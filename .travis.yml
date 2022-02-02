@@ -2,7 +2,8 @@ language: java
 os:
   - linux
   - osx
-osx_image: xcode13.2
 jdk:
+  - oraclejdk13
+  - oraclejdk16
   - oraclejdk17
 
