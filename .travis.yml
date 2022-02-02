@@ -1,9 +1,2 @@
 language: java
-os:
-  - linux
-  - osx
-jdk:
-  - oraclejdk13
-  - oraclejdk16
-  - oraclejdk17
 
