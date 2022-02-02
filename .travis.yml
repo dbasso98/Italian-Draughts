@@ -2,5 +2,3 @@ language: java
 os:
   - linux
   - osx
-  - windows
-jdk: openjdk17
