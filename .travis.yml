@@ -3,5 +3,4 @@ os:
   - linux
   - osx
   - windows
-jdk:
-  - oraclejdk17
+jdk: openjdk17
