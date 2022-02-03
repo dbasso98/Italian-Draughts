@@ -1,5 +1,4 @@
 package dssc.exam.draughts;
-import dssc.exam.draughts.Color;
 
 public class Piece {
     public final int id;
@@ -17,10 +16,16 @@ public class Piece {
     public Color get_color_of_piece(){
         return this.color;
     }
-    public int id_of_piece(){
+    public int get_id_of_piece(){
         return this.id;
     }
-    public Color color_of_piece(){
-        return this.color;
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "id=" + id +
+                ", color=" + color +
+                ", is_king=" + is_king +
+                '}';
     }
 }
