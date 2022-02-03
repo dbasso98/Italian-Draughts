@@ -1,8 +1,6 @@
 package dssc.exam.draughts;
+import dssc.exam.draughts.Color;
 
-public enum Color {
-    BLACK(0), WHITE(1)
-}
 public class Piece {
     public final int id;
     public final Color color;
@@ -15,6 +13,7 @@ public class Piece {
     public void upgrade_piece_to_king(){
         this.is_king = true;
     }
+    public boolean is_king(){return this.is_king == true;}
     public Color get_color_of_piece(){
         return this.color;
     }
