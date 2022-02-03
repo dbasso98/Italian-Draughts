@@ -28,4 +28,7 @@ public class Piece {
                 ", is_king=" + is_king +
                 '}';
     }
+    public void print_piece_info(){
+        System.out.println(this.toString());
+    }
 }
