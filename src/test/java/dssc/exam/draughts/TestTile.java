@@ -8,19 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class TestTile {
 
     Tile emptytile = new Tile();
+    Piece pieceBlack1 = new Piece(1, Color.BLACK);
+    Tile tileBlack1 = new Tile(pieceBlack1);
 
     @Test
     void createNonEmptyTile() {
-        Piece piece = new Piece(1, Color.BLACK);
-        Tile tile = new Tile(piece);
-        assertEquals(tile.piece.id, 1);
-        assertEquals(tile.piece.color, Color.BLACK);
+        assertEquals(tileBlack1.piece.id, 1);
+        assertEquals(tileBlack1.piece.color, Color.BLACK);
     }
 
     @Test
     void createEmptyTile() {
-        Tile tile = new Tile();
-        assertNull(tile.piece);
+        assertNull(emptytile.piece);
     }
 
     @Test
