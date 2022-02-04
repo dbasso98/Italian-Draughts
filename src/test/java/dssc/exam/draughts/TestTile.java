@@ -2,8 +2,7 @@ package dssc.exam.draughts;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTile {
 
@@ -24,13 +23,13 @@ public class TestTile {
 
     @Test
     void emptinessOfTile() {
-        assertEquals(emptytile.empty(), true);
+        assertTrue(emptytile.empty());
     }
 
     @Test
     void NonEmptinessOfTile() {
         Tile tile = new Tile(new Piece(1, Color.BLACK));
-        assertEquals(tile.empty(), false);
+        assertFalse(tile.empty());
     }
 
 }
