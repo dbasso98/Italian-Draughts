@@ -20,7 +20,7 @@ public class TestTile {
     @Test
     void createEmptyTile() {
         Tile tile = new Tile();
-        assertNull(null);
+        assertNull(tile.piece);
     }
 
     @Test
