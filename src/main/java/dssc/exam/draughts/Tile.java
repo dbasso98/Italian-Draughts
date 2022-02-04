@@ -9,4 +9,8 @@ public class Tile {
 
     Tile() {
     }
+
+    boolean empty(){
+        return piece == null;
+    }
 }

@@ -21,4 +21,16 @@ public class TestTile {
         assertNull(null);
     }
 
+    @Test
+    void emptinessOfTile() {
+        Tile tile = new Tile();
+        assertEquals(tile.empty(), true);
+    }
+
+    @Test
+    void NonEmptinessOfTile() {
+        Tile tile = new Tile(new Piece(1, Color.BLACK));
+        assertEquals(tile.empty(), false);
+    }
+
 }
