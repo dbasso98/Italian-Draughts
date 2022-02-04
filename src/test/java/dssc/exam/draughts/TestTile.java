@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestTile {
 
+    Tile emptytile = new Tile();
+
     @Test
     void createNonEmptyTile() {
         Piece piece = new Piece(1, Color.BLACK);
@@ -23,8 +25,7 @@ public class TestTile {
 
     @Test
     void emptinessOfTile() {
-        Tile tile = new Tile();
-        assertEquals(tile.empty(), true);
+        assertEquals(emptytile.empty(), true);
     }
 
     @Test
