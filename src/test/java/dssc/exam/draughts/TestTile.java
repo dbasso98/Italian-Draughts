@@ -10,7 +10,8 @@ public class TestTile {
     void createNonEmptyTile() {
         Piece piece = new Piece(1, Color.BLACK);
         Tile tile = new Tile(piece);
-        assertEquals(tile.piece, piece);
+        assertEquals(tile.piece.id, 1);
+        assertEquals(tile.piece.color, Color.BLACK);
     }
 
 }
