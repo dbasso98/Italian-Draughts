@@ -28,8 +28,7 @@ public class TestTile {
 
     @Test
     void NonEmptinessOfTile() {
-        Tile tile = new Tile(new Piece(1, Color.BLACK));
-        assertFalse(tile.empty());
+        assertFalse(tileBlack1.empty());
     }
 
 }
