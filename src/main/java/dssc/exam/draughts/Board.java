@@ -21,20 +21,25 @@ public class Board {
             if(board.get(i).tile_color == Color.BLACK){
                 board.get(i).set_piece_contained_in_tile(new Piece(i, Color.BLACK));
                 //relies on test.
-                board.get(size-(i+1)).set_piece_contained_in_tile(new Piece(size-(i+1), Color.WHITE));
+                board.get(size-i).set_piece_contained_in_tile(new Piece(size-i, Color.WHITE));
             }
         }
     }
 
-    public int get_size_of_board() {
+    int get_size_of_board() {
         return size;
     }
 
-    public int get_black_pieces() {
-        return 12;
+    public int get_pieces(Color color) {
+        int sum = 0;
+        for(int i = 0; i<size; ++i) {
+            if (board.get(i).tile_color == color && board.get(i).is_not_empty())
+                sum += 1;
+        }
+        return sum;
     }
 
-    public int get_white_pieces() {
-        return 12;
+    public int get_number_pieces() {
+        return 24;
     }
 }

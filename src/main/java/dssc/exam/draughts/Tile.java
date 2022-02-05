@@ -33,6 +33,7 @@ public class Tile {
     Tile() {
     }
 
+    // can simplify to return piece since if null then 0 and 1 otherwise?
     boolean is_tile_empty() {
         return piece == null;
     }
@@ -48,5 +49,9 @@ public class Tile {
     boolean check_if_tile_position_is_inside_board(Point position) {
         return position.getX() <= 7 && position.getX() >= 0
                 && position.getY() <= 7 && position.getY() >= 0;
+    }
+
+    public boolean is_not_empty() {
+        return !(is_tile_empty());
     }
 }
