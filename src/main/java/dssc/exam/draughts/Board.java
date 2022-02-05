@@ -1,5 +1,4 @@
 package dssc.exam.draughts;
-
 import java.util.ArrayList;
 
 public class Board {
@@ -10,12 +9,21 @@ public class Board {
     public ArrayList<Tile> board = new ArrayList<>(size);
 
     Board() {
-        for (int row = 0; row < maxRows; row += 2) {
+        Color firstColor;
+        Color secondColor;
+        for (int row = 0; row < maxRows; row ++) {
+            if(row%2 == 0){
+                firstColor = Color.BLACK;
+                secondColor = Color.WHITE;
+            }
+            else{
+                firstColor = Color.WHITE;
+                secondColor = Color.BLACK;
+            }
             for (int column = 0; column < maxColumns; column += 2) {
-                board.set(getIndex(row, column), new Tile(Color.BLACK));
-                board.set(getIndex(row, column + 1), new Tile(Color.WHITE));
-                board.set(getIndex(row + 1, column), new Tile(Color.WHITE));
-                board.set(getIndex(row + 1, column + 1), new Tile(Color.BLACK));
+                board.add(new Tile(firstColor));
+                board.add(new Tile(secondColor));
+
             }
         }
         for (int i = 0; i < piecesPerPlayer * 2; ++i) {
@@ -44,7 +52,7 @@ public class Board {
         return sum;
     }
 
-    public int getNumberPieces() {
+    public int getNumberOfPieces() {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
             if (board.get(i).isTileNotEmpty())

@@ -1,8 +1,8 @@
 package dssc.exam.draughts;
 
 public class Tile {
-    Piece piece = null;
-    Color tileColor = null;
+    public Piece piece = null;
+    public Color tileColor = null;
 
     Tile(Piece piece, Color tileColor) {
         this(tileColor);
@@ -15,7 +15,6 @@ public class Tile {
     Tile() {
     }
 
-    // can simplify to return piece since if null then 0 and 1 otherwise?
     boolean isTileEmpty() {
         return piece == null;
     }
