@@ -42,8 +42,9 @@ public class Tile {
     }
 
     public String display() {
-//        if (isTileEmpty()) {
-        return displayEmptyTile();
-//        }
+        if (isTileEmpty()) {
+            return displayEmptyTile();
+        }
+        return piece.display();
     }
 }

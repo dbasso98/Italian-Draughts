@@ -43,7 +43,7 @@ public class Piece {
         return pieceColor == Color.BLACK;
     }
 
-    public String displayKing(){
+    private String displayKing(){
         if (isBlack()) {
             return "[B]";
         }
