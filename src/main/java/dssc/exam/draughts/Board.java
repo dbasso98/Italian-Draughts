@@ -34,7 +34,7 @@ public class Board {
         }
     }
 
-    private int getIndex(int row, int column) {
+    public int getIndex(int row, int column) {
         return 8 * row + column;
     }
 
@@ -62,5 +62,9 @@ public class Board {
 
     public Tile getTile(int position) {
         return board.get(position);
+    }
+
+    public Tile getSymmetricTile(int position) {
+        return board.get(size-1-position);
     }
 }

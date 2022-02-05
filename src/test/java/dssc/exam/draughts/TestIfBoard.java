@@ -5,8 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfBoard {
     Board board = new Board();
@@ -48,5 +47,9 @@ public class TestIfBoard {
     void hasEmptyTilesInTwoMiddleRows(int position){
         assertTrue(board.getTile(position).isTileEmpty());
     }
-
+    @ParameterizedTest
+    @ValueSource(ints = {24,25,26,27,28,29,30,31})
+    void isColorSymmetricInTwoMiddleRows(int position){
+        assertSame(board.getTile(position).getTileColor(), board.getSymmetricTile(position).getTileColor());
+    }
 }

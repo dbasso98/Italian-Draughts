@@ -35,4 +35,8 @@ public class Tile {
     public Piece getPiece() {
         return piece;
     }
+
+    public Color getTileColor() {
+        return tileColor;
+    }
 }
