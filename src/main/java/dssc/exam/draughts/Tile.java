@@ -12,16 +12,21 @@ public class Tile {
     }
 
     Tile(Piece piece, int x, int y) {
-        this(x,y);
-        this.piece = piece;
+        this(piece, new Point(x,y));
     }
 
     Tile(Point position) {
-        this.position = position;
+        if (check_if_tile_position_is_inside_board(position))
+            this.position = position;
+        else {
+            // to be substituted by an exception
+            System.out.println("Position set to default value 0,0");
+            this.position = new Point(0,0);
+        }
     }
 
     Tile(int x, int y) {
-        this.position.setLocation(x,y);
+        this(new Point(x,y));
     }
 
     Tile() {
@@ -37,5 +42,14 @@ public class Tile {
 
     void set_piece_contained_in_tile(Piece piece) {
         this.piece = piece;
+    }
+
+    boolean check_if_tile_position_is_inside_board(Point position) {
+        if (position.getX() <= 7 && position.getX() >= 0
+            && position.getY() <= 7 && position.getY() >= 0) {
+            return true;
+        }
+
+        return false;
     }
 }
