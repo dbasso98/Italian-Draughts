@@ -40,7 +40,7 @@ public class Board {
     }
 
     int getSizeOfBoard() {
-        return size;
+        return board.size();
     }
 
     public int getPieces(Color color) {
