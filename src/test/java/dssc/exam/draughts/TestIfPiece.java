@@ -21,4 +21,10 @@ public class TestIfPiece {
 
         assertEquals(piece, fakeStandardOutput.toString());
     }
+
+    @Test
+    void displayBlackMan(){
+        Piece blackMan = new Piece(1, Color.BLACK);
+        assertEquals("[b]", blackMan.display());
+    }
 }

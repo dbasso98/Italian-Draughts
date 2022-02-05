@@ -38,4 +38,12 @@ public class Piece {
     public void printPieceInfo() {
         System.out.println(this);
     }
+
+    private boolean isBlack() {
+        return pieceColor == Color.BLACK;
+    }
+
+    public String display(){
+        return "[b]";
+    }
 }
