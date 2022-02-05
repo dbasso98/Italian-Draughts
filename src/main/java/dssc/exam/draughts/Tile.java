@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Tile {
     Piece piece = null;
-    Point coords = null;
+    Point position = null;
 
-    Tile(Piece piece, Point coords) {
-        this(coords);
+    Tile(Piece piece, Point position) {
+        this(position);
         this.piece = piece;
     }
 
@@ -16,12 +16,12 @@ public class Tile {
         this.piece = piece;
     }
 
-    Tile(Point coords) {
-        this.coords = coords;
+    Tile(Point position) {
+        this.position = position;
     }
 
     Tile(int x, int y) {
-        this.coords.setLocation(x,y);
+        this.position.setLocation(x,y);
     }
 
     Tile() {
