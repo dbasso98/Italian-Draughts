@@ -27,4 +27,10 @@ public class TestIfPiece {
         Piece blackMan = new Piece(1, Color.BLACK);
         assertEquals("[b]", blackMan.display());
     }
+
+    @Test
+    void displayWhiteMan(){
+        Piece whiteMan = new Piece(1, Color.WHITE);
+        assertEquals(whiteMan.display(), "[w]");
+    }
 }
