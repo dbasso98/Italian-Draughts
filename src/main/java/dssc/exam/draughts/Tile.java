@@ -32,11 +32,28 @@ public class Tile {
         return !(isTileEmpty());
     }
 
+
     public Piece getPiece() {
         return piece;
     }
 
     public Color getTileColor() {
         return tileColor;
+    }
+
+    private boolean isBlack() {
+        return tileColor == Color.BLACK;
+    }
+
+    private String displayEmptyTile() {
+        return "[ ]";
+    }
+
+    public String display() {
+        if (isTileEmpty()) {
+            return displayEmptyTile();
+        }
+        return piece.display();
+
     }
 }
