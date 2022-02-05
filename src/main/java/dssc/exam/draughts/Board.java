@@ -39,23 +39,23 @@ public class Board {
         return 8 * row + column;
     }
 
-    int getSizeOfBoard() {
+    public int getSizeOfBoard() {
         return board.size();
     }
 
-    public int getPieces(Color color) {
+    public int getPiecesOfColor(Color color) {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
-            if (board.get(i).tileColor == color && board.get(i).isTileNotEmpty())
+            if (board.get(i).isTileNotEmpty() && board.get(i).getPiece().pieceColor == color)
                 sum += 1;
         }
         return sum;
     }
 
-    public int getNumberOfPieces() {
+    public int getTotalNumberOfPieces() {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
-            if (board.get(i).isTileNotEmpty())
+            if(board.get(i).isTileNotEmpty())
                 sum += 1;
         }
         return sum;

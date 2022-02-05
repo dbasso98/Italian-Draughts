@@ -16,13 +16,13 @@ public class TestIfBoard {
 
     @Test
     void has24Pieces(){
-        assertEquals(24, board.getNumberOfPieces());
+        assertEquals(24, board.getTotalNumberOfPieces());
     }
 
     @ParameterizedTest
     @CsvSource({"BLACK, 12", "WHITE, 12"})
     void has_12_black_pieces(Color color, int number){
-        assertEquals(number, board.getPieces(color));
+        assertEquals(number, board.getPiecesOfColor(color));
     }
 
 }

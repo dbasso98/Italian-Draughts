@@ -30,4 +30,8 @@ public class Tile {
     public boolean isTileNotEmpty() {
         return !(isTileEmpty());
     }
+
+    public Piece getPiece() {
+        return piece;
+    }
 }
