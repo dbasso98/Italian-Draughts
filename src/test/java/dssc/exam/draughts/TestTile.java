@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTile {
 
-    Tile empty_tile = new Tile();
+    Tile emptyTile = new Tile();
     Tile black_tile_black_piece = new Tile(new Piece(1, Color.BLACK), Color.BLACK);
 
     @Test
@@ -17,17 +17,22 @@ public class TestTile {
 
     @Test
     void createEmptyTile() {
-        assertNull(empty_tile.piece);
+        assertNull(emptyTile.piece);
     }
 
     @Test
     void emptinessOfTile() {
-        assertTrue(empty_tile.isTileEmpty());
+        assertTrue(emptyTile.isTileEmpty());
     }
 
     @Test
     void nonEmptinessOfTile() {
         assertFalse(black_tile_black_piece.isTileEmpty());
+    }
+
+    @Test
+    void emptyTileDisplay(){
+        assertEquals(emptyTile.display(), "[ ]");
     }
 
 }

@@ -32,4 +32,18 @@ public class Tile {
     public boolean isTileNotEmpty() {
         return !(isTileEmpty());
     }
+
+    private boolean isBlack() {
+        return tileColor == Color.BLACK;
+    }
+
+    private String displayEmptyTile() {
+        return "[ ]";
+    }
+
+    public String display() {
+//        if (isTileEmpty()) {
+        return displayEmptyTile();
+//        }
+    }
 }
