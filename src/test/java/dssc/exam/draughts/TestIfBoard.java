@@ -33,5 +33,15 @@ public class TestIfBoard {
         assertEquals(board.getTile(position).getPiece().getColor(), color);
     }
 
+    @ParameterizedTest
+    @CsvSource({"WHITE, 57", "WHITE, 59", "WHITE, 61", "WHITE, 63",
+            "WHITE, 48", "WHITE, 50", "WHITE, 52", "WHITE, 54",
+            "WHITE, 41", "WHITE, 43", "WHITE, 45", "WHITE, 47",})
+    void has12WhitePiecesInLastThreeRows(Color color, int position){
+        assertEquals(board.getTile(position).getPiece().getColor(), color);
+    }
+
+
+
 
 }
