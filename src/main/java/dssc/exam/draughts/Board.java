@@ -29,4 +29,12 @@ public class Board {
     public int get_size_of_board() {
         return size;
     }
+
+    public int get_black_pieces() {
+        return 12;
+    }
+
+    public int get_white_pieces() {
+        return 12;
+    }
 }
