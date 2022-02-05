@@ -8,7 +8,8 @@ public class Tile {
         this(tileColor);
         this.piece = piece;
     }
-    Tile(Color color){
+
+    Tile(Color color) {
         this.tileColor = color;
     }
 

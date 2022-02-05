@@ -2,21 +2,27 @@ package dssc.exam.draughts;
 
 public class Piece {
     public final int id;
-    public final Color piece_color;
-    public boolean is_king = false;
+    public final Color pieceColor;
+    public boolean isKing = false;
 
-    Piece(int id, Color piece_color){
+    Piece(int id, Color pieceColor) {
         this.id = id;
-        this.piece_color = piece_color;
+        this.pieceColor = pieceColor;
     }
-    public void upgrade_piece_to_king(){
-        this.is_king = true;
+
+    public void upgradePieceToKing() {
+        this.isKing = true;
     }
-    public boolean is_king(){return this.is_king;}
-    public Color get_color_of_piece(){
-        return this.piece_color;
+
+    public boolean isKing() {
+        return this.isKing;
     }
-    public int get_id_of_piece(){
+
+    public Color getColorOfPiece() {
+        return this.pieceColor;
+    }
+
+    public int getIdOfPiece() {
         return this.id;
     }
 
@@ -24,11 +30,12 @@ public class Piece {
     public String toString() {
         return "Piece{" +
                 "id=" + id +
-                ", color=" + piece_color +
-                ", is_king=" + is_king +
+                ", color=" + pieceColor +
+                ", isKing=" + isKing +
                 '}';
     }
-    public void print_piece_info(){
+
+    public void printPieceInfo() {
         System.out.println(this);
     }
 }
