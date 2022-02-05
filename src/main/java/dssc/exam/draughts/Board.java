@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class Board {
     public final int size = 64;
-    public final int max_rows = 8;
-    public final int max_columns = 8;
-    public final int pieces_per_player = 12;
+    public final int maxRows = 8;
+    public final int maxColumns = 8;
+    public final int piecesPerPlayer = 12;
     public ArrayList<Tile> board = new ArrayList<>(size);
 
     Board() {
-        for (int row = 0; row < max_rows; row += 2) {
-            for (int column = 0; column < max_columns; column += 2) {
+        for (int row = 0; row < maxRows; row += 2) {
+            for (int column = 0; column < maxColumns; column += 2) {
                 board.set(getIndex(row, column), new Tile(Color.BLACK));
                 board.set(getIndex(row, column + 1), new Tile(Color.WHITE));
                 board.set(getIndex(row + 1, column), new Tile(Color.WHITE));
                 board.set(getIndex(row + 1, column + 1), new Tile(Color.BLACK));
             }
         }
-        for (int i = 0; i < pieces_per_player * 2; ++i) {
+        for (int i = 0; i < piecesPerPlayer * 2; ++i) {
             if (board.get(i).tileColor == Color.BLACK) {
                 board.get(i).setPieceContainedInTile(new Piece(i, Color.BLACK));
                 //relies on test.
@@ -31,11 +31,11 @@ public class Board {
         return 8 * row + column;
     }
 
-    int get_size_of_board() {
+    int getSizeOfBoard() {
         return size;
     }
 
-    public int get_pieces(Color color) {
+    public int getPieces(Color color) {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
             if (board.get(i).tileColor == color && board.get(i).isTileNotEmpty())
@@ -44,7 +44,7 @@ public class Board {
         return sum;
     }
 
-    public int get_number_pieces() {
+    public int getNumberPieces() {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
             if (board.get(i).isTileNotEmpty())
