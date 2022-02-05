@@ -31,6 +31,20 @@ public class TestIfPiece {
     @Test
     void displayWhiteMan(){
         Piece whiteMan = new Piece(1, Color.WHITE);
-        assertEquals(whiteMan.display(), "[w]");
+        assertEquals("[w]", whiteMan.display());
+    }
+
+    @Test
+    void displayBlackKing(){
+        Piece blackKing = new Piece(1, Color.BLACK);
+        blackKing.upgradePieceToKing();
+        assertEquals("[B]", blackKing.display() );
+    }
+
+    @Test
+    void displayWhiteKing(){
+        Piece whiteKing = new Piece(1, Color.WHITE);
+        whiteKing.upgradePieceToKing();
+        assertEquals("[W]", whiteKing.display() );
     }
 }
