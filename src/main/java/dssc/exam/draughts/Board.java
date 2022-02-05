@@ -1,4 +1,5 @@
 package dssc.exam.draughts;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -11,12 +12,11 @@ public class Board {
     Board() {
         Color firstColor;
         Color secondColor;
-        for (int row = 0; row < maxRows; row ++) {
-            if(row%2 == 0){
+        for (int row = 0; row < maxRows; row++) {
+            if (row % 2 == 0) {
                 firstColor = Color.BLACK;
                 secondColor = Color.WHITE;
-            }
-            else{
+            } else {
                 firstColor = Color.WHITE;
                 secondColor = Color.BLACK;
             }
@@ -54,7 +54,7 @@ public class Board {
     public int getTotalNumberOfPieces() {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
-            if(board.get(i).isTileNotEmpty())
+            if (board.get(i).isTileNotEmpty())
                 sum += 1;
         }
         return sum;
@@ -65,6 +65,15 @@ public class Board {
     }
 
     public Tile getSymmetricTile(int position) {
-        return board.get(size-1-position);
+        return board.get(size - 1 - position);
+    }
+
+    public void display() {
+        for (int row = 0; row < maxRows; row++) {
+            for (int col = 0; col < maxRows; col++) {
+                System.out.print(getTile(getIndex(row, col)).display());
+            }
+            System.out.print("\n");
+        }
     }
 }
