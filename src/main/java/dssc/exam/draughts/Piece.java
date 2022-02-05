@@ -38,4 +38,9 @@ public class Piece {
     public void printPieceInfo() {
         System.out.println(this);
     }
+
+    public Color getColor() {
+        return pieceColor;
+    }
+
 }
