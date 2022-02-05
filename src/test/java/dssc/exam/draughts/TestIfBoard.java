@@ -1,11 +1,8 @@
 package dssc.exam.draughts;
 
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +21,7 @@ public class TestIfBoard {
     @ParameterizedTest
     @CsvSource({"BLACK, 12", "WHITE, 12"})
     void has_12_black_pieces(Color color, int number){
-        assertEquals(number, board.get_pieces(Color.BLACK));
+        assertEquals(number, board.get_pieces(color));
     }
 
 
