@@ -5,14 +5,16 @@ import java.awt.*;
 public class Tile {
     Piece piece = null;
     Point position = null;
+    Color color = null;
 
-    Tile(Piece piece, Point position) {
+    Tile(Piece piece, Point position, Color color) {
         this(position);
         this.piece = piece;
+        this.color = color;
     }
 
-    Tile(Piece piece, int x, int y) {
-        this(piece, new Point(x,y));
+    Tile(Piece piece, int x, int y, Color color) {
+        this(piece, new Point(x,y), color);
     }
 
     Tile(Point position) {

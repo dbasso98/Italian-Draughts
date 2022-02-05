@@ -7,27 +7,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTile {
 
     Tile empty_tile = new Tile();
-    Tile tile_black_1 = new Tile(new Piece(1, Color.BLACK), new Point(0,0));
+    Tile black_tile_black_piece = new Tile(new Piece(1, Color.BLACK), new Point(0,0), Color.BLACK);
 
     @Test
     void createNonEmptyTile() {
-        assertEquals(tile_black_1.piece.id, 1);
-        assertEquals(tile_black_1.piece.color, Color.BLACK);
-        assertEquals(tile_black_1.position.getX(), 0);
-        assertEquals(tile_black_1.position.getY(), 0);
+        assertEquals(black_tile_black_piece.piece.id, 1);
+        assertEquals(black_tile_black_piece.piece.color, Color.BLACK);
+        assertEquals(black_tile_black_piece.position.getX(), 0);
+        assertEquals(black_tile_black_piece.position.getY(), 0);
     }
 
     @Test
     // to transform into property test
     void testTilePositionX(){
-        assertTrue(tile_black_1.position.getX() >= 0);
-        assertTrue(tile_black_1.position.getX() <= 7);
+        assertTrue(black_tile_black_piece.position.getX() >= 0);
+        assertTrue(black_tile_black_piece.position.getX() <= 7);
     }
 
     @Test
     void testTilePositionY(){
-        assertTrue(tile_black_1.position.getY() >= 0);
-        assertTrue(tile_black_1.position.getY() <= 7);
+        assertTrue(black_tile_black_piece.position.getY() >= 0);
+        assertTrue(black_tile_black_piece.position.getY() <= 7);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class TestTile {
 
     @Test
     void NonEmptinessOfTile() {
-        assertFalse(tile_black_1.is_tile_empty());
+        assertFalse(black_tile_black_piece.is_tile_empty());
     }
 
 }
