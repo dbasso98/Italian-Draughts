@@ -9,15 +9,15 @@ public class TestIfPiece {
     private static final String piece =  "Piece{" +
             "id=" + 1 +
             ", color=" + "BLACK" +
-            ", is_king=" + false +
+            ", isKing=" + false +
             "}" + System.lineSeparator();
 
     @Test
-    void prints_to_std_output() {
+    void printsToStdOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         var Piece = new Piece(1, Color.BLACK);
-        Piece.print_piece_info();
+        Piece.printPieceInfo();
 
         assertEquals(piece, fakeStandardOutput.toString());
     }
