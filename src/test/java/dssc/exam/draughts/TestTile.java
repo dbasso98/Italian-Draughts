@@ -12,7 +12,7 @@ public class TestTile {
     @Test
     void createNonEmptyTile() {
         assertEquals(black_tile_black_piece.piece.id, 1);
-        assertEquals(black_tile_black_piece.piece.color, Color.BLACK);
+        assertEquals(black_tile_black_piece.piece.piece_color, Color.BLACK);
         assertEquals(black_tile_black_piece.position.getX(), 0);
         assertEquals(black_tile_black_piece.position.getY(), 0);
     }

@@ -5,19 +5,17 @@ import java.awt.*;
 public class Tile {
     Piece piece = null;
     Point position = null;
-    Color color = null;
+    Color tile_color = null;
 
-    Tile(Piece piece, Point position, Color color) {
-        this(position);
+    Tile(Piece piece, Point position, Color tile_color) {
+        this(position, tile_color);
         this.piece = piece;
-        this.color = color;
+    }
+    Tile(Piece piece, int x, int y, Color tile_color) {
+        this(piece, new Point(x,y), tile_color);
     }
 
-    Tile(Piece piece, int x, int y, Color color) {
-        this(piece, new Point(x,y), color);
-    }
-
-    Tile(Point position) {
+    Tile(Point position, Color tile_color) {
         if (check_if_tile_position_is_inside_board(position))
             this.position = position;
         else {
@@ -25,10 +23,11 @@ public class Tile {
             System.out.println("Position set to default value 0,0");
             this.position = new Point(0,0);
         }
+        this.tile_color = tile_color;
     }
 
-    Tile(int x, int y) {
-        this(new Point(x,y));
+    Tile(int x, int y, Color tile_color) {
+        this(new Point(x,y), tile_color);
     }
 
     Tile() {
@@ -38,7 +37,7 @@ public class Tile {
         return piece == null;
     }
 
-    void reset_tile() {
+    void reset_tile_to_empty() {
         this.piece = null;
     }
 
@@ -47,11 +46,7 @@ public class Tile {
     }
 
     boolean check_if_tile_position_is_inside_board(Point position) {
-        if (position.getX() <= 7 && position.getX() >= 0
-            && position.getY() <= 7 && position.getY() >= 0) {
-            return true;
-        }
-
-        return false;
+        return position.getX() <= 7 && position.getX() >= 0
+                && position.getY() <= 7 && position.getY() >= 0;
     }
 }
