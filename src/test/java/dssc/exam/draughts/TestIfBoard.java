@@ -57,6 +57,14 @@ public class TestIfBoard {
         assertSame(board.getTile(position).getTileColor(), board.getSymmetricTile(position).getTileColor());
     }
 
+    @ParameterizedTest
+    @CsvSource({"0, 18, 9", "2, 16, 9",
+                "57, 43, 50", "52, 38, 45",
+                "50, 0, -1", "64, 46, -1"})
+    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition){
+        assertEquals(board.getMiddlePosition(startPosition, endPosition), middlePosition);
+    }
+
     @Test
     void printBoard() {
         String expected = """

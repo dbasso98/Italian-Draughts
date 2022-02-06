@@ -53,6 +53,5 @@ public class Tile {
             return displayEmptyTile();
         }
         return piece.display();
-
     }
 }
