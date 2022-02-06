@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTile {
 
     Tile emptyTile = new Tile();
-    Tile balckTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK);
+    Tile blackTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK);
 
     @Test
     void createNonEmptyTile() {
-        assertEquals(balckTileBlackMan.piece.id, 1);
-        assertEquals(balckTileBlackMan.piece.pieceColor, Color.BLACK);
+        assertEquals(blackTileBlackMan.piece.id, 1);
+        assertEquals(blackTileBlackMan.piece.pieceColor, Color.BLACK);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class TestTile {
 
     @Test
     void nonEmptinessOfTile() {
-        assertFalse(balckTileBlackMan.isTileEmpty());
+        assertFalse(blackTileBlackMan.isTileEmpty());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TestTile {
 
     @Test
     void nonemptyTileDisplay(){
-        assertEquals("[b]", balckTileBlackMan.display());
+        assertEquals("[b]", blackTileBlackMan.display());
         Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK);
         blackTileWhiteKing.piece.upgradePieceToKing();
         assertEquals("[W]", blackTileWhiteKing.display());
