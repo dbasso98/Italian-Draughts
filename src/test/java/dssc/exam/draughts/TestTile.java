@@ -11,8 +11,8 @@ public class TestTile {
 
     @Test
     void createNonEmptyTile() {
-        assertEquals(blackTileBlackMan.piece.id, 1);
-        assertEquals(blackTileBlackMan.piece.pieceColor, Color.BLACK);
+        assertEquals(blackTileBlackMan.piece.getIdOfPiece(), 1);
+        assertEquals(blackTileBlackMan.piece.getColorOfPiece(), Color.BLACK);
     }
 
     @Test
