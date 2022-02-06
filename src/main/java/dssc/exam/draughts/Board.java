@@ -67,6 +67,21 @@ public class Board {
         return board.get(size - 1 - position);
     }
 
+    public int getMiddlePosition(int startPosition, int endPosition) {
+        int distance = Math.abs(startPosition-endPosition);
+        if (startPosition < 0 || startPosition > 63 ||
+            endPosition < 0 || endPosition > 63) {
+            System.out.println("Invalid positions");
+            return -1;
+        }
+        if (distance == 14 || distance == 18) {
+            return Math.min(startPosition, endPosition) + distance/2;
+        }
+        // maybe raise exception
+        System.out.println("Invalid positions");
+        return -1;
+    }
+
     public void display() {
         for (int row = 0; row < maxRows; row++) {
             for (int col = 0; col < maxRows; col++) {

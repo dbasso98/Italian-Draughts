@@ -57,17 +57,26 @@ public class TestIfBoard {
         assertSame(board.getTile(position).getTileColor(), board.getSymmetricTile(position).getTileColor());
     }
 
+    @ParameterizedTest
+    @CsvSource({"0, 18, 9", "2, 16, 9",
+                "57, 43, 50", "52, 38, 45",
+                "50, 0, -1", "64, 46, -1"})
+    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition){
+        assertEquals(board.getMiddlePosition(startPosition, endPosition), middlePosition);
+    }
+
     @Test
     void printBoard() {
-        String expected = "[b][ ][b][ ][B][ ][b][ ]\n" +
-                "[ ][b][ ][b][ ][b][ ][b]\n" +
-                "[b][ ][b][ ][b][ ][b][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][w][ ][w][ ][w][ ][w]\n" +
-                "[W][ ][w][ ][w][ ][w][ ]\n" +
-                "[ ][w][ ][w][ ][w][ ][w]\n";
-        Board board = new Board();
+        String expected = """
+                [b][ ][b][ ][B][ ][b][ ]
+                [ ][b][ ][b][ ][b][ ][b]
+                [b][ ][b][ ][b][ ][b][ ]
+                [ ][ ][ ][ ][ ][ ][ ][ ]
+                [ ][ ][ ][ ][ ][ ][ ][ ]
+                [ ][w][ ][w][ ][w][ ][w]
+                [W][ ][w][ ][w][ ][w][ ]
+                [ ][w][ ][w][ ][w][ ][w]
+                """;
         board.getTile(4).getTilePiece().upgradePieceToKing();
         board.getTile(6 * 8).getTilePiece().upgradePieceToKing();
 
