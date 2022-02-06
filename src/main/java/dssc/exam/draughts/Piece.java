@@ -1,9 +1,9 @@
 package dssc.exam.draughts;
 
 public class Piece {
-    public final int id;
-    public final Color pieceColor;
-    public boolean isKing = false;
+    private final int id;
+    private final Color pieceColor;
+    private boolean isKing = false;
 
     Piece(int id, Color pieceColor) {
         this.id = id;
@@ -54,7 +54,6 @@ public class Piece {
         return "[W]";
     }
 
-
     public String display() {
         if (isKing()){
             return displayKing();
@@ -65,5 +64,4 @@ public class Piece {
         }
         return "[w]";
     }
-
 }

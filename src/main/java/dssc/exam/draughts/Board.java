@@ -44,7 +44,7 @@ public class Board {
     public int getPiecesOfColor(Color color) {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
-            if (board.get(i).isTileNotEmpty() && board.get(i).getPiece().pieceColor == color)
+            if (board.get(i).isTileNotEmpty() && board.get(i).getPiece().getColorOfPiece() == color)
                 sum += 1;
         }
         return sum;
