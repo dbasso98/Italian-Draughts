@@ -43,7 +43,6 @@ public class Piece {
         return pieceColor;
     }
 
-
     private boolean isBlack() {
         return pieceColor == Color.BLACK;
     }
