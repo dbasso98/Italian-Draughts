@@ -1,8 +1,8 @@
 package dssc.exam.draughts;
 
 public class Tile {
-    public Piece piece = null;
-    public Color tileColor = null;
+    private Piece piece = null;
+    private Color tileColor = null;
 
     Tile(Piece piece, Color tileColor) {
         this(tileColor);
@@ -32,8 +32,7 @@ public class Tile {
         return !(isTileEmpty());
     }
 
-
-    public Piece getPiece() {
+    public Piece getTilePiece() {
         return piece;
     }
 

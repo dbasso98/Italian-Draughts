@@ -26,7 +26,7 @@ public class Board {
             }
         }
         for (int i = 0; i < piecesPerPlayer * 2; ++i) {
-            if (board.get(i).tileColor == Color.BLACK) {
+            if (board.get(i).getTileColor() == Color.BLACK) {
                 board.get(i).setPieceContainedInTile(new Piece(i, Color.BLACK));
                 board.get(size - 1 - i).setPieceContainedInTile(new Piece(size - 1 - i, Color.WHITE));
             }
@@ -44,7 +44,7 @@ public class Board {
     public int getPiecesOfColor(Color color) {
         int sum = 0;
         for (int i = 0; i < size; ++i) {
-            if (board.get(i).isTileNotEmpty() && board.get(i).getPiece().getColorOfPiece() == color)
+            if (board.get(i).isTileNotEmpty() && board.get(i).getTilePiece().getColorOfPiece() == color)
                 sum += 1;
         }
         return sum;
