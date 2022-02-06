@@ -75,14 +75,13 @@ public class Board {
         if (getTile(startPosition).getTileColor() == Color.WHITE ||
             getTile(endPosition).getTileColor() == Color.WHITE)
             return -1;
-        if (distance == 14 || distance == 18) {
-            return Math.min(startPosition, endPosition) + distance/2;
+        if (distance != 14 && distance != 18) {
+            return -1;
         }
-        // maybe raise exception
-        return -1;
+        return Math.min(startPosition, endPosition) + distance/2;
     }
 
-    private boolean isValidPosition(int position) {
+    public boolean isValidPosition(int position) {
         return position >= 0 && position <= 63;
     }
 
