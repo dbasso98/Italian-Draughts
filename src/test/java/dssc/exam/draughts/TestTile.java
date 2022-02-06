@@ -11,13 +11,13 @@ public class TestTile {
 
     @Test
     void createNonEmptyTile() {
-        assertEquals(blackTileBlackMan.piece.getIdOfPiece(), 1);
-        assertEquals(blackTileBlackMan.piece.getColorOfPiece(), Color.BLACK);
+        assertEquals(blackTileBlackMan.getTilePiece().getIdOfPiece(), 1);
+        assertEquals(blackTileBlackMan.getTilePiece().getColorOfPiece(), Color.BLACK);
     }
 
     @Test
     void createEmptyTile() {
-        assertNull(emptyTile.piece);
+        assertNull(emptyTile.getTilePiece());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class TestTile {
     void nonemptyTileDisplay(){
         assertEquals("[b]", blackTileBlackMan.display());
         Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK);
-        blackTileWhiteKing.piece.upgradePieceToKing();
+        blackTileWhiteKing.getTilePiece().upgradePieceToKing();
         assertEquals("[W]", blackTileWhiteKing.display());
     }
 
