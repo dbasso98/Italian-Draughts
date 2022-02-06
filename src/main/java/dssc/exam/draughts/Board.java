@@ -69,17 +69,21 @@ public class Board {
 
     public int getMiddlePosition(int startPosition, int endPosition) {
         int distance = Math.abs(startPosition-endPosition);
-        if (startPosition < 0 || startPosition > 63 ||
-            endPosition < 0 || endPosition > 63) {
-            System.out.println("Invalid positions");
+        if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             return -1;
         }
+        if (getTile(startPosition).getTileColor() == Color.WHITE ||
+            getTile(endPosition).getTileColor() == Color.WHITE)
+            return -1;
         if (distance == 14 || distance == 18) {
             return Math.min(startPosition, endPosition) + distance/2;
         }
         // maybe raise exception
-        System.out.println("Invalid positions");
         return -1;
+    }
+
+    private boolean isValidPosition(int position) {
+        return position >= 0 && position <= 63;
     }
 
     public void display() {
