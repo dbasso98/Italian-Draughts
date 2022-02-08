@@ -16,10 +16,10 @@ public class TestIfPiece {
     void printsToStdOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
-        var Piece = new Piece(1, Color.BLACK);
-        Piece.printPieceInfo();
+        var fakePiece = new Piece(1, Color.BLACK);
+        fakePiece.printPieceInfo();
 
-        assertEquals(piece, fakeStandardOutput.toString());
+        assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());
     }
 
     @Test
