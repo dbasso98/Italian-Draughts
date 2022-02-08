@@ -72,12 +72,9 @@ public class Board {
         return board.get(getIndex(row, column));
     }
 
-    public Tile getSymmetricTile(int position) {
-        return board.get(size - 1 - position);
-    }
-
     public int getMiddlePosition(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
         return getMiddlePosition(getIndex(sourceRow, sourceColumn), getIndex(destinationRow, destinationColumn));
+    }
 
     public int getMiddlePosition(int startPosition, int endPosition) {
         int distance = Math.abs(startPosition - endPosition);
