@@ -4,12 +4,12 @@ import java.awt.*;
 
 public class MoveRules {
 
-    public static boolean isValidMove(Board board, Point source, Point destination) throws Exception{
+    public static boolean isPositionOfMoveValid(Board board, Point source, Point destination) throws Exception{
+        // secondo me questo e quello sotto si ripetono....
         int sourceRow = source.x;
         int sourceColumn = source.y;
         int destinationRow = destination.x;
         int destinationColumn = destination.y;
-        // check if both are valid positions
         try {
             isValidPosition(board, source);
             isValidPosition(board, destination);
@@ -22,8 +22,12 @@ public class MoveRules {
     }
 
     private static void isValidPosition(Board board, Point position) throws Exception {
-        if (!board.isValidPosition(position.x, position.y)){
-            throw new Exception("Every position must be in range of 0 to 7 for each axis!");
+        try{
+            board.isValidPosition(position.x, position.y);
         }
+        catch(Exception e){
+            throw e;
+        }
+
     }
 }
