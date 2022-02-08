@@ -44,8 +44,8 @@ public class Board {
 
     public int getPiecesOfColor(Color color) {
         int sum = 0;
-        for (int i = 0; i < size; ++i) {
-            if (board.get(i).isTileNotEmpty() && board.get(i).getTilePiece().getColorOfPiece() == color)
+        for (int tileIndex = 0; tileIndex < getSizeOfBoard(); ++tileIndex) {
+            if (board.get(tileIndex).isTileNotEmpty() && board.get(tileIndex).getTilePiece().getColorOfPiece() == color)
                 sum += 1;
         }
         return sum;
@@ -53,19 +53,23 @@ public class Board {
 
     public int getTotalNumberOfPieces() {
         int sum = 0;
-        for (int i = 0; i < size; ++i) {
-            if (board.get(i).isTileNotEmpty())
+        for (int tileIndex = 0; tileIndex < getSizeOfBoard(); ++tileIndex) {
+            if (board.get(tileIndex).isTileNotEmpty())
                 sum += 1;
         }
         return sum;
     }
 
-    public Tile getTile(int position) {
-        return board.get(position);
+    public Tile getTile(int index) {
+        return board.get(index);
     }
 
-    public Tile getSymmetricTile(int position) {
-        return board.get(lastIndex - position);
+    public Tile getSymmetricTile(int index) {
+        return board.get(lastIndex - index);
+    }
+
+    public int getMiddlePosition(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
+        return getMiddlePosition(getIndex(sourceRow, sourceColumn), getIndex(destinationRow, destinationColumn));
     }
 
     public int getMiddlePosition(int startPosition, int endPosition) {

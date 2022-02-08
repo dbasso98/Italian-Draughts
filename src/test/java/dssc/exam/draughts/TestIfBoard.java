@@ -65,6 +65,14 @@ public class TestIfBoard {
         assertEquals(board.getMiddlePosition(startPosition, endPosition), middlePosition);
     }
 
+    @ParameterizedTest
+    @CsvSource({"0, 0, 2, 2, 9", "0, 6, 2, 4, 13",
+                "7, 1, 5, 3, 50", "7, 7, 5, 5, 54",
+                "-1, 63, 1, 5, -1", "64, 30, 5, 8, -1"})
+    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition){
+        assertEquals(board.getMiddlePosition(sourceRow, sourceColumn, destinationRow, destinationColumn), middlePosition);
+    }
+
     @Test
     void printBoard() {
         String expected = """
