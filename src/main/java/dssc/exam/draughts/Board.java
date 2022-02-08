@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Board {
     public final int size = 64;
+    public final int lastIndex = size - 1;
     public final int maxRows = 8;
     public final int maxColumns = 8;
     public final int piecesPerPlayer = 12;
@@ -25,10 +26,10 @@ public class Board {
                 board.add(new Tile(secondColor));
             }
         }
-        for (int i = 0; i < piecesPerPlayer * 2; ++i) {
-            if (board.get(i).getTileColor() == Color.BLACK) {
-                board.get(i).setPieceContainedInTile(new Piece(i, Color.BLACK));
-                board.get(size - 1 - i).setPieceContainedInTile(new Piece(size - 1 - i, Color.WHITE));
+        for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
+            if (board.get(tileIndex).getTileColor() == Color.BLACK) {
+                board.get(tileIndex).setPieceContainedInTile(new Piece(tileIndex, Color.BLACK));
+                board.get(lastIndex - tileIndex).setPieceContainedInTile(new Piece(lastIndex - tileIndex, Color.WHITE));
             }
         }
     }
@@ -64,7 +65,7 @@ public class Board {
     }
 
     public Tile getSymmetricTile(int position) {
-        return board.get(size - 1 - position);
+        return board.get(lastIndex - position);
     }
 
     public int getMiddlePosition(int startPosition, int endPosition) {
