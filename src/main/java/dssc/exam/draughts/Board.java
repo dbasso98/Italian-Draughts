@@ -72,12 +72,9 @@ public class Board {
         return board.get(getIndex(row, column));
     }
 
-    public Tile getSymmetricTile(int position) {
-        return board.get(size - 1 - position);
-    }
-
     public int getMiddlePosition(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
         return getMiddlePosition(getIndex(sourceRow, sourceColumn), getIndex(destinationRow, destinationColumn));
+    }
 
     public int getMiddlePosition(int startPosition, int endPosition) {
         int distance = Math.abs(startPosition - endPosition);
@@ -98,11 +95,15 @@ public class Board {
     }
 
     public void display() {
+        String indexLine = "   1  2  3  4  5  6  7  8";
+        System.out.println(indexLine);
         for (int row = 0; row < maxRows; row++) {
+            System.out.print((row + 1) + " ");
             for (int col = 0; col < maxRows; col++) {
-                System.out.print(getTile(row, col).display());
+                System.out.print(getTile(getIndex(row, col)).display());
             }
-            System.out.print("\n");
+            System.out.print(" " + (row + 1) + "\n");
         }
+        System.out.println(indexLine);
     }
 }
