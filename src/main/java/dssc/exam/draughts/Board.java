@@ -92,7 +92,7 @@ public class Board {
     }
 
     public boolean isValidPosition(int position) {
-        return position >= 0 && position <= 63;
+        return position >= 0 && position <= lastIndex;
     }
 
     public boolean isValidPosition(int row, int column) {
