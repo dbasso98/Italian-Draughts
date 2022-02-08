@@ -59,14 +59,18 @@ public class TestIfBoard {
 
     @Test
     void printBoard() {
-        String expected = "[b][ ][b][ ][B][ ][b][ ]\n" +
-                "[ ][b][ ][b][ ][b][ ][b]\n" +
-                "[b][ ][b][ ][b][ ][b][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][w][ ][w][ ][w][ ][w]\n" +
-                "[W][ ][w][ ][w][ ][w][ ]\n" +
-                "[ ][w][ ][w][ ][w][ ][w]\n";
+        String expected = """
+                   1  2  3  4  5  6  7  8
+                1 [b][ ][b][ ][B][ ][b][ ] 1
+                2 [ ][b][ ][b][ ][b][ ][b] 2
+                3 [b][ ][b][ ][b][ ][b][ ] 3
+                4 [ ][ ][ ][ ][ ][ ][ ][ ] 4
+                5 [ ][ ][ ][ ][ ][ ][ ][ ] 5
+                6 [ ][w][ ][w][ ][w][ ][w] 6
+                7 [W][ ][w][ ][w][ ][w][ ] 7
+                8 [ ][w][ ][w][ ][w][ ][w] 8
+                   1  2  3  4  5  6  7  8
+                    """;
         Board board = new Board();
         board.getTile(4).piece.upgradePieceToKing();
         board.getTile(6 * 8).piece.upgradePieceToKing();
