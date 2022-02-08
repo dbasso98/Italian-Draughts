@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -70,7 +71,9 @@ public class TestIfBoard {
                 "7, 1, 5, 3, 50", "7, 7, 5, 5, 54",
                 "-1, 63, 1, 5, -1", "64, 30, 5, 8, -1"})
     void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition){
-        assertEquals(board.getMiddlePosition(sourceRow, sourceColumn, destinationRow, destinationColumn), middlePosition);
+        var sourcePoint = new Point(sourceRow, sourceColumn);
+        var destinationPoint = new Point(destinationRow, destinationColumn);
+        assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
     }
 
     @Test

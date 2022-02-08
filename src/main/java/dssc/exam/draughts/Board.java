@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
@@ -72,8 +73,8 @@ public class Board {
         return board.get(getIndex(row, column));
     }
 
-    public int getMiddlePosition(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
-        return getMiddlePosition(getIndex(sourceRow, sourceColumn), getIndex(destinationRow, destinationColumn));
+    public int getMiddlePosition(Point source, Point destination) {
+        return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
     }
 
     public int getMiddlePosition(int startPosition, int endPosition) {
@@ -91,7 +92,11 @@ public class Board {
     }
 
     public boolean isValidPosition(int position) {
-        return position >= 0 && position <= 63;
+        return position >= 0 && position <= lastIndex;
+    }
+
+    public boolean isValidPosition(int row, int column) {
+        return isValidPosition(getIndex(row, column));
     }
 
     public void display() {
