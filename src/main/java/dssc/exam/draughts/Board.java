@@ -94,6 +94,10 @@ public class Board {
         return position >= 0 && position <= 63;
     }
 
+    public boolean isValidPosition(int row, int column) {
+        return isValidPosition(getIndex(row, column));
+    }
+
     public void display() {
         for (int row = 0; row < maxRows; row++) {
             for (int col = 0; col < maxRows; col++) {
