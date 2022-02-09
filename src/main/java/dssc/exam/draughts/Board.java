@@ -77,7 +77,7 @@ public class Board {
         return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
     }
 
-    public int getMiddlePosition(int startPosition, int endPosition) {
+    int getMiddlePosition(int startPosition, int endPosition) {
         int distance = Math.abs(startPosition - endPosition);
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             return -1;
@@ -91,14 +91,14 @@ public class Board {
         return Math.min(startPosition, endPosition) + distance / 2;
     }
 
-    public boolean isValidPosition(int position) {
+    private boolean isValidPosition(int position) {
         return position >= 0 && position <= lastIndex;
     }
 
     public boolean isValidPosition(int row, int column) throws Exception {
         if(row <0 || column < 0 || row > 7 || column > 7)
             throw new Exception("Every position must be in range of 0 to 7 for each axis!");
-        return isValidPosition(getIndex(row, column));
+        return true;
     }
 
     public void display() {

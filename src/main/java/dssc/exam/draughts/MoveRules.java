@@ -4,30 +4,19 @@ import java.awt.*;
 
 public class MoveRules {
 
-    public static boolean isPositionOfMoveValid(Board board, Point source, Point destination) throws Exception{
-        // secondo me questo e quello sotto si ripetono....
+    public static boolean checkIfPositionIsValid(Board board, Point source, Point destination) throws Exception{
         int sourceRow = source.x;
         int sourceColumn = source.y;
         int destinationRow = destination.x;
         int destinationColumn = destination.y;
         try {
-            isValidPosition(board, source);
-            isValidPosition(board, destination);
+            board.isValidPosition(source.x, source.y);
+            board.isValidPosition(destination.x, destination.y);
         }
         catch (Exception e) {
             throw e;
         }
 
         return true;
-    }
-    // rename method because hard to differentiate between board.isvalid and move.isvalid
-    private static void isValidPosition(Board board, Point position) throws Exception {
-        try{
-            board.isValidPosition(position.x, position.y);
-        }
-        catch(Exception e){
-            throw e;
-        }
-
     }
 }
