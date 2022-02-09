@@ -15,7 +15,7 @@ public class Board {
         Color firstColor;
         Color secondColor;
         for (int row = 0; row < maxRows; row++) {
-            if (row % 2 == 0) {
+            if (row % 2 != 0) {
                 firstColor = Color.BLACK;
                 secondColor = Color.WHITE;
             } else {
@@ -29,8 +29,8 @@ public class Board {
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
             if (board.get(tileIndex).getTileColor() == Color.BLACK) {
-                board.get(tileIndex).setPieceContainedInTile(new Piece(tileIndex, Color.BLACK));
-                board.get(lastIndex - tileIndex).setPieceContainedInTile(new Piece(lastIndex - tileIndex, Color.WHITE));
+                board.get(tileIndex).setPieceContainedInTile(new Piece(tileIndex, Color.WHITE));
+                board.get(lastIndex - tileIndex).setPieceContainedInTile(new Piece(lastIndex - tileIndex, Color.BLACK));
             }
         }
     }
@@ -104,7 +104,7 @@ public class Board {
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
-        for (int row = 0; row < maxRows; row++) {
+        for (int row = maxRows-1 ; row >= 0; row--) {
             System.out.print((row + 1) + " ");
             for (int col = 0; col < maxRows; col++) {
                 System.out.print(getTile(getIndex(row, col)).display());
