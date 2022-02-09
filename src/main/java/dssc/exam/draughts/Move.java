@@ -10,13 +10,16 @@ public class Move {
             // and they are specified correctly (in other words, destination is diagonal to source).
             MoveRules.checkIfPositionsAreValid(board, source, destination);
 
+            // check for source & destination tile correctness (non-emptiness, emptiness)
             var sourceTile = board.getTile(source);
-            if(sourceTile.isTileNotEmpty()) {
-                var piece = board.getTile(source).returnPieceAndResetTileToEmpty();
-                board.getTile(destination).setPieceContainedInTile(piece);
+            if(sourceTile.isTileEmpty()) {
+                throw new Exception("Cannot move since tile at (" + (source.x+1) + "," + (source.y+1) + ") is empty");
             }
-            else
-                throw new Exception("Cannot move since tile at (" + source.x + "," + source.y + ") is empty");
+            else if(board.getTile(destination).isTileNotEmpty()) {
+                throw new Exception("Cannot move since tile at (" + (destination.x+1) + "," + (destination.y+1) + ") is not empty");
+            }
+            var piece = sourceTile.popPieceContainedInTile();
+            board.getTile(destination).setPieceContainedInTile(piece);
         }
         catch (Exception e){
             throw e;

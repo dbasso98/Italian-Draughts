@@ -20,7 +20,7 @@ public class Tile {
         return piece == null;
     }
 
-    Piece returnPieceAndResetTileToEmpty() {
+    Piece popPieceContainedInTile() {
         var piece = this.piece;
         this.piece = null;
         return piece;
