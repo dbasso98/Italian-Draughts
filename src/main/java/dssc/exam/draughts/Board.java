@@ -109,7 +109,7 @@ public class Board {
             for (int col = 0; col < maxRows; col++) {
                 System.out.print(getTile(getIndex(row, col)).display());
             }
-            System.out.print(" " + (row + 1) + "\n");
+            System.out.println(" " + (row + 1));
         }
         System.out.println(indexLine);
     }
