@@ -1,11 +1,11 @@
 package dssc.exam.draughts;
 
 import net.jqwik.api.*;
-import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestIfMoveRules {
     private Board board = new Board();
@@ -22,16 +22,6 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void doesNotThrowPositionException(@ForAll("validIndexGenerator") int sourceRow, @ForAll("validIndexGenerator") int sourceCol,
-                                             @ForAll("validIndexGenerator") int destinationRow, @ForAll("validIndexGenerator") int destinationCol) throws Exception {
-        if (sourceRow == destinationRow && sourceCol == destinationCol) {
-            Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
-            return;
-        }
-        assertTrue(MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
-    }
-
-    @Property
     void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
         Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
         assertEquals("Source and destination position cannot be the same!", exception.getMessage());
@@ -41,14 +31,22 @@ public class TestIfMoveRules {
         return Arbitraries.integers().between(0, 7);
     }
 
+
     @Property
-    void checksDiagonalPosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column){
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
-        assertEquals("Source and destination position cannot be the same!", exception.getMessage());
+    void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
+        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
+                new Point(row+offset[0], column+offset[1])));
+        assertEquals("Checker can only move diagonally!", exception.getMessage());
     }
 
+    @Provide
+    Arbitrary<Integer> subSquareGenerator(){ return Arbitraries.integers().between( 1, 6 );}
 
-    @Test
-    void checksDiagonalPiecesThatMustBeEaten(){}
+    @Provide
+    Arbitrary<Integer[]> offset() {
+        Arbitrary<Integer> integerArbitrary = Arbitraries.integers().between(-1,1);
+        return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> x[0]!=x[1] && (x[0]==0 || x[1]==0) );
+    }
+
 
 }
