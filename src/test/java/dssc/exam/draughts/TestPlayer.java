@@ -14,27 +14,27 @@ public class TestPlayer {
 
     @ParameterizedTest
     @CsvSource({"3, 4, 3, 4", "12, 15, 12, 15"})
-    void testReadPosition(String rowInput, String columnInput,
+    void testReadPosition(String xInput, String yInput,
                           int rowExpected, int columnExpected) {
 
-        String fakeInput = rowInput + " " + columnInput + "\n";
+        String fakeInput = xInput + " " + yInput + "\n";
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
         System.setIn(fakeStandardInput);
 
         Point point = new Player(Color.BLACK).readPosition();
-        assertEquals(point.x, rowExpected);
-        assertEquals(point.y, columnExpected);
+        assertEquals(point.x, columnExpected);
+        assertEquals(point.y, rowExpected);
     }
 
     @ParameterizedTest
     @CsvSource({"3, 4, 5, 6, 3, 4, 5, 6", "12, 15, 14, 36, 12, 15, 14, 36"})
-    void testGetMove(String sourceRowIn, String sourceColumnIn,
-                     String destinationRowIn, String destinationColumIn,
-                     int sourceRow, int sourceColumn,
-                     int destinationRow, int destinationColumn) {
+    void testGetMove(String sourceXIn, String sourceYIn,
+                     String destinationXIn, String destinationYIn,
+                     int sourceColumn, int sourceRow,
+                     int destinationColumn, int destinationRow) {
 
-        String fakeInput1  = sourceRowIn + " " + sourceColumnIn + "\n ";
-        String fakeInput2 = destinationRowIn + " " + destinationColumIn + "\n";
+        String fakeInput1 = sourceXIn + " " + sourceYIn + "\n ";
+        String fakeInput2 = destinationXIn + " " + destinationYIn + "\n";
         String fakeInput = fakeInput1 + fakeInput2;
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
         System.setIn(fakeStandardInput);

@@ -9,6 +9,8 @@ public class Game {
 
     // may implement custom, ctor, so that a saved game can be loaded;
     void playRound() {
+        // To be tested, the function move.executeOn(board);is to be defined
+
         board.display();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {

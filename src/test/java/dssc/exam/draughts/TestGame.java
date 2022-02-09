@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestGame {
 
     @Test
-    void testChangePlayer(){
+    void testChangePlayer() {
         Game game = new Game();
         assertEquals(game.whitePlayer, game.currentPlayer);
         game.changePlayer();
