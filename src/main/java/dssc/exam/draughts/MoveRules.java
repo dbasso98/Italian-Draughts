@@ -4,21 +4,25 @@ import java.awt.*;
 
 public class MoveRules {
 
-    public static boolean checkIfPositionIsValid(Board board, Point source, Point destination) throws Exception{
-        int sourceRow = source.x;
-        int sourceColumn = source.y;
-        int destinationRow = destination.x;
-        int destinationColumn = destination.y;
+    public static boolean checkIfPositionAreValid(Board board, Point source, Point destination) throws Exception{
         try {
             board.isValidPosition(source.x, source.y);
             board.isValidPosition(destination.x, destination.y);
             isSamePosition(source, destination);
+            isDiagonal(source, destination);
         }
         catch (Exception e) {
             throw e;
         }
 
         return true;
+    }
+
+    private static void isDiagonal(Point source, Point destination) throws Exception {
+        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
+            throw new Exception("Checker can only move diagonally!");
+        }
+
     }
 
     private static void isSamePosition(Point source, Point destination) throws Exception {

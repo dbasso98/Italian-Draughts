@@ -13,7 +13,7 @@ public class TestIfMoveRules {
     @Property
     void throwsInvalidPositionException(@ForAll("invalidIndexGenerator") int sourceRow, @ForAll("invalidIndexGenerator") int sourceCol,
                                              @ForAll("invalidIndexGenerator") int destinationRow, @ForAll("invalidIndexGenerator") int destinationCol) {
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionIsValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
         assertEquals("Every position must be in range of 0 to 7 for each axis!", exception.getMessage());
     }
     @Provide
@@ -25,15 +25,15 @@ public class TestIfMoveRules {
     void doesNotThrowPositionException(@ForAll("validIndexGenerator") int sourceRow, @ForAll("validIndexGenerator") int sourceCol,
                                              @ForAll("validIndexGenerator") int destinationRow, @ForAll("validIndexGenerator") int destinationCol) throws Exception {
         if (sourceRow == destinationRow && sourceCol == destinationCol) {
-            Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionIsValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+            Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
             return;
         }
-        assertTrue(MoveRules.checkIfPositionIsValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+        assertTrue(MoveRules.checkIfPositionAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
     }
 
     @Property
     void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionIsValid(board, new Point(row, column), new Point(row, column)));
+        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionAreValid(board, new Point(row, column), new Point(row, column)));
         assertEquals("Source and destination position cannot be the same!", exception.getMessage());
     }
     @Provide
