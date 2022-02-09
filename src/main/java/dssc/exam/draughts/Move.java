@@ -30,4 +30,8 @@ public class Move {
         this.source = source;
         this.destinantion = destinantion;
     }
+
+    public void executeOn(Board board){
+        // update the board so that the move is applied
+    }
 }
