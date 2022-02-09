@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import java.awt.*;
+
 public class Move {
     /*
     public void moveDiagonally(Board board, Point from, Point to) throws Exception{
