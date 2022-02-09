@@ -20,8 +20,10 @@ public class Tile {
         return piece == null;
     }
 
-    void resetTileToEmpty() {
+    Piece returnPieceAndResetTileToEmpty() {
+        var piece = this.piece;
         this.piece = null;
+        return piece;
     }
 
     void setPieceContainedInTile(Piece piece) {

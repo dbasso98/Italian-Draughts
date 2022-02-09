@@ -61,17 +61,18 @@ public class Board {
         return sum;
     }
 
-    public Tile getTile(int index) {
-        return board.get(index);
+    public Tile getTile(int index) { return board.get(index); }
+    public Tile getTile(int row, int column) {
+        return getTile(getIndex(row, column));
     }
+    public Tile getTile(Point position){return getTile(position.x, position.y);}
 
     public Tile getSymmetricTile(int index) {
         return board.get(lastIndex - index);
     }
+    public Tile getSymmetricTile(int row, int column) { return getSymmetricTile(getIndex(row,column));}
+    public Tile getSymmetricTile(Point position) { return getSymmetricTile(position.x, position.y);}
 
-    public Tile getTile(int row, int column) {
-        return board.get(getIndex(row, column));
-    }
 
     public int getMiddlePosition(Point source, Point destination) {
         return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
