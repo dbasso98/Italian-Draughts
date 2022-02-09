@@ -5,6 +5,11 @@ public class Piece {
     private final Color pieceColor;
     private boolean isKing = false;
 
+    private final String blackKingRepresentation = "[B]";
+    private final String blackManRepresentation = "[b]";
+    private final String whiteKingRepresentation = "[W]";
+    private final String whiteManRepresentation = "[w]";
+
     Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
@@ -49,9 +54,9 @@ public class Piece {
 
     private String displayKing(){
         if (isBlack()) {
-            return "[B]";
+            return blackKingRepresentation;
         }
-        return "[W]";
+        return whiteKingRepresentation;
     }
 
     public String display() {
@@ -60,8 +65,8 @@ public class Piece {
         }
 
         if (isBlack()) {
-            return "[b]";
+            return blackManRepresentation;
         }
-        return "[w]";
+        return whiteManRepresentation;
     }
 }
