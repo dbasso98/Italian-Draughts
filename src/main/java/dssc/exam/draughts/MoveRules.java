@@ -6,8 +6,10 @@ public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception{
         try {
-            board.isValidPosition(source.x, source.y);
-            board.isValidPosition(destination.x, destination.y);
+            board.isValidPosition(source);
+            board.isValidPosition(destination);
+            board.isValidTile(board.getTile(source));
+            board.isValidTile(board.getTile(destination));
             isNotSamePosition(source, destination);
             isDiagonal(source, destination);
         }

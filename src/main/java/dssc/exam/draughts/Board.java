@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.InvalidIndexException;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -61,21 +63,28 @@ public class Board {
         return sum;
     }
 
-    public Tile getTile(int index) { return board.get(index); }
+    public Tile getTile(int index) {
+        return board.get(index);
+    }
+
     public Tile getTile(int row, int column) {
         return getTile(getIndex(row, column));
     }
-    public Tile getTile(Point position){return getTile(position.x, position.y);}
+
+    public Tile getTile(Point position){
+        return getTile(position.x, position.y);
+    }
 
     public Tile getSymmetricTile(int index) {
         return board.get(lastIndex - index);
     }
-    public Tile getSymmetricTile(int row, int column) { return getSymmetricTile(getIndex(row,column));}
-    public Tile getSymmetricTile(Point position) { return getSymmetricTile(position.x, position.y);}
 
+    public Tile getSymmetricTile(int row, int column) {
+        return getSymmetricTile(getIndex(row,column));
+    }
 
-    public int getMiddlePosition(Point source, Point destination) {
-        return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
+    public Tile getSymmetricTile(Point position) {
+        return getSymmetricTile(position.x, position.y);
     }
 
     int getMiddlePosition(int startPosition, int endPosition) {
@@ -84,21 +93,35 @@ public class Board {
             return -1;
         }
         //if (getTile(startPosition).getTileColor() == Color.WHITE ||
-          //      getTile(endPosition).getTileColor() == Color.WHITE)
-           // return -1;
+        //      getTile(endPosition).getTileColor() == Color.WHITE)
+        // return -1;
         if (distance != 14 && distance != 18) {
             return -1;
         }
         return Math.min(startPosition, endPosition) + distance / 2;
     }
 
+    public int getMiddlePosition(Point source, Point destination) {
+        return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
+    }
+
     private boolean isValidPosition(int position) {
         return position >= 0 && position <= lastIndex;
     }
 
-    public boolean isValidPosition(int row, int column) throws Exception {
+    public boolean isValidPosition(int row, int column) throws InvalidIndexException {
         if(row <0 || column < 0 || row > 7 || column > 7)
-            throw new Exception("Every position must be in range of 1 to 8 for each axis!");
+            throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
+        return true;
+    }
+
+    public boolean isValidPosition(Point position) throws InvalidIndexException{
+        return isValidPosition(position.x, position.y);
+    }
+
+    public boolean isValidTile(Tile tile) throws Exception {
+        if (tile.getTileColor() == Color.WHITE)
+            throw new Exception("Cannot play on white tiles, only black ones, please change position!");
         return true;
     }
 
