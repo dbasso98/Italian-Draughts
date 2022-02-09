@@ -21,7 +21,7 @@ public class TestPlayer {
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
         System.setIn(fakeStandardInput);
 
-        Point point = new Player().readPosition();
+        Point point = new Player(Color.BLACK).readPosition();
         assertEquals(point.x, rowExpected);
         assertEquals(point.y, columnExpected);
     }
@@ -39,7 +39,7 @@ public class TestPlayer {
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
         System.setIn(fakeStandardInput);
 
-        Move move = new Player().getMove();
+        Move move = new Player(Color.BLACK).getMove();
 
         Point sourcePoint = new Point(sourceRow, sourceColumn);
         Point destinationPoint = new Point(destinationRow, destinationColumn);
