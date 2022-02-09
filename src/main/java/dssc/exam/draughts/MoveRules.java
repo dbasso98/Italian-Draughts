@@ -12,11 +12,18 @@ public class MoveRules {
         try {
             board.isValidPosition(source.x, source.y);
             board.isValidPosition(destination.x, destination.y);
+            isSamePosition(source, destination);
         }
         catch (Exception e) {
             throw e;
         }
 
         return true;
+    }
+
+    public static void isSamePosition(Point source, Point destination) throws Exception {
+        if (source.x == destination.x && source.y == destination.y) {
+            throw new Exception("Source and destination position cannot be the same!");
+        }
     }
 }
