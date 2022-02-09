@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Player {
     public final Color color;
-    private static final String readSourceMessage = "What are the coordinates (row, column) of the piece you intend to move? \n(e.g. 3 4)";
-    private static final String readDestinationMessage = "What are the coordinates (row, column) of the Tile you intend to move the piece to? \n(e.g. 3 4)";
+    private static final String readSourceMessage = "What are the coordinates (x, y) of the piece you intend to move? \n(e.g. 3 4)";
+    private static final String readDestinationMessage = "What are the coordinates (x, y) of the Tile you intend to move the piece to? \n(e.g. 3 4)";
     private final Scanner input = new Scanner(System.in);
 
     Player(Color color) {
@@ -19,8 +19,8 @@ public class Player {
 
     Point readPosition(String message) {
         System.out.println(message);
-        int row = input.nextInt();
         int column = input.nextInt();
+        int row = input.nextInt();
         return new Point(row, column);
     }
 
