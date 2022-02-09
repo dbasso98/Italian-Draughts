@@ -83,9 +83,9 @@ public class Board {
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             return -1;
         }
-        if (getTile(startPosition).getTileColor() == Color.WHITE ||
-                getTile(endPosition).getTileColor() == Color.WHITE)
-            return -1;
+        //if (getTile(startPosition).getTileColor() == Color.WHITE ||
+          //      getTile(endPosition).getTileColor() == Color.WHITE)
+           // return -1;
         if (distance != 14 && distance != 18) {
             return -1;
         }
