@@ -31,18 +31,18 @@ public class TestIfBoard {
     }
 
     @ParameterizedTest
-    @CsvSource({"BLACK, 16", "BLACK, 18", "BLACK, 20", "BLACK, 22",
-            "BLACK, 9", "BLACK, 11", "BLACK, 13", "BLACK, 15",
-            "BLACK, 0", "BLACK, 2", "BLACK, 4", "BLACK, 6"})
-    void has12BlackPiecesInFirstThreeRows(Color color, int position) {
+    @CsvSource({"WHITE, 17", "WHITE, 19", "WHITE, 21", "WHITE, 23",
+            "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
+            "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
+    void has12WhitePiecesInFirstThreeRows(Color color, int position) {
         assertEquals(board.getTile(position).getTilePiece().getColor(), color);
     }
 
     @ParameterizedTest
-    @CsvSource({"WHITE, 57", "WHITE, 59", "WHITE, 61", "WHITE, 63",
-            "WHITE, 48", "WHITE, 50", "WHITE, 52", "WHITE, 54",
-            "WHITE, 41", "WHITE, 43", "WHITE, 45", "WHITE, 47"})
-    void has12WhitePiecesInLastThreeRows(Color color, int position) {
+    @CsvSource({"BLACK, 56", "BLACK, 58", "BLACK, 60", "BLACK, 62",
+            "BLACK, 49", "BLACK, 51", "BLACK, 53", "BLACK, 55",
+            "BLACK, 40", "BLACK, 42", "BLACK, 44", "BLACK, 46"})
+    void has12BlackPiecesInLastThreeRows(Color color, int position) {
         assertEquals(board.getTile(position).getTilePiece().getColor(), color);
     }
 

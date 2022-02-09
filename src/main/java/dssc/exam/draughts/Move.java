@@ -3,6 +3,8 @@ package dssc.exam.draughts;
 import java.awt.*;
 
 public class Move {
+    public final Point source;
+    public final Point destinantion;
     public static void moveDiagonallyToEmptyTile(Board board, Point source, Point destination) throws Exception{
         try{
             // 1. first check if initial position is valid
@@ -27,4 +29,12 @@ public class Move {
 
     }
 
+    public Move(Point source, Point destinantion) {
+        this.source = source;
+        this.destinantion = destinantion;
+    }
+
+    public void executeOn(Board board){
+        // update the board so that the move is applied
+    }
 }
