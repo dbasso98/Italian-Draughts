@@ -5,7 +5,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -45,6 +44,6 @@ public class TestPlayer {
         Point destinationPoint = new Point(destinationRow, destinationColumn);
 
         assertEquals(move.source, sourcePoint);
-        assertEquals(move.destinantion, destinationPoint);
+        assertEquals(move.destination, destinationPoint);
     }
 }
