@@ -20,7 +20,7 @@ public class MoveRules {
 
         return true;
     }
-
+    // rename method because hard to differentiate between board.isvalid and move.isvalid
     private static void isValidPosition(Board board, Point position) throws Exception {
         try{
             board.isValidPosition(position.x, position.y);
