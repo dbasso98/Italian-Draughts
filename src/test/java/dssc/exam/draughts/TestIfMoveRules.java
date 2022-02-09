@@ -1,7 +1,9 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.InvalidIndexException;
+import dssc.exam.draughts.exceptions.*;
 import net.jqwik.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
 
@@ -22,32 +24,33 @@ public class TestIfMoveRules {
         return Arbitraries.integers().between(-10, 10).filter(n -> n<0 || n>7);
     }
 
-    @Property
-    void throwsInvalidTileException(@ForAll("whiteTileIndexGenerator") int sourceRow, @ForAll("whiteTileIndexGenerator") int sourceCol,
-                                        @ForAll("whiteTileIndexGenerator") int destinationRow, @ForAll("whiteTileIndexGenerator") int destinationCol) {
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+    @ParameterizedTest
+    @CsvSource({"0,0,1,1", "3,3,4,4"})
+    void throwsInvalidTileException(int sourceRow, int sourceCol, int destinationRow, int destinationCol) {
+        Exception exception = assertThrows(WhiteTileException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
         assertEquals("Cannot play on white tiles, only black ones, please change position!", exception.getMessage());
-    }
-    @Provide
-    Arbitrary<Integer> whiteTileIndexGenerator () {
-        return Arbitraries.integers().between(0, 7).filter(n -> n%2 == 0);
     }
 
     @Property
     void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
-        assertEquals("Source and destination position cannot be the same!", exception.getMessage());
+        if (checkIfTileIsBlack(row, column)) {
+            Exception exception = assertThrows(SamePositionException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
+            assertEquals("Source and destination position cannot be the same!", exception.getMessage());
+        }
     }
+
     @Provide
     Arbitrary<Integer> validIndexGenerator () {
-        return Arbitraries.integers().between(0, 7).filter(n -> n%2 != 0);
+        return Arbitraries.integers().between(0, 7);
     }
 
     @Property
     void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
-                new Point(row+offset[0], column+offset[1])));
-        assertEquals("Checker can only move diagonally!", exception.getMessage());
+        if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
+            Exception exception = assertThrows(NotDiagonalMoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
+                    new Point(row + offset[0], column + offset[1])));
+            assertEquals("Checker can only move diagonally!", exception.getMessage());
+        }
     }
     @Provide
     Arbitrary<Integer> subSquareGenerator(){ return Arbitraries.integers().between(1, 6);}
@@ -56,6 +59,10 @@ public class TestIfMoveRules {
     Arbitrary<Integer[]> offset() {
         Arbitrary<Integer> integerArbitrary = Arbitraries.integers().between(-1,1);
         return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> x[0]!=x[1] && (x[0]==0 || x[1]==0) );
+    }
+
+    private boolean checkIfTileIsBlack(int row, int column) {
+        return board.getTile(row, column).getTileColor() == Color.BLACK;
     }
 
 }

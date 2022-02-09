@@ -1,6 +1,6 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.InvalidIndexException;
+import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -92,9 +92,6 @@ public class Board {
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             return -1;
         }
-        //if (getTile(startPosition).getTileColor() == Color.WHITE ||
-        //      getTile(endPosition).getTileColor() == Color.WHITE)
-        // return -1;
         if (distance != 14 && distance != 18) {
             return -1;
         }
@@ -119,9 +116,9 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
-    public boolean isValidTile(Tile tile) throws Exception {
+    public boolean isBlackTile(Tile tile) throws WhiteTileException{
         if (tile.getTileColor() == Color.WHITE)
-            throw new Exception("Cannot play on white tiles, only black ones, please change position!");
+            throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
         return true;
     }
 

@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.*;
+
 import java.awt.*;
 
 public class MoveRules {
@@ -8,8 +10,8 @@ public class MoveRules {
         try {
             board.isValidPosition(source);
             board.isValidPosition(destination);
-            board.isValidTile(board.getTile(source));
-            board.isValidTile(board.getTile(destination));
+            board.isBlackTile(board.getTile(source));
+            board.isBlackTile(board.getTile(destination));
             isNotSamePosition(source, destination);
             isDiagonal(source, destination);
         }
@@ -20,16 +22,16 @@ public class MoveRules {
         return true;
     }
 
-    private static void isDiagonal(Point source, Point destination) throws Exception {
+    private static void isDiagonal(Point source, Point destination) throws NotDiagonalMoveException {
         if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
-            throw new Exception("Checker can only move diagonally!");
+            throw new NotDiagonalMoveException("Checker can only move diagonally!");
         }
 
     }
 
-    private static void isNotSamePosition(Point source, Point destination) throws Exception {
+    private static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
         if (source.x == destination.x && source.y == destination.y) {
-            throw new Exception("Source and destination position cannot be the same!");
+            throw new SamePositionException("Source and destination position cannot be the same!");
         }
     }
 
