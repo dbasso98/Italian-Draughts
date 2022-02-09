@@ -4,11 +4,11 @@ import java.awt.*;
 
 public class MoveRules {
 
-    public static boolean checkIfPositionAreValid(Board board, Point source, Point destination) throws Exception{
+    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception{
         try {
             board.isValidPosition(source.x, source.y);
             board.isValidPosition(destination.x, destination.y);
-            isSamePosition(source, destination);
+            isNotSamePosition(source, destination);
             isDiagonal(source, destination);
         }
         catch (Exception e) {
@@ -25,7 +25,7 @@ public class MoveRules {
 
     }
 
-    private static void isSamePosition(Point source, Point destination) throws Exception {
+    private static void isNotSamePosition(Point source, Point destination) throws Exception {
         if (source.x == destination.x && source.y == destination.y) {
             throw new Exception("Source and destination position cannot be the same!");
         }

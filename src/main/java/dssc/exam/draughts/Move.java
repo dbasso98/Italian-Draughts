@@ -6,7 +6,9 @@ public class Move {
     public static void moveDiagonallyToEmptyTile(Board board, Point source, Point destination) throws Exception{
         try{
             // 1. first check if initial position is valid
-            MoveRules.checkIfPositionAreValid(board, source, destination);
+            // at this point, only things i know are: the positions are inside the board, they are not the same
+            // and they are specified correctly (in other words, destination is diagonal to source).
+            MoveRules.checkIfPositionsAreValid(board, source, destination);
 
             var sourceTile = board.getTile(source);
             if(sourceTile.isTileNotEmpty()) {
