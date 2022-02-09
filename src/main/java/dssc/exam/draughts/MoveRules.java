@@ -12,6 +12,7 @@ public class MoveRules {
         try {
             board.isValidPosition(source.x, source.y);
             board.isValidPosition(destination.x, destination.y);
+            isSamePosition(source, destination);
         }
         catch (Exception e) {
             throw e;
@@ -19,4 +20,42 @@ public class MoveRules {
 
         return true;
     }
+
+    private static void isSamePosition(Point source, Point destination) throws Exception {
+        if (source.x == destination.x && source.y == destination.y) {
+            throw new Exception("Source and destination position cannot be the same!");
+        }
+    }
+
+    private static boolean isASimpleMove(Point source, Point destination) {
+        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y) ||
+           Math.abs(destination.x - source.x) != 1) {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+    public static void isACorrectSimpleMove(Point source, Point destination) {
+        if (isASimpleMove(source, destination)){
+
+        }
+    }
+    */
+
+    public static boolean isASkipMove(Point source, Point destination) {
+        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y) ||
+           Math.abs(destination.x - source.x) != 2) {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+    public static void isACorrectSkipMove(Point source, Point destination) {
+        if (isASimpleMove(source, destination)){
+
+        }
+    }
+    */
 }
