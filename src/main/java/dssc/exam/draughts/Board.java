@@ -98,7 +98,7 @@ public class Board {
 
     public boolean isValidPosition(int row, int column) throws Exception {
         if(row <0 || column < 0 || row > 7 || column > 7)
-            throw new Exception("Every position must be in range of 0 to 7 for each axis!");
+            throw new Exception("Every position must be in range of 1 to 8 for each axis!");
         return true;
     }
 
