@@ -11,17 +11,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPlayer {
 
+
     @ParameterizedTest
     @CsvSource({"3, 4, 3, 4", "12, 15, 12, 15"})
     void testReadPosition(String rowInput, String columnInput,
-                          int rowExpected, int columnExpected ) {
+                          int rowExpected, int columnExpected) {
+
         String fakeInput = rowInput + " " + columnInput + "\n";
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
         System.setIn(fakeStandardInput);
 
-        Player player = new Player();
-        Point point = player.readPosition();
+        Point point = new Player().readPosition();
         assertEquals(point.x, rowExpected);
         assertEquals(point.y, columnExpected);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"3, 4, 5, 6, 3, 4, 5, 6", "12, 15, 14, 36, 12, 15, 14, 36"})
+    void testGetMove(String sourceRowIn, String sourceColumnIn,
+                     String destinationRowIn, String destinationColumIn,
+                     int sourceRow, int sourceColumn,
+                     int destinationRow, int destinationColumn) {
+
+        String fakeInput1  = sourceRowIn + " " + sourceColumnIn + "\n ";
+        String fakeInput2 = destinationRowIn + " " + destinationColumIn + "\n";
+        String fakeInput = fakeInput1 + fakeInput2;
+        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
+        System.setIn(fakeStandardInput);
+
+        Move move = new Player().getMove();
+
+        Point sourcePoint = new Point(sourceRow, sourceColumn);
+        Point destinationPoint = new Point(destinationRow, destinationColumn);
+
+        assertEquals(move.source, sourcePoint);
+        assertEquals(move.destinantion, destinationPoint);
     }
 }
