@@ -27,7 +27,7 @@ public class TestIfBoard {
     @ParameterizedTest
     @CsvSource({"BLACK, 12", "WHITE, 12"})
     void has12PiecesOfColor(Color color, int number) {
-        assertEquals(number, board.getPiecesOfColor(color));
+        assertEquals(number, board.getNumberOfPiecesOfColor(color));
     }
 
     @ParameterizedTest

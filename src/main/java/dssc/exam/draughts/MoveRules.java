@@ -47,4 +47,8 @@ public class MoveRules {
         }
     }
 
+    static void isThereASkipMove(Board board, Color color) {
+
+    }
+
 }

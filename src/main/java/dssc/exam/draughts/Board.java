@@ -45,13 +45,17 @@ public class Board {
         return board.size();
     }
 
-    public int getPiecesOfColor(Color color) {
-        int sum = 0;
+    public int getNumberOfPiecesOfColor(Color color) {
+        return getPiecesOfColor(color).size();
+    }
+
+    private ArrayList<Piece> getPiecesOfColor(Color color) {
+        ArrayList<Piece> listOfPiece = new ArrayList<>(12);
         for (int tileIndex = 0; tileIndex < getSizeOfBoard(); ++tileIndex) {
             if (board.get(tileIndex).isTileNotEmpty() && board.get(tileIndex).getTilePiece().getColorOfPiece() == color)
-                sum += 1;
+                listOfPiece.add(board.get(tileIndex).getTilePiece());
         }
-        return sum;
+        return listOfPiece;
     }
 
     public int getTotalNumberOfPieces() {
