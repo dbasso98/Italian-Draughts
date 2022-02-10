@@ -10,8 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfPlayer {
 
@@ -74,10 +73,5 @@ public class TestIfPlayer {
         assertEquals(expected, fakeStandardOutput.toString());
     }
 
-    void testTurnBehaviour() {
-        Game game = new Game();
 
-
-        game.playRound();
-    }
 }

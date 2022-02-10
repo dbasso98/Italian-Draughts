@@ -13,7 +13,6 @@ public class Player {
     Player(Color color) {
         this.color = color;
     }
-    
     Point readPosition() {
         return readPosition(readSourceMessage);
     }
@@ -41,6 +40,10 @@ public class Player {
         Point source = readPosition(readSourceMessage);
         Point destination = readPosition(readDestinationMessage);
         return new Move(source, destination);
+    }
+
+    Color getColor() {
+        return color;
     }
 
 }

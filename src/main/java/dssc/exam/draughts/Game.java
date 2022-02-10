@@ -3,9 +3,9 @@ package dssc.exam.draughts;
 import java.nio.FloatBuffer;
 
 public class Game {
-    public Player whitePlayer = new Player(Color.WHITE);
-    public Player blackPlayer = new Player(Color.BLACK);
-    public Player currentPlayer = whitePlayer;
+    Player whitePlayer = new Player(Color.WHITE);
+    Player blackPlayer = new Player(Color.BLACK);
+    Player currentPlayer = whitePlayer;
     private Board board = new Board();
     public int round = 0;
 
@@ -51,6 +51,14 @@ public class Game {
 
     boolean whitePlayerHasPieces() {
         return board.getPiecesOfColor(Color.WHITE) != 0;
+    }
+
+    int getRound() {
+        return round;
+    }
+
+    Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
 }
