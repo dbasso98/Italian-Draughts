@@ -2,6 +2,7 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.EmptyTileException;
 import dssc.exam.draughts.exceptions.NonEmptyTileException;
+import dssc.exam.draughts.exceptions.SameColorException;
 
 import java.awt.*;
 
@@ -32,10 +33,21 @@ public class Move {
     private static void simpleSkipMove(Board board, Point source, Point destination) throws Exception{
         try {
             var sourceTile = board.getTile(source);
+            if(sourceTile.isTileEmpty()) {
+                throw new EmptyTileException("Cannot move since tile at (" + (source.y+1) + "," + (source.x+1) + ") is empty");
+            }
             var middleTile = board.getTile(board.getMiddlePosition(source,destination));
             if(middleTile.isTileEmpty())
                 throw new EmptyTileException("Skip move over two empty tiles is not accepted");
-            //if( middleTile.getTilePiece().getColorOfPiece() )
+            if(middleTile.getTilePiece().getColorOfPiece() == sourceTile.getTilePiece().getColorOfPiece())
+                throw new SameColorException("Color of piece to skip cannot be the same as source piece");
+            if(board.getTile(destination).isTileNotEmpty()) {
+                throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y+1) + "," + (destination.x+1) + ") is not empty");
+            }
+
+            var piece = sourceTile.popPieceContainedInTile();
+            var pieceEaten = middleTile.popPieceContainedInTile();
+            board.getTile(destination).setPieceContainedInTile(piece);
         }
         catch(Exception e){
             throw e;
