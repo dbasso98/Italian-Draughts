@@ -36,6 +36,7 @@ public class TestIfBoard {
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
     void has12WhitePiecesInFirstThreeRows(Color color, int position) {
         assertEquals(board.getTile(position).getTilePiece().getColor(), color);
+        assertEquals(board.getPieceAtTile(position).getColor(), color);
     }
 
     @ParameterizedTest
@@ -43,7 +44,7 @@ public class TestIfBoard {
             "BLACK, 49", "BLACK, 51", "BLACK, 53", "BLACK, 55",
             "BLACK, 40", "BLACK, 42", "BLACK, 44", "BLACK, 46"})
     void has12BlackPiecesInLastThreeRows(Color color, int position) {
-        assertEquals(board.getTile(position).getTilePiece().getColor(), color);
+        assertEquals(board.getPieceAtTile(position).getColor(), color);
     }
 
     @ParameterizedTest
@@ -89,8 +90,8 @@ public class TestIfBoard {
                           "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
                           "   1  2  3  4  5  6  7  8" + System.lineSeparator();
         Board board = new Board();
-        board.getTile(1,0).getTilePiece().upgradePieceToKing();
-        board.getTile(7, 4).getTilePiece().upgradePieceToKing();
+        board.getPieceAtTile(1,0).upgradePieceToKing();
+        board.getPieceAtTile(7,4).upgradePieceToKing();
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
