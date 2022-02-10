@@ -56,7 +56,7 @@ public class Move {
             var destinationTile = board.getTile(destination);
             MoveRules.checkTileEmptiness(source, sourceTile);
             MoveRules.checkTileNonEmptiness(destination, destinationTile);
-            movePiece(board, destination, sourceTile);
+            movePiece(board, destinationTile, sourceTile);
         } catch (Exception e) {
             throw e;
         }
@@ -74,9 +74,9 @@ public class Move {
         }
     }
 
-    public static void movePiece(Board board, Point destination, Tile sourceTile) {
+    public static void movePiece(Board board, Tile destinationTile, Tile sourceTile) {
         var piece = sourceTile.popPieceContainedInTile();
-        board.getTile(destination).setPieceContainedInTile(piece);
+        destinationTile.setPieceContainedInTile(piece);
     }
 
     public Move(Point source, Point destination) {

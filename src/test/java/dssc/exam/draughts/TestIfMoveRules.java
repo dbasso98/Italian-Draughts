@@ -2,6 +2,7 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.*;
 import net.jqwik.api.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -64,5 +65,11 @@ public class TestIfMoveRules {
     private boolean checkIfTileIsBlack(int row, int column) {
         return board.getTile(row, column).getTileColor() == Color.BLACK;
     }
+
+//    @Test
+//    void checksPresenceOfManInAdjacentDiagonals() {
+//        var board = new Board();
+//        Move.movePiece(board, new Point(3,2), );
+//    }
 
 }

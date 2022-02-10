@@ -29,7 +29,6 @@ public class MoveRules {
         if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
             throw new NotDiagonalMoveException("Checker can only move diagonally!");
         }
-
     }
 
     static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
