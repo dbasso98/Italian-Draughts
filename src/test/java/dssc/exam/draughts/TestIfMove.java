@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMove {
+public class TestIfMove {
 
     @Test
     void canMoveDiagonallyToEmptySpace() throws Exception{

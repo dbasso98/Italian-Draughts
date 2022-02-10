@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestPlayer {
+public class TestIfPlayer {
 
 
     @ParameterizedTest
