@@ -61,17 +61,41 @@ public class Board {
         return sum;
     }
 
-    public Tile getTile(int index) { return board.get(index); }
+    public Tile getTile(int index) {
+        return board.get(index);
+    }
+
     public Tile getTile(int row, int column) {
         return getTile(getIndex(row, column));
     }
-    public Tile getTile(Point position){return getTile(position.x, position.y);}
+
+    public Tile getTile(Point position) {
+        return getTile(position.x, position.y);
+    }
+
+    public Piece getPieceAtTile(int index) {
+        return getTile(index).getTilePiece();
+    }
+
+    public Piece getPieceAtTile(int row, int column) {
+        return getTile(row, column).getTilePiece();
+    }
+
+    public Piece getPieceAtTile(Point position) {
+        return getTile(position).getTilePiece();
+    }
 
     public Tile getSymmetricTile(int index) {
         return board.get(lastIndex - index);
     }
-    public Tile getSymmetricTile(int row, int column) { return getSymmetricTile(getIndex(row,column));}
-    public Tile getSymmetricTile(Point position) { return getSymmetricTile(position.x, position.y);}
+
+    public Tile getSymmetricTile(int row, int column) {
+        return getSymmetricTile(getIndex(row, column));
+    }
+
+    public Tile getSymmetricTile(Point position) {
+        return getSymmetricTile(position.x, position.y);
+    }
 
 
     public int getMiddlePosition(Point source, Point destination) {
@@ -84,8 +108,8 @@ public class Board {
             return -1;
         }
         //if (getTile(startPosition).getTileColor() == Color.WHITE ||
-          //      getTile(endPosition).getTileColor() == Color.WHITE)
-           // return -1;
+        //      getTile(endPosition).getTileColor() == Color.WHITE)
+        // return -1;
         if (distance != 14 && distance != 18) {
             return -1;
         }
@@ -97,7 +121,7 @@ public class Board {
     }
 
     public boolean isValidPosition(int row, int column) throws Exception {
-        if(row <0 || column < 0 || row > 7 || column > 7)
+        if (row < 0 || column < 0 || row > 7 || column > 7)
             throw new Exception("Every position must be in range of 1 to 8 for each axis!");
         return true;
     }
@@ -105,10 +129,10 @@ public class Board {
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
-        for (int row = maxRows-1 ; row >= 0; row--) {
+        for (int row = maxRows - 1; row >= 0; row--) {
             System.out.print((row + 1) + " ");
             for (int col = 0; col < maxRows; col++) {
-                System.out.print(getTile(getIndex(row, col)).display());
+                System.out.print(getTile(row, col).display());
             }
             System.out.println(" " + (row + 1));
         }
