@@ -1,12 +1,17 @@
 package dssc.exam.draughts;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestIfPlayer {
 
@@ -45,5 +50,28 @@ public class TestIfPlayer {
 
         assertEquals(move.source, sourcePoint);
         assertEquals(move.destination, destinationPoint);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1 a, 1 1", "a 1, 2 3"})
+    void nonNumericInputException(String source1, String destination1) {
+        String fakeInput = source1 + System.lineSeparator() + destination1 + System.lineSeparator();
+
+        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
+        System.setIn(fakeStandardInput);
+
+        Player player = new Player(Color.WHITE);
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+
+        player.readPosition();
+
+        String expected = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)" +
+                System.lineSeparator() +
+                "Please enter a valid expression" + System.lineSeparator();
+
+        assertEquals(expected, fakeStandardOutput.toString());
+
+
     }
 }
