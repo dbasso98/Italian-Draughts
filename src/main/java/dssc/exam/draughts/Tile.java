@@ -2,7 +2,7 @@ package dssc.exam.draughts;
 
 public class Tile {
     private Piece piece = null;
-    private Color tileColor = null;
+    private final Color tileColor;
 
     Tile(Piece piece, Color tileColor) {
         this(tileColor);
@@ -11,9 +11,6 @@ public class Tile {
 
     Tile(Color color) {
         this.tileColor = color;
-    }
-
-    Tile() {
     }
 
     boolean isTileEmpty() {

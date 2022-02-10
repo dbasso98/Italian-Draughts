@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfTile {
 
-    Tile emptyTile = new Tile();
+    Tile emptyTile = new Tile(Color.BLACK);
     Tile blackTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK);
 
     @Test
