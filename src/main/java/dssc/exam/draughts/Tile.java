@@ -54,6 +54,15 @@ public class Tile {
         return tileColor == Color.BLACK;
     }
 
+    public int getTileRow() {
+        return position.x;
+    }
+
+    public int getTileColumn() {
+        return position.y;
+    }
+
+
 
     private String displayEmptyTile() {
         return "[ ]";

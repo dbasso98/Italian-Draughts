@@ -12,6 +12,8 @@ public class Move {
     public static void moveDecider(Board board, Point source, Point destination) throws Exception{
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
+            var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getPieceAtTile(source).getColorOfPiece());
+
             if( isASimpleMove(source, destination) ){
                 diagonalMove(board, source, destination);
             }

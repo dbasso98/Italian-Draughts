@@ -1,9 +1,12 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.*;
+import dssc.exam.draughts.exceptions.EmptyTileException;
+import dssc.exam.draughts.exceptions.NonEmptyTileException;
+import dssc.exam.draughts.exceptions.NotDiagonalMoveException;
+import dssc.exam.draughts.exceptions.SamePositionException;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.BitSet;
 
 public class MoveRules {
 
@@ -47,27 +50,28 @@ public class MoveRules {
         }
     }
 
-    static ArrayList<Tile> isThereASkipMove(Board board, Color color) {
+    static BitSet candidateTilesForSkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
-        var listOfCandidatesTiles = new ArrayList<Tile>(12);
+        var bitSetOfCandidatesTiles = new BitSet(64);
         for (Tile tile : listOfTiles) {
             if (checkAdjacentDiagonal(board, tile, color))
-                listOfCandidatesTiles.add(tile);
+                bitSetOfCandidatesTiles.set(board.getIndex(tile.getTileRow(), tile.getTileColumn()));
         }
-        return listOfCandidatesTiles;
+        return bitSetOfCandidatesTiles;
     }
 
     static boolean checkAdjacentDiagonal(Board board, Tile tile, Color color) {
         if (color == Color.WHITE) {
-            if(board.getTile(tile.getTilePosition().x + 1, tile.getTilePosition().y - 1).isTileNotEmpty() ||
-               board.getTile(tile.getTilePosition().x + 1, tile.getTilePosition().y + 1).isTileNotEmpty())
+            if(board.getTile(tile.getTileRow() + 1, tile.getTileColumn() - 1).isTileNotEmpty() ||
+               board.getTile(tile.getTileRow() + 1, tile.getTileColumn() + 1).isTileNotEmpty())
                 return true;
         }
         else if (color == Color.BLACK) {
-            if(board.getTile(tile.getTilePosition().x - 1, tile.getTilePosition().y - 1).isTileNotEmpty() ||
-               board.getTile(tile.getTilePosition().x - 1, tile.getTilePosition().y + 1).isTileNotEmpty())
+            if(board.getTile(tile.getTileRow() - 1, tile.getTileColumn() - 1).isTileNotEmpty() ||
+               board.getTile(tile.getTileRow() - 1, tile.getTileColumn() + 1).isTileNotEmpty())
                 return true;
         }
         return false;
     }
+
 }
