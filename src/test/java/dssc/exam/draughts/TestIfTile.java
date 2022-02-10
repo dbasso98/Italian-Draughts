@@ -2,13 +2,14 @@ package dssc.exam.draughts;
 
 import org.junit.jupiter.api.Test;
 
+import javax.swing.text.Position;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfTile {
 
-    Tile emptyTile = new Tile(Color.BLACK);
+    Tile emptyTile = new Tile(Color.BLACK, new Point(0,0));
     Tile blackTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK, new Point(0,0));
 
     @Test

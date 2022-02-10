@@ -46,11 +46,11 @@ public class Game {
     }
 
     boolean blackPlayerHasPieces() {
-        return board.getPiecesOfColor(Color.BLACK) != 0;
+        return board.getNumberOfPiecesOfColor(Color.BLACK) != 0;
     }
 
     boolean whitePlayerHasPieces() {
-        return board.getPiecesOfColor(Color.WHITE) != 0;
+        return board.getNumberOfPiecesOfColor(Color.WHITE) != 0;
     }
 
     int getRound() {
