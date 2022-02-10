@@ -13,16 +13,12 @@ public class Move {
     public static void moveDecider(Board board, Point source, Point destination) throws Exception{
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
-
             if( isASimpleMove(source, destination) ){
                 simpleDiagonalMove(board, source, destination);
             }
-            else{
+            else {
                 simpleSkipMove(board, source, destination);
             }
-
-            //2. se è skipmove
-
 
         }
         catch(Exception e){
@@ -30,7 +26,7 @@ public class Move {
         }
     }
 
-    private static void simpleSkipMove(Board board, Point source, Point destination) throws Exception{
+    static void simpleSkipMove(Board board, Point source, Point destination) throws Exception{
         try {
             var sourceTile = board.getTile(source);
             var destinationTile = board.getTile(destination);
@@ -63,7 +59,7 @@ public class Move {
 
     }
 
-    private static void movePiece(Board board, Point destination, Tile sourceTile) {
+    public static void movePiece(Board board, Point destination, Tile sourceTile) {
         var piece = sourceTile.popPieceContainedInTile();
         board.getTile(destination).setPieceContainedInTile(piece);
     }
