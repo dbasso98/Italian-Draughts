@@ -159,4 +159,8 @@ public class Board {
         }
         System.out.println(indexLine);
     }
+
+    public Color getColorOfPieceAtTile(Point position) {
+        return getPieceAtTile(position).getColorOfPiece();
+    }
 }
