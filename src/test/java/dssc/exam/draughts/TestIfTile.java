@@ -2,12 +2,14 @@ package dssc.exam.draughts;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfTile {
 
     Tile emptyTile = new Tile();
-    Tile blackTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK);
+    Tile blackTileBlackMan = new Tile(new Piece(1, Color.BLACK), Color.BLACK, new Point(0,0));
 
     @Test
     void createNonEmptyTile() {
@@ -38,7 +40,7 @@ public class TestIfTile {
     @Test
     void nonemptyTileDisplay(){
         assertEquals("[b]", blackTileBlackMan.display());
-        Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK);
+        Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK, new Point(0,0));
         blackTileWhiteKing.getTilePiece().upgradePieceToKing();
         assertEquals("[W]", blackTileWhiteKing.display());
     }

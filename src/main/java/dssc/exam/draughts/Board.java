@@ -25,8 +25,8 @@ public class Board {
                 secondColor = Color.BLACK;
             }
             for (int column = 0; column < maxColumns; column += 2) {
-                board.add(new Tile(firstColor));
-                board.add(new Tile(secondColor));
+                board.add(new Tile(firstColor , new Point(row, column)));
+                board.add(new Tile(secondColor, new Point(row, column)));
             }
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
@@ -49,13 +49,22 @@ public class Board {
         return getPiecesOfColor(color).size();
     }
 
-    private ArrayList<Piece> getPiecesOfColor(Color color) {
+    public ArrayList<Piece> getPiecesOfColor(Color color) {
         ArrayList<Piece> listOfPiece = new ArrayList<>(12);
         for (int tileIndex = 0; tileIndex < getSizeOfBoard(); ++tileIndex) {
-            if (board.get(tileIndex).isTileNotEmpty() && board.get(tileIndex).getTilePiece().getColorOfPiece() == color)
-                listOfPiece.add(board.get(tileIndex).getTilePiece());
+            if (getTile(tileIndex).isTileNotEmpty() && getPieceAtTile(tileIndex).getColorOfPiece() == color)
+                listOfPiece.add(getPieceAtTile(tileIndex));
         }
         return listOfPiece;
+    }
+
+    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+        ArrayList<Tile> listOfTiles = new ArrayList<>(12);
+        for (int tileIndex = 0; tileIndex < getSizeOfBoard(); ++tileIndex) {
+            if (getTile(tileIndex).isTileNotEmpty() && getPieceAtTile(tileIndex).getColorOfPiece() == color)
+                listOfTiles.add(getTile(tileIndex));
+        }
+        return listOfTiles;
     }
 
     public int getTotalNumberOfPieces() {

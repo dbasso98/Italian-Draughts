@@ -3,6 +3,7 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MoveRules {
 
@@ -48,6 +49,10 @@ public class MoveRules {
     }
 
     static void isThereASkipMove(Board board, Color color) {
+        var listOfTiles = board.getTilesContainingPieceOfColor(color);
+        for (Tile tile : listOfTiles) {
+
+        }
 
     }
 

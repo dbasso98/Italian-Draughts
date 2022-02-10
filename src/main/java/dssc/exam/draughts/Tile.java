@@ -1,19 +1,23 @@
 package dssc.exam.draughts;
 
+import java.awt.*;
+
 public class Tile {
     private Piece piece = null;
     private Color tileColor = null;
+    private Point position = null;
 
-    Tile(Piece piece, Color tileColor) {
-        this(tileColor);
+    Tile(Piece piece, Color tileColor, Point position) {
+        this(tileColor, position);
         this.piece = piece;
     }
 
-    Tile(Color color) {
+    Tile(Color color, Point position) {
         this.tileColor = color;
+        this.position = position;
     }
 
-    Tile() {
+    Tile (){
     }
 
     boolean isTileEmpty() {
