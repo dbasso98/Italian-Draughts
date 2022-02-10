@@ -2,9 +2,9 @@ package dssc.exam.draughts;
 
 import java.awt.*;
 
-public class Tile {
+class Tile {
     private Piece piece = null;
-    private Color tileColor = null;
+    private final Color tileColor;
     private Point position = null;
 
     Tile(Piece piece, Color tileColor, Point position) {
@@ -15,9 +15,6 @@ public class Tile {
     Tile(Color color, Point position) {
         this.tileColor = color;
         this.position = position;
-    }
-
-    Tile (){
     }
 
     boolean isTileEmpty() {
@@ -34,15 +31,15 @@ public class Tile {
         this.piece = piece;
     }
 
-    public boolean isTileNotEmpty() {
+    boolean isTileNotEmpty() {
         return !(isTileEmpty());
     }
 
-    public Piece getTilePiece() {
+    Piece getTilePiece() {
         return piece;
     }
 
-    public Color getTileColor() {
+    Color getTileColor() {
         return tileColor;
     }
 
