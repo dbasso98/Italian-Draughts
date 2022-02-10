@@ -1,9 +1,8 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.EmptyTileException;
-import dssc.exam.draughts.exceptions.SameColorException;
-
+import dssc.exam.draughts.exceptions.*;
 import java.awt.*;
+import java.util.stream.*;
 
 public class Move {
     public final Point source;
@@ -12,13 +11,21 @@ public class Move {
     public static void moveDecider(Board board, Point source, Point destination) throws Exception{
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
+
             var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getPieceAtTile(source).getColorOfPiece());
 
-            if( isASimpleMove(source, destination) ){
-                diagonalMove(board, source, destination);
-            }
-            else {
+            if(candidateTiles.get(board.getIndex(source.x, source.y))){
                 skipMove(board, source, destination);
+            }
+            else{
+                //candidateTiles.stream().filter(i -> i == 1).mapToObj(i -> board.getTile(i))
+                if(candidateTiles.isEmpty()){
+                    if( isASimpleMove(source, destination) ){
+                        diagonalMove(board, source, destination);
+                    }
+                }
+                else
+                    throw new InvalidMoveException("There are pieces that must capture." + IntStream.range(0, candidateTiles.size()).filter(candidateTiles::get).mapToObj(board::getTile).collect(Collectors.toList()));
             }
         }
         catch(Exception e){
@@ -61,10 +68,7 @@ public class Move {
             // if we generalize to start - end position which indicates final absolute position after eating many times
             // checking if diagonal is not needed. but is needed in every substep.
             MoveRules.isDiagonal(source, destination);
-            if (Math.abs(destination.x - source.x) == 1)
-                return true;
-            else
-                return false;
+            return Math.abs(destination.x - source.x) == 1;
         } catch (Exception e) {
             throw e;
         }
