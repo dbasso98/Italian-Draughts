@@ -89,15 +89,15 @@ public class Board {
     }
 
     public Piece getPieceAtTile(int index) {
-        return getTile(index).getTilePiece();
+        return getTile(index).getPieceOfTile();
     }
 
     public Piece getPieceAtTile(int row, int column) {
-        return getTile(row, column).getTilePiece();
+        return getTile(row, column).getPieceOfTile();
     }
 
     public Piece getPieceAtTile(Point position) {
-        return getTile(position).getTilePiece();
+        return getTile(position).getPieceOfTile();
     }
 
     public Tile getSymmetricTile(int index) {
@@ -173,5 +173,8 @@ public class Board {
         return getPieceAtTile(position).getColorOfPiece();
     }
 
+    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
+        return getTile(tile.getTileRow() + offset1, tile.getTileColumn() + offset2);
+    }
 
 }

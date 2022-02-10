@@ -35,7 +35,7 @@ class Tile {
         return !(isTileEmpty());
     }
 
-    Piece getTilePiece() {
+    Piece getPieceOfTile() {
         return piece;
     }
 

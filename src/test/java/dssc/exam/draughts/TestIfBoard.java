@@ -36,7 +36,7 @@ public class TestIfBoard {
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
     void has12WhitePiecesInFirstThreeRows(Color color, int position) {
-        assertEquals(board.getTile(position).getTilePiece().getColorOfPiece(), color);
+        assertEquals(board.getTile(position).getPieceOfTile().getColorOfPiece(), color);
         assertEquals(board.getPieceAtTile(position).getColorOfPiece(), color);
     }
 
