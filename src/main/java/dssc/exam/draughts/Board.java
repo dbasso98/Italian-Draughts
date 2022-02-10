@@ -160,7 +160,18 @@ public class Board {
         System.out.println(indexLine);
     }
 
+
+    public Color getColorOfPieceAtTile(int index) {
+        return getPieceAtTile(index).getColorOfPiece();
+    }
+
+    public Color getColorOfPieceAtTile(int row, int column) {
+        return getPieceAtTile(row, column).getColorOfPiece();
+    }
+
     public Color getColorOfPieceAtTile(Point position) {
         return getPieceAtTile(position).getColorOfPiece();
     }
+
+
 }

@@ -45,7 +45,7 @@ public class TestIfBoard {
             "BLACK, 49", "BLACK, 51", "BLACK, 53", "BLACK, 55",
             "BLACK, 40", "BLACK, 42", "BLACK, 44", "BLACK, 46"})
     void has12BlackPiecesInLastThreeRows(Color color, int position) {
-        assertEquals(board.getPieceAtTile(position).getColorOfPiece(), color);
+        assertEquals(board.getColorOfPieceAtTile(position), color);
     }
 
     @ParameterizedTest
