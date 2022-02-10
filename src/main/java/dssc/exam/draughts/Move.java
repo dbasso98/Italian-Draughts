@@ -12,16 +12,18 @@ public class Move {
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
 
-            var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getPieceAtTile(source).getColorOfPiece());
+            var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
 
             if(candidateTiles.get(board.getIndex(source.x, source.y))){
                 skipMove(board, source, destination);
             }
             else{
-                //candidateTiles.stream().filter(i -> i == 1).mapToObj(i -> board.getTile(i))
                 if(candidateTiles.isEmpty()){
                     if( isASimpleMove(source, destination) ){
                         diagonalMove(board, source, destination);
+                    }
+                    else{
+                        throw new InvalidMoveException("This piece cannot move there. Pieces can only move diagonally!");
                     }
                 }
                 else
@@ -91,6 +93,6 @@ public class Move {
     public void executeOn(Board board) throws Exception {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        diagonalMove(board, this.source, this.destination);
+        movePiece(board, destination, board.getTile(source));
     }
 }
