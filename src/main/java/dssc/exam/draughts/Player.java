@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
-    public final Color color;
+    private final Color color;
     private static final String readSourceMessage = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
     private static final String readDestinationMessage = "What are the coordinates (x, y) of the Tile you intend to move the piece to? (e.g. 3 4)";
     private final Scanner input = new Scanner(System.in);
@@ -13,7 +13,7 @@ public class Player {
     Player(Color color) {
         this.color = color;
     }
-
+    
     Point readPosition() {
         return readPosition(readSourceMessage);
     }

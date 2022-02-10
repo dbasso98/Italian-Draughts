@@ -9,8 +9,7 @@ public class Game {
 
     // may implement custom, ctor, so that a saved game can be loaded;
     void playRound() {
-        // To be tested, the function move.executeOn(board);is to be defined
-
+        // To be tested, not trivial
         board.display();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
@@ -36,5 +35,12 @@ public class Game {
         currentPlayer = blackPlayer;
     }
 
+    boolean blackPlayerHasPieces() {
+        return board.getPiecesOfColor(Color.BLACK) != 0;
+    }
+
+    boolean whitePlayerHasPieces() {
+        return board.getPiecesOfColor(Color.WHITE) != 0;
+    }
 
 }
