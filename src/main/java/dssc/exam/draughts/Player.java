@@ -21,7 +21,7 @@ public class Player {
         System.out.println(message);
         int column = input.nextInt();
         int row = input.nextInt();
-        return new Point(row, column);
+        return new Point(row - 1, column - 1);
     }
 
     Move getMove() {

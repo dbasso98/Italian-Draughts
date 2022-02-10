@@ -12,7 +12,7 @@ public class TestIfPlayer {
 
 
     @ParameterizedTest
-    @CsvSource({"3, 4, 3, 4", "12, 15, 12, 15"})
+    @CsvSource({"3, 4, 2, 3", "12, 15, 11, 14"})
     void testReadPosition(String xInput, String yInput,
                           int rowExpected, int columnExpected) {
 
@@ -26,7 +26,7 @@ public class TestIfPlayer {
     }
 
     @ParameterizedTest
-    @CsvSource({"3, 4, 5, 6, 3, 4, 5, 6", "12, 15, 14, 36, 12, 15, 14, 36"})
+    @CsvSource({"3, 4, 5, 6, 2, 3, 4, 5", "12, 15, 14, 36, 11, 14, 13, 35"})
     void testGetMove(String sourceXIn, String sourceYIn,
                      String destinationXIn, String destinationYIn,
                      int sourceColumn, int sourceRow,
