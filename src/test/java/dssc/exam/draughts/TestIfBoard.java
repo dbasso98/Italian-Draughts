@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -75,6 +76,17 @@ public class TestIfBoard {
         var sourcePoint = new Point(sourceRow, sourceColumn);
         var destinationPoint = new Point(destinationRow, destinationColumn);
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
+    }
+
+    @Property
+    void associatesCorrectPositionToTiles(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column){
+        assertEquals(row, board.getTile(row, column).getTileRow());
+        assertEquals(column, board.getTile(row, column).getTileColumn());
+    }
+
+    @Provide
+    Arbitrary<Integer> validIndexGenerator () {
+        return Arbitraries.integers().between(0, 7);
     }
 
     @Test
