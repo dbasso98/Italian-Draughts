@@ -1,13 +1,15 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.*;
+import dssc.exam.draughts.exceptions.InvalidIndexException;
+import dssc.exam.draughts.exceptions.NotDiagonalMoveException;
+import dssc.exam.draughts.exceptions.SamePositionException;
+import dssc.exam.draughts.exceptions.WhiteTileException;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,7 +85,7 @@ public class TestIfMoveRules {
     void checksCandidateTilesForSkipMove() {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
-        System.out.println(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).stream());
+        assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).stream().count());
     }
 
 }
