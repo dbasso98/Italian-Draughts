@@ -4,7 +4,6 @@ public class Main {
     public static void main (String ... args){
         System.out.println("ciao!");
         Player player = new Player(Color.WHITE);
-        player.readPosition();
         Game game = new Game();
         game.playRound();
         game.playRound();
