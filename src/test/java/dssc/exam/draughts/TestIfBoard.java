@@ -35,8 +35,8 @@ public class TestIfBoard {
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
     void has12WhitePiecesInFirstThreeRows(Color color, int position) {
-        assertEquals(board.getTile(position).getTilePiece().getColor(), color);
-        assertEquals(board.getPieceAtTile(position).getColor(), color);
+        assertEquals(board.getTile(position).getTilePiece().getColorOfPiece(), color);
+        assertEquals(board.getPieceAtTile(position).getColorOfPiece(), color);
     }
 
     @ParameterizedTest
@@ -44,7 +44,7 @@ public class TestIfBoard {
             "BLACK, 49", "BLACK, 51", "BLACK, 53", "BLACK, 55",
             "BLACK, 40", "BLACK, 42", "BLACK, 44", "BLACK, 46"})
     void has12BlackPiecesInLastThreeRows(Color color, int position) {
-        assertEquals(board.getPieceAtTile(position).getColor(), color);
+        assertEquals(board.getPieceAtTile(position).getColorOfPiece(), color);
     }
 
     @ParameterizedTest

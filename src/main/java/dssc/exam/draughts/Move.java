@@ -17,7 +17,7 @@ public class Move {
                 simpleDiagonalMove(board, source, destination);
             }
             else{
-                return;
+                simpleSkipMove(board, source, destination);
             }
 
             //2. se è skipmove
@@ -29,14 +29,23 @@ public class Move {
         }
     }
 
+    private static void simpleSkipMove(Board board, Point source, Point destination) throws Exception{
+        try {
+            var sourceTile = board.getTile(source);
+            var middleTile = board.getTile(board.getMiddlePosition(source,destination));
+            if(middleTile.isTileEmpty())
+                throw new EmptyTileException("Skip move over two empty tiles is not accepted");
+            //if( middleTile.getTilePiece().getColorOfPiece() )
+        }
+        catch(Exception e){
+            throw e;
+        }
+
+
+    }
+
     public static void simpleDiagonalMove(Board board, Point source, Point destination) throws Exception {
         try {
-            // 1. first check if initial position is valid
-            // at this point, only things i know are: the positions are inside the board, they are not the same
-            // and they are specified correctly (in other words, destination is diagonal to source).
-            MoveRules.checkIfPositionsAreValid(board, source, destination);
-
-            // check for source & destination tile correctness (non-emptiness, emptiness)
             var sourceTile = board.getTile(source);
             if(sourceTile.isTileEmpty()) {
                 throw new EmptyTileException("Cannot move since tile at (" + (source.y+1) + "," + (source.x+1) + ") is empty");

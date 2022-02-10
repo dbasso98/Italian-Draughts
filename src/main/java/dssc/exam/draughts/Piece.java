@@ -44,10 +44,6 @@ public class Piece {
         System.out.println(this);
     }
 
-    public Color getColor() {
-        return pieceColor;
-    }
-
     private boolean isBlack() {
         return pieceColor == Color.BLACK;
     }
