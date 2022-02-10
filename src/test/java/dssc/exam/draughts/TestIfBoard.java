@@ -61,17 +61,17 @@ public class TestIfBoard {
 
     @ParameterizedTest
     @CsvSource({"0, 18, 9", "2, 16, 9",
-                "57, 43, 50", "52, 38, 45",
-                "50, 0, -1", "64, 46, -1"})
-    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition){
+            "57, 43, 50", "52, 38, 45",
+            "50, 0, -1", "64, 46, -1"})
+    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition) {
         assertEquals(board.getMiddlePosition(startPosition, endPosition), middlePosition);
     }
 
     @ParameterizedTest
     @CsvSource({"0, 0, 2, 2, 9", "0, 6, 2, 4, 13",
-                "7, 1, 5, 3, 50", "7, 7, 5, 5, 54",
-                "-1, 63, 1, 5, -1", "64, 30, 5, 8, -1"})
-    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition){
+            "7, 1, 5, 3, 50", "7, 7, 5, 5, 54",
+            "-1, 63, 1, 5, -1", "64, 30, 5, 8, -1"})
+    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition) {
         var sourcePoint = new Point(sourceRow, sourceColumn);
         var destinationPoint = new Point(destinationRow, destinationColumn);
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
@@ -80,18 +80,18 @@ public class TestIfBoard {
     @Test
     void printBoard() {
         String expected = "   1  2  3  4  5  6  7  8" + System.lineSeparator() +
-                          "8 [b][ ][b][ ][B][ ][b][ ] 8" + System.lineSeparator() +
-                          "7 [ ][b][ ][b][ ][b][ ][b] 7"+ System.lineSeparator() +
-                          "6 [b][ ][b][ ][b][ ][b][ ] 6" + System.lineSeparator() +
-                          "5 [ ][ ][ ][ ][ ][ ][ ][ ] 5" + System.lineSeparator() +
-                          "4 [ ][ ][ ][ ][ ][ ][ ][ ] 4" + System.lineSeparator() +
-                          "3 [ ][w][ ][w][ ][w][ ][w] 3" + System.lineSeparator() +
-                          "2 [W][ ][w][ ][w][ ][w][ ] 2" + System.lineSeparator() +
-                          "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
-                          "   1  2  3  4  5  6  7  8" + System.lineSeparator();
+                "8 [b][ ][b][ ][B][ ][b][ ] 8" + System.lineSeparator() +
+                "7 [ ][b][ ][b][ ][b][ ][b] 7" + System.lineSeparator() +
+                "6 [b][ ][b][ ][b][ ][b][ ] 6" + System.lineSeparator() +
+                "5 [ ][ ][ ][ ][ ][ ][ ][ ] 5" + System.lineSeparator() +
+                "4 [ ][ ][ ][ ][ ][ ][ ][ ] 4" + System.lineSeparator() +
+                "3 [ ][w][ ][w][ ][w][ ][w] 3" + System.lineSeparator() +
+                "2 [W][ ][w][ ][w][ ][w][ ] 2" + System.lineSeparator() +
+                "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
+                "   1  2  3  4  5  6  7  8" + System.lineSeparator();
         Board board = new Board();
-        board.getPieceAtTile(1,0).upgradePieceToKing();
-        board.getPieceAtTile(7,4).upgradePieceToKing();
+        board.getPieceAtTile(1, 0).upgradePieceToKing();
+        board.getPieceAtTile(7, 4).upgradePieceToKing();
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
