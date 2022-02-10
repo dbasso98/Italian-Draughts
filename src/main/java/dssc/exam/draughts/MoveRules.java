@@ -13,7 +13,7 @@ public class MoveRules {
             board.isBlackTile(board.getTile(source));
             board.isBlackTile(board.getTile(destination));
             isNotSamePosition(source, destination);
-            isDiagonal(source, destination);
+            //isDiagonal(source, destination);
         }
         catch (Exception e) {
             throw e;
@@ -35,28 +35,32 @@ public class MoveRules {
         }
     }
 
-    private static boolean isASimpleMove(Point source, Point destination) {
-        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y) ||
-           Math.abs(destination.x - source.x) != 1) {
-            return false;
+    public static boolean isASimpleMove(Point source, Point destination) throws Exception {
+        try {
+            // if we generalize to start - end position which indicates final absolute position after eating many times
+            // checking if diagonal is not needed. but is needed in every substep.
+            isDiagonal(source, destination);
+            if (Math.abs(destination.x - source.x) == 1)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            throw e;
         }
-        return true;
     }
 
-    /*
-    public static void isACorrectSimpleMove(Point source, Point destination) {
-        if (isASimpleMove(source, destination)){
-
+    public static boolean isASkipMove(Point source, Point destination) throws Exception{
+        try {
+            // if we generalize to start - end position which indicates final absolute position after eating many times
+            // checking if diagonal is not needed. but is needed in every substep.
+            isDiagonal(source, destination);
+            if (Math.abs(destination.x - source.x) == 2)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            throw e;
         }
-    }
-    */
-
-    public static boolean isASkipMove(Point source, Point destination) {
-        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y) ||
-           Math.abs(destination.x - source.x) != 2) {
-            return false;
-        }
-        return true;
     }
 
     /*

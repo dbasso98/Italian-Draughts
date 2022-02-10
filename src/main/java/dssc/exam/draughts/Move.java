@@ -9,7 +9,27 @@ public class Move {
     public final Point source;
     public final Point destination;
 
-    public static void moveDiagonallyToEmptyTile(Board board, Point source, Point destination) throws Exception {
+    public static void moveDecider(Board board, Point source, Point destination) throws Exception{
+        try{
+            MoveRules.checkIfPositionsAreValid(board, source, destination);
+
+            if( MoveRules.isASimpleMove(source, destination) ){
+                simpleDiagonalMove(board, source, destination);
+            }
+            else{
+                return;
+            }
+
+            //2. se è skipmove
+
+
+        }
+        catch(Exception e){
+            throw e;
+        }
+    }
+
+    public static void simpleDiagonalMove(Board board, Point source, Point destination) throws Exception {
         try {
             // 1. first check if initial position is valid
             // at this point, only things i know are: the positions are inside the board, they are not the same
@@ -40,6 +60,6 @@ public class Move {
     public void executeOn(Board board) throws Exception {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        moveDiagonallyToEmptyTile(board, this.source, this.destination);
+        simpleDiagonalMove(board, this.source, this.destination);
     }
 }
