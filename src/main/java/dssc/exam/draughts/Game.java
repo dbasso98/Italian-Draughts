@@ -1,16 +1,25 @@
 package dssc.exam.draughts;
 
+import java.nio.FloatBuffer;
+
 public class Game {
-    public Player whitePlayer = new Player(Color.WHITE);
-    public Player blackPlayer = new Player(Color.BLACK);
-    public Player currentPlayer = whitePlayer;
+    Player whitePlayer = new Player(Color.WHITE);
+    Player blackPlayer = new Player(Color.BLACK);
+    Player currentPlayer = whitePlayer;
     private Board board = new Board();
     public int round = 0;
 
-    // may implement custom, ctor, so that a saved game can be loaded;
-    void playRound() {
-        // To be tested, the function move.executeOn(board);is to be defined
+    void loadGame(Board board, int round) {
+        this.board = board;
+        this.round = round;
+        if ((round % 2) == 0)
+            this.currentPlayer = this.whitePlayer;
+        else
+            this.currentPlayer = this.blackPlayer;
+    }
 
+    void playRound() {
+        // To be tested, not trivial
         board.display();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
@@ -36,5 +45,20 @@ public class Game {
         currentPlayer = blackPlayer;
     }
 
+    boolean blackPlayerHasPieces() {
+        return board.getPiecesOfColor(Color.BLACK) != 0;
+    }
+
+    boolean whitePlayerHasPieces() {
+        return board.getPiecesOfColor(Color.WHITE) != 0;
+    }
+
+    int getRound() {
+        return round;
+    }
+
+    Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
 }
