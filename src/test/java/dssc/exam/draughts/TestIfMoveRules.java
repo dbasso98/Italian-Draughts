@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,6 +77,13 @@ public class TestIfMoveRules {
     void checksAbsenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
         assertFalse(MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.WHITE));
+    }
+
+    @Test
+    void checksCandidateTilesForSkipMove() {
+        var newBoard = new Board();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        System.out.println(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).stream());
     }
 
 }

@@ -93,6 +93,6 @@ public class Move {
     public void executeOn(Board board) throws Exception {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        movePiece(board, destination, board.getTile(source));
+        movePiece(board, source, destination);
     }
 }
