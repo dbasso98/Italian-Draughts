@@ -8,8 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfMoveRules {
     private Board board = new Board();
@@ -66,10 +65,17 @@ public class TestIfMoveRules {
         return board.getTile(row, column).getTileColor() == Color.BLACK;
     }
 
-//    @Test
-//    void checksPresenceOfManInAdjacentDiagonals() {
-//        var board = new Board();
-//        Move.movePiece(board, new Point(3,2), );
-//    }
+    @Test
+    void checksPresenceOfManInAdjacentDiagonals() {
+        var newBoard = new Board();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        assertTrue(MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.WHITE));
+    }
+
+    @Test
+    void checksAbsenceOfManInAdjacentDiagonals() {
+        var newBoard = new Board();
+        assertFalse(MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.WHITE));
+    }
 
 }

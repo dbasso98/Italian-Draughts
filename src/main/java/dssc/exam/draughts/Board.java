@@ -26,7 +26,7 @@ public class Board {
             }
             for (int column = 0; column < maxColumns; column += 2) {
                 board.add(new Tile(firstColor , new Point(row, column)));
-                board.add(new Tile(secondColor, new Point(row, column)));
+                board.add(new Tile(secondColor, new Point(row, column+1)));
             }
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {

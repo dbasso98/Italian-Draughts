@@ -59,15 +59,22 @@ public class MoveRules {
         return bitSetOfCandidatesTiles;
     }
 
-    static boolean checkAdjacentDiagonal(Board board, Tile tile, Color color) {
-        if (color == Color.WHITE) {
-            if(board.getTile(tile.getTileRow() + 1, tile.getTileColumn() - 1).isTileNotEmpty() ||
-               board.getTile(tile.getTileRow() + 1, tile.getTileColumn() + 1).isTileNotEmpty())
+    static boolean checkAdjacentDiagonal(Board board, Tile tile, Color pieceColor) {
+        // handle edge cases (tile is on the border)
+        if (pieceColor == Color.WHITE) {
+            if((board.getTile(tile.getTileRow() + 1, tile.getTileColumn() - 1).isTileNotEmpty() &&
+                (board.getTile(tile.getTileRow() + 1, tile.getTileColumn() - 1).getTilePiece().getColorOfPiece() == Color.BLACK))
+               ||
+               (board.getTile(tile.getTileRow() + 1, tile.getTileColumn() + 1).isTileNotEmpty() &&
+                (board.getTile(tile.getTileRow() + 1, tile.getTileColumn() + 1).getTilePiece().getColorOfPiece() == Color.BLACK)))
                 return true;
         }
-        else if (color == Color.BLACK) {
-            if(board.getTile(tile.getTileRow() - 1, tile.getTileColumn() - 1).isTileNotEmpty() ||
-               board.getTile(tile.getTileRow() - 1, tile.getTileColumn() + 1).isTileNotEmpty())
+        else if (pieceColor == Color.BLACK) {
+            if((board.getTile(tile.getTileRow() - 1, tile.getTileColumn() - 1).isTileNotEmpty() &&
+                (board.getTile(tile.getTileRow() - 1, tile.getTileColumn() - 1).getTilePiece().getColorOfPiece() == Color.WHITE))
+               ||
+               (board.getTile(tile.getTileRow() - 1, tile.getTileColumn() + 1).isTileNotEmpty() &&
+                (board.getTile(tile.getTileRow() - 1, tile.getTileColumn() + 1).getTilePiece().getColorOfPiece() == Color.WHITE)))
                 return true;
         }
         return false;

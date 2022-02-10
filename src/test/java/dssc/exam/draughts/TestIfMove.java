@@ -34,7 +34,7 @@ public class TestIfMove {
     void canSkipMove() throws Exception {
         var board = new Board();
         assertTrue(board.getTile(2,1 ).isTileNotEmpty());
-        Move.movePiece(board, board.getTile(new Point(3,2)), board.getTile(new Point(5,2)));
+        Move.movePiece(board, new Point(3,2), new Point(5,2));
         assertTrue(board.getTile(3,2).isTileNotEmpty());
         assertTrue(board.getTile(5,2).isTileEmpty());
         try{
