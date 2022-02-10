@@ -54,10 +54,13 @@ public class TestIfBoard {
         assertTrue(board.getTile(position).isTileEmpty());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {24, 25, 26, 27, 28, 29, 30, 31})
-    void isColorSymmetricInTwoMiddleRows(int position) {
+    @Property
+    void isColorSymmetric(@ForAll("validPositionGenerator") int position) {
         assertSame(board.getTile(position).getTileColor(), board.getSymmetricTile(position).getTileColor());
+    }
+    @Provide
+    Arbitrary<Integer> validPositionGenerator () {
+        return Arbitraries.integers().between(0, 63);
     }
 
     @ParameterizedTest
@@ -79,13 +82,13 @@ public class TestIfBoard {
     }
 
     @Property
-    void associatesCorrectPositionToTiles(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column){
+    void associatesCorrectPositionToTiles(@ForAll("validRowColumnGenerator") int row, @ForAll("validRowColumnGenerator") int column){
         assertEquals(row, board.getTile(row, column).getTileRow());
         assertEquals(column, board.getTile(row, column).getTileColumn());
     }
 
     @Provide
-    Arbitrary<Integer> validIndexGenerator () {
+    Arbitrary<Integer> validRowColumnGenerator () {
         return Arbitraries.integers().between(0, 7);
     }
 
