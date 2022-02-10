@@ -71,8 +71,20 @@ public class Board {
         return getTile(getIndex(row, column));
     }
 
-    public Tile getTile(Point position){
+    public Tile getTile(Point position) {
         return getTile(position.x, position.y);
+    }
+
+    public Piece getPieceAtTile(int index) {
+        return getTile(index).getTilePiece();
+    }
+
+    public Piece getPieceAtTile(int row, int column) {
+        return getTile(row, column).getTilePiece();
+    }
+
+    public Piece getPieceAtTile(Point position) {
+        return getTile(position).getTilePiece();
     }
 
     public Tile getSymmetricTile(int index) {
@@ -92,6 +104,9 @@ public class Board {
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             return -1;
         }
+        //if (getTile(startPosition).getTileColor() == Color.WHITE ||
+        //      getTile(endPosition).getTileColor() == Color.WHITE)
+        // return -1;
         if (distance != 14 && distance != 18) {
             return -1;
         }
@@ -125,10 +140,10 @@ public class Board {
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
-        for (int row = maxRows-1 ; row >= 0; row--) {
+        for (int row = maxRows - 1; row >= 0; row--) {
             System.out.print((row + 1) + " ");
             for (int col = 0; col < maxRows; col++) {
-                System.out.print(getTile(getIndex(row, col)).display());
+                System.out.print(getTile(row, col).display());
             }
             System.out.println(" " + (row + 1));
         }
