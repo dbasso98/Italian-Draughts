@@ -46,9 +46,14 @@ public class Tile {
         return tileColor;
     }
 
+    public Point getTilePosition(){
+        return position;
+    }
+
     private boolean isBlack() {
         return tileColor == Color.BLACK;
     }
+
 
     private String displayEmptyTile() {
         return "[ ]";

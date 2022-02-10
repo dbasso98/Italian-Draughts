@@ -14,7 +14,6 @@ public class MoveRules {
             board.isBlackTile(board.getTile(source));
             board.isBlackTile(board.getTile(destination));
             isNotSamePosition(source, destination);
-            //isDiagonal(source, destination);
         }
         catch (Exception e) {
             throw e;
@@ -48,12 +47,27 @@ public class MoveRules {
         }
     }
 
-    static void isThereASkipMove(Board board, Color color) {
+    static ArrayList<Tile> isThereASkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
+        var listOfCandidatesTiles = new ArrayList<Tile>(12);
         for (Tile tile : listOfTiles) {
-
+            if (checkAdjacentDiagonal(board, tile, color))
+                listOfCandidatesTiles.add(tile);
         }
-
+        return listOfCandidatesTiles;
     }
 
+    static boolean checkAdjacentDiagonal(Board board, Tile tile, Color color) {
+        if (color == Color.WHITE) {
+            if(board.getTile(tile.getTilePosition().x + 1, tile.getTilePosition().y - 1).isTileNotEmpty() ||
+               board.getTile(tile.getTilePosition().x + 1, tile.getTilePosition().y + 1).isTileNotEmpty())
+                return true;
+        }
+        else if (color == Color.BLACK) {
+            if(board.getTile(tile.getTilePosition().x - 1, tile.getTilePosition().y - 1).isTileNotEmpty() ||
+               board.getTile(tile.getTilePosition().x - 1, tile.getTilePosition().y + 1).isTileNotEmpty())
+                return true;
+        }
+        return false;
+    }
 }
