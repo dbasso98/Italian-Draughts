@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import java.nio.FloatBuffer;
+
 public class Game {
     public Player whitePlayer = new Player(Color.WHITE);
     public Player blackPlayer = new Player(Color.BLACK);
@@ -7,7 +9,15 @@ public class Game {
     private Board board = new Board();
     public int round = 0;
 
-    // may implement custom, ctor, so that a saved game can be loaded;
+    void loadGame(Board board, int round) {
+        this.board = board;
+        this.round = round;
+        if ((round % 2) == 0)
+            this.currentPlayer = this.whitePlayer;
+        else
+            this.currentPlayer = this.blackPlayer;
+    }
+
     void playRound() {
         // To be tested, not trivial
         board.display();
