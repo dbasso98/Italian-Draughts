@@ -16,14 +16,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TestIfPlayer {
 
 
+    void setFakeStdInput(String fakeInput) {
+        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
+        System.setIn(fakeStandardInput);
+    }
+
     @ParameterizedTest
     @CsvSource({"3, 4, 2, 3", "12, 15, 11, 14"})
     void testReadPosition(String xInput, String yInput,
                           int rowExpected, int columnExpected) {
 
         String fakeInput = xInput + " " + yInput + "\n";
-        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
-        System.setIn(fakeStandardInput);
+        setFakeStdInput(fakeInput);
 
         Point point = new Player(Color.BLACK).readPosition();
         assertEquals(point.x, columnExpected);
@@ -40,8 +44,7 @@ public class TestIfPlayer {
         String fakeInput1 = sourceXIn + " " + sourceYIn + "\n ";
         String fakeInput2 = destinationXIn + " " + destinationYIn + "\n";
         String fakeInput = fakeInput1 + fakeInput2;
-        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
-        System.setIn(fakeStandardInput);
+        setFakeStdInput(fakeInput);
 
         Move move = new Player(Color.BLACK).getMove();
 
@@ -56,9 +59,7 @@ public class TestIfPlayer {
     @CsvSource({"1 a, 1 1", "a 1, 2 3"})
     void nonNumericInputException(String source1, String destination1) {
         String fakeInput = source1 + System.lineSeparator() + destination1 + System.lineSeparator();
-
-        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
-        System.setIn(fakeStandardInput);
+        setFakeStdInput(fakeInput);
 
         Player player = new Player(Color.WHITE);
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
@@ -71,7 +72,12 @@ public class TestIfPlayer {
                 "Please enter a valid expression" + System.lineSeparator();
 
         assertEquals(expected, fakeStandardOutput.toString());
+    }
+
+    void testTurnBehaviour() {
+        Game game = new Game();
 
 
+        game.playRound();
     }
 }
