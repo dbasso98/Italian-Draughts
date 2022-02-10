@@ -18,10 +18,10 @@ public class Move {
             // check for source & destination tile correctness (non-emptiness, emptiness)
             var sourceTile = board.getTile(source);
             if(sourceTile.isTileEmpty()) {
-                throw new EmptyTileException("Cannot move since tile at (" + (source.x+1) + "," + (source.y+1) + ") is empty");
+                throw new EmptyTileException("Cannot move since tile at (" + (source.y+1) + "," + (source.x+1) + ") is empty");
             }
             else if(board.getTile(destination).isTileNotEmpty()) {
-                throw new NonEmptyTileException("Cannot move since tile at (" + (destination.x+1) + "," + (destination.y+1) + ") is not empty");
+                throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y+1) + "," + (destination.x+1) + ") is not empty");
             }
             var piece = sourceTile.popPieceContainedInTile();
             board.getTile(destination).setPieceContainedInTile(piece);

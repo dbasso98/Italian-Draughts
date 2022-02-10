@@ -28,7 +28,7 @@ public class TestIfMove {
         assertTrue(board.getTile(1,2).isTileNotEmpty());
         assertTrue(board.getTile(2,1 ).isTileNotEmpty());
         Exception exception = assertThrows(Exception.class, () -> Move.moveDiagonallyToEmptyTile(board, new Point(1,2), new Point(2,1)));
-        assertEquals("Cannot move since tile at (3,2) is not empty", exception.getMessage());
+        assertEquals("Cannot move since tile at (2,3) is not empty", exception.getMessage());
     }
 
 }

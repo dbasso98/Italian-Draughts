@@ -25,7 +25,7 @@ public class TestIfMoveRules {
     }
 
     @ParameterizedTest
-    @CsvSource({"0,0,1,1", "3,3,4,4"})
+    @CsvSource({"0,0,1,1", "3,3,4,4", "5,5,6,6", "0,2,1,3"})
     void throwsInvalidTileException(int sourceRow, int sourceCol, int destinationRow, int destinationCol) {
         Exception exception = assertThrows(WhiteTileException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
         assertEquals("Cannot play on white tiles, only black ones, please change position!", exception.getMessage());
