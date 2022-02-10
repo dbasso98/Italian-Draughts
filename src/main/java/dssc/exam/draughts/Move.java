@@ -14,7 +14,7 @@ public class Move {
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
 
-            if( MoveRules.isASimpleMove(source, destination) ){
+            if( isASimpleMove(source, destination) ){
                 simpleDiagonalMove(board, source, destination);
             }
             else{
@@ -33,44 +33,53 @@ public class Move {
     private static void simpleSkipMove(Board board, Point source, Point destination) throws Exception{
         try {
             var sourceTile = board.getTile(source);
-            if(sourceTile.isTileEmpty()) {
-                throw new EmptyTileException("Cannot move since tile at (" + (source.y+1) + "," + (source.x+1) + ") is empty");
-            }
+            var destinationTile = board.getTile(destination);
             var middleTile = board.getTile(board.getMiddlePosition(source,destination));
+            MoveRules.checkTileEmptiness(source, sourceTile);
+            MoveRules.checkTileNonEmptiness(destination, destinationTile);
             if(middleTile.isTileEmpty())
                 throw new EmptyTileException("Skip move over two empty tiles is not accepted");
             if(middleTile.getTilePiece().getColorOfPiece() == sourceTile.getTilePiece().getColorOfPiece())
                 throw new SameColorException("Color of piece to skip cannot be the same as source piece");
-            if(board.getTile(destination).isTileNotEmpty()) {
-                throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y+1) + "," + (destination.x+1) + ") is not empty");
-            }
 
-            var piece = sourceTile.popPieceContainedInTile();
+            movePiece(board, destination, sourceTile);
             var pieceEaten = middleTile.popPieceContainedInTile();
-            board.getTile(destination).setPieceContainedInTile(piece);
         }
         catch(Exception e){
             throw e;
         }
-
-
     }
 
     public static void simpleDiagonalMove(Board board, Point source, Point destination) throws Exception {
         try {
             var sourceTile = board.getTile(source);
-            if(sourceTile.isTileEmpty()) {
-                throw new EmptyTileException("Cannot move since tile at (" + (source.y+1) + "," + (source.x+1) + ") is empty");
-            }
-            else if(board.getTile(destination).isTileNotEmpty()) {
-                throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y+1) + "," + (destination.x+1) + ") is not empty");
-            }
-            var piece = sourceTile.popPieceContainedInTile();
-            board.getTile(destination).setPieceContainedInTile(piece);
+            var destinationTile = board.getTile(destination);
+            MoveRules.checkTileEmptiness(source, sourceTile);
+            MoveRules.checkTileNonEmptiness(destination, destinationTile);
+            movePiece(board, destination, sourceTile);
         } catch (Exception e) {
             throw e;
         }
 
+    }
+
+    private static void movePiece(Board board, Point destination, Tile sourceTile) {
+        var piece = sourceTile.popPieceContainedInTile();
+        board.getTile(destination).setPieceContainedInTile(piece);
+    }
+
+    public static boolean isASimpleMove(Point source, Point destination) throws Exception {
+        try {
+            // if we generalize to start - end position which indicates final absolute position after eating many times
+            // checking if diagonal is not needed. but is needed in every substep.
+            MoveRules.isDiagonal(source, destination);
+            if (Math.abs(destination.x - source.x) == 1)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public Move(Point source, Point destination) {
