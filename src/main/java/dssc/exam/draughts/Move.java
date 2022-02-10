@@ -87,6 +87,6 @@ public class Move {
     public void executeOn(Board board) throws Exception {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        diagonalMove(board, this.source, this.destination);
+        movePiece(board, destination, board.getTile(source));
     }
 }
