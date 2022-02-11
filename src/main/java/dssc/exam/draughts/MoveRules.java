@@ -7,18 +7,18 @@ import dssc.exam.draughts.exceptions.SamePositionException;
 
 import java.awt.*;
 import java.util.BitSet;
+import java.util.Map;
 
 public class MoveRules {
 
-    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception{
+    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
         try {
             board.isValidPosition(source);
             board.isValidPosition(destination);
             board.isBlackTile(board.getTile(source));
             board.isBlackTile(board.getTile(destination));
             isNotSamePosition(source, destination);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw e;
         }
 
@@ -26,7 +26,7 @@ public class MoveRules {
     }
 
     static void isDiagonal(Point source, Point destination) throws NotDiagonalMoveException {
-        if(Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
+        if (Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
             throw new NotDiagonalMoveException("Checker can only move diagonally!");
         }
     }
@@ -53,49 +53,47 @@ public class MoveRules {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
         var bitSetOfCandidatesTiles = new BitSet(64);
         for (Tile tile : listOfTiles) {
-            if (checkAdjacentDiagonal(board, tile))
-                bitSetOfCandidatesTiles.set(board.getIndex(tile.getTileRow(), tile.getTileColumn()));
+            // check che la tile contiene un king o no:
+            // non king
+            // w = checkAdjacent(board, tile, direction)
+            // se sei king
+            // check(su giu) w =
+            int weight = 0;
+            weight += checkAdjacentDiagonal(board, tile, tile.getPieceOfTile().getColorOfPiece(), 1, weight);
+                //bitSetOfCandidatesTiles.set(board.getIndex(tile.getTileRow(), tile.getTileColumn()));
         }
         return bitSetOfCandidatesTiles;
     }
 
-    static boolean checkAdjacentDiagonal(Board board, Tile tile) {
-        var pieceColor = tile.getPieceOfTile().getColorOfPiece();
+    static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction, int weight) {
+        var tileRow = tile.getTileRow();
+        var tileColumn = tile.getTileColumn();
+        Map<String, Integer> side = Map.ofEntries(Map.entry("LEFT", -1), Map.entry("RIGHT", 1));
+        for (var diagonalLR : side.values()) {
+            try {
+                board.isValidPosition(tileRow + direction, tileColumn + diagonalLR);
+                board.isValidPosition(tileRow + 2 * direction, tileColumn + 2 * diagonalLR);
+                var firstDiagonalTile = board.getTileInDiagonalOffset(tile, direction, diagonalLR);
+                var secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, direction, diagonalLR);
+                var check = (firstDiagonalTile.isTileNotEmpty() &&
+                        firstDiagonalTile.getPieceOfTile().getColorOfPiece() == originalColorOfPiece &&
+                        secondDiagonalTile.isTileEmpty());
+                if (!check) {
+                    return ++weight;
+                } else {
+                    weight += checkAdjacentDiagonal(board, secondDiagonalTile, originalColorOfPiece, direction, weight);
+                    return weight;
+                }
 
-        if (pieceColor == Color.WHITE) {
-            var firstUpperLeftDiagonalTile = board.getTileInDiagonalOffset(tile,1, -1);
-            var secondUpperLeftDiagonalTile = board.getTileInDiagonalOffset(firstUpperLeftDiagonalTile, 1, -1);
 
-            var firstUpperRightDiagonalTile = board.getTileInDiagonalOffset(tile,1, 1);
-            var secondUpperRightDiagonalTile = board.getTileInDiagonalOffset(firstUpperLeftDiagonalTile, 1, 1);
-
-            if((firstUpperLeftDiagonalTile.isTileNotEmpty() &&
-                    firstUpperLeftDiagonalTile.getPieceOfTile().getColorOfPiece() == Color.BLACK &&
-                        secondUpperLeftDiagonalTile.isTileEmpty())
-                    ||
-                    (firstUpperRightDiagonalTile.isTileNotEmpty() &&
-                            firstUpperRightDiagonalTile.getPieceOfTile().getColorOfPiece() == Color.BLACK &&
-                                secondUpperRightDiagonalTile.isTileEmpty()))
-                return true;
+            } catch (Exception e) {
+                return 0;
+            }
         }
-        else if (pieceColor == Color.BLACK) {
-            var firstLowerLeftDiagonalTile = board.getTileInDiagonalOffset(tile,-1, -1);
-            var secondLowerLeftDiagonalTile = board.getTileInDiagonalOffset(firstLowerLeftDiagonalTile, -1, -1);
-
-            var firstLowerRightDiagonalTile = board.getTileInDiagonalOffset(tile,-1, 1);
-            var secondLowerRightDiagonalTile = board.getTileInDiagonalOffset(firstLowerRightDiagonalTile, -1, 1);
-
-            if((firstLowerLeftDiagonalTile.isTileNotEmpty() &&
-                    firstLowerLeftDiagonalTile.getPieceOfTile().getColorOfPiece() == Color.WHITE &&
-                        secondLowerLeftDiagonalTile.isTileEmpty())
-                    ||
-                    firstLowerRightDiagonalTile.isTileNotEmpty() &&
-                            firstLowerRightDiagonalTile.getPieceOfTile().getColorOfPiece() == Color.WHITE &&
-                                secondLowerRightDiagonalTile.isTileEmpty())
-                return true;
-        }
-
-        return false;
+        return 0;
     }
+
+
+
 
 }
