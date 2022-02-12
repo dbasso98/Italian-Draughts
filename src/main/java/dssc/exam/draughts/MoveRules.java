@@ -4,6 +4,7 @@ import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.BitSet;
+import java.util.HashMap;
 
 public class MoveRules {
 
@@ -45,29 +46,19 @@ public class MoveRules {
         }
     }
 
-    static BitSet candidateTilesForSkipMove(Board board, Color color) {
+    static HashMap<Tile, Integer> candidateTilesForSkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
-        var bitSetOfCandidatesTiles = new BitSet(64);
-        var maxWeight = -1;
-        Tile candidateTile;
+//        var bitSetOfCandidatesTiles = new BitSet(64);
+        var candidateTilesForSkipMap = new HashMap<Tile, Integer>();
         var direction = 1;
         if (color == Color.BLACK) {
             direction = -1;
         }
         for (Tile tile : listOfTiles) {
-            // check che la tile contiene un king o no:
-            // non king
-            // w = checkAdjacent(board, tile, direction)
-            // se sei king
-            // check(su giu) w =
-            int currentWeight = checkAdjacentDiagonal(board, tile, tile.getPieceOfTile().getColorOfPiece(), direction);
-            if (currentWeight > maxWeight) {
-                candidateTile = tile;
-                maxWeight = currentWeight;
-            }
-                //bitSetOfCandidatesTiles.set(board.getIndex(tile.getTileRow(), tile.getTileColumn()));
+            int skipWeight = checkAdjacentDiagonal(board, tile, tile.getPieceOfTile().getColorOfPiece(), direction);
+            candidateTilesForSkipMap.put(tile, skipWeight);
         }
-        return bitSetOfCandidatesTiles;
+        return candidateTilesForSkipMap;
     }
 
     static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction) {
