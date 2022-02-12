@@ -48,20 +48,25 @@ public class MoveRules {
 
     static HashMap<Tile, Integer> candidateTilesForSkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
-//        var bitSetOfCandidatesTiles = new BitSet(64);
         var candidateTilesForSkipMap = new HashMap<Tile, Integer>();
         var direction = 1;
+        Color oppositeColor = Color.BLACK;
         if (color == Color.BLACK) {
             direction = -1;
+            oppositeColor = Color.WHITE;
         }
         for (Tile tile : listOfTiles) {
-            int skipWeight = checkAdjacentDiagonal(board, tile, tile.getPieceOfTile().getColorOfPiece(), direction);
-            candidateTilesForSkipMap.put(tile, skipWeight);
+            int skipWeight = checkAdjacentDiagonal(board, tile, oppositeColor, direction, 0);
+            if (skipWeight > 0)
+                candidateTilesForSkipMap.put(tile, skipWeight);
         }
         return candidateTilesForSkipMap;
     }
 
-    static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction) {
+    static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
+        if (steps == 3) {
+            return 0;
+        }
         boolean rightCheck, leftCheck;
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
@@ -69,12 +74,12 @@ public class MoveRules {
         var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
         var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, -1);
         leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
-        if (leftCheck == rightCheck == false) {
+        if (!(leftCheck || rightCheck)) {
             return 0;
         }
         else {
-            var leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction);
-            var rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction);
+            var leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction, ++steps);
+            var rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction, ++steps);
             if(leftWeight > rightWeight)
                 return leftWeight+1;
             else

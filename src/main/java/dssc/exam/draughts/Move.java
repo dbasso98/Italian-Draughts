@@ -27,8 +27,7 @@ public class Move {
                                         + printPositionsOfTiles(bestTilesToStartTheSkip));
                 }
             }
-            else{
-                if(candidateTiles.isEmpty()){
+            else if(candidateTiles.isEmpty()){
                     if(isASimpleMove(source, destination)){
                         diagonalMove(board, source, destination);
                     }
@@ -36,11 +35,10 @@ public class Move {
                         throw new InvalidMoveException("This piece cannot move there. Pieces can only move diagonally!");
                     }
                 }
-                else{
-                    var arrayListOfCandidateTiles = new ArrayList<>(candidateTiles.keySet());
-                    throw new InvalidMoveException("There are pieces that must capture, try these positions:"
-                                                    + printPositionsOfTiles(arrayListOfCandidateTiles));
-                }
+            else{
+                var arrayListOfCandidateTiles = new ArrayList<>(candidateTiles.keySet());
+                throw new InvalidMoveException("There are pieces that must capture, try these positions: "
+                                                + printPositionsOfTiles(arrayListOfCandidateTiles));
             }
         }
         catch(Exception e){

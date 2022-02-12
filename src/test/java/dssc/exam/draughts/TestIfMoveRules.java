@@ -72,13 +72,13 @@ public class TestIfMoveRules {
     void checksPresenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
-        //(MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 1));
+        assertEquals(1, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
     }
 
     @Test
     void checksAbsenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
-        //assertFalse(MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1))));
+        assertEquals(0,MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
     }
 
 
@@ -86,17 +86,15 @@ public class TestIfMoveRules {
     void checksCandidateTilesForSkipMove() {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
-        //assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).stream().count());
-        //assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).stream().count());
-
+        assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).size());
     }
 
     @Test
     void checksCandidateTilesForSkipMoveIsEmptyAtBeginning() {
         var newBoard = new Board();
-        //assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).stream().count());
-        //assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).stream().count());
-
+        assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).size());
     }
 
 
