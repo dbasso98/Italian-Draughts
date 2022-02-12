@@ -71,34 +71,27 @@ public class MoveRules {
     }
 
     static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction) {
-        boolean rightCheck, leftCheck = false;
-        try {
-            var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
-            var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
-            rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
-
-            var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
-            var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, -1);
-            leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
-
-            if (leftCheck == rightCheck == false) {
-                return 0;
-            }
-            else {
-                var leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction);
-                var rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction);
-                if(leftWeight > rightWeight)
-                    return leftWeight+1;
-                else
-                    return rightWeight+1;
-            }
-        }
-        catch(Exception e) {
+        boolean rightCheck, leftCheck;
+        var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
+        var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
+        rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
+        var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
+        var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, -1);
+        leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
+        if (leftCheck == rightCheck == false) {
             return 0;
+        }
+        else {
+            var leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction);
+            var rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction);
+            if(leftWeight > rightWeight)
+                return leftWeight+1;
+            else
+                return rightWeight+1;
         }
     }
 
-    private static boolean canSkip(Board board, Color originalColorOfPiece, Tile firstDiagonalTile, Tile secondDiagonalTile) throws InvalidIndexException {
+    private static boolean canSkip(Board board, Color originalColorOfPiece, Tile firstDiagonalTile, Tile secondDiagonalTile) {
         try {
             return board.isValidPosition(firstDiagonalTile.getTilePosition()) &&
                     board.isValidPosition(secondDiagonalTile.getTilePosition()) &&
@@ -107,9 +100,7 @@ public class MoveRules {
                     secondDiagonalTile.isTileEmpty();
         }
         catch(Exception e){
-            throw e;
+            return false;
         }
     }
-
-
 }
