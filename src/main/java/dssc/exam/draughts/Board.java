@@ -80,11 +80,19 @@ public class Board {
         return board.get(index);
     }
 
-    public Tile getTile(int row, int column) {
+    public Tile getTile(int row, int column) throws Exception{
+        try{isValidPosition(row, column);}
+        catch(Exception e) {
+            throw e;
+        }
         return getTile(getIndex(row, column));
     }
 
-    public Tile getTile(Point position) {
+    public Tile getTile(Point position) throws Exception{
+        try{isValidPosition(position);}
+        catch(Exception e) {
+            throw e;
+        }
         return getTile(position.x, position.y);
     }
 
@@ -92,11 +100,11 @@ public class Board {
         return getTile(index).getPieceOfTile();
     }
 
-    public Piece getPieceAtTile(int row, int column) {
+    public Piece getPieceAtTile(int row, int column) throws Exception{
         return getTile(row, column).getPieceOfTile();
     }
 
-    public Piece getPieceAtTile(Point position) {
+    public Piece getPieceAtTile(Point position) throws Exception{
         return getTile(position).getPieceOfTile();
     }
 
@@ -147,7 +155,7 @@ public class Board {
         return true;
     }
 
-    public void display() {
+    public void display() throws Exception{
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
         for (int row = maxRows - 1; row >= 0; row--) {
@@ -165,16 +173,21 @@ public class Board {
         return getPieceAtTile(index).getColorOfPiece();
     }
 
-    public Color getColorOfPieceAtTile(int row, int column) {
+    public Color getColorOfPieceAtTile(int row, int column) throws Exception{
         return getPieceAtTile(row, column).getColorOfPiece();
     }
 
-    public Color getColorOfPieceAtTile(Point position) {
+    public Color getColorOfPieceAtTile(Point position) throws Exception{
         return getPieceAtTile(position).getColorOfPiece();
     }
 
-    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        return getTile(tile.getTileRow() + offset1, tile.getTileColumn() + offset2);
+    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2){
+        try{
+            return getTile(tile.getTileRow() + offset1, tile.getTileColumn() + offset2);
+        }
+        catch (Exception e) {
+            return new Tile(tile.getTileColor(), new Point(tile.getTileRow() + offset1, tile.getTileColumn() + offset2));
+        }
     }
 
 }

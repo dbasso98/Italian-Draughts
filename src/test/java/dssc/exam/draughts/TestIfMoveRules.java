@@ -35,7 +35,7 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
+    void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) throws Exception{
         if (checkIfTileIsBlack(row, column)) {
             Exception exception = assertThrows(SamePositionException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
             assertEquals("Source and destination position cannot be the same!", exception.getMessage());
@@ -48,7 +48,7 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
+    void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset) throws Exception{
         if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
             Exception exception = assertThrows(NotDiagonalMoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
                     new Point(row + offset[0], column + offset[1])));
@@ -64,26 +64,25 @@ public class TestIfMoveRules {
         return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> x[0]!=x[1] && (x[0]==0 || x[1]==0) );
     }
 
-    private boolean checkIfTileIsBlack(int row, int column) {
+    private boolean checkIfTileIsBlack(int row, int column) throws Exception{
         return board.getTile(row, column).getTileColor() == Color.BLACK;
     }
 
     @Test
-    void checksPresenceOfManInAdjacentDiagonals() {
+    void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
         assertEquals(1, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
     }
 
     @Test
-    void checksAbsenceOfManInAdjacentDiagonals() {
+    void checksAbsenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         assertEquals(0,MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
     }
 
-
     @Test
-    void checksCandidateTilesForSkipMove() {
+    void checksCandidateTilesForSkipMove() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
         assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
@@ -97,6 +96,13 @@ public class TestIfMoveRules {
         assertEquals(0,MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).size());
     }
 
-
+    @Test
+    void checkCandidateTilesForSkipMoveComplex() throws Exception{
+        var newBoard = new Board();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
+        Move.movePiece(newBoard, new Point(6,5), new Point(4,7));
+        assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+    }
 
 }

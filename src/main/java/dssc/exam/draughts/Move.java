@@ -100,7 +100,7 @@ public class Move {
         destinationTile.setPieceContainedInTile(piece);
     }
 
-    public static void movePiece(Board board, Point source, Point destination) {
+    public static void movePiece(Board board, Point source, Point destination) throws Exception{
         movePiece(board.getTile(source), board.getTile(destination));
     }
 
@@ -109,7 +109,7 @@ public class Move {
         this.destination = destination;
     }
 
-    public void executeOn(Board board) {
+    public void executeOn(Board board) throws Exception{
         // update the board so that the move is applied
         // At the moment does just diagonal moves
         movePiece(board, source, destination);

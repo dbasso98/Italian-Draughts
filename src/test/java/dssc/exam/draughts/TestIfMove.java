@@ -22,7 +22,7 @@ public class TestIfMove {
     }
 
     @Test
-    void doesntMoveDiagonallyIfTileIsOccupied() {
+    void doesntMoveDiagonallyIfTileIsOccupied() throws Exception{
         var board = new Board();
         assertTrue(board.getTile(1,2).isTileNotEmpty());
         assertTrue(board.getTile(2,1 ).isTileNotEmpty());

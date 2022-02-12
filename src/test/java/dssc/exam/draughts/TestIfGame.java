@@ -26,7 +26,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testTurnBehaviour() {
+    void testTurnBehaviour() throws Exception{
         String move = "4 3" + System.lineSeparator() + "5 4" + System.lineSeparator();
 
         String fakeInput = move;

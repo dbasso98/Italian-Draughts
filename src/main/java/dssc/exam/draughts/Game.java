@@ -18,7 +18,7 @@ public class Game {
             this.currentPlayer = this.blackPlayer;
     }
 
-    void playRound() {
+    void playRound() throws Exception{
         // To be tested, not trivial
         board.display();
         boolean isMoveInvalid = true;
