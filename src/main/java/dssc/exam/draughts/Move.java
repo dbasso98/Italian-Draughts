@@ -16,30 +16,26 @@ public class Move {
             var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
             var maxWeight = Collections.max(candidateTiles.values());
             var bestTilesToStartTheSkip = new ArrayList<> (candidateTiles.entrySet().stream()
-                                                                            .filter(entry -> entry.getValue() == maxWeight)
-                                                                            .map(entry -> entry.getKey())
-                                                                            .collect(Collectors.toList()));
-            if(candidateTiles.containsKey(board.getTile(source))){
-                if (bestTilesToStartTheSkip.contains(board.getTile(source)))
-                    skipMove(board, source, destination);
-                else {
-                    throw new Exception("You can select a better skip! Choose tile at position "
-                                        + printPositionsOfTiles(bestTilesToStartTheSkip));
+                    .filter(entry -> entry.getValue() == maxWeight)
+                    .map(entry -> entry.getKey())
+                    .collect(Collectors.toList()));
+            if(bestTilesToStartTheSkip.contains(board.getTile(source))) {
+                skipMove(board, source, destination);
+            }
+            else {
+                throw new Exception("You can select a better skip! Choose tile at position "
+                        + printPositionsOfTiles(bestTilesToStartTheSkip));
+            }
+            if(candidateTiles.isEmpty()){
+                if(isASimpleMove(source, destination)){
+                    diagonalMove(board, source, destination);
+                }
+                else{
+                    throw new InvalidMoveException("This piece cannot move there. Pieces can only move diagonally!");
                 }
             }
-            else if(candidateTiles.isEmpty()){
-                    if(isASimpleMove(source, destination)){
-                        diagonalMove(board, source, destination);
-                    }
-                    else{
-                        throw new InvalidMoveException("This piece cannot move there. Pieces can only move diagonally!");
-                    }
-                }
-            else{
-                var arrayListOfCandidateTiles = new ArrayList<>(candidateTiles.keySet());
-                throw new InvalidMoveException("There are pieces that must capture, try these positions: "
-                                                + printPositionsOfTiles(arrayListOfCandidateTiles));
-            }
+            throw new InvalidMoveException("There are pieces that must capture, try these positions: "
+                    + printPositionsOfTiles(bestTilesToStartTheSkip));
         }
         catch(Exception e){
             throw e;

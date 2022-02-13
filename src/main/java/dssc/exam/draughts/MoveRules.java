@@ -3,6 +3,7 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 
@@ -49,18 +50,54 @@ public class MoveRules {
     static HashMap<Tile, Integer> candidateTilesForSkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
         var candidateTilesForSkipMap = new HashMap<Tile, Integer>();
-        var direction = 1;
-        Color oppositeColor = Color.BLACK;
+        int direction = 0;
         if (color == Color.BLACK) {
             direction = -1;
-            oppositeColor = Color.WHITE;
         }
+        else if (color == Color.WHITE)
+            direction = 1;
         for (Tile tile : listOfTiles) {
-            int skipWeight = checkAdjacentDiagonal(board, tile, oppositeColor, direction, 0);
+            int skipWeight = checkAdjacentDiagonal(board, tile, color, direction, 0);
+            if (tile.getPieceOfTile().isKing()){
+                int oppositeDirectionMoveWeight = checkAdjacentDiagonalForKing(board, tile, color, direction, 0);
+                if (oppositeDirectionMoveWeight > skipWeight)
+                    skipWeight = oppositeDirectionMoveWeight;
+            }
             if (skipWeight > 0)
                 candidateTilesForSkipMap.put(tile, skipWeight);
         }
         return candidateTilesForSkipMap;
+    }
+
+    public static int checkAdjacentDiagonalForKing(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
+        if (steps == 3) {
+            return 0;
+        }
+        var oppositeDirection = -1*direction;
+        boolean rightCheck, leftCheck, oppositeDirectionRightCheck, oppositeDirectionLeftCheck;
+        var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
+        var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
+        rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
+        var firstOppositeRightDiagonalTile = board.getTileInDiagonalOffset(tile, oppositeDirection, 1);
+        var secondOppositeRightDiagonalTile = board.getTileInDiagonalOffset(firstOppositeRightDiagonalTile, oppositeDirection, 1);
+        oppositeDirectionRightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
+
+        var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
+        var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstLeftDiagonalTile, direction, -1);
+        leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
+        var firstOppositeLeftDiagonalTile = board.getTileInDiagonalOffset(tile, oppositeDirection, -1);
+        var secondOppositeLeftDiagonalTile = board.getTileInDiagonalOffset(firstOppositeLeftDiagonalTile, oppositeDirection, -1);
+        oppositeDirectionLeftCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
+        if (!(leftCheck || rightCheck || oppositeDirectionRightCheck || oppositeDirectionLeftCheck)) {
+            return 0;
+        }
+        else {
+            var leftWeight = checkAdjacentDiagonalForKing(board, secondLeftDiagonalTile, originalColorOfPiece, direction, ++steps);
+            var rightWeight = checkAdjacentDiagonalForKing(board, secondRightDiagonalTile, originalColorOfPiece, direction, ++steps);
+            var oppositeLeftWeight = checkAdjacentDiagonalForKing(board, secondOppositeLeftDiagonalTile, originalColorOfPiece, direction, ++steps);
+            var oppositeRightWeight = checkAdjacentDiagonalForKing(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, ++steps);
+            return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight,oppositeRightWeight)) + 1;
+        }
     }
 
     static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
@@ -92,7 +129,7 @@ public class MoveRules {
             return board.isValidPosition(firstDiagonalTile.getTilePosition()) &&
                     board.isValidPosition(secondDiagonalTile.getTilePosition()) &&
                     firstDiagonalTile.isTileNotEmpty() &&
-                    firstDiagonalTile.getPieceOfTile().getColorOfPiece() == originalColorOfPiece &&
+                    firstDiagonalTile.getPieceOfTile().getColorOfPiece() != originalColorOfPiece &&
                     secondDiagonalTile.isTileEmpty();
         }
         catch(Exception e){

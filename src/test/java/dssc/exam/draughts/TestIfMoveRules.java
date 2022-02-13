@@ -72,13 +72,13 @@ public class TestIfMoveRules {
     void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
-        assertEquals(1, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
+        assertEquals(1, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.WHITE, 1, 0));
     }
 
     @Test
     void checksAbsenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
-        assertEquals(0,MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.BLACK, 1, 0));
+        assertEquals(0,MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2,1)), Color.WHITE, 1, 0));
     }
 
     @Test
@@ -97,12 +97,21 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checkCandidateTilesForSkipMoveComplex() throws Exception{
+    void checkCandidateTilesForMoreThanOneSkip() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
         Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
         Move.movePiece(newBoard, new Point(6,5), new Point(4,7));
         assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+    }
+
+    void checkSkipsForKingMove() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2,1).upgradePieceToKing();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
+        Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
+        assertEquals(3,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
     }
 
 }

@@ -98,9 +98,9 @@ public class TestIfBoard {
                 "8 [b][ ][b][ ][B][ ][b][ ] 8" + System.lineSeparator() +
                 "7 [ ][ ][ ][b][ ][ ][ ][b] 7" + System.lineSeparator() +
                 "6 [b][ ][b][ ][b][ ][b][ ] 6" + System.lineSeparator() +
-                "5 [ ][ ][ ][ ][ ][ ][ ][b] 5" + System.lineSeparator() +
-                "4 [ ][ ][b][ ][ ][ ][ ][ ] 4" + System.lineSeparator() +
-                "3 [ ][w][ ][w][ ][w][ ][w] 3" + System.lineSeparator() +
+                "5 [ ][ ][ ][ ][ ][ ][ ][ ] 5" + System.lineSeparator() +
+                "4 [ ][ ][b][ ][ ][ ][b][ ] 4" + System.lineSeparator() +
+                "3 [ ][W][ ][w][ ][w][ ][w] 3" + System.lineSeparator() +
                 "2 [W][ ][w][ ][w][ ][w][ ] 2" + System.lineSeparator() +
                 "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
                 "   1  2  3  4  5  6  7  8" + System.lineSeparator();
