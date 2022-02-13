@@ -1,6 +1,5 @@
 package dssc.exam.draughts;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -27,9 +26,7 @@ public class TestIfGame {
 
     @Test
     void testTurnBehaviour() throws Exception{
-        String move = "4 3" + System.lineSeparator() + "5 4" + System.lineSeparator();
-
-        String fakeInput = move;
+        String fakeInput = "4 3" + System.lineSeparator() + "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
         Game game = new Game();

@@ -81,19 +81,19 @@ public class Board {
     }
 
     public Tile getTile(int row, int column) throws Exception{
-        try{isValidPosition(row, column);}
-        catch(Exception e) {
-            throw e;
-        }
-        return getTile(getIndex(row, column));
+        if (isValidPosition(row, column))
+            return getTile(getIndex(row, column));
+        else
+            throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
     }
 
     public Tile getTile(Point position) throws Exception{
-        try{isValidPosition(position);}
-        catch(Exception e) {
-            throw e;
-        }
-        return getTile(position.x, position.y);
+       try {
+           return getTile(position.x, position.y);
+       }
+       catch(Exception e){
+           throw e;
+       }
     }
 
     public Piece getPieceAtTile(int index) {
@@ -139,13 +139,14 @@ public class Board {
         return position >= 0 && position <= lastIndex;
     }
 
-    public boolean isValidPosition(int row, int column) throws InvalidIndexException {
+    public boolean isValidPosition(int row, int column){
         if(row <0 || column < 0 || row > 7 || column > 7)
-            throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
+//            throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
+            return false;
         return true;
     }
 
-    public boolean isValidPosition(Point position) throws InvalidIndexException{
+    public boolean isValidPosition(Point position){
         return isValidPosition(position.x, position.y);
     }
 
@@ -182,12 +183,16 @@ public class Board {
     }
 
     public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2){
-        try{
+//        try{
+//            return getTile(tile.getTileRow() + offset1, tile.getTileColumn() + offset2);
+//        }
+//        catch (Exception e) {
+//            return new Tile(tile.getTileColor(), new Point(tile.getTileRow() + offset1, tile.getTileColumn() + offset2));
+//        }
+        try {
             return getTile(tile.getTileRow() + offset1, tile.getTileColumn() + offset2);
-        }
-        catch (Exception e) {
-            return new Tile(tile.getTileColor(), new Point(tile.getTileRow() + offset1, tile.getTileColumn() + offset2));
+        } catch (Exception e) {
+            return new Tile(tile.getTileColor(), new Point(-1, -1));
         }
     }
-
 }

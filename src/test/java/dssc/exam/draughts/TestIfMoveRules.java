@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -105,13 +106,14 @@ public class TestIfMoveRules {
         assertEquals(2,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
     }
 
+    @Test
     void checkSkipsForKingMove() throws Exception{
         var newBoard = new Board();
         newBoard.getPieceAtTile(2,1).upgradePieceToKing();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
         Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
         Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
-        assertEquals(3,MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
 
 }

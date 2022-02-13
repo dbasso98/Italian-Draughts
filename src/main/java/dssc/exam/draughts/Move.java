@@ -97,7 +97,12 @@ public class Move {
     }
 
     public static void movePiece(Board board, Point source, Point destination) throws Exception{
-        movePiece(board.getTile(source), board.getTile(destination));
+        try {
+            movePiece(board.getTile(source), board.getTile(destination));
+        }
+        catch (Exception e) {
+            throw e;
+        }
     }
 
     public Move(Point source, Point destination) {
@@ -108,6 +113,10 @@ public class Move {
     public void executeOn(Board board) throws Exception{
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        movePiece(board, source, destination);
+        try {
+            movePiece(board, source, destination);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
