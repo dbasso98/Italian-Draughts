@@ -101,13 +101,13 @@ public class MoveRules {
         else {
             path.add(tile);
             int leftWeight=0, rightWeight=0, oppositeLeftWeight=0, oppositeRightWeight=0;
-            if (secondLeftDiagonalTile.getTileRow()!= -1 && leftCheck)
+            if (leftCheck)
                 leftWeight = checkAdjacentDiagonalForKing(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (secondRightDiagonalTile.getTileRow()!= -1 && rightCheck)
+            if (rightCheck)
                 rightWeight = checkAdjacentDiagonalForKing(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (secondOppositeLeftDiagonalTile.getTileRow()!= -1 && oppositeDirectionLeftCheck)
+            if (oppositeDirectionLeftCheck)
                 oppositeLeftWeight = checkAdjacentDiagonalForKing(board, secondOppositeLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (secondOppositeRightDiagonalTile.getTileRow()!= -1 && oppositeDirectionRightCheck)
+            if (oppositeDirectionRightCheck)
                 oppositeRightWeight = checkAdjacentDiagonalForKing(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, steps, path);
             return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight,oppositeRightWeight)) + 1;
         }
@@ -131,8 +131,11 @@ public class MoveRules {
             return 0;
         }
         else {
-            var leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps);
-            var rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps);
+            int leftWeight=0, rightWeight=0;
+            if(leftCheck)
+                leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps);
+            if(rightCheck)
+                rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps);
             return Math.max(leftWeight, rightWeight) + 1;
         }
     }
