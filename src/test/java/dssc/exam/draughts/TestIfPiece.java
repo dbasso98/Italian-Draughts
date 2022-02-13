@@ -17,7 +17,7 @@ public class TestIfPiece {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         var fakePiece = new Piece(1, Color.BLACK);
-        fakePiece.printPieceInfo();
+        fakePiece.printInfo();
 
         assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());
     }
@@ -37,14 +37,14 @@ public class TestIfPiece {
     @Test
     void displayBlackKing(){
         Piece blackKing = new Piece(1, Color.BLACK);
-        blackKing.upgradePieceToKing();
+        blackKing.upgradeToKing();
         assertEquals("[B]", blackKing.display() );
     }
 
     @Test
     void displayWhiteKing(){
         Piece whiteKing = new Piece(1, Color.WHITE);
-        whiteKing.upgradePieceToKing();
+        whiteKing.upgradeToKing();
         assertEquals("[W]", whiteKing.display() );
     }
 }

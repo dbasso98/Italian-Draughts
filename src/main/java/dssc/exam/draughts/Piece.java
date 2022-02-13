@@ -15,7 +15,7 @@ public class Piece {
         this.pieceColor = pieceColor;
     }
 
-    public void upgradePieceToKing() {
+    public void upgradeToKing() {
         this.isKing = true;
     }
 
@@ -23,11 +23,11 @@ public class Piece {
         return this.isKing;
     }
 
-    public Color getColorOfPiece() {
+    public Color getColor() {
         return this.pieceColor;
     }
 
-    public int getIdOfPiece() {
+    public int getId() {
         return this.id;
     }
 
@@ -40,7 +40,7 @@ public class Piece {
                 '}';
     }
 
-    public void printPieceInfo() {
+    public void printInfo() {
         System.out.println(this);
     }
 

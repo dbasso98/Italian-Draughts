@@ -45,7 +45,7 @@ public class Move {
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
         StringBuilder result = new StringBuilder();
         for(var tile : tiles){
-            result.append("(").append(tile.getTilePosition().y + 1).append(",").append(tile.getTilePosition().x + 1).append(") ");
+            result.append("(").append(tile.getPosition().y + 1).append(",").append(tile.getPosition().x + 1).append(") ");
         }
         return result.toString();
     }
@@ -54,13 +54,13 @@ public class Move {
         try {
             var sourceTile = board.getTile(source);
             var middleTile = board.getTile(board.getMiddlePosition(source,destination));
-            if(middleTile.isTileEmpty())
+            if(middleTile.isEmpty())
                 throw new EmptyTileException("Skip move over two empty tiles is not accepted");
-            if(middleTile.getPieceOfTile().getColorOfPiece() == sourceTile.getPieceOfTile().getColorOfPiece())
+            if(middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
                 throw new SameColorException("Color of piece to skip cannot be the same as source piece");
             diagonalMove(board, source, destination);
 
-            middleTile.popPieceContainedInTile();
+            middleTile.popPiece();
         }
         catch(Exception e){
             throw e;
@@ -92,8 +92,8 @@ public class Move {
     }
 
     public static void movePiece(Tile sourceTile, Tile destinationTile) {
-        var piece = sourceTile.popPieceContainedInTile();
-        destinationTile.setPieceContainedInTile(piece);
+        var piece = sourceTile.popPiece();
+        destinationTile.setPiece(piece);
     }
 
     public static void movePiece(Board board, Point source, Point destination) throws Exception{

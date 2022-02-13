@@ -33,15 +33,15 @@ public class TestIfGame {
         Board board = new Board();
         game.loadGame(board, 0);
 
-        assertTrue(board.getTile(2, 3).isTileNotEmpty());
-        assertTrue(board.getTile(3, 4).isTileEmpty());
+        assertTrue(board.getTile(2, 3).isNotEmpty());
+        assertTrue(board.getTile(3, 4).isEmpty());
         assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         assertEquals(0, game.getRound());
 
         game.playRound();
 
-        assertTrue(board.getTile(2, 3).isTileEmpty());
-        assertTrue(board.getTile(3, 4).isTileNotEmpty());
+        assertTrue(board.getTile(2, 3).isEmpty());
+        assertTrue(board.getTile(3, 4).isNotEmpty());
         assertEquals(Color.BLACK, game.getCurrentPlayer().getColor());
         assertEquals(1, game.getRound());
     }

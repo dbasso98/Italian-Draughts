@@ -17,12 +17,12 @@ public class TestIfBoard {
 
     @Test
     void hasSizeOf64Tiles() {
-        assertEquals(64, board.getSizeOfBoard());
+        assertEquals(64, board.getSize());
     }
 
     @Test
     void has24Pieces() {
-        assertEquals(24, board.getTotalNumberOfPieces());
+        assertEquals(24, board.getNumberOfPiecesOnTheBoard());
     }
 
     @ParameterizedTest
@@ -36,8 +36,8 @@ public class TestIfBoard {
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
     void has12WhitePiecesInFirstThreeRows(Color color, int position) {
-        assertEquals(board.getTile(position).getPieceOfTile().getColorOfPiece(), color);
-        assertEquals(board.getPieceAtTile(position).getColorOfPiece(), color);
+        assertEquals(board.getTile(position).getPiece().getColor(), color);
+        assertEquals(board.getPieceAtTile(position).getColor(), color);
     }
 
     @ParameterizedTest
@@ -51,12 +51,12 @@ public class TestIfBoard {
     @ParameterizedTest
     @ValueSource(ints = {24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39})
     void hasEmptyTilesInTwoMiddleRows(int position) {
-        assertTrue(board.getTile(position).isTileEmpty());
+        assertTrue(board.getTile(position).isEmpty());
     }
 
     @Property
     void isColorSymmetric(@ForAll("validPositionGenerator") int position) {
-        assertSame(board.getTile(position).getTileColor(), board.getSymmetricTile(position).getTileColor());
+        assertSame(board.getTile(position).getColor(), board.getSymmetricTile(position).getColor());
     }
     @Provide
     Arbitrary<Integer> validPositionGenerator () {
@@ -83,8 +83,8 @@ public class TestIfBoard {
 
     @Property
     void associatesCorrectPositionToTiles(@ForAll("validRowColumnGenerator") int row, @ForAll("validRowColumnGenerator") int column) throws Exception{
-        assertEquals(row, board.getTile(row, column).getTileRow());
-        assertEquals(column, board.getTile(row, column).getTileColumn());
+        assertEquals(row, board.getTile(row, column).getRow());
+        assertEquals(column, board.getTile(row, column).getColumn());
     }
 
     @Provide
@@ -105,8 +105,8 @@ public class TestIfBoard {
                 "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
                 "   1  2  3  4  5  6  7  8" + System.lineSeparator();
         Board board = new Board();
-        board.getPieceAtTile(1, 0).upgradePieceToKing();
-        board.getPieceAtTile(7, 4).upgradePieceToKing();
+        board.getPieceAtTile(1, 0).upgradeToKing();
+        board.getPieceAtTile(7, 4).upgradeToKing();
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));

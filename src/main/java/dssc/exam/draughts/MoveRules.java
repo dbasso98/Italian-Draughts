@@ -34,13 +34,13 @@ public class MoveRules {
     }
 
     static void checkTileNonEmptiness(Point destination, Tile destinationTile) throws NonEmptyTileException {
-        if (destinationTile.isTileNotEmpty()) {
+        if (destinationTile.isNotEmpty()) {
             throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y + 1) + "," + (destination.x + 1) + ") is not empty");
         }
     }
 
     static void checkTileEmptiness(Point source, Tile sourceTile) throws EmptyTileException {
-        if (sourceTile.isTileEmpty()) {
+        if (sourceTile.isEmpty()) {
             throw new EmptyTileException("Cannot move since tile at (" + (source.y + 1) + "," + (source.x + 1) + ") is empty");
         }
     }
@@ -56,7 +56,7 @@ public class MoveRules {
             direction = 1;
         int skipWeight;
         for (Tile tile : listOfTiles) {
-            if (tile.getPieceOfTile().isKing())
+            if (tile.getPiece().isKing())
                 skipWeight = checkAdjacentDiagonalForKing(board, tile, color, direction, -1, new ArrayList<>());
             else
                 skipWeight = checkAdjacentDiagonal(board, tile, color, direction, -1);
@@ -141,10 +141,10 @@ public class MoveRules {
     }
 
     private static boolean canSkip(Board board, Color originalColorOfPiece, Tile firstDiagonalTile, Tile secondDiagonalTile) {
-        return board.isValidPosition(firstDiagonalTile.getTilePosition()) &&
-                    board.isValidPosition(secondDiagonalTile.getTilePosition()) &&
-                    firstDiagonalTile.isTileNotEmpty() &&
-                    firstDiagonalTile.getPieceOfTile().getColorOfPiece() != originalColorOfPiece &&
-                    secondDiagonalTile.isTileEmpty();
+        return board.isValidPosition(firstDiagonalTile.getPosition()) &&
+                    board.isValidPosition(secondDiagonalTile.getPosition()) &&
+                    firstDiagonalTile.isNotEmpty() &&
+                    firstDiagonalTile.getPiece().getColor() != originalColorOfPiece &&
+                    secondDiagonalTile.isEmpty();
     }
 }

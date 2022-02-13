@@ -13,23 +13,23 @@ public class TestIfTile {
 
     @Test
     void createNonEmptyTile() {
-        assertEquals(blackTileBlackMan.getPieceOfTile().getIdOfPiece(), 1);
-        assertEquals(blackTileBlackMan.getPieceOfTile().getColorOfPiece(), Color.BLACK);
+        assertEquals(blackTileBlackMan.getPiece().getId(), 1);
+        assertEquals(blackTileBlackMan.getPiece().getColor(), Color.BLACK);
     }
 
     @Test
     void createEmptyTile() {
-        assertNull(emptyTile.getPieceOfTile());
+        assertNull(emptyTile.getPiece());
     }
 
     @Test
     void emptinessOfTile() {
-        assertTrue(emptyTile.isTileEmpty());
+        assertTrue(emptyTile.isEmpty());
     }
 
     @Test
     void nonEmptinessOfTile() {
-        assertFalse(blackTileBlackMan.isTileEmpty());
+        assertFalse(blackTileBlackMan.isEmpty());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class TestIfTile {
     void nonemptyTileDisplay(){
         assertEquals("[b]", blackTileBlackMan.display());
         Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK, new Point(0,0));
-        blackTileWhiteKing.getPieceOfTile().upgradePieceToKing();
+        blackTileWhiteKing.getPiece().upgradeToKing();
         assertEquals("[W]", blackTileWhiteKing.display());
     }
 

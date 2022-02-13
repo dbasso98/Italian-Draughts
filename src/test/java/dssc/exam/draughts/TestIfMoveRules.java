@@ -66,7 +66,7 @@ public class TestIfMoveRules {
     }
 
     private boolean checkIfTileIsBlack(int row, int column) throws Exception{
-        return board.getTile(row, column).getTileColor() == Color.BLACK;
+        return board.getTile(row, column).getColor() == Color.BLACK;
     }
 
     @Test
@@ -109,7 +109,7 @@ public class TestIfMoveRules {
     @Test
     void checkSkipsForKingMove() throws Exception{
         var newBoard = new Board();
-        newBoard.getPieceAtTile(2,1).upgradePieceToKing();
+        newBoard.getPieceAtTile(2,1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
         Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
         Move.movePiece(newBoard, new Point(6,5), new Point(3,6));

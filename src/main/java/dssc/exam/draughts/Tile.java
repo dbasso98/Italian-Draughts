@@ -5,7 +5,7 @@ import java.awt.*;
 class Tile {
     private Piece piece = null;
     private final Color tileColor;
-    private Point position = null;
+    private Point position;
 
     Tile(Piece piece, Color tileColor, Point position) {
         this(tileColor, position);
@@ -17,33 +17,33 @@ class Tile {
         this.position = position;
     }
 
-    boolean isTileEmpty() {
+    boolean isEmpty() {
         return piece == null;
     }
 
-    Piece popPieceContainedInTile() {
+    Piece popPiece() {
         var piece = this.piece;
         this.piece = null;
         return piece;
     }
 
-    void setPieceContainedInTile(Piece piece) {
+    void setPiece(Piece piece) {
         this.piece = piece;
     }
 
-    boolean isTileNotEmpty() {
-        return !(isTileEmpty());
+    boolean isNotEmpty() {
+        return !(isEmpty());
     }
 
-    Piece getPieceOfTile() {
+    Piece getPiece() {
         return piece;
     }
 
-    Color getTileColor() {
+    Color getColor() {
         return tileColor;
     }
 
-    public Point getTilePosition(){
+    public Point getPosition(){
         return position;
     }
 
@@ -51,22 +51,20 @@ class Tile {
         return tileColor == Color.BLACK;
     }
 
-    public int getTileRow() {
+    public int getRow() {
         return position.x;
     }
 
-    public int getTileColumn() {
+    public int getColumn() {
         return position.y;
     }
-
-
 
     private String displayEmptyTile() {
         return "[ ]";
     }
 
     public String display() {
-        if (isTileEmpty()) {
+        if (isEmpty()) {
             return displayEmptyTile();
         }
         return piece.display();
