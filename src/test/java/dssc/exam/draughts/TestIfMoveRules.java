@@ -67,6 +67,13 @@ public class TestIfMoveRules {
     }
 
     @Test
+    void makeAnInvalidMove() throws Exception{
+        var newBoard = new Board();
+        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(6,5)));
+        assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
+    }
+
+    @Test
     void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
@@ -112,5 +119,4 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
         assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
-
 }

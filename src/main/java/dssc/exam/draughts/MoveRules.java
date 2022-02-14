@@ -15,10 +15,19 @@ public class MoveRules {
             board.isBlackTile(board.getTile(source));
             board.isBlackTile(board.getTile(destination));
             isNotSamePosition(source, destination);
+            isValidDistance(source, destination);
         } catch (Exception e) {
             throw e;
         }
         return true;
+    }
+
+    private static void isValidDistance(Point source, Point destination) throws Exception{
+        isDiagonal(source, destination);
+        var distance = Math.abs(destination.x - source.x);
+        if (distance != 1 && distance != 2){
+            throw new InvalidMoveException(("Checker can move only by one or two tiles!"));
+        }
     }
 
     static void isDiagonal(Point source, Point destination) throws NotDiagonalMoveException {
