@@ -25,8 +25,8 @@ public class Board {
                 secondColor = Color.BLACK;
             }
             for (int column = 0; column < maxColumns; column += 2) {
-                board.add(new Tile(firstColor , new Point(row, column)));
-                board.add(new Tile(secondColor, new Point(row, column+1)));
+                board.add(new Tile(firstColor, new Point(row, column)));
+                board.add(new Tile(secondColor, new Point(row, column + 1)));
             }
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
@@ -80,31 +80,30 @@ public class Board {
         return board.get(index);
     }
 
-    public Tile getTile(int row, int column) throws Exception{
+    public Tile getTile(int row, int column) throws InvalidIndexException {
         if (isValidPosition(row, column))
             return getTile(getIndex(row, column));
         else
             throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
     }
 
-    public Tile getTile(Point position) throws Exception{
-       try {
-           return getTile(position.x, position.y);
-       }
-       catch(Exception e){
-           throw e;
-       }
+    public Tile getTile(Point position) throws InvalidIndexException {
+        try {
+            return getTile(position.x, position.y);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public Piece getPieceAtTile(int index) {
         return getTile(index).getPiece();
     }
 
-    public Piece getPieceAtTile(int row, int column) throws Exception{
+    public Piece getPieceAtTile(int row, int column) throws Exception {
         return getTile(row, column).getPiece();
     }
 
-    public Piece getPieceAtTile(Point position) throws Exception{
+    public Piece getPieceAtTile(Point position) throws Exception {
         return getTile(position).getPiece();
     }
 
@@ -113,7 +112,7 @@ public class Board {
     }
 
     public Tile getSymmetricTile(int row, int column) {
-        return getSymmetricTile(getIndex(row,column));
+        return getSymmetricTile(getIndex(row, column));
     }
 
     public Tile getSymmetricTile(Point position) {
@@ -139,21 +138,21 @@ public class Board {
         return position >= 0 && position <= lastIndex;
     }
 
-    public boolean isValidPosition(int row, int column){
+    public boolean isValidPosition(int row, int column) {
         return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
-    public boolean isValidPosition(Point position){
+    public boolean isValidPosition(Point position) {
         return isValidPosition(position.x, position.y);
     }
 
-    public boolean isBlackTile(Tile tile) throws WhiteTileException{
+    public boolean isBlackTile(Tile tile) throws WhiteTileException {
         if (tile.getColor() == Color.WHITE)
             throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
         return true;
     }
 
-    public void display() throws Exception{
+    public void display() throws InvalidIndexException {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
         for (int row = maxRows - 1; row >= 0; row--) {
@@ -170,15 +169,15 @@ public class Board {
         return getPieceAtTile(index).getColor();
     }
 
-    public Color getColorOfPieceAtTile(int row, int column) throws Exception{
+    public Color getColorOfPieceAtTile(int row, int column) throws Exception {
         return getPieceAtTile(row, column).getColor();
     }
 
-    public Color getColorOfPieceAtTile(Point position) throws Exception{
+    public Color getColorOfPieceAtTile(Point position) throws Exception {
         return getPieceAtTile(position).getColor();
     }
 
-    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2){
+    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
         try {
             return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
         } catch (Exception e) {

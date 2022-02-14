@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
-import java.nio.FloatBuffer;
+import dssc.exam.draughts.exceptions.EmptyTileException;
+import dssc.exam.draughts.exceptions.InvalidColorException;
 
 public class Game {
     Player whitePlayer = new Player(Color.WHITE);
@@ -18,23 +19,32 @@ public class Game {
             this.currentPlayer = this.blackPlayer;
     }
 
-    void playRound() throws Exception{
+    void playRound() throws Exception {
         // To be tested, not trivial
         board.display();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
             try {
                 Move move = currentPlayer.getMove();
+                TestPieceValidity(move);
                 move.executeOn(board);
                 isMoveInvalid = false;
 
             } catch (Exception e) {
-                System.out.println("Invalid move:");
+                System.out.print("Invalid move: ");
                 System.out.println(e.getMessage());
             }
         }
         changePlayer();
         ++round;
+    }
+
+    private void TestPieceValidity(Move move) throws Exception {
+        Tile sourceTile = board.getTile(move.source);
+        if (sourceTile.isEmpty())
+            throw new EmptyTileException("The first Tile you selected contains no Piece");
+        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
+            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
     }
 
     void changePlayer() {
