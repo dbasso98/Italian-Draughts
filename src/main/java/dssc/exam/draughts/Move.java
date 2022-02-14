@@ -34,23 +34,6 @@ public class Move {
                     throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions: "
                             + printPositionsOfTiles(bestTilesToStartTheSkip));
             }
-//            if(bestTilesToStartTheSkip.contains(board.getTile(source))) {
-//                skipMove(board, source, destination);
-//            }
-//            else {
-//                throw new Exception("You can select a better skip! Choose one of the tiles at these positions: "
-//                        + printPositionsOfTiles(bestTilesToStartTheSkip));
-//            }
-//           if(candidateTiles.isEmpty()){
-//                if(isASimpleMove(source, destination)){
-//                    diagonalMove(board, source, destination);
-//                }
-//                else{
-//                    throw new InvalidMoveException("This piece cannot move there. Pieces can only move diagonally!");
-//                }
-//            }
-//            throw new InvalidMoveException("There are pieces that must capture, try these positions: "
-//                    + printPositionsOfTiles(bestTilesToStartTheSkip));
         }
         catch(Exception e){
             throw e;
