@@ -67,7 +67,7 @@ public class TestIfBoard {
     @CsvSource({"0, 18, 9", "2, 16, 9",
             "57, 43, 50", "52, 38, 45",
             "50, 0, -1", "64, 46, -1"})
-    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition) {
+    void isMiddlePositionCorrect(int startPosition, int endPosition, int middlePosition) throws Exception{
         assertEquals(board.getMiddlePosition(startPosition, endPosition), middlePosition);
     }
 
@@ -75,7 +75,7 @@ public class TestIfBoard {
     @CsvSource({"0, 0, 2, 2, 9", "0, 6, 2, 4, 13",
             "7, 1, 5, 3, 50", "7, 7, 5, 5, 54",
             "-1, 63, 1, 5, -1", "64, 30, 5, 8, -1"})
-    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition) {
+    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition) throws Exception{
         var sourcePoint = new Point(sourceRow, sourceColumn);
         var destinationPoint = new Point(destinationRow, destinationColumn);
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);

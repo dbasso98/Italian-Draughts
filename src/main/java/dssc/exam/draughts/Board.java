@@ -119,18 +119,18 @@ public class Board {
         return getSymmetricTile(position.x, position.y);
     }
 
-    int getMiddlePosition(int startPosition, int endPosition) {
+    int getMiddlePosition(int startPosition, int endPosition) throws Exception{
         int distance = Math.abs(startPosition - endPosition);
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
-            return -1;
+            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         }
         if (distance != 14 && distance != 18) {
-            return -1;
+            throw new InvalidMoveException("Checker can move only by one or two tiles!");
         }
         return Math.min(startPosition, endPosition) + distance / 2;
     }
 
-    public int getMiddlePosition(Point source, Point destination) {
+    public int getMiddlePosition(Point source, Point destination) throws Exception {
         return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
     }
 
