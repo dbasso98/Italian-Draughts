@@ -152,17 +152,23 @@ public class Board {
         return true;
     }
 
-    public void display() throws InvalidIndexException {
+    public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
-        for (int row = maxRows - 1; row >= 0; row--) {
-            System.out.print((row + 1) + " ");
-            for (int col = 0; col < maxRows; col++) {
-                System.out.print(getTile(row, col).display());
+        try {
+            for (int row = maxRows - 1; row >= 0; row--) {
+                System.out.print((row + 1) + " ");
+                for (int col = 0; col < maxRows; col++) {
+                    System.out.print(getTile(row, col).display());
+                }
+                System.out.println(" " + (row + 1));
             }
-            System.out.println(" " + (row + 1));
+            System.out.println(indexLine);
+        } catch (InvalidIndexException e) {
+            System.out.println("ERROR: Unable to print the board: ");
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
-        System.out.println(indexLine);
     }
 
     public Color getColorOfPieceAtTile(int index) {

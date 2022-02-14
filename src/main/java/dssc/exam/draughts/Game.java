@@ -10,6 +10,7 @@ public class Game {
     private Board board = new Board();
     public int round = 0;
 
+
     void loadGame(Board board, int round) {
         this.board = board;
         this.round = round;
@@ -19,8 +20,15 @@ public class Game {
             this.currentPlayer = this.blackPlayer;
     }
 
-    void playRound() throws Exception {
-        // To be tested, not trivial
+    void play() {
+        while (whitePlayerHasPieces() & blackPlayerHasPieces()) {
+            playRound();
+        }
+        changePlayer();
+        System.out.println("The winner is " + currentPlayer.name);
+    }
+
+    void playRound() {
         board.display();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
@@ -70,5 +78,4 @@ public class Game {
     Player getCurrentPlayer() {
         return currentPlayer;
     }
-
 }
