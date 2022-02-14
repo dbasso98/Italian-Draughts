@@ -57,7 +57,6 @@ public class Move {
             if(middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
                 throw new SameColorException("Color of piece to skip cannot be the same as source piece");
             diagonalMove(board, source, destination);
-
             middleTile.popPiece();
         }
         catch(Exception e){
@@ -75,7 +74,6 @@ public class Move {
         } catch (Exception e) {
             throw e;
         }
-
     }
 
     public static boolean isASimpleMove(Point source, Point destination) throws Exception {
