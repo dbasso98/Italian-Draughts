@@ -1,5 +1,8 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.EmptyTileException;
+import dssc.exam.draughts.exceptions.InvalidIndexException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -95,4 +98,26 @@ public class TestIfGame {
 
         assertEquals(expectedOut, actualLines[actualLines.length - 3]);
     }
+
+    @Test
+    void GameEndForEndOfPieces() throws InvalidIndexException {
+        Board board = new Board();
+        for (int row = 0; row < board.maxRows / 2; ++row) {
+            for (int column = 0; column < board.maxColumns; ++column) {
+                board.getTile(row, column).setPiece(null);
+            }
+        }
+
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+
+        Game game = new Game();
+        game.whitePlayer.setName("Player 1");
+        game.blackPlayer.setName("Player 2");
+        game.loadGame(board, 0);
+        game.play();
+        String expected = "The winner is Player 2" +System.lineSeparator();
+        assertEquals(expected, fakeStandardOutput.toString());
+    }
+
 }
