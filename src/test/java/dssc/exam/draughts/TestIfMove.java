@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.InvalidMoveException;
 import org.junit.jupiter.api.Test;
 import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,5 +47,27 @@ public class TestIfMove {
         catch (Exception e){
             throw e;
         }
+    }
+
+    @Test
+    void suggestOptimalMove() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2,1).upgradeToKing();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
+        Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
+        Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2,1), new Point(3,0)));
+        assertEquals("There are pieces that must capture, try these positions: (2,3) ", exception.getMessage());
+    }
+
+    @Test
+    void suggestOptimalMoveEvenIfOriginalIsASkip() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2,1).upgradeToKing();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
+        Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
+        Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2,3), new Point(4,1)));
+        assertEquals("You can select a better skip! Choose one of the tiles at these positions: (2,3) ", exception.getMessage());
     }
 }
