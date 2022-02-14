@@ -1,9 +1,6 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.InvalidIndexException;
-import dssc.exam.draughts.exceptions.NotDiagonalMoveException;
-import dssc.exam.draughts.exceptions.SamePositionException;
-import dssc.exam.draughts.exceptions.WhiteTileException;
+import dssc.exam.draughts.exceptions.*;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -114,6 +111,17 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
         Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
         assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
+
+    @Test
+    void suggestOptimalMove() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2,1).upgradeToKing();
+        Move.movePiece(newBoard, new Point(5,4), new Point(3,2));
+        Move.movePiece(newBoard, new Point(6,1), new Point(5,4));
+        Move.movePiece(newBoard, new Point(6,5), new Point(3,6));
+        Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2,1), new Point(3,0)));
+        assertEquals("There are pieces that must capture, try these positions: (2,3) ", exception.getMessage());
     }
 
 }
