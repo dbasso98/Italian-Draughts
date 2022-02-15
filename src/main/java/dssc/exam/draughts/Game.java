@@ -30,12 +30,12 @@ public class Game {
         System.out.println("The winner is " + currentPlayer.name);
     }
 
-    void initPlayers(){
+    void initPlayers() {
         whitePlayer.askAndSetName(1);
         blackPlayer.askAndSetName(2);
     }
 
-    void startGame(){
+    void startGame() {
         initPlayers();
         play();
     }
@@ -46,13 +46,11 @@ public class Game {
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
             try {
-//                Move move = currentPlayer.getMove();
                 Point source = currentPlayer.getSource();
                 Point destination = currentPlayer.getDestination();
 
-                Move move = new Move(source, destination);
-                TestPieceValidity(move);
-                move.executeOn(board);
+                TestPieceValidity(source);
+                Move.moveDecider(board, source, destination);
                 isMoveInvalid = false;
 
             } catch (Exception e) {
@@ -64,8 +62,16 @@ public class Game {
         ++round;
     }
 
-    private void TestPieceValidity(Move move) throws Exception {
-        Tile sourceTile = board.getTile(move.source);
+//    private void TestPieceValidity(Move move) throws Exception {
+//        Tile sourceTile = board.getTile(move.source);
+//        if (sourceTile.isEmpty())
+//            throw new EmptyTileException("The first Tile you selected contains no Piece");
+//        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
+//            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
+//    }
+
+    private void TestPieceValidity(Point source) throws Exception {
+        Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new EmptyTileException("The first Tile you selected contains no Piece");
         if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
