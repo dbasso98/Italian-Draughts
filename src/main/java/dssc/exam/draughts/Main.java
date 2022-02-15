@@ -5,8 +5,6 @@ public class Main {
         System.out.println("ciao!");
         Player player = new Player(Color.WHITE);
         Game game = new Game();
-        game.playRound();
-        game.playRound();
-        game.playRound();
+        game.startGame();
     }
 }

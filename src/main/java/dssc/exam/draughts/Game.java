@@ -28,8 +28,19 @@ public class Game {
         System.out.println("The winner is " + currentPlayer.name);
     }
 
+    void initPlayers(){
+        whitePlayer.askAndSetName(1);
+        blackPlayer.askAndSetName(2);
+    }
+
+    void startGame(){
+        initPlayers();
+        play();
+    }
+
     void playRound() {
         board.display();
+        currentPlayer.displayHolder();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
             try {
