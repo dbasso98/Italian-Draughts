@@ -6,12 +6,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Board {
-    public final int size = 64;
-    public final int lastIndex = size - 1;
-    public final int maxRows = 8;
-    public final int maxColumns = 8;
-    public final int piecesPerPlayer = 12;
-    public ArrayList<Tile> board = new ArrayList<>(size);
+    private final int size = 64;
+    private final int lastIndex = size - 1;
+    final int maxRows = 8;
+    final int maxColumns = 8;
+    final int piecesPerPlayer = 12;
+    private final ArrayList<Tile> board = new ArrayList<>(size);
 
     Board() {
         Color firstColor;
@@ -37,19 +37,23 @@ public class Board {
         }
     }
 
-    public int getIndex(int row, int column) {
+    private int getIndex(int row, int column) {
         return 8 * row + column;
     }
 
-    public int getSize() {
+    private int getIndex(Point position){
+        return getIndex(position.x, position.y);
+    }
+
+    int getSize() {
         return board.size();
     }
 
-    public int getNumberOfPiecesOfColor(Color color) {
+    int getNumberOfPiecesOfColor(Color color) {
         return getPiecesOfColor(color).size();
     }
 
-    public ArrayList<Piece> getPiecesOfColor(Color color) {
+    private ArrayList<Piece> getPiecesOfColor(Color color) {
         ArrayList<Piece> listOfPiece = new ArrayList<>(12);
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
             if (getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color)
@@ -58,7 +62,7 @@ public class Board {
         return listOfPiece;
     }
 
-    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+    ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(12);
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
             if (getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color)
@@ -67,7 +71,7 @@ public class Board {
         return listOfTiles;
     }
 
-    public int getNumberOfPiecesOnTheBoard() {
+    int getNumberOfPiecesOnTheBoard() {
         int sum = 0;
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
             if (board.get(tileIndex).isNotEmpty())
@@ -76,18 +80,18 @@ public class Board {
         return sum;
     }
 
-    public Tile getTile(int index) {
+    Tile getTile(int index) {
         return board.get(index);
     }
 
-    public Tile getTile(int row, int column) throws InvalidIndexException {
+    Tile getTile(int row, int column) throws InvalidIndexException {
         if (isValidPosition(row, column))
             return getTile(getIndex(row, column));
         else
             throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
     }
 
-    public Tile getTile(Point position) throws InvalidIndexException {
+    Tile getTile(Point position) throws InvalidIndexException {
         try {
             return getTile(position.x, position.y);
         } catch (Exception e) {
@@ -95,31 +99,31 @@ public class Board {
         }
     }
 
-    public Piece getPieceAtTile(int index) {
+    Piece getPieceAtTile(int index) {
         return getTile(index).getPiece();
     }
 
-    public Piece getPieceAtTile(int row, int column) throws Exception {
+    Piece getPieceAtTile(int row, int column) throws Exception {
         return getTile(row, column).getPiece();
     }
 
-    public Piece getPieceAtTile(Point position) throws Exception {
+    Piece getPieceAtTile(Point position) throws Exception {
         return getTile(position).getPiece();
     }
 
-    public Tile getSymmetricTile(int index) {
+    Tile getSymmetricTile(int index) {
         return board.get(lastIndex - index);
     }
 
-    public Tile getSymmetricTile(int row, int column) {
+    Tile getSymmetricTile(int row, int column) {
         return getSymmetricTile(getIndex(row, column));
     }
 
-    public Tile getSymmetricTile(Point position) {
+    Tile getSymmetricTile(Point position) {
         return getSymmetricTile(position.x, position.y);
     }
 
-    int getMiddlePosition(int startPosition, int endPosition) throws Exception{
+    private int getMiddlePosition(int startPosition, int endPosition) throws Exception {
         int distance = Math.abs(startPosition - endPosition);
         if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
@@ -130,8 +134,8 @@ public class Board {
         return Math.min(startPosition, endPosition) + distance / 2;
     }
 
-    public int getMiddlePosition(Point source, Point destination) throws Exception {
-        return getMiddlePosition(getIndex(source.x, source.y), getIndex(destination.x, destination.y));
+    int getMiddlePosition(Point source, Point destination) throws Exception {
+        return getMiddlePosition(getIndex(source), getIndex(destination));
     }
 
     private boolean isValidPosition(int position) {
