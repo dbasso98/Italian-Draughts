@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,56 +11,60 @@ public class Move {
     public final Point source;
     public final Point destination;
 
-    public static void moveDecider(Board board, Point source, Point destination) throws Exception{
-        try{
+    public static void moveDecider(Board board, Point source, Point destination) throws Exception {
+        try {
             MoveRules.checkIfPositionsAreValid(board, source, destination);
             var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
-            var maxWeight = Collections.max(candidateTiles.values());
-            var bestTilesToStartTheSkip = new ArrayList<> (candidateTiles.entrySet().stream()
+
+            int maxWeight;
+            if (!candidateTiles.isEmpty())
+                maxWeight = Collections.max(candidateTiles.values());
+            else
+                maxWeight = 0;
+
+//            var maxWeight = Collections.max(candidateTiles.values());
+            var bestTilesToStartTheSkip = new ArrayList<>(candidateTiles.entrySet().stream()
                     .filter(entry -> entry.getValue() == maxWeight)
                     .map(entry -> entry.getKey())
                     .collect(Collectors.toList()));
 
-            if(isASimpleMove(source, destination)) {
-                if(candidateTiles.isEmpty())
+            if (isASimpleMove(source, destination)) {
+                if (candidateTiles.isEmpty())
                     diagonalMove(board, source, destination);
                 else
                     throw new InvalidMoveException("There are pieces that must capture, try these positions: "
                             + printPositionsOfTiles(bestTilesToStartTheSkip));
-            }
-            else{
-                if(bestTilesToStartTheSkip.contains(board.getTile(source)))
+            } else {
+                if (bestTilesToStartTheSkip.contains(board.getTile(source)))
                     skipMove(board, source, destination);
                 else
                     throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions: "
                             + printPositionsOfTiles(bestTilesToStartTheSkip));
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
 
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
         StringBuilder result = new StringBuilder();
-        for(var tile : tiles){
+        for (var tile : tiles) {
             result.append("(").append(tile.getPosition().y + 1).append(",").append(tile.getPosition().x + 1).append(") ");
         }
         return result.toString();
     }
 
-    static void skipMove(Board board, Point source, Point destination) throws Exception{
+    static void skipMove(Board board, Point source, Point destination) throws Exception {
         try {
             var sourceTile = board.getTile(source);
-            var middleTile = board.getTile(board.getMiddlePosition(source,destination));
-            if(middleTile.isEmpty())
+            var middleTile = board.getTile(board.getMiddlePosition(source, destination));
+            if (middleTile.isEmpty())
                 throw new EmptyTileException("Skip move over two empty tiles is not accepted");
-            if(middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
+            if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
                 throw new SameColorException("Color of piece to skip cannot be the same as source piece");
             diagonalMove(board, source, destination);
             middleTile.popPiece();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -92,11 +97,10 @@ public class Move {
         destinationTile.setPiece(piece);
     }
 
-    public static void movePiece(Board board, Point source, Point destination) throws Exception{
+    public static void movePiece(Board board, Point source, Point destination) throws Exception {
         try {
             movePiece(board.getTile(source), board.getTile(destination));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw e;
         }
     }
@@ -106,13 +110,10 @@ public class Move {
         this.destination = destination;
     }
 
-    public void executeOn(Board board) throws Exception{
+    public void executeOn(Board board) throws Exception {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
-        try {
-            movePiece(board, source, destination);
-        } catch (Exception e) {
-            throw e;
-        }
+//        movePiece(board, source, destination);
+        moveDecider(board, source, destination);
     }
 }
