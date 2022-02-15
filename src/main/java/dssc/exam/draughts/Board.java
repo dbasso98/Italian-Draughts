@@ -80,7 +80,7 @@ public class Board {
     }
 
     ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
-        ArrayList<Tile> listOfTiles = new ArrayList<>(12);
+        ArrayList<Tile> listOfTiles = new ArrayList<>(piecesPerPlayer);
 
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
             if (tileContainsPieceOfColor(tileIndex, color))

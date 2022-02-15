@@ -39,7 +39,7 @@ public class MoveRules {
     }
 
     static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
-        if (source.x == destination.x && source.y == destination.y) {
+        if (source.equals(destination)) {
             throw new SamePositionException("Source and destination position cannot be the same!");
         }
     }
