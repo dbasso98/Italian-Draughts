@@ -21,20 +21,27 @@ public class Move {
                 .filter(entry -> entry.getValue() == maxWeight)
                 .map(entry -> entry.getKey())
                 .collect(Collectors.toList()));
+        var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
+                .filter(entry -> entry.getPiece().isKing())
+                .collect(Collectors.toList()));
 
         if (isASimpleMove(source, destination)) {
             if (candidateTiles.isEmpty())
                 diagonalMove(board, source, destination);
             else
-                throw new InvalidMoveException("There are pieces that must capture, try these positions: "
+                throw new InvalidMoveException("There are pieces that must capture, try these positions:"
                         + printPositionsOfTiles(bestTilesToStartTheSkip));
         } else {
             if (bestTilesToStartTheSkip.contains(board.getTile(source))) {
-                skipMove(board, source, destination);
+                if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).getPiece().isKing())
+                    skipMove(board, source, destination);
+                else
+                    throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
+                        + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
                 if (candidateTiles.get(board.getTile(source)) > 1)
                     throw new IncompleteMoveException("You can continue to skip!", candidateTiles.get(board.getTile(source)));
             } else
-                throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions: "
+                throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions:"
                         + printPositionsOfTiles(bestTilesToStartTheSkip));
         }
     }
@@ -50,11 +57,11 @@ public class Move {
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
         StringBuilder result = new StringBuilder();
         for (var tile : tiles) {
-            result.append("(")
+            result.append(" (")
                     .append(tile.getPosition().y + 1)
                     .append(",")
                     .append(tile.getPosition().x + 1)
-                    .append(") ");
+                    .append(")");
         }
         return result.toString();
     }
