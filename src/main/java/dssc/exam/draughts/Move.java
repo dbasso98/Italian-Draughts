@@ -51,7 +51,7 @@ public class Move {
         if(!isASimpleMove(source,destination))
             skipMove(board, source, destination);
         else
-            throw new InvalidMoveException("");
+            throw new InvalidMoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
     }
 
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
