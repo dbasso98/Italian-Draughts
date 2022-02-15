@@ -41,7 +41,7 @@ public class Board {
         return 8 * row + column;
     }
 
-    private int getIndex(Point position){
+    private int getIndex(Point position) {
         return getIndex(position.x, position.y);
     }
 
@@ -123,14 +123,28 @@ public class Board {
         return getSymmetricTile(position.x, position.y);
     }
 
-    private int getMiddlePosition(int startPosition, int endPosition) throws Exception {
-        int distance = Math.abs(startPosition - endPosition);
-        if (!isValidPosition(startPosition) || !isValidPosition(endPosition)) {
+    private boolean startOrEndAreInvalid(int startPosition, int endPosition) {
+        return isInValidPosition(startPosition) || isInValidPosition(endPosition);
+    }
+
+    private void HandleInvalidPositions(int startPosition, int endPosition) throws InvalidIndexException {
+        if (startOrEndAreInvalid(startPosition, endPosition)) {
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         }
+    }
+
+    private void HandleInvalidDistance(int distance) throws InvalidMoveException {
         if (distance != 14 && distance != 18) {
             throw new InvalidMoveException("Checker can move only by one or two tiles!");
         }
+    }
+
+    private int getMiddlePosition(int startPosition, int endPosition) throws Exception {
+        int distance = Math.abs(startPosition - endPosition);
+
+        HandleInvalidPositions(startPosition, endPosition);
+        HandleInvalidDistance(distance);
+
         return Math.min(startPosition, endPosition) + distance / 2;
     }
 
@@ -138,8 +152,8 @@ public class Board {
         return getMiddlePosition(getIndex(source), getIndex(destination));
     }
 
-    private boolean isValidPosition(int position) {
-        return position >= 0 && position <= lastIndex;
+    private boolean isInValidPosition(int position) {
+        return position < 0 || position > lastIndex;
     }
 
     public boolean isValidPosition(int row, int column) {
