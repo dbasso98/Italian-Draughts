@@ -1,5 +1,8 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.EmptyTileException;
+import dssc.exam.draughts.exceptions.InvalidColorException;
+
 import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -52,20 +55,20 @@ public class Player {
         return new Point(row - 1, column - 1);
     }
 
-    Move getMove() {
-//        Point source = readPosition(readSourceMessage);
-        Point source = getSource();
-//        Point destination = readPosition(readDestinationMessage);
-        Point destination = getDestination();
-//        return new Move(source, destination);
-        return new Move(source, destination);
-    }
 
-    Point getSource(){
+    Point getSource() {
         return readPosition(readSourceMessage);
     }
 
-    Point getDestination(){
+    private void TestPieceValidity(Point source, Board board) throws Exception {
+        Tile sourceTile = board.getTile(source);
+        if (sourceTile.isEmpty())
+            throw new EmptyTileException("The first Tile you selected contains no Piece");
+        if (sourceTile.getPiece().getColor() != getColor())
+            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
+    }
+
+    Point getDestination() {
         return readPosition(readDestinationMessage);
     }
 

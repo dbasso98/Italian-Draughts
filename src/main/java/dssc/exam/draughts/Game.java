@@ -62,13 +62,6 @@ public class Game {
         ++round;
     }
 
-//    private void TestPieceValidity(Move move) throws Exception {
-//        Tile sourceTile = board.getTile(move.source);
-//        if (sourceTile.isEmpty())
-//            throw new EmptyTileException("The first Tile you selected contains no Piece");
-//        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
-//            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
-//    }
 
     private void TestPieceValidity(Point source) throws Exception {
         Tile sourceTile = board.getTile(source);

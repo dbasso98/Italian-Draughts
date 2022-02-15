@@ -45,13 +45,15 @@ public class TestIfPlayer {
         String fakeInput = fakeInput1 + fakeInput2;
         setFakeStdInput(fakeInput);
 
-        Move move = new Player(Color.BLACK).getMove();
+        Player player = new Player(Color.BLACK);
+        Point source = player.getSource();
+        Point destination = player.getDestination();
 
         Point sourcePoint = new Point(sourceRow, sourceColumn);
         Point destinationPoint = new Point(destinationRow, destinationColumn);
 
-        assertEquals(move.source, sourcePoint);
-        assertEquals(move.destination, destinationPoint);
+        assertEquals(source, sourcePoint);
+        assertEquals(destination, destinationPoint);
     }
 
     @ParameterizedTest
