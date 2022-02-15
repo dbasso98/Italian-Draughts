@@ -73,5 +73,16 @@ public class TestIfPlayer {
         assertEquals(expected, fakeStandardOutput.toString());
     }
 
+    @ParameterizedTest
+    @CsvSource({"Michele, Andres, Davide"})
+    void testNameGetter(String Name){
+        String fakeInput = Name;
+        setFakeStdInput(fakeInput);
+
+        Player player = new Player(Color.BLACK);
+        player.askAndSetName(0);
+
+        assertEquals(Name, player.name);
+    }
 
 }

@@ -29,6 +29,10 @@ public class Player {
         this.name = name;
     }
 
+    void askAndSetName(int playerNum) {
+        setName(askName(playerNum));
+    }
+
     Point readPosition(String message) {
         System.out.println(message);
         int row = 0;
@@ -58,4 +62,7 @@ public class Player {
         return color;
     }
 
+    public void displayHolder() {
+        System.out.println("Player " + name + "[" + color + "]:");
+    }
 }
