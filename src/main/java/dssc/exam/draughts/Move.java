@@ -122,7 +122,7 @@ public class Move {
         // update the board so that the move is applied
         // At the moment does just diagonal moves
         try {
-            movePiece(board, source, destination);
+            moveDecider(board, source, destination);
         } catch (Exception e) {
             throw e;
         }
