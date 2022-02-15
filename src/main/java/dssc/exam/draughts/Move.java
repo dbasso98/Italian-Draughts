@@ -50,7 +50,11 @@ public class Move {
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
         StringBuilder result = new StringBuilder();
         for (var tile : tiles) {
-            result.append("(").append(tile.getPosition().y + 1).append(",").append(tile.getPosition().x + 1).append(") ");
+            result.append("(")
+                    .append(tile.getPosition().y + 1)
+                    .append(",")
+                    .append(tile.getPosition().x + 1)
+                    .append(") ");
         }
         return result.toString();
     }
@@ -58,10 +62,13 @@ public class Move {
     static void skipMove(Board board, Point source, Point destination) throws Exception {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
+
         if (middleTile.isEmpty())
             throw new EmptyTileException("Skip move over two empty tiles is not accepted");
+
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new SameColorException("Color of piece to skip cannot be the same as source piece");
+
         diagonalMove(board, source, destination);
         middleTile.popPiece();
     }
@@ -69,8 +76,10 @@ public class Move {
     public static void diagonalMove(Board board, Point source, Point destination) throws Exception {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
+
         MoveRules.checkTileEmptiness(source, sourceTile);
         MoveRules.checkTileNonEmptiness(destination, destinationTile);
+
         movePiece(sourceTile, destinationTile);
     }
 
@@ -86,6 +95,5 @@ public class Move {
 
     public static void movePiece(Board board, Point source, Point destination) throws Exception {
         movePiece(board.getTile(source), board.getTile(destination));
-
     }
 }

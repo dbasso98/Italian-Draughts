@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.EmptyTileException;
+import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.InvalidColorException;
 
 import java.awt.*;
@@ -52,6 +53,11 @@ public class Game {
                 TestPieceValidity(source);
                 Move.moveDecider(board, source, destination);
                 isMoveInvalid = false;
+            } catch (IncompleteMoveException e){
+                int movesToCompleteTurn = e.getWeight();
+                while(movesToCompleteTurn > 0){
+
+                }
 
             } catch (Exception e) {
                 System.out.print("Invalid move: ");
