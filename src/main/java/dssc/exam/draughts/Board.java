@@ -33,7 +33,6 @@ public class Board {
         }
     }
 
-
     Board() {
         for (int row = 0; row < maxRows; row += 2) {
             createEvenRow(row);
@@ -175,10 +174,7 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
-    // This method, written as it is, is in the wrong class.
-    public boolean isBlackTile(Tile tile) throws WhiteTileException {
-        if (tile.getColor() == Color.WHITE)
-            throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
+    public boolean isBlackTile(Tile tile) {
         return true;
     }
 

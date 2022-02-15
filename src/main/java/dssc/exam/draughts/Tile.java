@@ -43,7 +43,7 @@ class Tile {
         return tileColor;
     }
 
-    public Point getPosition(){
+    public Point getPosition() {
         return position;
     }
 
@@ -68,5 +68,9 @@ class Tile {
             return displayEmptyTile();
         }
         return piece.display();
+    }
+
+    boolean isWhite() {
+        return tileColor == Color.WHITE;
     }
 }
