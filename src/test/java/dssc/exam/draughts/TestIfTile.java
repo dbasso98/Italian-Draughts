@@ -38,7 +38,7 @@ public class TestIfTile {
     }
 
     @Test
-    void nonemptyTileDisplay(){
+    void nonEmptyTileDisplay(){
         assertEquals("[b]", blackTileBlackMan.display());
         Tile blackTileWhiteKing = new Tile(new Piece(1, Color.WHITE), Color.BLACK, new Point(0,0));
         blackTileWhiteKing.getPiece().upgradeToKing();
