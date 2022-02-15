@@ -14,7 +14,11 @@ public class Move {
         try{
             MoveRules.checkIfPositionsAreValid(board, source, destination);
             var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
-            var maxWeight = Collections.max(candidateTiles.values());
+            int maxWeight;
+            if (!candidateTiles.isEmpty())
+                maxWeight = Collections.max(candidateTiles.values());
+            else
+                maxWeight = 0;
             var bestTilesToStartTheSkip = new ArrayList<> (candidateTiles.entrySet().stream()
                     .filter(entry -> entry.getValue() == maxWeight)
                     .map(entry -> entry.getKey())
@@ -28,11 +32,11 @@ public class Move {
                             + printPositionsOfTiles(bestTilesToStartTheSkip));
             }
             else{
-                if(bestTilesToStartTheSkip.contains(board.getTile(source)))
+                if(bestTilesToStartTheSkip.contains(board.getTile(source))) {
                     skipMove(board, source, destination);
-//                    if (candidateTiles.get(board.getTile(source)) > 0)
-//                        throw new IncompleteMoveException("You can continue to skip!", candidateTiles.get(board.getTile(source)));
-                else
+                    if (candidateTiles.get(board.getTile(source)) > 1)
+                        throw new IncompleteMoveException("You can continue to skip!", candidateTiles.get(board.getTile(source)));
+                } else
                     throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions: "
                             + printPositionsOfTiles(bestTilesToStartTheSkip));
             }
@@ -40,6 +44,14 @@ public class Move {
         catch(Exception e){
             throw e;
         }
+    }
+
+    public static void continueToSkip(Board board, Point source, Point destination) throws Exception{
+        MoveRules.checkIfPositionsAreValid(board, source, destination);
+        if(!isASimpleMove(source,destination))
+            skipMove(board, source, destination);
+        else
+            throw new InvalidMoveException("");
     }
 
     private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
@@ -80,8 +92,6 @@ public class Move {
 
     public static boolean isASimpleMove(Point source, Point destination) throws Exception {
         try {
-            // if we generalize to start - end position which indicates final absolute position after eating many times
-            // checking if diagonal is not needed. but is needed in every substep.
             MoveRules.isDiagonal(source, destination);
             return Math.abs(destination.x - source.x) == 1;
         } catch (Exception e) {
