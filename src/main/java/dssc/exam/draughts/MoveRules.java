@@ -76,11 +76,9 @@ public class MoveRules {
     }
 
     public static int checkAdjacentDiagonalForKing(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps, ArrayList<Tile> path) {
+        ++steps;
         if (steps == 3) {
             return 0;
-        }
-        else{
-            ++steps;
         }
         var oppositeDirection = -1*direction;
         boolean rightCheck, leftCheck, oppositeDirectionRightCheck, oppositeDirectionLeftCheck;
@@ -123,11 +121,9 @@ public class MoveRules {
     }
 
     static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
+        ++steps;
         if (steps == 3) {
             return 0;
-        }
-        else{
-            ++steps;
         }
         boolean rightCheck, leftCheck;
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
