@@ -164,28 +164,37 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
+    // This method, written as it is, is in the wrong class.
     public boolean isBlackTile(Tile tile) throws WhiteTileException {
         if (tile.getColor() == Color.WHITE)
             throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
         return true;
     }
 
+    private void HandleInvalidIndexInDisplay(InvalidIndexException e) {
+        System.out.println("ERROR: Unable to print the board: ");
+        System.out.println(e.getMessage());
+        System.exit(1);
+    }
+
+    private void displayInnerPartOfBoard() throws InvalidIndexException {
+        for (int row = maxRows - 1; row >= 0; row--) {
+            System.out.print((row + 1) + " ");
+            for (int col = 0; col < maxRows; col++) {
+                System.out.print(getTile(row, col).display());
+            }
+            System.out.println(" " + (row + 1));
+        }
+    }
+
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         System.out.println(indexLine);
         try {
-            for (int row = maxRows - 1; row >= 0; row--) {
-                System.out.print((row + 1) + " ");
-                for (int col = 0; col < maxRows; col++) {
-                    System.out.print(getTile(row, col).display());
-                }
-                System.out.println(" " + (row + 1));
-            }
+            displayInnerPartOfBoard();
             System.out.println(indexLine);
         } catch (InvalidIndexException e) {
-            System.out.println("ERROR: Unable to print the board: ");
-            System.out.println(e.getMessage());
-            System.exit(1);
+            HandleInvalidIndexInDisplay(e);
         }
     }
 
