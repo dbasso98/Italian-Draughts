@@ -129,9 +129,15 @@ public class MoveRules {
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
         rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
+        if(firstRightDiagonalTile.isNotEmpty())
+            rightCheck = rightCheck && !firstRightDiagonalTile.getPiece().isKing();
+
         var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
         var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstLeftDiagonalTile, direction, -1);
         leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
+        if (firstLeftDiagonalTile.isNotEmpty())
+            leftCheck = leftCheck && !firstLeftDiagonalTile.getPiece().isKing();
+
         if (!(leftCheck || rightCheck)) {
             return 0;
         }

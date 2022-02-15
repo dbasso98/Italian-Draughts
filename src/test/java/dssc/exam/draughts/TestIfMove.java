@@ -48,14 +48,14 @@ public class TestIfMove {
     }
 
     @Test
-    void doASimpleMove() throws Exception{
+    void doesASimpleMove() throws Exception{
         var newBoard = new Board();
         Move.moveDecider(newBoard, new Point(2, 1), new Point(3, 2));
         assertEquals(17, newBoard.getPieceAtTile(new Point(3,2)).getId());
     }
 
     @Test
-    void doASkipMove() throws Exception{
+    void doesASkipMove() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.moveDecider(newBoard, new Point(2, 1), new Point(4, 3));
@@ -64,7 +64,7 @@ public class TestIfMove {
     }
 
     @Test
-    void suggestOptimalMove() throws Exception {
+    void suggestsOptimalMove() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
@@ -75,7 +75,7 @@ public class TestIfMove {
     }
 
     @Test
-    void suggestOptimalMoveEvenIfOriginalIsASkip() throws Exception {
+    void suggestsOptimalMoveEvenIfOriginalIsASkip() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
@@ -86,7 +86,7 @@ public class TestIfMove {
     }
 
     @Test
-    void stopMoveAfterThreeCompletedSkips() throws Exception {
+    void stopsAfterThreeCompletedSkips() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));

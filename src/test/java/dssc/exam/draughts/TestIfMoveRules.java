@@ -134,4 +134,13 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
         assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
+
+    @Test
+    void doesNotAllowAManToSkipAKing() throws Exception{
+        var newBoard = new Board();
+        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
+        newBoard.getPieceAtTile(5, 4).upgradeToKing();
+        assertEquals(2, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(1,  Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
 }
