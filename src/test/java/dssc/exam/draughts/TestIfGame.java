@@ -5,9 +5,11 @@ import dssc.exam.draughts.exceptions.InvalidIndexException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +33,8 @@ public class TestIfGame {
 
     @Test
     void testTurnBehaviour() throws Exception {
-        String fakeInput = "4 3" + System.lineSeparator() + "5 4" + System.lineSeparator();
+        String fakeInput = "4 3" + System.lineSeparator() +
+                "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
         Game game = new Game();
@@ -116,8 +119,41 @@ public class TestIfGame {
         game.blackPlayer.setName("Player 2");
         game.loadGame(board, 0);
         game.play();
-        String expected = "The winner is Player 2" +System.lineSeparator();
+        String expected = "The winner is Player 2" + System.lineSeparator();
         assertEquals(expected, fakeStandardOutput.toString());
+    }
+
+    @Test
+    void ValidDoubleSkipTest() throws Exception {
+
+        String fakeInput = "1 6 3 4" + System.lineSeparator()
+                + "5 2" + System.lineSeparator();
+        setFakeStdInput(fakeInput);
+
+        Board board = new Board();
+        Move.moveDecider(board, new Point(2, 3), new Point(3, 4));
+        Move.moveDecider(board, new Point(5, 4), new Point(4, 5));
+        Move.moveDecider(board, new Point(1, 4), new Point(2, 3));
+        Move.moveDecider(board, new Point(5, 2), new Point(4, 1));
+        Move.moveDecider(board, new Point(2, 1), new Point(3, 2));
+        Move.moveDecider(board, new Point(4, 1), new Point(3, 0));
+        Move.moveDecider(board, new Point(3, 2), new Point(4, 1));
+        Game game = new Game();
+        game.loadGame(board, 1);
+
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+
+        game.playRound();
+
+        String actualOut = fakeStandardOutput.toString();
+        String[] actualLines = actualOut.split(System.lineSeparator());
+
+        String expected11 = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
+        String expected23 = "You can continue to skip!";
+        assertEquals("Player [BLACK]:", actualLines[10]);
+        assertEquals(expected11, actualLines[11]);
+        assertEquals(expected23, actualLines[23]);
     }
 
 }

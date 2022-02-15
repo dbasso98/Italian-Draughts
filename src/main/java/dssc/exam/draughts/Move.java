@@ -32,7 +32,10 @@ public class Move {
             if (bestTilesToStartTheSkip.contains(board.getTile(source))) {
                 skipMove(board, source, destination);
                 if (candidateTiles.get(board.getTile(source)) > 1)
-                    throw new IncompleteMoveException("You can continue to skip!", candidateTiles.get(board.getTile(source)));
+                    throw new IncompleteMoveException("You can continue to skip!",
+                            destination,
+                            candidateTiles.get(board.getTile(source))
+                            );
             } else
                 throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions: "
                         + printPositionsOfTiles(bestTilesToStartTheSkip));

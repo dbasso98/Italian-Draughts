@@ -53,10 +53,26 @@ public class Game {
                 TestPieceValidity(source);
                 Move.moveDecider(board, source, destination);
                 isMoveInvalid = false;
-            } catch (IncompleteMoveException e){
+            } catch (IncompleteMoveException e) {
                 int movesToCompleteTurn = e.getWeight();
-                while(movesToCompleteTurn > 0){
-
+                Point source = e.getNewSource();
+                while (movesToCompleteTurn > 1) {
+                    board.display();
+                    System.out.println(e.getMessage());
+                    boolean isInvalidDestination = true;
+                    while (isInvalidDestination) {
+                        try {
+                            Point destination = currentPlayer.getDestination();
+                            Move.continueToSkip(board, source, destination);
+                            --movesToCompleteTurn;
+                            source = destination;
+                            isInvalidDestination = false;
+                        } catch (Exception e2) {
+                            System.out.print("Invalid move: ");
+                            System.out.println(e2.getMessage());
+                        }
+                    }
+                    isMoveInvalid = false;
                 }
 
             } catch (Exception e) {
