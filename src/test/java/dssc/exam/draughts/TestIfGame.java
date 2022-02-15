@@ -56,7 +56,7 @@ public class TestIfGame {
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
-                "5 4" + System.lineSeparator();
+                "3 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
         String expectedOut = "Invalid move: The first Tile you selected contains no Piece";
@@ -80,7 +80,7 @@ public class TestIfGame {
         String fakeInput = "1 6" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
-                "5 4" + System.lineSeparator();
+                "3 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
         String expectedOut = "Invalid move: The piece you intend to move belongs to your opponent";

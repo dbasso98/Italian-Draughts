@@ -53,9 +53,20 @@ public class Player {
     }
 
     Move getMove() {
-        Point source = readPosition(readSourceMessage);
-        Point destination = readPosition(readDestinationMessage);
+//        Point source = readPosition(readSourceMessage);
+        Point source = getSource();
+//        Point destination = readPosition(readDestinationMessage);
+        Point destination = getDestination();
+//        return new Move(source, destination);
         return new Move(source, destination);
+    }
+
+    Point getSource(){
+        return readPosition(readSourceMessage);
+    }
+
+    Point getDestination(){
+        return readPosition(readDestinationMessage);
     }
 
     Color getColor() {
