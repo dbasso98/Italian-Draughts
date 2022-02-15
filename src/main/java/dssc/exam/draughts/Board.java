@@ -16,7 +16,6 @@ public class Board {
     private void createOddRow(int row) {
         Color firstColor = Color.BLACK;
         Color secondColor = Color.WHITE;
-
         createRow(row, firstColor, secondColor);
     }
 
@@ -33,15 +32,20 @@ public class Board {
         }
     }
 
+    private void setNewPieceAtIndex(int tileIndex, Color color) {
+        Tile tile = board.get(tileIndex);
+        tile.setPiece(new Piece(tileIndex, color));
+    }
+
     Board() {
         for (int row = 0; row < maxRows; row += 2) {
             createEvenRow(row);
             createOddRow(row + 1);
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
-            if (board.get(tileIndex).getColor() == Color.BLACK) {
-                board.get(tileIndex).setPiece(new Piece(tileIndex, Color.WHITE));
-                board.get(lastIndex - tileIndex).setPiece(new Piece(lastIndex - tileIndex, Color.BLACK));
+            if (isBlackTile(tileIndex)) {
+                setNewPieceAtIndex(tileIndex, Color.WHITE);
+                setNewPieceAtIndex(lastIndex - tileIndex, Color.BLACK);
             }
         }
     }
@@ -174,8 +178,8 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
-    public boolean isBlackTile(Tile tile) {
-        return true;
+    public boolean isBlackTile(int tileIndex) {
+        return !getTile(tileIndex).isWhite();
     }
 
     private void HandleInvalidIndexInDisplay(InvalidIndexException e) {
