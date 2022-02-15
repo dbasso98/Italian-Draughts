@@ -3,6 +3,8 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.exceptions.EmptyTileException;
 import dssc.exam.draughts.exceptions.InvalidColorException;
 
+import java.awt.*;
+
 public class Game {
     Player whitePlayer = new Player(Color.WHITE);
     Player blackPlayer = new Player(Color.BLACK);
@@ -44,7 +46,11 @@ public class Game {
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
             try {
-                Move move = currentPlayer.getMove();
+//                Move move = currentPlayer.getMove();
+                Point source = currentPlayer.getSource();
+                Point destination = currentPlayer.getDestination();
+
+                Move move = new Move(source, destination);
                 TestPieceValidity(move);
                 move.executeOn(board);
                 isMoveInvalid = false;
