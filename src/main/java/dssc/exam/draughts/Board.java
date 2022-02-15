@@ -13,21 +13,31 @@ public class Board {
     final int piecesPerPlayer = 12;
     private final ArrayList<Tile> board = new ArrayList<>(size);
 
+    private void createOddRow(int row) {
+        Color firstColor = Color.BLACK;
+        Color secondColor = Color.WHITE;
+
+        createRow(row, firstColor, secondColor);
+    }
+
+    private void createEvenRow(int row) {
+        Color firstColor = Color.WHITE;
+        Color secondColor = Color.BLACK;
+        createRow(row, firstColor, secondColor);
+    }
+
+    private void createRow(int row, Color firstColor, Color secondColor) {
+        for (int column = 0; column < maxColumns; column += 2) {
+            board.add(new Tile(firstColor, new Point(row, column)));
+            board.add(new Tile(secondColor, new Point(row, column + 1)));
+        }
+    }
+
+
     Board() {
-        Color firstColor;
-        Color secondColor;
-        for (int row = 0; row < maxRows; row++) {
-            if (row % 2 != 0) {
-                firstColor = Color.BLACK;
-                secondColor = Color.WHITE;
-            } else {
-                firstColor = Color.WHITE;
-                secondColor = Color.BLACK;
-            }
-            for (int column = 0; column < maxColumns; column += 2) {
-                board.add(new Tile(firstColor, new Point(row, column)));
-                board.add(new Tile(secondColor, new Point(row, column + 1)));
-            }
+        for (int row = 0; row < maxRows; row += 2) {
+            createEvenRow(row);
+            createOddRow(row + 1);
         }
         for (int tileIndex = 0; tileIndex < piecesPerPlayer * 2; ++tileIndex) {
             if (board.get(tileIndex).getColor() == Color.BLACK) {
@@ -54,18 +64,23 @@ public class Board {
     }
 
     private ArrayList<Piece> getPiecesOfColor(Color color) {
-        ArrayList<Piece> listOfPiece = new ArrayList<>(12);
+        ArrayList<Piece> listOfPiece = new ArrayList<>(piecesPerPlayer);
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
-            if (getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color)
+            if (tileContainsPieceOfColor(tileIndex, color))
                 listOfPiece.add(getPieceAtTile(tileIndex));
         }
         return listOfPiece;
     }
 
+    private boolean tileContainsPieceOfColor(int tileIndex, Color color) {
+        return getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color;
+    }
+
     ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(12);
+
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
-            if (getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color)
+            if (tileContainsPieceOfColor(tileIndex, color))
                 listOfTiles.add(getTile(tileIndex));
         }
         return listOfTiles;
@@ -92,11 +107,7 @@ public class Board {
     }
 
     Tile getTile(Point position) throws InvalidIndexException {
-        try {
-            return getTile(position.x, position.y);
-        } catch (Exception e) {
-            throw e;
-        }
+        return getTile(position.x, position.y);
     }
 
     Piece getPieceAtTile(int index) {
@@ -189,8 +200,8 @@ public class Board {
 
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
-        System.out.println(indexLine);
         try {
+            System.out.println(indexLine);
             displayInnerPartOfBoard();
             System.out.println(indexLine);
         } catch (InvalidIndexException e) {
