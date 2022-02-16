@@ -146,7 +146,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void choosesPathWithMostKingsToEat() throws Exception{
+    void givesHigherScoreToPathWithMostKingsToEat() throws Exception{
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         newBoard.getPieceAtTile(6, 5).upgradeToKing();
@@ -155,8 +155,20 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
         Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
         Move.movePiece(newBoard, new Point(6, 1), new Point(4, 0));
-        newBoard.display();
-        var candidateTiles = MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE);
-        assertEquals(45, Collections.max(candidateTiles.values()));
+        assertEquals(45, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
+
+    @Test
+    void givesHigherScoreToPathWithFirstOccurrenceOfAKing() throws Exception {
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2, 1).upgradeToKing();
+        newBoard.getPieceAtTile(2, 3).upgradeToKing();
+        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
+        Move.movePiece(newBoard, new Point(6, 1), new Point(3, 2));
+        Move.movePiece(newBoard, new Point(6, 3), new Point(4, 7));
+        Move.movePiece(newBoard, new Point(5, 0), new Point(4, 1));
+        newBoard.getPieceAtTile(3, 2).upgradeToKing();
+        newBoard.getPieceAtTile(5, 4).upgradeToKing();
+        assertEquals(38, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
 }
