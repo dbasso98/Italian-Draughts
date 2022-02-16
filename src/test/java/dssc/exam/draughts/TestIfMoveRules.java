@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
 import java.util.Collections;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -142,5 +143,20 @@ public class TestIfMoveRules {
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
         assertEquals(2, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
         assertEquals(10,  Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
+
+    @Test
+    void choosesPathWithMostKingsToEat() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2, 1).upgradeToKing();
+        newBoard.getPieceAtTile(6, 5).upgradeToKing();
+        newBoard.getPieceAtTile(5, 4).upgradeToKing();
+        newBoard.getPieceAtTile(2, 5).upgradeToKing();
+        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
+        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
+        Move.movePiece(newBoard, new Point(6, 1), new Point(4, 0));
+        newBoard.display();
+        var candidateTiles = MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE);
+        assertEquals(45, Collections.max(candidateTiles.values()));
     }
 }
