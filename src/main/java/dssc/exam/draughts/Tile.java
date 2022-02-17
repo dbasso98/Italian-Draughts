@@ -2,7 +2,7 @@ package dssc.exam.draughts;
 
 import java.awt.*;
 
-class Tile {
+public class Tile {
     private Piece piece = null;
     private final Color tileColor;
     private Point position;
