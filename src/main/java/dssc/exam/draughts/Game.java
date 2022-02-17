@@ -41,17 +41,21 @@ public class Game {
         play();
     }
 
+    private void performAction() throws Exception {
+        Point source = currentPlayer.readSource();
+        Point destination = currentPlayer.readDestination();
+
+        TestPieceValidity(source);
+        Move.moveDecider(board, source, destination);
+    }
+
     void playRound() {
         board.display();
         currentPlayer.displayHolder();
         boolean isMoveInvalid = true;
         while (isMoveInvalid) {
             try {
-                Point source = currentPlayer.getSource();
-                Point destination = currentPlayer.getDestination();
-
-                TestPieceValidity(source);
-                Move.moveDecider(board, source, destination);
+                performAction();
                 isMoveInvalid = false;
             } catch (IncompleteMoveException e) {
                 int movesToCompleteTurn = e.getSkipPath().size() - 1;
@@ -62,7 +66,7 @@ public class Game {
                     boolean isInvalidDestination = true;
                     while (isInvalidDestination) {
                         try {
-                            Point destination = currentPlayer.getDestination();
+                            Point destination = currentPlayer.readDestination();
                             Move.continueToSkip(board, source, destination, e.getSkipPath());
                             --movesToCompleteTurn;
                             source = destination;
@@ -72,6 +76,7 @@ public class Game {
                             System.out.println(e2.getMessage());
                         }
                     }
+
                     isMoveInvalid = false;
                 }
 

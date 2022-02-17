@@ -198,6 +198,7 @@ public class Board {
         }
     }
 
+    // Extract Responsibility (return a string representation)
     public void display() {
         String indexLine = "   1  2  3  4  5  6  7  8";
         try {

@@ -1,7 +1,6 @@
 package dssc.exam.draughts;
 
 import net.jqwik.api.*;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -10,7 +9,7 @@ import java.util.InputMismatchException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestIfScannerPlayerInputInterface {
+public class TestIfScannerPlayerInput {
 
     void setFakeStdInput(String fakeInput) {
         ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
@@ -25,7 +24,7 @@ public class TestIfScannerPlayerInputInterface {
     @Property
     void testGetInt(@ForAll("integerGenerator") Integer input) {
         setFakeStdInput(input.toString());
-        ScannerPlayerInputInterface inputInterface = new ScannerPlayerInputInterface();
+        ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertSame(input, inputInterface.getInt());
     }
 
@@ -33,7 +32,7 @@ public class TestIfScannerPlayerInputInterface {
     @CsvSource({"Michele", "Andres", "Davide", "Alberto", "1", "some"})
     void testGetString(String string) {
         setFakeStdInput(string);
-        ScannerPlayerInputInterface inputInterface = new ScannerPlayerInputInterface();
+        ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertEquals(string, inputInterface.getString());
     }
 
@@ -41,7 +40,7 @@ public class TestIfScannerPlayerInputInterface {
     @CsvSource({"Michele", "a", "b", "@", "some"})
     void testInputMismatchException(String string){
         setFakeStdInput(string);
-        ScannerPlayerInputInterface inputInterface = new ScannerPlayerInputInterface();
+        ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertThrows(InputMismatchException.class, inputInterface::getInt);
     }
 

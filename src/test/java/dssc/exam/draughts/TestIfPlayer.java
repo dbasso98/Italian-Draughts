@@ -58,8 +58,8 @@ public class TestIfPlayer {
 
         Player player = getPlayerWithDoubledInput(inputList);
 
-        Point actualSource = player.getSource();
-        Point actualDestination = player.getDestination();
+        Point actualSource = player.readSource();
+        Point actualDestination = player.readDestination();
 
         Point expectedSource = new Point(sourceRow, sourceColumn);
         Point expectedDestination = new Point(destinationRow, destinationColumn);

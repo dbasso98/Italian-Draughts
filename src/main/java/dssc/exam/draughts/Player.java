@@ -20,9 +20,9 @@ public class Player {
         this.inputInterface = inputInterface;
     }
 
-    Player(Color color){
+    Player(Color color) {
         this.color = color;
-        this.inputInterface = new ScannerPlayerInputInterface(new Scanner(System.in));
+        this.inputInterface = new ScannerPlayerInput(new Scanner(System.in));
     }
 
     Point readPosition() {
@@ -31,7 +31,6 @@ public class Player {
 
     String askName(int playerNum) {
         System.out.println("Player" + playerNum + "[" + color + "]: Please, insert your name:");
-//        return inputScanner.next();
         return inputInterface.getString();
     }
 
@@ -43,40 +42,42 @@ public class Player {
         setName(askName(playerNum));
     }
 
+    Point readPoint() throws InputMismatchException {
+        int column = inputInterface.getInt();
+        int row = inputInterface.getInt();
+        return new Point(row - 1, column - 1);
+    }
+
     Point readPosition(String message) {
         System.out.println(message);
-        int row = 0;
-        int column = 0;
 
-        boolean IsInputNotNumerical = true;
-        while (IsInputNotNumerical) {
+        while (true) {
             try {
-                column = inputInterface.getInt();
-                row = inputInterface.getInt();
-                IsInputNotNumerical = false;
+                return readPoint();
+
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid expression");
                 inputInterface.skipToNextInput();
             }
         }
-        return new Point(row - 1, column - 1);
     }
 
 
-    Point getSource() {
+    Point readSource() {
         return readPosition(readSourceMessage);
     }
 
+    Point readDestination() {
+        return readPosition(readDestinationMessage);
+    }
+
+    // maybe to be changes to Tiles?
     private void TestPieceValidity(Point source, Board board) throws Exception {
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new EmptyTileException("The first Tile you selected contains no Piece");
         if (sourceTile.getPiece().getColor() != getColor())
             throw new InvalidColorException("The piece you intend to move belongs to your opponent");
-    }
-
-    Point getDestination() {
-        return readPosition(readDestinationMessage);
     }
 
     Color getColor() {

@@ -3,14 +3,14 @@ package dssc.exam.draughts;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ScannerPlayerInputInterface implements PlayerInputInterface {
+public class ScannerPlayerInput implements PlayerInputInterface {
     Scanner scanner;
 
-    ScannerPlayerInputInterface(Scanner scanner) {
+    ScannerPlayerInput(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    ScannerPlayerInputInterface() {
+    ScannerPlayerInput() {
         this.scanner = new Scanner(System.in);
     }
 
