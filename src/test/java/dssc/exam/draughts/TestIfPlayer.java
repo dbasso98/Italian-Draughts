@@ -7,6 +7,9 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,14 +78,45 @@ public class TestIfPlayer {
 
     @ParameterizedTest
     @CsvSource({"Michele, Andres, Davide"})
-    void testNameGetter(String Name){
-        String fakeInput = Name;
-        setFakeStdInput(fakeInput);
+    void testNameGetter(String name) {
 
-        Player player = new Player(Color.BLACK);
+        PlayerInterfaceDouble input = new PlayerInterfaceDouble();
+        input.setStrings(List.of(name));
+
+        Player player = new Player(Color.BLACK, input);
         player.initializePlayerName(0);
 
-        assertEquals(Name, player.name);
+        assertEquals(name, player.name);
+    }
+
+    private class PlayerInterfaceDouble implements PlayerInputInterface {
+
+        private static int stringIndex = 0;
+        private static int intIndex = 0;
+        private List<String> strings;
+        private List<Integer> integers;
+
+        void setIntegers(ArrayList<Integer> integers) {
+            this.integers = integers;
+        }
+
+        void setStrings(List<String> strings) {
+            this.strings = strings;
+        }
+
+        @Override
+        public String getString() {
+            return strings.get(stringIndex++);
+        }
+
+        @Override
+        public int getInt() {
+            return integers.get(intIndex++);
+        }
+
+        @Override
+        public void skipToNextInput() {
+        }
     }
 
 }
