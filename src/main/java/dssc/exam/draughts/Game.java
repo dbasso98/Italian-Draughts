@@ -32,8 +32,8 @@ public class Game {
     }
 
     void initPlayers() {
-        whitePlayer.askAndSetName(1);
-        blackPlayer.askAndSetName(2);
+        whitePlayer.initializePlayerName(1);
+        blackPlayer.initializePlayerName(2);
     }
 
     void startGame() {

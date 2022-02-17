@@ -1,7 +1,5 @@
 package dssc.exam.draughts;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -82,7 +80,7 @@ public class TestIfPlayer {
         setFakeStdInput(fakeInput);
 
         Player player = new Player(Color.BLACK);
-        player.askAndSetName(0);
+        player.initializePlayerName(0);
 
         assertEquals(Name, player.name);
     }
