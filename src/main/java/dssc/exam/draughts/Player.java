@@ -10,13 +10,19 @@ import java.util.Scanner;
 public class Player {
     public String name = "";
     private final Color color;
-    private final Scanner input = new Scanner(System.in);
+    private final PlayerInputInterface inputInterface;
 
     private static final String readSourceMessage = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
     private static final String readDestinationMessage = "What are the coordinates (x, y) of the Tile you intend to move the piece to? (e.g. 3 4)";
 
-    Player(Color color) {
+    Player(Color color, PlayerInputInterface inputInterface) {
         this.color = color;
+        this.inputInterface = inputInterface;
+    }
+
+    Player(Color color){
+        this.color = color;
+        this.inputInterface = new ScannerPlayerInputInterface(new Scanner(System.in));
     }
 
     Point readPosition() {
@@ -25,14 +31,15 @@ public class Player {
 
     String askName(int playerNum) {
         System.out.println("Player" + playerNum + "[" + color + "]: Please, insert your name:");
-        return input.next();
+//        return inputScanner.next();
+        return inputInterface.getString();
     }
 
     void setName(String name) {
         this.name = name;
     }
 
-    void askAndSetName(int playerNum) {
+    void initializePlayerName(int playerNum) {
         setName(askName(playerNum));
     }
 
@@ -44,12 +51,12 @@ public class Player {
         boolean IsInputNotNumerical = true;
         while (IsInputNotNumerical) {
             try {
-                column = input.nextInt();
-                row = input.nextInt();
+                column = inputInterface.getInt();
+                row = inputInterface.getInt();
                 IsInputNotNumerical = false;
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid expression");
-                input.next();
+                inputInterface.passInvalid();
             }
         }
         return new Point(row - 1, column - 1);
