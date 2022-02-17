@@ -9,23 +9,25 @@ import java.util.HashMap;
 public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
-        try {
-            board.isValidPosition(source);
-            board.isValidPosition(destination);
-            board.isBlackTile(board.getTile(source));
-            board.isBlackTile(board.getTile(destination));
-            isNotSamePosition(source, destination);
-            isValidDistance(source, destination);
-        } catch (Exception e) {
-            throw e;
-        }
+
+        board.isValidPosition(source);
+        board.isValidPosition(destination);
+        isWhite(source, board);
+        isWhite(destination, board);
+        isNotSamePosition(source, destination);
+        isValidDistance(source, destination);
         return true;
     }
 
-    private static void isValidDistance(Point source, Point destination) throws Exception{
+    private static void isWhite(Point tile, Board board) throws Exception {
+        if (board.getTile(tile).isWhite())
+            throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
+    }
+
+    private static void isValidDistance(Point source, Point destination) throws Exception {
         isDiagonal(source, destination);
         var distance = Math.abs(destination.x - source.x);
-        if (distance != 1 && distance != 2){
+        if (distance != 1 && distance != 2) {
             throw new InvalidMoveException(("Checker can move only by one or two tiles!"));
         }
     }
@@ -37,7 +39,7 @@ public class MoveRules {
     }
 
     static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
-        if (source.x == destination.x && source.y == destination.y) {
+        if (source.equals(destination)) {
             throw new SamePositionException("Source and destination position cannot be the same!");
         }
     }
@@ -60,8 +62,7 @@ public class MoveRules {
         int direction = 0;
         if (color == Color.BLACK) {
             direction = -1;
-        }
-        else if (color == Color.WHITE)
+        } else if (color == Color.WHITE)
             direction = 1;
         int skipWeight;
         for (Tile tile : listOfTiles) {
@@ -80,7 +81,7 @@ public class MoveRules {
         if (steps == 3) {
             return 0;
         }
-        var oppositeDirection = -1*direction;
+        var oppositeDirection = -1 * direction;
         boolean rightCheck, leftCheck, oppositeDirectionRightCheck, oppositeDirectionLeftCheck;
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
@@ -104,10 +105,9 @@ public class MoveRules {
 
         if (!(leftCheck || rightCheck || oppositeDirectionRightCheck || oppositeDirectionLeftCheck)) {
             return 0;
-        }
-        else {
+        } else {
             path.add(tile);
-            int leftWeight=0, rightWeight=0, oppositeLeftWeight=0, oppositeRightWeight=0;
+            int leftWeight = 0, rightWeight = 0, oppositeLeftWeight = 0, oppositeRightWeight = 0;
             if (leftCheck)
                 leftWeight = checkAdjacentDiagonalForKing(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
             if (rightCheck)
@@ -116,7 +116,7 @@ public class MoveRules {
                 oppositeLeftWeight = checkAdjacentDiagonalForKing(board, secondOppositeLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
             if (oppositeDirectionRightCheck)
                 oppositeRightWeight = checkAdjacentDiagonalForKing(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, steps, path);
-            return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight,oppositeRightWeight)) + 1;
+            return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight, oppositeRightWeight)) + 1;
         }
     }
 
@@ -140,12 +140,11 @@ public class MoveRules {
 
         if (!(leftCheck || rightCheck)) {
             return 0;
-        }
-        else {
-            int leftWeight=0, rightWeight=0;
-            if(leftCheck)
+        } else {
+            int leftWeight = 0, rightWeight = 0;
+            if (leftCheck)
                 leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps);
-            if(rightCheck)
+            if (rightCheck)
                 rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps);
             return Math.max(leftWeight, rightWeight) + 1;
         }
@@ -153,9 +152,9 @@ public class MoveRules {
 
     private static boolean canSkip(Board board, Color originalColorOfPiece, Tile firstDiagonalTile, Tile secondDiagonalTile) {
         return board.isValidPosition(firstDiagonalTile.getPosition()) &&
-                    board.isValidPosition(secondDiagonalTile.getPosition()) &&
-                    firstDiagonalTile.isNotEmpty() &&
-                    firstDiagonalTile.getPiece().getColor() != originalColorOfPiece &&
-                    secondDiagonalTile.isEmpty();
+                board.isValidPosition(secondDiagonalTile.getPosition()) &&
+                firstDiagonalTile.isNotEmpty() &&
+                firstDiagonalTile.getPiece().getColor() != originalColorOfPiece &&
+                secondDiagonalTile.isEmpty();
     }
 }
