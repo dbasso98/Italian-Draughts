@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ScannerPlayerInputInterface implements PlayerInputInterface {
@@ -19,12 +20,12 @@ public class ScannerPlayerInputInterface implements PlayerInputInterface {
     }
 
     @Override
-    public int getInt() {
+    public int getInt() throws InputMismatchException {
         return scanner.nextInt();
     }
 
     @Override
-    public void passInvalid() {
+    public void skipToNextInput() {
         scanner.next();
     }
 }

@@ -6,9 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayInputStream;
+import java.util.InputMismatchException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfScannerPlayerInputInterface {
 
@@ -35,6 +35,14 @@ public class TestIfScannerPlayerInputInterface {
         setFakeStdInput(string);
         ScannerPlayerInputInterface inputInterface = new ScannerPlayerInputInterface();
         assertEquals(string, inputInterface.getString());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"Michele", "a", "b", "@", "some"})
+    void testInputMismatchException(String string){
+        setFakeStdInput(string);
+        ScannerPlayerInputInterface inputInterface = new ScannerPlayerInputInterface();
+        assertThrows(InputMismatchException.class, inputInterface::getInt);
     }
 
 }
