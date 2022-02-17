@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,12 +58,19 @@ public class TestIfPlayer {
     }
 
     @ParameterizedTest
-    @CsvSource({"1 a, 1 1", "a 1, 2 3"})
-    void nonNumericInputException(String source1, String destination1) {
-        String fakeInput = source1 + System.lineSeparator() + destination1 + System.lineSeparator();
-        setFakeStdInput(fakeInput);
+    @CsvSource({"1, 2", "3, 4"})
+    void nonNumericInputException(int correctSourceX, int correctSOurceY) {
 
-        Player player = new Player(Color.WHITE);
+        PlayerInterfaceExceptionRaiserDouble input = new
+                PlayerInterfaceExceptionRaiserDouble(new InputMismatchException());
+
+        List<Integer> integers = new ArrayList<>();
+        integers.add(correctSourceX);
+        integers.add(correctSOurceY);
+        input.setIntegers(integers);
+
+        Player player = new Player(Color.WHITE, input);
+
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
@@ -74,6 +81,25 @@ public class TestIfPlayer {
                 "Please enter a valid expression" + System.lineSeparator();
 
         assertEquals(expected, fakeStandardOutput.toString());
+    }
+
+    private class PlayerInterfaceExceptionRaiserDouble extends PlayerInterfaceDouble {
+        private final InputMismatchException exceptionToThrow;
+        private boolean isFirstCall = true;
+
+        PlayerInterfaceExceptionRaiserDouble(InputMismatchException exception) {
+            this.exceptionToThrow = exception;
+        }
+
+        @Override
+        public int getInt() throws InputMismatchException {
+            if (isFirstCall) {
+                isFirstCall = false;
+                throw exceptionToThrow;
+            }
+            return super.getInt();
+        }
+
     }
 
     @ParameterizedTest
@@ -91,12 +117,12 @@ public class TestIfPlayer {
 
     private class PlayerInterfaceDouble implements PlayerInputInterface {
 
-        private static int stringIndex = 0;
-        private static int intIndex = 0;
+        private int stringIndex = 0;
+        private int intIndex = 0;
         private List<String> strings;
         private List<Integer> integers;
 
-        void setIntegers(ArrayList<Integer> integers) {
+        void setIntegers(List<Integer> integers) {
             this.integers = integers;
         }
 
