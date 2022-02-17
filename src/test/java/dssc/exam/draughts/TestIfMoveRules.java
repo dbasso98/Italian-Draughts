@@ -74,13 +74,13 @@ public class TestIfMoveRules {
     void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        assertEquals(1, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, 0));
+        assertEquals(10, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, -1));
     }
 
     @Test
     void checksAbsenceOfManInAdjacentDiagonals() throws Exception {
         var newBoard = new Board();
-        assertEquals(0, MoveRules.checkAdjacentDiagonal(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, 0));
+        assertEquals(0, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, -1));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
-        assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+        assertEquals(60, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
 
     @Test
@@ -132,7 +132,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
         Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
-        assertEquals(3, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+        assertEquals(60, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
 
     @Test
@@ -141,6 +141,33 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
         assertEquals(2, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(1,  Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+        assertEquals(10,  Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
+
+    @Test
+    void givesHigherScoreToPathWithMostKingsToEat() throws Exception{
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2, 1).upgradeToKing();
+        newBoard.getPieceAtTile(6, 5).upgradeToKing();
+        newBoard.getPieceAtTile(5, 4).upgradeToKing();
+        newBoard.getPieceAtTile(2, 5).upgradeToKing();
+        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
+        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
+        Move.movePiece(newBoard, new Point(6, 1), new Point(4, 0));
+        assertEquals(45, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
+    }
+
+    @Test
+    void givesHigherScoreToPathWithFirstOccurrenceOfAKing() throws Exception {
+        var newBoard = new Board();
+        newBoard.getPieceAtTile(2, 1).upgradeToKing();
+        newBoard.getPieceAtTile(2, 3).upgradeToKing();
+        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
+        Move.movePiece(newBoard, new Point(6, 1), new Point(3, 2));
+        Move.movePiece(newBoard, new Point(6, 3), new Point(4, 7));
+        Move.movePiece(newBoard, new Point(5, 0), new Point(4, 1));
+        newBoard.getPieceAtTile(3, 2).upgradeToKing();
+        newBoard.getPieceAtTile(5, 4).upgradeToKing();
+        assertEquals(38, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values()));
     }
 }

@@ -67,20 +67,20 @@ public class MoveRules {
         int skipWeight;
         for (Tile tile : listOfTiles) {
             if (tile.getPiece().isKing())
-                skipWeight = checkAdjacentDiagonalForKing(board, tile, color, direction, -1, new ArrayList<>());
+                skipWeight = getWeightForKingSkipPath(board, tile, color, direction, -1, new ArrayList<>());
             else
-                skipWeight = checkAdjacentDiagonal(board, tile, color, direction, -1);
+                skipWeight = getWeightForManSkipPath(board, tile, color, direction, -1);
             if (skipWeight > 0)
                 candidateTilesForSkipMap.put(tile, skipWeight);
         }
         return candidateTilesForSkipMap;
     }
 
-    public static int checkAdjacentDiagonalForKing(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps, ArrayList<Tile> path) {
+    public static int getWeightForKingSkipPath(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps, ArrayList<Tile> path) {
         ++steps;
-        if (steps == 3) {
-            return 0;
-        }
+        var currentWeight = 0;
+        if (steps == 3)
+            return currentWeight;
         var oppositeDirection = -1 * direction;
         boolean rightCheck, leftCheck, oppositeDirectionRightCheck, oppositeDirectionLeftCheck;
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
@@ -104,27 +104,41 @@ public class MoveRules {
         oppositeDirectionLeftCheck = oppositeDirectionLeftCheck && !(path.contains(secondOppositeLeftDiagonalTile));
 
         if (!(leftCheck || rightCheck || oppositeDirectionRightCheck || oppositeDirectionLeftCheck)) {
-            return 0;
-        } else {
+            return currentWeight;
+        }
+        else {
             path.add(tile);
-            int leftWeight = 0, rightWeight = 0, oppositeLeftWeight = 0, oppositeRightWeight = 0;
-            if (leftCheck)
-                leftWeight = checkAdjacentDiagonalForKing(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (rightCheck)
-                rightWeight = checkAdjacentDiagonalForKing(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (oppositeDirectionLeftCheck)
-                oppositeLeftWeight = checkAdjacentDiagonalForKing(board, secondOppositeLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
-            if (oppositeDirectionRightCheck)
-                oppositeRightWeight = checkAdjacentDiagonalForKing(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, steps, path);
-            return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight, oppositeRightWeight)) + 1;
+            int leftWeight=0, rightWeight=0, oppositeLeftWeight=0, oppositeRightWeight=0;
+            var skippedTiles = new ArrayList<Tile>();
+            if (leftCheck){
+                leftWeight = getWeightForKingSkipPath(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
+                skippedTiles.add(firstLeftDiagonalTile);
+            }
+            if (rightCheck){
+                rightWeight = getWeightForKingSkipPath(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps, path);
+                skippedTiles.add(firstRightDiagonalTile);
+            }
+            if (oppositeDirectionLeftCheck){
+                oppositeLeftWeight = getWeightForKingSkipPath(board, secondOppositeLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
+                skippedTiles.add(firstOppositeLeftDiagonalTile);
+            }
+            if (oppositeDirectionRightCheck){
+                oppositeRightWeight = getWeightForKingSkipPath(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, steps, path);
+                skippedTiles.add(firstOppositeRightDiagonalTile);
+            }
+            currentWeight =  10 * (steps + 1);
+            skippedTiles.removeIf(element -> !element.getPiece().isKing());
+            if(!skippedTiles.isEmpty())
+                 currentWeight += 5 + (3 - steps);
+            return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight,oppositeRightWeight)) + currentWeight;
         }
     }
 
-    static int checkAdjacentDiagonal(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
+    static int getWeightForManSkipPath(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps) {
         ++steps;
-        if (steps == 3) {
-            return 0;
-        }
+        var currentWeight = 0;
+        if (steps == 3)
+            return currentWeight;
         boolean rightCheck, leftCheck;
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
@@ -139,14 +153,16 @@ public class MoveRules {
             leftCheck = leftCheck && !firstLeftDiagonalTile.getPiece().isKing();
 
         if (!(leftCheck || rightCheck)) {
-            return 0;
-        } else {
-            int leftWeight = 0, rightWeight = 0;
-            if (leftCheck)
-                leftWeight = checkAdjacentDiagonal(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps);
-            if (rightCheck)
-                rightWeight = checkAdjacentDiagonal(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps);
-            return Math.max(leftWeight, rightWeight) + 1;
+            return currentWeight;
+        }
+        else {
+            int leftWeight=0, rightWeight=0;
+            if(leftCheck)
+                leftWeight = getWeightForManSkipPath(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps);
+            if(rightCheck)
+                rightWeight = getWeightForManSkipPath(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps);
+            currentWeight = 10 * (steps + 1);
+            return Math.max(leftWeight, rightWeight) + currentWeight;
         }
     }
 
