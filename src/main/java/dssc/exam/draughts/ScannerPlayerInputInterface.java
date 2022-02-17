@@ -21,8 +21,6 @@ public class ScannerPlayerInputInterface implements PlayerInputInterface {
     @Override
     public int getInt() {
         return scanner.nextInt();
-
-
     }
 
     @Override
