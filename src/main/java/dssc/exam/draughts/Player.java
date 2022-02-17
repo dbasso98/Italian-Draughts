@@ -56,7 +56,7 @@ public class Player {
                 IsInputNotNumerical = false;
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid expression");
-                inputInterface.passInvalid();
+                inputInterface.skipToNextInput();
             }
         }
         return new Point(row - 1, column - 1);

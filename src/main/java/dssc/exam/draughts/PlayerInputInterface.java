@@ -5,5 +5,5 @@ public interface PlayerInputInterface {
 
     int getInt();
 
-    void passInvalid();
+    void skipToNextInput();
 }
