@@ -1,74 +1,89 @@
 package dssc.exam.draughts;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.awt.*;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfPlayer {
 
+    private Player getPlayerWithDoubledInput(List<Integer> inputList) {
+        PlayerInterfaceDouble inputDouble = new PlayerInterfaceDouble();
+        inputDouble.setIntegers(inputList);
+        return new Player(Color.BLACK, inputDouble);
+    }
 
-    void setFakeStdInput(String fakeInput) {
-        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
-        System.setIn(fakeStandardInput);
+
+    static Stream<Arguments> generateDataReadPosition() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(3, 4), 2, 3),
+                Arguments.of(Arrays.asList(12, 15), 11, 14)
+        );
     }
 
     @ParameterizedTest
-    @CsvSource({"3, 4, 2, 3", "12, 15, 11, 14"})
-    void testReadPosition(String xInput, String yInput,
+    @MethodSource("generateDataGetMove")
+    void testReadPosition(List<Integer> inputList,
                           int rowExpected, int columnExpected) {
 
-        String fakeInput = xInput + " " + yInput + "\n";
-        setFakeStdInput(fakeInput);
+        Point point = getPlayerWithDoubledInput(inputList).readPosition();
 
-        Point point = new Player(Color.BLACK).readPosition();
         assertEquals(point.x, columnExpected);
         assertEquals(point.y, rowExpected);
     }
 
-    @ParameterizedTest
-    @CsvSource({"3, 4, 5, 6, 2, 3, 4, 5", "12, 15, 14, 36, 11, 14, 13, 35"})
-    void testGetMove(String sourceXIn, String sourceYIn,
-                     String destinationXIn, String destinationYIn,
-                     int sourceColumn, int sourceRow,
-                     int destinationColumn, int destinationRow) {
 
-        String fakeInput1 = sourceXIn + " " + sourceYIn + "\n ";
-        String fakeInput2 = destinationXIn + " " + destinationYIn + "\n";
-        String fakeInput = fakeInput1 + fakeInput2;
-        setFakeStdInput(fakeInput);
-
-        Player player = new Player(Color.BLACK);
-        Point source = player.getSource();
-        Point destination = player.getDestination();
-
-        Point sourcePoint = new Point(sourceRow, sourceColumn);
-        Point destinationPoint = new Point(destinationRow, destinationColumn);
-
-        assertEquals(source, sourcePoint);
-        assertEquals(destination, destinationPoint);
+    static Stream<Arguments> generateDataGetMove() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(3, 4, 5, 6), 2, 3, 4, 5),
+                Arguments.of(Arrays.asList(12, 15, 14, 36), 11, 14, 13, 35)
+        );
     }
 
     @ParameterizedTest
-    @CsvSource({"1, 2", "3, 4"})
-    void nonNumericInputException(int correctSourceX, int correctSOurceY) {
+    @MethodSource("generateDataGetMove")
+    void testGetMove(List<Integer> inputList,
+                     int sourceColumn, int sourceRow,
+                     int destinationColumn, int destinationRow) {
+
+        Player player = getPlayerWithDoubledInput(inputList);
+
+        Point actualSource = player.getSource();
+        Point actualDestination = player.getDestination();
+
+        Point expectedSource = new Point(sourceRow, sourceColumn);
+        Point expectedDestination = new Point(destinationRow, destinationColumn);
+
+        assertEquals(expectedSource, actualSource);
+        assertEquals(expectedDestination, actualDestination);
+    }
+
+
+    static Stream<Arguments> generateDataNonNumericInputException() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(1, 2)),
+                Arguments.of(Arrays.asList(3, 4))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateDataGetMove")
+    void nonNumericInputException(List<Integer> inputList) {
 
         PlayerInterfaceExceptionRaiserDouble input = new
                 PlayerInterfaceExceptionRaiserDouble(new InputMismatchException());
 
-        List<Integer> integers = new ArrayList<>();
-        integers.add(correctSourceX);
-        integers.add(correctSOurceY);
-        input.setIntegers(integers);
-
+        input.setIntegers(inputList);
         Player player = new Player(Color.WHITE, input);
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
