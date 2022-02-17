@@ -14,11 +14,13 @@ public class Move {
         var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
         int maxWeight;
         if (!candidateTiles.isEmpty())
-            maxWeight = Collections.max(candidateTiles.values());
+            maxWeight = Collections.max(candidateTiles.values().stream()
+                                                               .map(path -> path.getWeight())
+                                                               .collect(Collectors.toList()));
         else
             maxWeight = 0;
         var bestTilesToStartTheSkip = new ArrayList<>(candidateTiles.entrySet().stream()
-                .filter(entry -> entry.getValue() == maxWeight)
+                .filter(entry -> entry.getValue().getWeight() == maxWeight)
                 .map(entry -> entry.getKey())
                 .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
@@ -38,7 +40,7 @@ public class Move {
                 else
                     throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
                         + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
-                if (candidateTiles.get(board.getTile(source)) > 18)
+                if (candidateTiles.get(board.getTile(source)).getWeight() > 18)
                     throw new IncompleteMoveException("You can continue to skip!", destination, candidateTiles.get(board.getTile(source)));
             } else
                 throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions:"
@@ -46,9 +48,9 @@ public class Move {
         }
     }
 
-    public static void continueToSkip(Board board, Point source, Point destination) throws Exception {
+    public static void continueToSkip(Board board, Point source, Point destination, ArrayList<Tile> path) throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
-        if (!isASimpleMove(source, destination))
+        if (path.stream().map(tile -> tile.getPosition()).collect(Collectors.toList()).contains(destination))
             skipMove(board, source, destination);
         else
             throw new InvalidMoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");

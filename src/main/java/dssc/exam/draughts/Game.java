@@ -54,7 +54,7 @@ public class Game {
                 Move.moveDecider(board, source, destination);
                 isMoveInvalid = false;
             } catch (IncompleteMoveException e) {
-                int movesToCompleteTurn = e.getWeight();
+                int movesToCompleteTurn = e.getSkipPath().size() - 1;
                 Point source = e.getNewSource();
                 while (movesToCompleteTurn > 1) {
                     board.display();
@@ -63,7 +63,7 @@ public class Game {
                     while (isInvalidDestination) {
                         try {
                             Point destination = currentPlayer.getDestination();
-                            Move.continueToSkip(board, source, destination);
+                            Move.continueToSkip(board, source, destination, e.getSkipPath());
                             --movesToCompleteTurn;
                             source = destination;
                             isInvalidDestination = false;

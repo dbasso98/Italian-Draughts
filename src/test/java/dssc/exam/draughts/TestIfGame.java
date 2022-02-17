@@ -55,7 +55,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidEmptyTileInput() throws Exception {
+    void testInvalidEmptyTileInput() {
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
@@ -79,7 +79,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidPieceColorInput() throws Exception {
+    void testInvalidPieceColorInput() {
         String fakeInput = "1 6" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
@@ -138,6 +138,7 @@ public class TestIfGame {
         Move.moveDecider(board, new Point(2, 1), new Point(3, 2));
         Move.moveDecider(board, new Point(4, 1), new Point(3, 0));
         Move.moveDecider(board, new Point(3, 2), new Point(4, 1));
+        board.display();
         Game game = new Game();
         game.loadGame(board, 1);
 
