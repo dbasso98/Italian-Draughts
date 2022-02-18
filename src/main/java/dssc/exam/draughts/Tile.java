@@ -5,7 +5,7 @@ import java.awt.*;
 public class Tile {
     private Piece piece = null;
     private final Color tileColor;
-    private Point position;
+    private final Point position;
 
     Tile(Piece piece, Color tileColor, Point position) {
         this(tileColor, position);
