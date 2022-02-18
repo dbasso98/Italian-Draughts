@@ -7,11 +7,6 @@ public class Tile {
     private final Color tileColor;
     private final Point position;
 
-    Tile(Piece piece, Color tileColor, Point position) {
-        this(tileColor, position);
-        this.piece = piece;
-    }
-
     Tile(Color color, Point position) {
         this.tileColor = color;
         this.position = position;
