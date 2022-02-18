@@ -86,7 +86,7 @@ public class Board {
         int piecesLeftOnTheBoard = 0;
         for (Tile tile : board) {
             if (tile.isNotEmpty())
-                piecesLeftOnTheBoard += 1;
+                ++piecesLeftOnTheBoard;
         }
         return piecesLeftOnTheBoard;
     }
