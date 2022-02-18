@@ -49,14 +49,6 @@ public class Piece {
         System.out.println(this);
     }
 
-    private boolean isBlack() {
-        return pieceColor == Color.BLACK;
-    }
-
-    private String displayKing(){
-        return representation.getPieceRepresentation();
-    }
-
     public String display() {
         return representation.getPieceRepresentation();
     }
