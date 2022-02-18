@@ -10,7 +10,7 @@ public class Piece {
     private final String whiteKingRepresentation = "[W]";
     private final String whiteManRepresentation = "[w]";
 
-    Piece(int id, Color pieceColor) {
+    public Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
     }

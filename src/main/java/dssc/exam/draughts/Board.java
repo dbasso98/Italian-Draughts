@@ -179,7 +179,7 @@ public class Board {
     }
 
     public boolean isBlackTile(int tileIndex) {
-        return !getTile(tileIndex).isWhite();
+        return getTile(tileIndex).isBlack();
     }
 
     private void HandleInvalidIndexInDisplay(InvalidIndexException e) {

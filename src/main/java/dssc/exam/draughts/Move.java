@@ -60,9 +60,9 @@ public class Move {
         StringBuilder result = new StringBuilder();
         for (var tile : tiles) {
             result.append(" (")
-                    .append(tile.getPosition().y + 1)
+                    .append(tile.getColumn() + 1)
                     .append(",")
-                    .append(tile.getPosition().x + 1)
+                    .append(tile.getRow() + 1)
                     .append(")");
         }
         return result.toString();

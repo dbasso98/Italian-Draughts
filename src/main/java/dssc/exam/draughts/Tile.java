@@ -5,50 +5,46 @@ import java.awt.*;
 public class Tile {
     private Piece piece = null;
     private final Color tileColor;
-    private Point position;
+    private final Point position;
 
-    Tile(Piece piece, Color tileColor, Point position) {
+    public Tile(Piece piece, Color tileColor, Point position) {
         this(tileColor, position);
         this.piece = piece;
     }
 
-    Tile(Color color, Point position) {
+    public Tile(Color color, Point position) {
         this.tileColor = color;
         this.position = position;
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return piece == null;
     }
 
-    Piece popPiece() {
+    public Piece popPiece() {
         var piece = this.piece;
         this.piece = null;
         return piece;
     }
 
-    void setPiece(Piece piece) {
+    public void setPiece(Piece piece) {
         this.piece = piece;
     }
 
-    boolean isNotEmpty() {
+    public boolean isNotEmpty() {
         return !(isEmpty());
     }
 
-    Piece getPiece() {
+    public Piece getPiece() {
         return piece;
     }
 
-    Color getColor() {
+    public Color getColor() {
         return tileColor;
     }
 
     public Point getPosition() {
         return position;
-    }
-
-    private boolean isBlack() {
-        return tileColor == Color.BLACK;
     }
 
     public int getRow() {
@@ -57,6 +53,14 @@ public class Tile {
 
     public int getColumn() {
         return position.y;
+    }
+
+    public boolean isBlack() {
+        return tileColor == Color.BLACK;
+    }
+
+    public boolean isWhite() {
+        return tileColor == Color.WHITE;
     }
 
     private String displayEmptyTile() {
@@ -68,9 +72,5 @@ public class Tile {
             return displayEmptyTile();
         }
         return piece.display();
-    }
-
-    boolean isWhite() {
-        return tileColor == Color.WHITE;
     }
 }
