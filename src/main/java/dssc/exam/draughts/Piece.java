@@ -6,7 +6,7 @@ public class Piece {
     private boolean isKing;
     private RepresentationOfPiece representation;
 
-    Piece(int id, Color pieceColor) {
+    public Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
         this.isKing = false;
