@@ -63,6 +63,10 @@ public class Tile {
         return tileColor == Color.WHITE;
     }
 
+    public boolean containsPieceOfColor(Color color) {
+        return isNotEmpty() && getPiece().getColor() == color;
+    }
+
     private String displayEmptyTile() {
         return "[ ]";
     }

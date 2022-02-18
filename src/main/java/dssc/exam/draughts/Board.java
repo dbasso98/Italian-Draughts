@@ -73,26 +73,22 @@ public class Board {
                                                                     .collect(Collectors.toList()));
     }
 
-    private boolean tileContainsPieceOfColor(int tileIndex, Color color) {
-        return getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color;
-    }
-
     public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(piecesPerPlayer);
-        for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
-            if (tileContainsPieceOfColor(tileIndex, color))
-                listOfTiles.add(getTile(tileIndex));
+        for (Tile tile : board) {
+            if (tile.containsPieceOfColor(color))
+                listOfTiles.add(tile);
         }
         return listOfTiles;
     }
 
     int getNumberOfPiecesOnTheBoard() {
-        int sum = 0;
-        for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
-            if (board.get(tileIndex).isNotEmpty())
-                sum += 1;
+        int piecesLeftOnTheBoard = 0;
+        for (Tile tile : board) {
+            if (tile.isNotEmpty())
+                piecesLeftOnTheBoard += 1;
         }
-        return sum;
+        return piecesLeftOnTheBoard;
     }
 
     Tile getTile(int index) {
