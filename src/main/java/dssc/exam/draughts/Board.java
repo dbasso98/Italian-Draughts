@@ -4,13 +4,14 @@ import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Board {
     private final int size = 64;
     private final int lastIndex = size - 1;
     final int maxRows = 8;
     final int maxColumns = 8;
-    final int piecesPerPlayer = 12;
+    private final int piecesPerPlayer = 12;
     private final ArrayList<Tile> board = new ArrayList<>(size);
 
     private void createOddRow(int row) {
@@ -37,7 +38,7 @@ public class Board {
         tile.setPiece(new Piece(tileIndex, color));
     }
 
-    Board() {
+    public Board() {
         for (int row = 0; row < maxRows; row += 2) {
             createEvenRow(row);
             createOddRow(row + 1);
@@ -58,30 +59,26 @@ public class Board {
         return getIndex(position.x, position.y);
     }
 
-    int getSize() {
+    public int getSize() {
         return board.size();
     }
 
-    int getNumberOfPiecesOfColor(Color color) {
+    public int getNumberOfPiecesOfColor(Color color) {
         return getPiecesOfColor(color).size();
     }
 
     private ArrayList<Piece> getPiecesOfColor(Color color) {
-        ArrayList<Piece> listOfPiece = new ArrayList<>(piecesPerPlayer);
-        for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
-            if (tileContainsPieceOfColor(tileIndex, color))
-                listOfPiece.add(getPieceAtTile(tileIndex));
-        }
-        return listOfPiece;
+        return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
+                                                                    .map(tile -> tile.getPiece())
+                                                                    .collect(Collectors.toList()));
     }
 
     private boolean tileContainsPieceOfColor(int tileIndex, Color color) {
         return getTile(tileIndex).isNotEmpty() && getPieceAtTile(tileIndex).getColor() == color;
     }
 
-    ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(piecesPerPlayer);
-
         for (int tileIndex = 0; tileIndex < getSize(); ++tileIndex) {
             if (tileContainsPieceOfColor(tileIndex, color))
                 listOfTiles.add(getTile(tileIndex));
