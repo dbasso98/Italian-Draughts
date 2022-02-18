@@ -21,7 +21,7 @@ public class Piece {
 
     public void upgradeToKing() {
         this.isKing = true;
-        this.representation = RepresentationOfPiece.representation(this);
+        this.representation = RepresentationOfPiece.updateRepresentation(this);
     }
 
     public boolean isKing() {

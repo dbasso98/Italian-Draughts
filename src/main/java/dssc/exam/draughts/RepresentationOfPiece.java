@@ -12,6 +12,10 @@ public class RepresentationOfPiece {
         return pieceRepresentation;
     }
 
+    public static RepresentationOfPiece updateRepresentation(Piece piece){
+        return representation(piece);
+    }
+
     private static RepresentationOfPiece kingRepresentation(Piece piece){
         if(piece.getColor() == Color.BLACK)
             return new RepresentationOfPiece("[B]");
