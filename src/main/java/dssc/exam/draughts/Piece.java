@@ -3,8 +3,10 @@ package dssc.exam.draughts;
 public class Piece {
     private final int id;
     private final Color pieceColor;
-    private boolean isKing = false;
+    private boolean isKing;
+    private RepresentationOfPiece representation;
 
+    // primitive obsession
     private final String blackKingRepresentation = "[B]";
     private final String blackManRepresentation = "[b]";
     private final String whiteKingRepresentation = "[W]";
@@ -13,10 +15,13 @@ public class Piece {
     public Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
+        this.isKing = false;
+        this.representation = RepresentationOfPiece.representation(this);
     }
 
     public void upgradeToKing() {
         this.isKing = true;
+        this.representation = RepresentationOfPiece.updateRepresentation(this);
     }
 
     public boolean isKing() {
@@ -44,25 +49,7 @@ public class Piece {
         System.out.println(this);
     }
 
-    private boolean isBlack() {
-        return pieceColor == Color.BLACK;
-    }
-
-    private String displayKing(){
-        if (isBlack()) {
-            return blackKingRepresentation;
-        }
-        return whiteKingRepresentation;
-    }
-
     public String display() {
-        if (isKing()){
-            return displayKing();
-        }
-
-        if (isBlack()) {
-            return blackManRepresentation;
-        }
-        return whiteManRepresentation;
+        return representation.getPieceRepresentation();
     }
 }
