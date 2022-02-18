@@ -6,13 +6,7 @@ public class Piece {
     private boolean isKing;
     private RepresentationOfPiece representation;
 
-    // primitive obsession
-    private final String blackKingRepresentation = "[B]";
-    private final String blackManRepresentation = "[b]";
-    private final String whiteKingRepresentation = "[W]";
-    private final String whiteManRepresentation = "[w]";
-
-    public Piece(int id, Color pieceColor) {
+    Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
         this.isKing = false;
@@ -43,10 +37,6 @@ public class Piece {
                 ", color=" + pieceColor +
                 ", isKing=" + isKing +
                 '}';
-    }
-
-    public void printInfo() {
-        System.out.println(this);
     }
 
     public String display() {
