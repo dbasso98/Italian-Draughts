@@ -58,7 +58,7 @@ public class Game {
                 performAction();
                 isMoveInvalid = false;
             } catch (IncompleteMoveException e) {
-                int movesToCompleteTurn = e.getSkipPath().size() - 1;
+                int movesToCompleteTurn = e.getNumberOfSkips();
                 Point source = e.getNewSource();
                 while (movesToCompleteTurn > 1) {
                     board.display();

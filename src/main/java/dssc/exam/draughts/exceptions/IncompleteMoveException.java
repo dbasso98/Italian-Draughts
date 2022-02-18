@@ -25,6 +25,10 @@ public class IncompleteMoveException extends Exception {
         return skipPath.getPath();
     }
 
+    public int getNumberOfSkips() {
+        return getSkipPath().size() - 1;
+    }
+
     public Point getNewSource(){
         return newSource;
     }
