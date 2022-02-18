@@ -55,21 +55,9 @@ public class Piece {
 
     private String displayKing(){
         return representation.getPieceRepresentation();
-
-        //if (isBlack()) {
-          //  return blackKingRepresentation;
-       // }
-        //return whiteKingRepresentation;
     }
 
     public String display() {
-        if (isKing()){
-            return displayKing();
-        }
-
-        if (isBlack()) {
-            return blackManRepresentation;
-        }
-        return whiteManRepresentation;
+        return representation.getPieceRepresentation();
     }
 }
