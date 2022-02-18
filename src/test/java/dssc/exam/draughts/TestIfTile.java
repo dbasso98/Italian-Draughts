@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,9 +26,13 @@ public class TestIfTile {
         assertEquals(expectedColor, coloredTile.getColor());
     }
 
+    @BeforeEach
+    void setBlackPieceOnTile(){
+        blackTileBlackMan.setPiece(new Piece(1, Color.BLACK));
+    }
+
     @Test
     void isNotEmptyIfPieceIsSetOnIt() {
-        blackTileBlackMan.setPiece(new Piece(1, Color.BLACK));
         assertFalse(blackTileBlackMan.isEmpty());
     }
 
@@ -37,15 +42,14 @@ public class TestIfTile {
     }
 
     @Test
-    void correctlyDisplaysTileOncePieceIsSetOnIT(){
-        blackTileBlackMan.setPiece(new Piece(1, Color.BLACK));
+    void correctlyDisplaysTileOnceBlackPieceIsSetOnIT(){
         assertEquals("[b]", blackTileBlackMan.display());
+    }
 
-        Tile blackTileWhiteKing = new Tile(Color.BLACK, new Point(0,0));
-        blackTileWhiteKing.setPiece(new Piece(1, Color.WHITE));
-        blackTileWhiteKing.getPiece().upgradeToKing();
-
-        assertEquals("[W]", blackTileWhiteKing.display());
+    @Test
+    void correctlyDisplaysTileOnceBlackKingIsPlacedOnIt(){
+        blackTileBlackMan.getPiece().upgradeToKing();
+        assertEquals("[B]", blackTileBlackMan.display());
     }
 
 
