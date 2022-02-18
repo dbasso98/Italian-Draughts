@@ -45,9 +45,6 @@ public class Piece {
                 '}';
     }
 
-    public void printInfo() {
-        System.out.println(this);
-    }
 
     public String display() {
         return representation.getPieceRepresentation();
