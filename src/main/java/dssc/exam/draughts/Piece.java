@@ -39,7 +39,6 @@ public class Piece {
                 '}';
     }
 
-
     public String display() {
         return representation.getPieceRepresentation();
     }
