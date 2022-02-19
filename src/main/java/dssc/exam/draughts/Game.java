@@ -49,36 +49,17 @@ public class Game {
         Move.moveDecider(board, source, destination);
     }
 
+
     void playRound() {
         board.display();
         currentPlayer.displayHolder();
-        boolean isMoveInvalid = true;
-        while (isMoveInvalid) {
+        while (true) {
             try {
                 performAction();
-                isMoveInvalid = false;
+                break;
             } catch (IncompleteMoveException e) {
-                int movesToCompleteTurn = e.getNumberOfSkips();
-                Point source = e.getNewSource();
-                while (movesToCompleteTurn > 1) {
-                    board.display();
-                    System.out.println(e.getMessage());
-                    boolean isInvalidDestination = true;
-                    while (isInvalidDestination) {
-                        try {
-                            Point destination = currentPlayer.readDestination();
-                            Move.continueToSkip(board, source, destination, e.getSkipPath());
-                            --movesToCompleteTurn;
-                            source = destination;
-                            isInvalidDestination = false;
-                        } catch (Exception e2) {
-                            System.out.print("Invalid move: ");
-                            System.out.println(e2.getMessage());
-                        }
-                    }
-
-                    isMoveInvalid = false;
-                }
+                continueTheRound(e);
+                break;
 
             } catch (Exception e) {
                 System.out.print("Invalid move: ");
@@ -87,6 +68,27 @@ public class Game {
         }
         changePlayer();
         ++round;
+    }
+
+    private void continueTheRound(IncompleteMoveException e) {
+        int movesToCompleteTurn = e.getNumberOfSkips();
+        Point source = e.getNewSource();
+        while (movesToCompleteTurn > 1) {
+            board.display();
+            System.out.println(e.getMessage());
+            while (true) {
+                try {
+                    Point destination = currentPlayer.readDestination();
+                    Move.continueToSkip(board, source, destination, e.getSkipPath());
+                    --movesToCompleteTurn;
+                    source = destination;
+                    break;
+                } catch (Exception e2) {
+                    System.out.print("Invalid move: ");
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
     }
 
 
