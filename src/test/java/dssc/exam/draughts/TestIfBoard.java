@@ -72,14 +72,6 @@ public class TestIfBoard {
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
     }
 
-    @ParameterizedTest
-    @CsvSource({"-1, 63, 1, 5", "64, 30, 5, 8"})
-    void isMiddlePositionNotCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
-        var sourcePoint = new Point(sourceRow, sourceColumn);
-        var destinationPoint = new Point(destinationRow, destinationColumn);
-        assertThrows(Exception.class, () -> board.getMiddlePosition(sourcePoint, destinationPoint));
-    }
-
     @Property
     void associatesCorrectPositionToTiles(@ForAll("validRowColumnGenerator") int row, @ForAll("validRowColumnGenerator") int column) throws Exception{
         assertEquals(row, board.getTile(row, column).getRow());

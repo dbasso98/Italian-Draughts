@@ -51,26 +51,6 @@ public class Board {
         return BoardSpecifications.numberOfColumns() * row + column;
     }
 
-    private boolean startOrEndAreInvalid(int startPosition, int endPosition) {
-        return isInvalidIndex(startPosition) || isInvalidIndex(endPosition);
-    }
-
-    private void HandleInvalidPositions(int startPosition, int endPosition) throws InvalidIndexException {
-        if (startOrEndAreInvalid(startPosition, endPosition)) {
-            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        }
-    }
-
-    private void HandleInvalidDistance(int distance) throws InvalidMoveException {
-        if (distance != 14 && distance != 18) {
-            throw new InvalidMoveException("Checker can move only by one or two tiles!");
-        }
-    }
-
-    private boolean isInvalidIndex(int index) {
-        return index < 0 || index > lastIndexOfBoardArray;
-    }
-
     private boolean isValidPosition(int row, int column) {
         return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
@@ -78,6 +58,22 @@ public class Board {
     public boolean isValidPosition(Point position) {
         return isValidPosition(position.x, position.y);
     }
+
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index <= lastIndexOfBoardArray;
+    }
+
+    private int getMiddleIndex(int startIndex, int endIndex){
+        int distance = Math.abs(startIndex - endIndex);
+        return Math.min(startIndex, endIndex) + distance / 2;
+    }
+
+    int getMiddlePosition(Point source, Point destination) throws Exception {
+        if(!isValidPosition(source) && !isValidPosition(destination))
+            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
+        return getMiddleIndex(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x,destination.y));
+    }
+
 
     public boolean isBlackTile(int tileIndex) {
         return getTile(tileIndex).isBlack();
@@ -146,19 +142,6 @@ public class Board {
 
     private int getSymmetricIndexOf(int index) {
         return lastIndexOfBoardArray - index;
-    }
-
-    private int getMiddlePosition(int startPosition, int endPosition) throws Exception {
-        int distance = Math.abs(startPosition - endPosition);
-
-        HandleInvalidPositions(startPosition, endPosition);
-        HandleInvalidDistance(distance);
-
-        return Math.min(startPosition, endPosition) + distance / 2;
-    }
-
-    int getMiddlePosition(Point source, Point destination) throws Exception {
-        return getMiddlePosition(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x,destination.y));
     }
 
     public Color getColorOfPieceAtTile(int index) {

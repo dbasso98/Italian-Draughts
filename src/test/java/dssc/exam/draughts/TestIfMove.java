@@ -1,8 +1,11 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.*;
+import dssc.exam.draughts.exceptions.IncompleteMoveException;
+import dssc.exam.draughts.exceptions.InvalidMoveException;
 import org.junit.jupiter.api.Test;
+
 import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfMove {
@@ -106,4 +109,5 @@ public class TestIfMove {
         Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2, 3), new Point(4, 1)));
         assertEquals("You should skip with a King instead of a Man! Choose one of these positions: (2,3)", exception.getMessage());
     }
+
 }
