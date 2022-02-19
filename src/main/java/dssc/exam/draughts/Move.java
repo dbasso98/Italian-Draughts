@@ -90,6 +90,7 @@ public class Move {
         MoveRules.checkTileNonEmptiness(destination, destinationTile);
 
         movePiece(sourceTile, destinationTile);
+        updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }
 
     public static boolean isASimpleMove(Point source, Point destination) throws Exception {
@@ -104,5 +105,14 @@ public class Move {
 
     public static void movePiece(Board board, Point source, Point destination) throws Exception {
         movePiece(board.getTile(source), board.getTile(destination));
+    }
+
+    private static void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow){
+        var destinationTilePiece = destinationTile.getPiece();
+        if (!destinationTilePiece.isKing()){
+            if ((destinationTilePiece.getColor() == Color.WHITE && destinationRow == 7) ||
+                (destinationTilePiece.getColor() == Color.BLACK && destinationRow == 0))
+                destinationTilePiece.upgradeToKing();
+        }
     }
 }

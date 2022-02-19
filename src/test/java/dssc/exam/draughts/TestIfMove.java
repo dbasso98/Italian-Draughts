@@ -67,6 +67,13 @@ public class TestIfMove {
     }
 
     @Test
+    void updatesManToKingWhenLastRowIsReached() throws Exception{
+        var newBoard = new Board();
+        Move.diagonalMove(newBoard, new Point(2,1), new Point(7,7));
+        assertTrue(newBoard.getPieceAtTile(7,7).isKing());
+    }
+
+    @Test
     void suggestsOptimalMove() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
@@ -109,5 +116,4 @@ public class TestIfMove {
         Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2, 3), new Point(4, 1)));
         assertEquals("You should skip with a King instead of a Man! Choose one of these positions: (2,3)", exception.getMessage());
     }
-
 }
