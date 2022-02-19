@@ -4,18 +4,23 @@ public class Piece {
     private final int id;
     private final Color pieceColor;
     private boolean isKing;
-    private RepresentationOfPiece representation;
+    private StringRepresentationOfPiece representation;
 
     public Piece(int id, Color pieceColor) {
         this.id = id;
         this.pieceColor = pieceColor;
         this.isKing = false;
-        this.representation = RepresentationOfPiece.representation(this);
+        this.representation = StringRepresentationOfPiece.representation(this);
     }
 
     public void upgradeToKing() {
         this.isKing = true;
-        this.representation = RepresentationOfPiece.updateRepresentation(this);
+        updateRepresentation();
+    }
+
+    private void updateRepresentation() {
+        this.representation = StringRepresentationOfPiece.representation(this);
+
     }
 
     public boolean isKing() {

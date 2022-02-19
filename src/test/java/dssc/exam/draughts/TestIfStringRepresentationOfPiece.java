@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestIfRepresentationOfPiece {
+public class TestIfStringRepresentationOfPiece {
     @Test
     void displayBlackMan(){
         Piece blackMan = new Piece(1, Color.BLACK);
