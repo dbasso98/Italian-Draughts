@@ -48,13 +48,43 @@ public class Board {
     }
 
     private int convertRowAndColumnToIndex(int row, int column) {
-        return 8 * row + column;
+        return BoardSpecifications.numberOfColumns() * row + column;
     }
 
-    private int convertRowAndColumnToIndex(Point position) {
-        return convertRowAndColumnToIndex(position.x, position.y);
+    private boolean startOrEndAreInvalid(int startPosition, int endPosition) {
+        return isInvalidIndex(startPosition) || isInvalidIndex(endPosition);
     }
 
+    private void HandleInvalidPositions(int startPosition, int endPosition) throws InvalidIndexException {
+        if (startOrEndAreInvalid(startPosition, endPosition)) {
+            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
+        }
+    }
+
+    private void HandleInvalidDistance(int distance) throws InvalidMoveException {
+        if (distance != 14 && distance != 18) {
+            throw new InvalidMoveException("Checker can move only by one or two tiles!");
+        }
+    }
+
+    private boolean isInvalidIndex(int index) {
+        return index < 0 || index > lastIndexOfBoardArray;
+    }
+
+    private boolean isValidPosition(int row, int column) {
+        return row >= 0 && column >= 0 && row <= 7 && column <= 7;
+    }
+
+    public boolean isValidPosition(Point position) {
+        return isValidPosition(position.x, position.y);
+    }
+
+    public boolean isBlackTile(int tileIndex) {
+        return getTile(tileIndex).isBlack();
+    }
+
+    // possibly useless since BoardSpecifications.boardSize() = 64 but technically that is
+    // the capacity of the array?..
     public int getSize() {
         return boardArray.size();
     }
@@ -118,22 +148,6 @@ public class Board {
         return lastIndexOfBoardArray - index;
     }
 
-    private boolean startOrEndAreInvalid(int startPosition, int endPosition) {
-        return isInvalidPosition(startPosition) || isInvalidPosition(endPosition);
-    }
-
-    private void HandleInvalidPositions(int startPosition, int endPosition) throws InvalidIndexException {
-        if (startOrEndAreInvalid(startPosition, endPosition)) {
-            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        }
-    }
-
-    private void HandleInvalidDistance(int distance) throws InvalidMoveException {
-        if (distance != 14 && distance != 18) {
-            throw new InvalidMoveException("Checker can move only by one or two tiles!");
-        }
-    }
-
     private int getMiddlePosition(int startPosition, int endPosition) throws Exception {
         int distance = Math.abs(startPosition - endPosition);
 
@@ -144,26 +158,27 @@ public class Board {
     }
 
     int getMiddlePosition(Point source, Point destination) throws Exception {
-        return getMiddlePosition(convertRowAndColumnToIndex(source), convertRowAndColumnToIndex(destination));
+        return getMiddlePosition(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x,destination.y));
     }
 
-    private boolean isInvalidPosition(int position) {
-        return position < 0 || position > lastIndexOfBoardArray;
+    public Color getColorOfPieceAtTile(int index) {
+        return getPieceAtTile(index).getColor();
     }
 
-    public boolean isValidPosition(int row, int column) {
-        return row >= 0 && column >= 0 && row <= 7 && column <= 7;
+    public Color getColorOfPieceAtTile(Point position) throws Exception {
+        return getPieceAtTile(position.x, position.y).getColor();
     }
 
-    public boolean isValidPosition(Point position) {
-        return isValidPosition(position.x, position.y);
+    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
+        try {
+            return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
+        } catch (Exception e) {
+            return new Tile(tile.getColor(), new Point(-1, -1));
+        }
     }
 
-    public boolean isBlackTile(int tileIndex) {
-        return getTile(tileIndex).isBlack();
-    }
-
-    private void HandleInvalidIndexInDisplay(InvalidIndexException e) {
+    // three methods below must be moved to a displayBoard Class of some sort.
+    private void handleInvalidIndexInDisplay(InvalidIndexException e) {
         System.out.println("ERROR: Unable to print the board: ");
         System.out.println(e.getMessage());
         System.exit(1);
@@ -187,23 +202,10 @@ public class Board {
             displayInnerPartOfBoard();
             System.out.println(indexLine);
         } catch (InvalidIndexException e) {
-            HandleInvalidIndexInDisplay(e);
+            handleInvalidIndexInDisplay(e);
         }
     }
 
-    public Color getColorOfPieceAtTile(int index) {
-        return getPieceAtTile(index).getColor();
-    }
 
-    public Color getColorOfPieceAtTile(Point position) throws Exception {
-        return getPieceAtTile(position.x, position.y).getColor();
-    }
-
-    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        try {
-            return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
-        } catch (Exception e) {
-            return new Tile(tile.getColor(), new Point(-1, -1));
-        }
-    }
 }
+
