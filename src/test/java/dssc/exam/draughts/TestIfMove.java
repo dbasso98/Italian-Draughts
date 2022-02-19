@@ -51,7 +51,7 @@ public class TestIfMove {
     void doesASimpleMove() throws Exception{
         var newBoard = new Board();
         Move.moveDecider(newBoard, new Point(2, 1), new Point(3, 2));
-        assertEquals(17, newBoard.getPieceAtTile(new Point(3,2)).getId());
+        assertEquals(17, newBoard.getPieceAtTile(3,2).getId());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TestIfMove {
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.moveDecider(newBoard, new Point(2, 1), new Point(4, 3));
         assertTrue(newBoard.getTile(new Point(3,2)).isEmpty());
-        assertEquals(17, newBoard.getPieceAtTile(new Point(4,3)).getId());
+        assertEquals(17, newBoard.getPieceAtTile(4,3).getId());
     }
 
     @Test

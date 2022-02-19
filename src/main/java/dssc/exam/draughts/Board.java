@@ -1,7 +1,6 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.*;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -82,7 +81,7 @@ public class Board {
         return listOfTiles;
     }
 
-    int getNumberOfPiecesOnTheBoard() {
+    public int getNumberOfPiecesOnTheBoard() {
         int piecesLeftOnTheBoard = 0;
         for (Tile tile : board) {
             if (tile.isNotEmpty())
@@ -91,47 +90,35 @@ public class Board {
         return piecesLeftOnTheBoard;
     }
 
-    Tile getTile(int index) {
+    public Tile getTile(int index) {
         return board.get(index);
     }
 
-    Tile getTile(int row, int column) throws InvalidIndexException {
+    public Tile getTile(int row, int column) throws InvalidIndexException {
         if (isValidPosition(row, column))
             return getTile(getIndex(row, column));
         else
             throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
     }
 
-    Tile getTile(Point position) throws InvalidIndexException {
+    public Tile getTile(Point position) throws InvalidIndexException {
         return getTile(position.x, position.y);
     }
 
-    Piece getPieceAtTile(int index) {
+    public Piece getPieceAtTile(int index) {
         return getTile(index).getPiece();
     }
 
-    Piece getPieceAtTile(int row, int column) throws Exception {
+    public Piece getPieceAtTile(int row, int column) throws Exception {
         return getTile(row, column).getPiece();
     }
 
-    Piece getPieceAtTile(Point position) throws Exception {
-        return getTile(position).getPiece();
-    }
-
-    Tile getSymmetricTile(int index) {
+    public Tile getSymmetricTile(int index) {
         return board.get(lastIndex - index);
     }
 
-    Tile getSymmetricTile(int row, int column) {
-        return getSymmetricTile(getIndex(row, column));
-    }
-
-    Tile getSymmetricTile(Point position) {
-        return getSymmetricTile(position.x, position.y);
-    }
-
     private boolean startOrEndAreInvalid(int startPosition, int endPosition) {
-        return isInValidPosition(startPosition) || isInValidPosition(endPosition);
+        return isInvalidPosition(startPosition) || isInvalidPosition(endPosition);
     }
 
     private void HandleInvalidPositions(int startPosition, int endPosition) throws InvalidIndexException {
@@ -159,7 +146,7 @@ public class Board {
         return getMiddlePosition(getIndex(source), getIndex(destination));
     }
 
-    private boolean isInValidPosition(int position) {
+    private boolean isInvalidPosition(int position) {
         return position < 0 || position > lastIndex;
     }
 
@@ -207,12 +194,8 @@ public class Board {
         return getPieceAtTile(index).getColor();
     }
 
-    public Color getColorOfPieceAtTile(int row, int column) throws Exception {
-        return getPieceAtTile(row, column).getColor();
-    }
-
     public Color getColorOfPieceAtTile(Point position) throws Exception {
-        return getPieceAtTile(position).getColor();
+        return getPieceAtTile(position.x, position.y).getColor();
     }
 
     public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
