@@ -14,4 +14,6 @@ public interface OutInterface {
     void giveInitialRoundInformationToThePlayer(Board board, Player player);
 
     void displayWinner(Player player);
+
+    void askName(Player player, int playerNum);
 }

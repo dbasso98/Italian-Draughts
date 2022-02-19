@@ -49,11 +49,20 @@ public class OutInterfaceStdout implements OutInterface {
     @Override
     public void giveInitialRoundInformationToThePlayer(Board board, Player player) {
         displayBoard(board);
-        player.displayHolder();
+        displayHolder(player);
+    }
+
+    private void displayHolder(Player player) {
+        System.out.println("Player " + player.name + "[" + player.getColor() + "]:");
     }
 
     @Override
     public void displayWinner(Player player) {
         System.out.println("The winner is " + player.name);
+    }
+
+    @Override
+    public void askName(Player player, int playerNum) {
+        System.out.println("Player" + playerNum + "[" + player.getColor() + "]: Please, insert your name:");
     }
 }
