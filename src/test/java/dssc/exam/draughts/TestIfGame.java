@@ -1,15 +1,12 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.EmptyTileException;
 import dssc.exam.draughts.exceptions.InvalidIndexException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -105,8 +102,8 @@ public class TestIfGame {
     @Test
     void GameEndForEndOfPieces() throws InvalidIndexException {
         Board board = new Board();
-        for (int row = 0; row < board.maxRows / 2; ++row) {
-            for (int column = 0; column < board.maxColumns; ++column) {
+        for (int row = 0; row < BoardSpecifications.numberOfRows() / 2; ++row) {
+            for (int column = 0; column < BoardSpecifications.numberOfColumns(); ++column) {
                 board.getTile(row, column).setPiece(null);
             }
         }

@@ -35,7 +35,7 @@ public class TestIfBoard {
     @CsvSource({"WHITE, 17", "WHITE, 19", "WHITE, 21", "WHITE, 23",
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
-    void has12WhitePiecesInFirstThreeRows(Color color, int position) {
+    void has12WhitePiecesInFirstThreeRows(Color color, int position) throws Exception{
         assertEquals(board.getTile(position).getPiece().getColor(), color);
         assertEquals(board.getPieceAtTile(position).getColor(), color);
     }
@@ -50,12 +50,12 @@ public class TestIfBoard {
 
     @ParameterizedTest
     @ValueSource(ints = {24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39})
-    void hasEmptyTilesInTwoMiddleRows(int position) {
+    void hasEmptyTilesInTwoMiddleRows(int position) throws Exception{
         assertTrue(board.getTile(position).isEmpty());
     }
 
     @Property
-    void isColorSymmetric(@ForAll("validPositionGenerator") int position) {
+    void isColorSymmetric(@ForAll("validPositionGenerator") int position) throws Exception{
         assertSame(board.getTile(position).getColor(), board.getSymmetricTile(position).getColor());
     }
     @Provide
@@ -70,14 +70,6 @@ public class TestIfBoard {
         var sourcePoint = new Point(sourceRow, sourceColumn);
         var destinationPoint = new Point(destinationRow, destinationColumn);
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"-1, 63, 1, 5", "64, 30, 5, 8"})
-    void isMiddlePositionNotCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn) {
-        var sourcePoint = new Point(sourceRow, sourceColumn);
-        var destinationPoint = new Point(destinationRow, destinationColumn);
-        assertThrows(Exception.class, () -> board.getMiddlePosition(sourcePoint, destinationPoint));
     }
 
     @Property
