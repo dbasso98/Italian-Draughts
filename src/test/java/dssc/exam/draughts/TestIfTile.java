@@ -42,7 +42,7 @@ public class TestIfTile {
     }
 
     @Test
-    void correctlyDisplaysTileOnceBlackPieceIsSetOnIT(){
+    void correctlyDisplaysTileOnceBlackPieceIsSetOnIt(){
         assertEquals("[b]", blackTileBlackMan.display());
     }
 
@@ -51,6 +51,4 @@ public class TestIfTile {
         blackTileBlackMan.getPiece().upgradeToKing();
         assertEquals("[B]", blackTileBlackMan.display());
     }
-
-
 }
