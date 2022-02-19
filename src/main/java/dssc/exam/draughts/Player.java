@@ -1,7 +1,7 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.EmptyTileException;
-import dssc.exam.draughts.exceptions.InvalidColorException;
+import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
+import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 
 import java.awt.*;
 import java.util.InputMismatchException;

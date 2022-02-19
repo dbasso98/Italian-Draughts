@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import net.jqwik.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
