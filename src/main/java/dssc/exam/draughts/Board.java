@@ -59,10 +59,6 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index <= lastIndexOfBoardArray;
-    }
-
     private int getMiddleIndex(int startIndex, int endIndex){
         int distance = Math.abs(startIndex - endIndex);
         return Math.min(startIndex, endIndex) + distance / 2;
