@@ -40,7 +40,7 @@ public class Board {
             createOddRow(row + 1);
         }
         for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
-            if (isBlackTile(tileIndex)) {
+            if (getTile(tileIndex).isBlack()) {
                 setNewPieceAtIndex(tileIndex, Color.WHITE);
                 setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
             }
@@ -71,17 +71,13 @@ public class Board {
     }
 
 
-    public boolean isBlackTile(int tileIndex) {
-        return getTile(tileIndex).isBlack();
-    }
-
     // possibly useless since BoardSpecifications.boardSize() = 64 but technically that is
     // the capacity of the array?..
     public int getSize() {
         return boardArray.size();
     }
 
-    public int getNumberOfPiecesOfColor(Color color) {
+    public int getNumberOfPiecesOfColor(Color color) { // serve
         return getPiecesOfColor(color).size();
     }
 
@@ -100,7 +96,7 @@ public class Board {
         return listOfTiles;
     }
 
-    public int getNumberOfPiecesOnTheBoard() {
+    public int getNumberOfPiecesOnTheBoard() { // non serve -> metti in test
         int piecesLeftOnTheBoard = 0;
         for (Tile tile : boardArray) {
             if (tile.isNotEmpty())
@@ -109,7 +105,8 @@ public class Board {
         return piecesLeftOnTheBoard;
     }
 
-    public Tile getTile(int index) {
+
+    public Tile getTile(int index) { // dovrebbe andar bene
         return boardArray.get(index);
     }
 
@@ -124,7 +121,7 @@ public class Board {
         return getTile(position.x, position.y);
     }
 
-    public Piece getPieceAtTile(int index) {
+    public Piece getPieceAtTile(int index) { // eliminate method and put chain inside the test where its called
         return getTile(index).getPiece();
     }
 
