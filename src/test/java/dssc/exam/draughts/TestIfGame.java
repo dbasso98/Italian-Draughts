@@ -78,7 +78,6 @@ public class TestIfGame {
     @Test
     void testInvalidPieceColorInput() {
         String fakeInput = "1 6" + System.lineSeparator() +
-                "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
                 "3 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
