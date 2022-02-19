@@ -134,7 +134,7 @@ public class TestIfGame {
         Move.moveDecider(board, new Point(2, 1), new Point(3, 2));
         Move.moveDecider(board, new Point(4, 1), new Point(3, 0));
         Move.moveDecider(board, new Point(3, 2), new Point(4, 1));
-        board.display();
+
         Game game = new Game();
         game.loadGame(board, 1);
 

@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.OutInterface;
+import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import dssc.exam.draughts.exceptions.EmptyTileException;
 import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.InvalidColorException;
@@ -13,7 +15,7 @@ public class Game {
     Player currentPlayer = whitePlayer;
     private Board board = new Board();
     public int round = 0;
-
+    private final OutInterface out;
 
     void loadGame(Board board, int round) {
         this.board = board;
@@ -29,7 +31,7 @@ public class Game {
             playRound();
         }
         changePlayer();
-        System.out.println("The winner is " + currentPlayer.name);
+        out.displayWinner(currentPlayer);
     }
 
     void initPlayers() {
@@ -52,7 +54,7 @@ public class Game {
 
 
     void playRound() {
-        giveInitialRoundInformationToThePlayer();
+        out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
         readAndPerformMove();
         changePlayer();
         ++round;
@@ -67,22 +69,17 @@ public class Game {
                 continueSkipMove(e);
                 break;
             } catch (Exception e) {
-                signalInvalidMoveToPlayer(e);
+                out.signalInvalidMove(e);
             }
         }
-    }
-
-    private void giveInitialRoundInformationToThePlayer() {
-        board.display();
-        currentPlayer.displayHolder();
     }
 
     private void continueSkipMove(IncompleteMoveException e) {
         int movesToCompleteTurn = e.getNumberOfSkips();
         Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
-            board.display();
-            System.out.println(e.getMessage());
+            out.displayBoard(board);
+            out.displayMessage(e.getMessage());
             newSource = makeAStepInMultipleSkip(e.getSkipPath(), newSource);
             --movesToCompleteTurn;
         }
@@ -96,18 +93,11 @@ public class Game {
                 source = destination;
                 break;
             } catch (Exception e) {
-                signalInvalidMoveToPlayer(e);
+                out.signalInvalidMove(e);
             }
         }
         return source;
     }
-
-    // Display responsibility
-    private void signalInvalidMoveToPlayer(Exception exception) {
-        System.out.print("Invalid move: ");
-        System.out.println(exception.getMessage());
-    }
-
 
     private void TestSourceValidity(Point source) throws Exception {
         Tile sourceTile = board.getTile(source);
@@ -139,5 +129,13 @@ public class Game {
 
     Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    Game(OutInterface outInterface) {
+        this.out = outInterface;
+    }
+
+    Game() {
+        this.out = new OutInterfaceStdout();
     }
 }

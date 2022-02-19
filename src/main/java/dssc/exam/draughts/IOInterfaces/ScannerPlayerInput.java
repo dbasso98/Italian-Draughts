@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.IOInterfaces;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class ScannerPlayerInput implements PlayerInputInterface {
     Scanner scanner;
 
-    ScannerPlayerInput(Scanner scanner) {
+    public ScannerPlayerInput(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    ScannerPlayerInput() {
+    public ScannerPlayerInput() {
         this.scanner = new Scanner(System.in);
     }
 

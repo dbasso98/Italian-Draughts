@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.IOInterfaces;
 
 import java.util.InputMismatchException;
 

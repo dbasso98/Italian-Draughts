@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -102,7 +103,7 @@ public class TestIfBoard {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
-        board.display();
+        new OutInterfaceStdout().displayBoard(board);
         assertEquals(expected, fakeStandardOutput.toString());
     }
 

@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -59,15 +60,15 @@ public class Board {
         return isValidPosition(position.x, position.y);
     }
 
-    private int getMiddleIndex(int startIndex, int endIndex){
+    private int getMiddleIndex(int startIndex, int endIndex) {
         int distance = Math.abs(startIndex - endIndex);
         return Math.min(startIndex, endIndex) + distance / 2;
     }
 
     int getMiddlePosition(Point source, Point destination) throws Exception {
-        if(!isValidPosition(source) && !isValidPosition(destination))
+        if (!isValidPosition(source) && !isValidPosition(destination))
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        return getMiddleIndex(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x,destination.y));
+        return getMiddleIndex(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x, destination.y));
     }
 
 
@@ -83,8 +84,8 @@ public class Board {
 
     private ArrayList<Piece> getPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
-                                                                    .map(tile -> tile.getPiece())
-                                                                    .collect(Collectors.toList()));
+                .map(tile -> tile.getPiece())
+                .collect(Collectors.toList()));
     }
 
     public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
@@ -152,36 +153,6 @@ public class Board {
             return new Tile(tile.getColor(), new Point(-1, -1));
         }
     }
-
-    // three methods below must be moved to a displayBoard Class of some sort.
-    private void handleInvalidIndexInDisplay(InvalidIndexException e) {
-        System.out.println("ERROR: Unable to print the board: ");
-        System.out.println(e.getMessage());
-        System.exit(1);
-    }
-
-    private void displayInnerPartOfBoard() throws InvalidIndexException {
-        for (int row = BoardSpecifications.numberOfRows() - 1; row >= 0; row--) {
-            System.out.print((row + 1) + " ");
-            for (int col = 0; col < BoardSpecifications.numberOfRows(); col++) {
-                System.out.print(getTile(row, col).display());
-            }
-            System.out.println(" " + (row + 1));
-        }
-    }
-
-    // Extract Responsibility (return a string representation)
-    public void display() {
-        String indexLine = "   1  2  3  4  5  6  7  8";
-        try {
-            System.out.println(indexLine);
-            displayInnerPartOfBoard();
-            System.out.println(indexLine);
-        } catch (InvalidIndexException e) {
-            handleInvalidIndexInDisplay(e);
-        }
-    }
-
 
 }
 
