@@ -5,6 +5,7 @@ import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.InvalidColorException;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Game {
     Player whitePlayer = new Player(Color.WHITE);
@@ -43,16 +44,21 @@ public class Game {
 
     private void performAction() throws Exception {
         Point source = currentPlayer.readSource();
-        Point destination = currentPlayer.readDestination();
+        TestSourceValidity(source);
 
-        TestPieceValidity(source);
+        Point destination = currentPlayer.readDestination();
         Move.moveDecider(board, source, destination);
     }
 
 
     void playRound() {
-        board.display();
-        currentPlayer.displayHolder();
+        giveInitialRoundInformationToThePlayer();
+        readAndPerformMove();
+        changePlayer();
+        ++round;
+    }
+
+    private void readAndPerformMove() {
         while (true) {
             try {
                 performAction();
@@ -60,39 +66,49 @@ public class Game {
             } catch (IncompleteMoveException e) {
                 continueTheRound(e);
                 break;
-
             } catch (Exception e) {
-                System.out.print("Invalid move: ");
-                System.out.println(e.getMessage());
+                signalInvalidMoveToPlayer(e);
             }
         }
-        changePlayer();
-        ++round;
+    }
+
+    private void giveInitialRoundInformationToThePlayer() {
+        board.display();
+        currentPlayer.displayHolder();
     }
 
     private void continueTheRound(IncompleteMoveException e) {
         int movesToCompleteTurn = e.getNumberOfSkips();
-        Point source = e.getNewSource();
+        Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
             board.display();
             System.out.println(e.getMessage());
-            while (true) {
-                try {
-                    Point destination = currentPlayer.readDestination();
-                    Move.continueToSkip(board, source, destination, e.getSkipPath());
-                    --movesToCompleteTurn;
-                    source = destination;
-                    break;
-                } catch (Exception e2) {
-                    System.out.print("Invalid move: ");
-                    System.out.println(e2.getMessage());
-                }
-            }
+            newSource = makeAStep(e.getSkipPath(), newSource);
+            --movesToCompleteTurn;
         }
     }
 
+    private Point makeAStep(ArrayList<Tile> skipPath, Point source) {
+        while (true) {
+            try {
+                Point destination = currentPlayer.readDestination();
+                Move.continueToSkip(board, source, destination, skipPath);
+                source = destination;
+                break;
+            } catch (Exception e) {
+                signalInvalidMoveToPlayer(e);
+            }
+        }
+        return source;
+    }
 
-    private void TestPieceValidity(Point source) throws Exception {
+    private void signalInvalidMoveToPlayer(Exception exception) {
+        System.out.print("Invalid move: ");
+        System.out.println(exception.getMessage());
+    }
+
+
+    private void TestSourceValidity(Point source) throws Exception {
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new EmptyTileException("The first Tile you selected contains no Piece");

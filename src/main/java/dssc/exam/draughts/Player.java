@@ -71,15 +71,6 @@ public class Player {
         return readPosition(readDestinationMessage);
     }
 
-    // maybe to be changes to Tiles?
-    private void TestPieceValidity(Point source, Board board) throws Exception {
-        Tile sourceTile = board.getTile(source);
-        if (sourceTile.isEmpty())
-            throw new EmptyTileException("The first Tile you selected contains no Piece");
-        if (sourceTile.getPiece().getColor() != getColor())
-            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
-    }
-
     Color getColor() {
         return color;
     }
