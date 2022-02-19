@@ -42,7 +42,7 @@ public class Game {
         play();
     }
 
-    private void performAction() throws Exception {
+    private void performSimpleAction() throws Exception {
         Point source = currentPlayer.readSource();
         TestSourceValidity(source);
 
@@ -61,10 +61,10 @@ public class Game {
     private void readAndPerformMove() {
         while (true) {
             try {
-                performAction();
+                performSimpleAction();
                 break;
             } catch (IncompleteMoveException e) {
-                continueTheRound(e);
+                continueSkipMove(e);
                 break;
             } catch (Exception e) {
                 signalInvalidMoveToPlayer(e);
@@ -77,7 +77,7 @@ public class Game {
         currentPlayer.displayHolder();
     }
 
-    private void continueTheRound(IncompleteMoveException e) {
+    private void continueSkipMove(IncompleteMoveException e) {
         int movesToCompleteTurn = e.getNumberOfSkips();
         Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
@@ -102,6 +102,7 @@ public class Game {
         return source;
     }
 
+    // Display responsibility
     private void signalInvalidMoveToPlayer(Exception exception) {
         System.out.print("Invalid move: ");
         System.out.println(exception.getMessage());
