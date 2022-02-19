@@ -83,12 +83,12 @@ public class Game {
         while (movesToCompleteTurn > 1) {
             board.display();
             System.out.println(e.getMessage());
-            newSource = makeAStep(e.getSkipPath(), newSource);
+            newSource = makeAStepInMultipleSkip(e.getSkipPath(), newSource);
             --movesToCompleteTurn;
         }
     }
 
-    private Point makeAStep(ArrayList<Tile> skipPath, Point source) {
+    private Point makeAStepInMultipleSkip(ArrayList<Tile> skipPath, Point source) {
         while (true) {
             try {
                 Point destination = currentPlayer.readDestination();
