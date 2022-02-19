@@ -20,7 +20,7 @@ public class TestIfMoveRules {
     void throwsInvalidPositionException(@ForAll("invalidIndexGenerator") int sourceRow, @ForAll("invalidIndexGenerator") int sourceCol,
                                         @ForAll("invalidIndexGenerator") int destinationRow, @ForAll("invalidIndexGenerator") int destinationCol) {
         Exception exception = assertThrows(InvalidIndexException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
-        assertEquals("Every position must be in range of 1 to 8 for each axis!", exception.getMessage());
+        assertEquals("Position is not valid! Index must be between 1 and 8 for each axis! ", exception.getMessage());
     }
 
     @Provide
@@ -101,7 +101,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checkCandidateTilesForMoreThanOneSkip() throws Exception {
+    void checksCandidateTilesForMoreThanOneSkip() throws Exception {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
@@ -110,7 +110,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checkSkipsForKingMove() throws Exception {
+    void checksSkipsForKingMove() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
@@ -122,14 +122,21 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void makeAnInvalidMove() {
+    void doesntAllowTooLongMove() {
         var newBoard = new Board();
         Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(6,5)));
         assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
     }
 
     @Test
-    void stopMoveAfterThreeCompletedSkips() throws Exception {
+    void checksForCorrectDirectionOfAPiece(){
+        var newBoard = new Board();
+        Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(1,0)));
+        assertEquals("You are moving in the opposite direction!", exception.getMessage());
+    }
+
+    @Test
+    void stopsMoveAfterThreeCompletedSkips() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));

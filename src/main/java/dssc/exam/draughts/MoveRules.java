@@ -9,17 +9,26 @@ import java.util.HashMap;
 public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
-
-        board.isValidPosition(source);
-        board.isValidPosition(destination);
-        isWhite(source, board);
-        isWhite(destination, board);
-        isNotSamePosition(source, destination);
+        if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
+            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis! ");
+        isSamePosition(source, destination);
+        isWhiteTile(source, board);
+        isWhiteTile(destination, board);
+        isValidDirection(board, source, destination);
         isValidDistance(source, destination);
         return true;
     }
 
-    private static void isWhite(Point tile, Board board) throws Exception {
+    private static void isValidDirection(Board board, Point source, Point destination) throws Exception{
+        var colorOfSourceTile = board.getColorOfPieceAtTile(source);
+        var isSourceTileAKing = board.getPieceAtTile(source.x, source.y).isKing();
+        var direction = destination.x - source.x;
+        if (!isSourceTileAKing &&
+            ((colorOfSourceTile == Color.WHITE && direction < 0) || (colorOfSourceTile == Color.BLACK && direction > 0)))
+            throw new InvalidMoveException("You are moving in the opposite direction!");
+    }
+
+    private static void isWhiteTile(Point tile, Board board) throws Exception {
         if (board.getTile(tile).isWhite())
             throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
     }
@@ -38,7 +47,7 @@ public class MoveRules {
         }
     }
 
-    static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
+    static void isSamePosition(Point source, Point destination) throws SamePositionException {
         if (source.equals(destination)) {
             throw new SamePositionException("Source and destination position cannot be the same!");
         }
