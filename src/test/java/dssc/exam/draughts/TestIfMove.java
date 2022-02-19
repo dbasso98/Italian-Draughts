@@ -105,7 +105,6 @@ public class TestIfMove {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        newBoard.display();
         Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2, 3), new Point(4, 1)));
         assertEquals("You should skip with a King instead of a Man! Choose one of these positions: (2,3)", exception.getMessage());
     }

@@ -19,7 +19,7 @@ public class OutInterfaceStdout implements OutInterface {
     }
 
     private void handleInvalidIndexInDisplay(InvalidIndexException e) {
-        System.out.println("ERROR: Unable to print the board: ");
+        System.out.println("ERROR: Unable to print the board, the Tile are corrupted: ");
         System.out.println(e.getMessage());
         System.exit(1);
     }
@@ -48,7 +48,7 @@ public class OutInterfaceStdout implements OutInterface {
 
     @Override
     public void giveInitialRoundInformationToThePlayer(Board board, Player player) {
-        board.display();
+        displayBoard(board);
         player.displayHolder();
     }
 

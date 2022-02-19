@@ -78,7 +78,7 @@ public class Game {
         int movesToCompleteTurn = e.getNumberOfSkips();
         Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
-            board.display();
+            out.displayBoard(board);
             out.displayMessage(e.getMessage());
             newSource = makeAStepInMultipleSkip(e.getSkipPath(), newSource);
             --movesToCompleteTurn;
