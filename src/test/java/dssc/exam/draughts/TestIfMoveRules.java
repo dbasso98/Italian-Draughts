@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfMoveRules {
-    private Board board = new Board();
+    private final Board board = new Board();
 
     @Property
     void throwsInvalidPositionException(@ForAll("invalidIndexGenerator") int sourceRow, @ForAll("invalidIndexGenerator") int sourceCol,
@@ -36,7 +36,7 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) throws Exception {
+    void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
         if (checkIfTileIsBlack(row, column)) {
             Exception exception = assertThrows(SamePositionException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
             assertEquals("Source and destination position cannot be the same!", exception.getMessage());
@@ -49,7 +49,7 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset) throws Exception {
+    void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
         if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
             Exception exception = assertThrows(NotDiagonalMoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
                     new Point(row + offset[0], column + offset[1])));
@@ -68,7 +68,7 @@ public class TestIfMoveRules {
         return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> x[0] != x[1] && (x[0] == 0 || x[1] == 0));
     }
 
-    private boolean checkIfTileIsBlack(int row, int column) throws Exception {
+    private boolean checkIfTileIsBlack(int row, int column){
         return board.getTile(row, column).getColor() == Color.BLACK;
     }
 
@@ -80,7 +80,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checksAbsenceOfManInAdjacentDiagonals() throws Exception {
+    void checksAbsenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
         assertEquals(0, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, -1, new ArrayList<>()));
     }

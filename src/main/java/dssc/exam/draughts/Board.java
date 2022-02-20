@@ -109,14 +109,11 @@ public class Board {
         return boardArray.get(index);
     }
 
-    public Tile getTile(int row, int column) throws InvalidIndexException {
-        if (isValidPosition(row, column))
-            return getTile(convertRowAndColumnToIndex(row, column));
-        else
-            throw new InvalidIndexException("Every position must be in range of 1 to 8 for each axis!");
+    public Tile getTile(int row, int column) {
+        return getTile(convertRowAndColumnToIndex(row, column));
     }
 
-    public Tile getTile(Point position) throws InvalidIndexException {
+    public Tile getTile(Point position) {
         return getTile(position.x, position.y);
     }
 
@@ -124,7 +121,7 @@ public class Board {
         return getTile(index).getPiece();
     }
 
-    public Piece getPieceAtTile(int row, int column) throws Exception {
+    public Piece getPieceAtTile(int row, int column) {
         return getTile(row, column).getPiece();
     }
 
@@ -140,16 +137,15 @@ public class Board {
         return getPieceAtTile(index).getColor();
     }
 
-    public Color getColorOfPieceAtTile(Point position) throws Exception {
+    public Color getColorOfPieceAtTile(Point position) {
         return getPieceAtTile(position.x, position.y).getColor();
     }
 
     public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        try {
+        if (tile!=null && isValidPosition(tile.getRow() + offset1, tile.getColumn() + offset2))
             return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
-        } catch (Exception e) {
-            return new Tile(tile.getColor(), new Point(-1, -1));
-        }
+        else
+            return null;
     }
 
     // three methods below must be moved to a displayBoard Class of some sort.
