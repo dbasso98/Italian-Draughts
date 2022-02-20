@@ -23,9 +23,9 @@ public class TestIfMove {
     void doesASimpleMove() throws Exception{
         var newBoard = new Board();
         Move.moveDecider(newBoard, new Point(2, 1), new Point(3, 2));
-        assertEquals(17, newBoard.getPieceAtTile(3,2).getId());
         assertTrue(newBoard.getTile(2, 1).isEmpty());
         assertTrue(newBoard.getTile(3, 2).isNotEmpty());
+        assertEquals(17, newBoard.getPieceAtTile(3,2).getId());
     }
 
     @Test
@@ -35,11 +35,12 @@ public class TestIfMove {
         Move.moveDecider(newBoard, new Point(2, 1), new Point(4, 3));
         assertTrue(newBoard.getTile(3,2).isEmpty());
         assertTrue(newBoard.getTile(2, 1).isEmpty());
+        assertTrue(newBoard.getTile(4, 3).isNotEmpty());
         assertEquals(17, newBoard.getPieceAtTile(4,3).getId());
     }
 
     @Test
-    void updatesManToKingWhenLastRowIsReached() throws Exception{
+    void updatesManToKingWhenLastRowIsReached() throws Exception {
         var newBoard = new Board();
         Move.diagonalMove(newBoard, new Point(2,1), new Point(7,7));
         assertTrue(newBoard.getPieceAtTile(7,7).isKing());
