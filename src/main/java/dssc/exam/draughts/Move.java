@@ -86,15 +86,14 @@ public class Move {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
 
-        MoveRules.checkTileEmptiness(source, sourceTile);
-        MoveRules.checkTileNonEmptiness(destination, destinationTile);
+        MoveRules.checkTileEmptiness(sourceTile);
+        MoveRules.checkTileNonEmptiness(destinationTile);
 
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }
 
-    public static boolean isASimpleMove(Point source, Point destination) throws Exception {
-        MoveRules.isDiagonal(source, destination);
+    public static boolean isASimpleMove(Point source, Point destination){
         return Math.abs(destination.x - source.x) == 1;
     }
 
