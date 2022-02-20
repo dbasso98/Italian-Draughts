@@ -10,11 +10,12 @@ public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
         if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
-            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis! ");
+            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isSamePosition(source, destination);
-        isWhiteTile(source, board);
-        isWhiteTile(destination, board);
+        isWhiteTile(board, source);
+        isWhiteTile(board, destination);
         isValidDirection(board, source, destination);
+        isDiagonal(source, destination);
         isValidDistance(source, destination);
         return true;
     }
@@ -28,51 +29,43 @@ public class MoveRules {
             throw new InvalidMoveException("You are moving in the opposite direction!");
     }
 
-    private static void isWhiteTile(Point tile, Board board) throws Exception {
-        if (board.getTile(tile).isWhite())
+    private static void isWhiteTile(Board board, Point position) throws Exception {
+        if (board.getTile(position).isWhite())
             throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
     }
 
     private static void isValidDistance(Point source, Point destination) throws Exception {
-        isDiagonal(source, destination);
         var distance = Math.abs(destination.x - source.x);
-        if (distance != 1 && distance != 2) {
+        if (distance != 1 && distance != 2)
             throw new InvalidMoveException(("Checker can move only by one or two tiles!"));
-        }
     }
 
     static void isDiagonal(Point source, Point destination) throws NotDiagonalMoveException {
-        if (Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y)) {
+        if (Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y))
             throw new NotDiagonalMoveException("Checker can only move diagonally!");
-        }
     }
 
     static void isSamePosition(Point source, Point destination) throws SamePositionException {
-        if (source.equals(destination)) {
+        if (source.equals(destination))
             throw new SamePositionException("Source and destination position cannot be the same!");
-        }
     }
 
-    static void checkTileNonEmptiness(Point destination, Tile destinationTile) throws NonEmptyTileException {
-        if (destinationTile.isNotEmpty()) {
-            throw new NonEmptyTileException("Cannot move since tile at (" + (destination.y + 1) + "," + (destination.x + 1) + ") is not empty");
-        }
+    static void checkTileNonEmptiness(Tile destinationTile) throws NonEmptyTileException {
+        if (destinationTile.isNotEmpty())
+            throw new NonEmptyTileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
+                                            + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void checkTileEmptiness(Point source, Tile sourceTile) throws EmptyTileException {
-        if (sourceTile.isEmpty()) {
-            throw new EmptyTileException("Cannot move since tile at (" + (source.y + 1) + "," + (source.x + 1) + ") is empty");
-        }
+    static void checkTileEmptiness(Tile sourceTile) throws EmptyTileException {
+        if (sourceTile.isEmpty())
+            throw new EmptyTileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
+                                         + "," + (sourceTile.getRow() + 1) + ") is empty");
     }
 
     static HashMap<Tile, Path> candidateTilesForSkipMove(Board board, Color color) {
         var listOfTiles = board.getTilesContainingPieceOfColor(color);
-        var candidateTilesForSkipMap = new HashMap<Tile, Path>();
-        int direction = 0;
-        if (color == Color.BLACK) {
-            direction = -1;
-        } else if (color == Color.WHITE)
-            direction = 1;
+        var tilesThatCanPerformASkip = new HashMap<Tile, Path>();
+        int direction = getMovingDirection(color);
         int skipWeight;
         for (Tile tile : listOfTiles) {
             var skipPath = new ArrayList<Tile>();
@@ -81,41 +74,47 @@ public class MoveRules {
             else
                 skipWeight = getWeightForManSkipPath(board, tile, color, direction, -1, skipPath);
             if (skipWeight > 0)
-                candidateTilesForSkipMap.put(tile, new Path(skipPath, skipWeight));
+                tilesThatCanPerformASkip.put(tile, new Path(skipPath, skipWeight));
         }
-        return candidateTilesForSkipMap;
+        return tilesThatCanPerformASkip;
+    }
+
+    private static int getMovingDirection(Color color) {
+        if (color == Color.BLACK)
+            return -1;
+//        if (color == Color.WHITE)
+        return 1;
     }
 
     public static int getWeightForKingSkipPath(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps, ArrayList<Tile> path) {
         ++steps;
-        var currentWeight = 0;
         if (steps == 3)
-            return currentWeight;
+            return 0;
+        path.add(tile);
         var oppositeDirection = -1 * direction;
-        boolean rightCheck, leftCheck, oppositeDirectionRightCheck, oppositeDirectionLeftCheck;
+
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
-        rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
-        rightCheck = rightCheck && !(path.contains(secondRightDiagonalTile));
+        boolean rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile) &&
+                             !(path.contains(secondRightDiagonalTile));
 
         var firstOppositeRightDiagonalTile = board.getTileInDiagonalOffset(tile, oppositeDirection, 1);
         var secondOppositeRightDiagonalTile = board.getTileInDiagonalOffset(firstOppositeRightDiagonalTile, oppositeDirection, 1);
-        oppositeDirectionRightCheck = canSkip(board, originalColorOfPiece, firstOppositeRightDiagonalTile, secondOppositeRightDiagonalTile);
-        oppositeDirectionRightCheck = oppositeDirectionRightCheck && !(path.contains(secondOppositeRightDiagonalTile));
+        boolean oppositeDirectionRightCheck = canSkip(board, originalColorOfPiece, firstOppositeRightDiagonalTile, secondOppositeRightDiagonalTile) &&
+                                              !(path.contains(secondOppositeRightDiagonalTile));
 
         var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
         var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstLeftDiagonalTile, direction, -1);
-        leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
-        leftCheck = leftCheck && !(path.contains(secondLeftDiagonalTile));
+        boolean leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile) &&
+                            !(path.contains(secondLeftDiagonalTile));
 
         var firstOppositeLeftDiagonalTile = board.getTileInDiagonalOffset(tile, oppositeDirection, -1);
         var secondOppositeLeftDiagonalTile = board.getTileInDiagonalOffset(firstOppositeLeftDiagonalTile, oppositeDirection, -1);
-        oppositeDirectionLeftCheck = canSkip(board, originalColorOfPiece, firstOppositeLeftDiagonalTile, secondOppositeLeftDiagonalTile);
-        oppositeDirectionLeftCheck = oppositeDirectionLeftCheck && !(path.contains(secondOppositeLeftDiagonalTile));
+        boolean oppositeDirectionLeftCheck = canSkip(board, originalColorOfPiece, firstOppositeLeftDiagonalTile, secondOppositeLeftDiagonalTile) &&
+                                             !(path.contains(secondOppositeLeftDiagonalTile));
 
-        path.add(tile);
         if (!(leftCheck || rightCheck || oppositeDirectionRightCheck || oppositeDirectionLeftCheck)) {
-            return currentWeight;
+            return 0;
         }
         else {
             int leftWeight=0, rightWeight=0, oppositeLeftWeight=0, oppositeRightWeight=0;
@@ -136,34 +135,36 @@ public class MoveRules {
                 oppositeRightWeight = getWeightForKingSkipPath(board, secondOppositeRightDiagonalTile, originalColorOfPiece, direction, steps, path);
                 skippedTiles.add(firstOppositeRightDiagonalTile);
             }
-            currentWeight =  10 * (steps + 1);
-            skippedTiles.removeIf(element -> !element.getPiece().isKing());
-            if(!skippedTiles.isEmpty())
-                 currentWeight += 5 + (3 - steps);
+            var currentWeight = getCurrentWeight(steps, skippedTiles);
             return Math.max(Math.max(leftWeight, rightWeight), Math.max(oppositeLeftWeight,oppositeRightWeight)) + currentWeight;
         }
     }
 
+    private static int getCurrentWeight(int steps, ArrayList<Tile> skippedTiles) {
+        int currentWeight =  10 * (steps + 1);
+        skippedTiles.removeIf(element -> !element.getPiece().isKing());
+        if(!skippedTiles.isEmpty())
+             currentWeight += 5 + (3 - steps);
+        return currentWeight;
+    }
+
     static int getWeightForManSkipPath(Board board, Tile tile, Color originalColorOfPiece, int direction, int steps, ArrayList<Tile> path) {
         ++steps;
-        var currentWeight = 0;
         if (steps == 3)
-            return currentWeight;
-        boolean rightCheck, leftCheck;
+            return 0;
+        path.add(tile);
+
         var firstRightDiagonalTile = board.getTileInDiagonalOffset(tile, direction, 1);
         var secondRightDiagonalTile = board.getTileInDiagonalOffset(firstRightDiagonalTile, direction, 1);
-        rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile);
-        if(firstRightDiagonalTile.isNotEmpty())
-            rightCheck = rightCheck && !firstRightDiagonalTile.getPiece().isKing();
+        boolean rightCheck = canSkip(board, originalColorOfPiece, firstRightDiagonalTile, secondRightDiagonalTile) &&
+                             checkThatIsSkippingAMan(firstRightDiagonalTile);
 
         var firstLeftDiagonalTile = board.getTileInDiagonalOffset(tile, direction, -1);
         var secondLeftDiagonalTile = board.getTileInDiagonalOffset(firstLeftDiagonalTile, direction, -1);
-        leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile);
-        if (firstLeftDiagonalTile.isNotEmpty())
-            leftCheck = leftCheck && !firstLeftDiagonalTile.getPiece().isKing();
-        path.add(tile);
+        boolean leftCheck = canSkip(board, originalColorOfPiece, firstLeftDiagonalTile, secondLeftDiagonalTile) &&
+                            checkThatIsSkippingAMan(firstLeftDiagonalTile);
         if (!(leftCheck || rightCheck)) {
-            return currentWeight;
+            return 0;
         }
         else {
             int leftWeight=0, rightWeight=0;
@@ -171,9 +172,15 @@ public class MoveRules {
                 leftWeight = getWeightForManSkipPath(board, secondLeftDiagonalTile, originalColorOfPiece, direction, steps, path);
             if(rightCheck)
                 rightWeight = getWeightForManSkipPath(board, secondRightDiagonalTile, originalColorOfPiece, direction, steps, path);
-            currentWeight = 10 * (steps + 1);
+            var currentWeight = 10 * (steps + 1);
             return Math.max(leftWeight, rightWeight) + currentWeight;
         }
+    }
+
+    private static boolean checkThatIsSkippingAMan(Tile firstRightDiagonalTile) {
+        if (firstRightDiagonalTile.isNotEmpty())
+            return !firstRightDiagonalTile.getPiece().isKing();
+        return false;
     }
 
     private static boolean canSkip(Board board, Color originalColorOfPiece, Tile firstDiagonalTile, Tile secondDiagonalTile) {

@@ -70,7 +70,6 @@ public class Board {
         return getMiddleIndex(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x,destination.y));
     }
 
-
     // possibly useless since BoardSpecifications.boardSize() = 64 but technically that is
     // the capacity of the array?..
     public int getSize() {
