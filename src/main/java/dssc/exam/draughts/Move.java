@@ -11,18 +11,18 @@ public class Move {
 
     public static void moveDecider(Board board, Point source, Point destination) throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
-        var candidateTiles = MoveRules.candidateTilesForSkipMove(board, board.getColorOfPieceAtTile(source));
+        var candidateTiles = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         int maxWeight;
         if (!candidateTiles.isEmpty())
             maxWeight = Collections.max(candidateTiles.values().stream()
-                                                               .map(path -> path.getWeight())
-                                                               .collect(Collectors.toList()));
+                                                       .map(path -> path.getWeight())
+                                                       .collect(Collectors.toList()));
         else
             maxWeight = 0;
-        var bestTilesToStartTheSkip = new ArrayList<>(candidateTiles.entrySet().stream()
-                .filter(entry -> entry.getValue().getWeight() == maxWeight)
-                .map(entry -> entry.getKey())
-                .collect(Collectors.toList()));
+        var bestTilesToStartTheSkip = new ArrayList<>(candidateTiles.values().stream()
+                                                                    .filter(entry -> entry.getWeight() == maxWeight)
+                                                                    .map(path -> path.getSource())
+                                                                    .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
                 .filter(entry -> entry.getPiece().isKing())
                 .collect(Collectors.toList()));
@@ -74,7 +74,6 @@ public class Move {
 
         if (middleTile.isEmpty())
             throw new EmptyTileException("Skip move over two empty tiles is not accepted");
-
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new SameColorException("Color of piece to skip cannot be the same as source piece");
 

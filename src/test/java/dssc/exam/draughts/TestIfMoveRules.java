@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -76,28 +75,32 @@ public class TestIfMoveRules {
     void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        assertEquals(10, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, -1, new ArrayList<>()));
+        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
+        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
+        assertEquals(10, bestPath.getWeight());
     }
 
     @Test
     void checksAbsenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
-        assertEquals(0, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), Color.WHITE, 1, -1, new ArrayList<>()));
+        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
+        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
+        assertEquals(0, bestPath.getWeight());
     }
 
     @Test
     void checksCandidateTilesForSkipMove() throws Exception {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        assertEquals(2, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(0, MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).size());
+        assertEquals(2, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(0, MoveRules.candidatePathsForSkipMove(newBoard, Color.BLACK).size());
     }
 
     @Test
     void checksCandidateTilesForSkipMoveIsEmptyAtBeginning() {
         var newBoard = new Board();
-        assertEquals(0, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(0, MoveRules.candidateTilesForSkipMove(newBoard, Color.BLACK).size());
+        assertEquals(0, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(0, MoveRules.candidatePathsForSkipMove(newBoard, Color.BLACK).size());
     }
 
     @Test
@@ -106,7 +109,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
-        assertEquals(4, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(4, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
     }
 
     @Test
@@ -116,7 +119,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
-        assertEquals(60, Collections.max((MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(60, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
     }
@@ -143,7 +146,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
         Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
-        assertEquals(60, Collections.max(MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(60, Collections.max(MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList())));
     }
@@ -153,8 +156,8 @@ public class TestIfMoveRules {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
-        assertEquals(2, MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(10,  Collections.max((MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(2, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(10,  Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
     }
@@ -169,7 +172,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
         Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
         Move.movePiece(newBoard, new Point(6, 1), new Point(4, 0));
-        assertEquals(45, Collections.max((MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(45, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
     }
@@ -185,7 +188,7 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(5, 0), new Point(4, 1));
         newBoard.getPieceAtTile(3, 2).upgradeToKing();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
-        assertEquals(38, Collections.max((MoveRules.candidateTilesForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(38, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
     }
