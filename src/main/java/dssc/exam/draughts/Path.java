@@ -11,6 +11,13 @@ public class Path {
         this.source = source;
     }
 
+    public static Path copy(Path other) {
+        var newPath = new Path(other.source);
+        newPath.path = new ArrayList<>(other.path);
+        newPath.weight = other.weight;
+        return newPath;
+    }
+
     public Tile getSource() {
         return source;
     }
@@ -23,8 +30,8 @@ public class Path {
         return path;
     }
 
-    public Tile getTileAt(int index) {
-        return getPath().get(index);
+    public void setPath(ArrayList<Tile> newPath){
+        this.path = newPath;
     }
 
     public void addTile(Tile tile) {

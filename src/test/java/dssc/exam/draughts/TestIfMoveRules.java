@@ -75,13 +75,17 @@ public class TestIfMoveRules {
     void checksPresenceOfManInAdjacentDiagonals() throws Exception{
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        assertEquals(10, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), new Path(newBoard.getTile(new Point(2, 1)))));
+        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
+        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
+        assertEquals(10, bestPath.getWeight());
     }
 
     @Test
     void checksAbsenceOfManInAdjacentDiagonals() {
         var newBoard = new Board();
-        assertEquals(0, MoveRules.getWeightForManSkipPath(newBoard, newBoard.getTile(new Point(2, 1)), new Path(newBoard.getTile(new Point(2, 1)))));
+        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
+        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
+        assertEquals(0, bestPath.getWeight());
     }
 
     @Test

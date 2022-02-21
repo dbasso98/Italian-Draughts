@@ -53,6 +53,7 @@ public class TestIfMove {
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
+        newBoard.display();
         Exception exception = assertThrows(InvalidMoveException.class, () -> Move.moveDecider(newBoard, new Point(2, 1), new Point(3, 0)));
         assertEquals("There are pieces that must capture, try these positions: (2,3)", exception.getMessage());
     }
