@@ -69,18 +69,6 @@ public class TestIfMove {
     }
 
     @Test
-    void stopsAfterThreeCompletedSkips() throws Exception {
-        var newBoard = new Board();
-        newBoard.getPieceAtTile(2, 1).upgradeToKing();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
-        Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
-        IncompleteMoveException exception = assertThrows(IncompleteMoveException.class, () -> Move.moveDecider(newBoard, new Point(2, 1), new Point(4, 3)));
-        assertEquals(60, exception.getWeight());
-    }
-
-    @Test
     void skipsWithAKingInsteadOfAMan() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
