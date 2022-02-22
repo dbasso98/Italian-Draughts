@@ -78,13 +78,9 @@ public class Board {
     }
 
     public int getNumberOfPiecesOfColor(Color color) { // serve
-        return getPiecesOfColor(color).size();
-    }
-
-    private ArrayList<Piece> getPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(tile -> tile.getPiece())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList())).size();
     }
 
     public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
