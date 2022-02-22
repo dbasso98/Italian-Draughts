@@ -96,16 +96,6 @@ public class Board {
         return listOfTiles;
     }
 
-    public int getNumberOfPiecesOnTheBoard() { // non serve -> metti in test
-        int piecesLeftOnTheBoard = 0;
-        for (Tile tile : boardArray) {
-            if (tile.isNotEmpty())
-                ++piecesLeftOnTheBoard;
-        }
-        return piecesLeftOnTheBoard;
-    }
-
-
     public Tile getTile(int index) { // dovrebbe andar bene
         return boardArray.get(index);
     }
