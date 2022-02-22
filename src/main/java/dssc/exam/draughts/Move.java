@@ -28,8 +28,8 @@ public class Move {
                                                                     .map(path -> path.getSource())
                                                                     .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
-                .filter(entry -> entry.getPiece().isKing())
-                .collect(Collectors.toList()));
+                                                                    .filter(entry -> entry.getPiece().isKing())
+                                                                    .collect(Collectors.toList()));
         if (isASimpleMove()) {
             doASimpleMove(candidatePaths, bestTilesToStartTheSkip);
         } else {
