@@ -71,13 +71,11 @@ public class Board {
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
 
-    // possibly useless since BoardSpecifications.boardSize() = 64 but technically that is
-    // the capacity of the array?..
-    public int getSize() {
+    int getSize() {
         return boardArray.size();
     }
 
-    public int getNumberOfPiecesOfColor(Color color) { // serve
+    public int getNumberOfPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(tile -> tile.getPiece())
                 .collect(Collectors.toList())).size();
@@ -104,10 +102,6 @@ public class Board {
         return getTile(position.x, position.y);
     }
 
-    public Piece getPieceAtTile(int index) { // eliminate method and put chain inside the test where its called
-        return getTile(index).getPiece();
-    }
-
     public Piece getPieceAtTile(int row, int column) {
         return getTile(row, column).getPiece();
     }
@@ -121,7 +115,8 @@ public class Board {
     }
 
     public Color getColorOfPieceAtTile(int index) {
-        return getPieceAtTile(index).getColor();
+        // eliminate method and put chain inside the test where its called
+        return getTile(index).getPiece().getColor();
     }
 
     public Color getColorOfPieceAtTile(Point position) {

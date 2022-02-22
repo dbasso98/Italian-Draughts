@@ -38,7 +38,8 @@ public class TestIfBoard {
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
     void has12WhitePiecesInFirstThreeRows(Color color, int position) throws Exception{
         assertEquals(board.getTile(position).getPiece().getColor(), color);
-        assertEquals(board.getPieceAtTile(position).getColor(), color);
+        // eliminate method and put chain inside the test where its called
+        assertEquals(board.getTile(position).getPiece().getColor(), color);
     }
 
     @ParameterizedTest
