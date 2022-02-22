@@ -77,7 +77,7 @@ public class Board {
 
     public int getNumberOfPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
-                .map(tile -> tile.getPiece())
+                .map(Tile::getPiece)
                 .collect(Collectors.toList())).size();
     }
 
@@ -115,7 +115,7 @@ public class Board {
     }
 
     public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        if (tile!=null && isValidPosition(tile.getRow() + offset1, tile.getColumn() + offset2))
+        if (tile != null && isValidPosition(tile.getRow() + offset1, tile.getColumn() + offset2))
             return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
         else
             return null;

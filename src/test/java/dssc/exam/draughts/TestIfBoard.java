@@ -2,6 +2,7 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import net.jqwik.api.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -17,13 +18,15 @@ public class TestIfBoard {
     Board board = new Board();
 
     @Test
-    void hasSizeOf64Tiles() {
+    void has64Tiles() {
         assertEquals(64, board.getSize());
     }
 
     @Test
     void has24Pieces() {
-        assertEquals(24, board.getNumberOfPiecesOfColor(Color.BLACK)+board.getNumberOfPiecesOfColor(Color.WHITE));
+        var numberOfBlackPieces = board.getNumberOfPiecesOfColor(Color.BLACK);
+        var numberOfWhitePieces = board.getNumberOfPiecesOfColor(Color.WHITE);
+        assertEquals(24, numberOfBlackPieces + numberOfWhitePieces);
     }
 
     @ParameterizedTest
@@ -36,9 +39,8 @@ public class TestIfBoard {
     @CsvSource({"WHITE, 17", "WHITE, 19", "WHITE, 21", "WHITE, 23",
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
-    void has12WhitePiecesInFirstThreeRows(Color color, int position) throws Exception{
+    void has12WhitePiecesInFirstThreeRows(Color color, int position) {
         assertEquals(board.getTile(position).getPiece().getColor(), color);
-        // eliminate method and put chain inside the test where its called
         assertEquals(board.getTile(position).getPiece().getColor(), color);
     }
 
@@ -53,13 +55,13 @@ public class TestIfBoard {
 
     @ParameterizedTest
     @ValueSource(ints = {24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39})
-    void hasEmptyTilesInTwoMiddleRows(int position) throws Exception{
+    void hasEmptyTilesInTwoMiddleRows(int position){
         assertTrue(board.getTile(position).isEmpty());
     }
 
     @Property
-    void isColorSymmetric(@ForAll("validPositionGenerator") int position) throws Exception{
-        assertSame(board.getTile(position).getColor(), board.getTile(63 - position).getColor());
+    void isColorSymmetric(@ForAll("validPositionGenerator") int position) {
+        assertSame(board.getTile(position).getColor(), board.getTile(board.getSize()-1 - position).getColor());
     }
     @Provide
     Arbitrary<Integer> validPositionGenerator () {
@@ -69,14 +71,14 @@ public class TestIfBoard {
     @ParameterizedTest
     @CsvSource({"0, 0, 2, 2, 9", "0, 6, 2, 4, 13",
             "7, 1, 5, 3, 50", "7, 7, 5, 5, 54"})
-    void isMiddlePositionCorrect(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition) throws Exception{
+    void findsMiddlePositionCorrectly(int sourceRow, int sourceColumn, int destinationRow, int destinationColumn, int middlePosition) throws Exception{
         var sourcePoint = new Point(sourceRow, sourceColumn);
         var destinationPoint = new Point(destinationRow, destinationColumn);
         assertEquals(board.getMiddlePosition(sourcePoint, destinationPoint), middlePosition);
     }
 
     @Property
-    void associatesCorrectPositionToTiles(@ForAll("validRowColumnGenerator") int row, @ForAll("validRowColumnGenerator") int column) throws Exception{
+    void associatesCorrectPositionToTiles(@ForAll("validRowColumnGenerator") int row, @ForAll("validRowColumnGenerator") int column){
         assertEquals(row, board.getTile(row, column).getRow());
         assertEquals(column, board.getTile(row, column).getColumn());
     }
@@ -86,8 +88,14 @@ public class TestIfBoard {
         return Arbitraries.integers().between(0, 7);
     }
 
+    @BeforeEach
+    private void makeBoardWithWhiteKingAndBlackKing() {
+        board.getPieceAtTile(1, 0).upgradeToKing();
+        board.getPieceAtTile(7, 4).upgradeToKing();
+    }
+
     @Test
-    void printBoard() throws Exception{
+    void printBoard() {
         String expected = "   1  2  3  4  5  6  7  8" + System.lineSeparator() +
                 "8 [b][ ][b][ ][B][ ][b][ ] 8" + System.lineSeparator() +
                 "7 [ ][b][ ][b][ ][b][ ][b] 7" + System.lineSeparator() +
@@ -98,9 +106,6 @@ public class TestIfBoard {
                 "2 [W][ ][w][ ][w][ ][w][ ] 2" + System.lineSeparator() +
                 "1 [ ][w][ ][w][ ][w][ ][w] 1" + System.lineSeparator() +
                 "   1  2  3  4  5  6  7  8" + System.lineSeparator();
-        Board board = new Board();
-        board.getPieceAtTile(1, 0).upgradeToKing();
-        board.getPieceAtTile(7, 4).upgradeToKing();
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
