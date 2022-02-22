@@ -48,7 +48,7 @@ public class Board {
         }
     }
 
-    private int convertRowAndColumnToIndex(int row, int column) {
+    private int convertRowColumnToIndex(int row, int column) {
         return BoardSpecifications.numberOfColumns() * row + column;
     }
 
@@ -68,7 +68,7 @@ public class Board {
     int getMiddlePosition(Point source, Point destination) throws InvalidIndexException {
         if(!isValidPosition(source) && !isValidPosition(destination))
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        return getMiddleIndex(convertRowAndColumnToIndex(source.x, source.y), convertRowAndColumnToIndex(destination.x, destination.y));
+        return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
 
     // possibly useless since BoardSpecifications.boardSize() = 64 but technically that is
@@ -111,7 +111,7 @@ public class Board {
     }
 
     public Tile getTile(int row, int column) {
-        return getTile(convertRowAndColumnToIndex(row, column));
+        return getTile(convertRowColumnToIndex(row, column));
     }
 
     public Tile getTile(Point position) {

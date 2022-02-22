@@ -23,7 +23,7 @@ public class TestIfBoard {
 
     @Test
     void has24Pieces() {
-        assertEquals(24, board.getNumberOfPiecesOnTheBoard());
+        assertEquals(24, board.getNumberOfPiecesOfColor(Color.BLACK)+board.getNumberOfPiecesOfColor(Color.WHITE));
     }
 
     @ParameterizedTest
