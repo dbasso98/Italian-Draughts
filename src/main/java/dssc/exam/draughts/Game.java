@@ -49,7 +49,8 @@ public class Game {
         TestSourceValidity(source);
 
         Point destination = currentPlayer.readDestination();
-        Move.moveDecider(board, source, destination);
+        Move move = new Move(board, source, destination);
+        move.moveDecider();
     }
 
 
@@ -89,7 +90,7 @@ public class Game {
         while (true) {
             try {
                 Point destination = currentPlayer.readDestination();
-                Move.continueToSkip(board, source, destination, skipPath);
+                new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;
             } catch (Exception e) {

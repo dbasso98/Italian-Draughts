@@ -72,9 +72,9 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checksCandidateTilesForSkipMove() throws Exception {
+    void checksCandidateTilesForSkipMove() {
         var newBoard = new Board();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
+        new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
         assertEquals(2, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
         assertEquals(0, MoveRules.candidatePathsForSkipMove(newBoard, Color.BLACK).size());
     }
@@ -87,21 +87,21 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checksCandidateTilesForMoreThanOneSkip() throws Exception {
+    void checksCandidateTilesForMoreThanOneSkip() {
         var newBoard = new Board();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
+        new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
+        new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
+        new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
         assertEquals(4, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
     }
 
     @Test
-    void checksSkipsForKingMove() throws Exception {
+    void checksSkipsForKingMove() {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
+        new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
+        new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
+        new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
         assertEquals(60, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
@@ -122,22 +122,22 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void stopsMoveAfterThreeCompletedSkips() throws Exception {
+    void stopsMoveAfterThreeCompletedSkips() {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
-        Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
+        new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
+        new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
+        new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
+        new Move(newBoard, new Point(2, 5), new Point(3, 4)).movePiece();
         assertEquals(3, Collections.max(MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getNumberOfSkips())
                                                                                                             .collect(Collectors.toList())));
     }
 
     @Test
-    void doesNotAllowAManToSkipAKing() throws Exception {
+    void doesNotAllowAManToSkipAKing() {
         var newBoard = new Board();
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
+        new Move(newBoard, new Point(6, 5), new Point(3, 2)).movePiece();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
         assertEquals(2, MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
         assertEquals(10,  Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
@@ -146,15 +146,15 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void givesHigherScoreToPathWithMostKingsToEat() throws Exception {
+    void givesHigherScoreToPathWithMostKingsToEat() {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         newBoard.getPieceAtTile(6, 5).upgradeToKing();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
         newBoard.getPieceAtTile(2, 5).upgradeToKing();
-        Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(4, 0));
+        new Move(newBoard, new Point(6, 5), new Point(3, 2)).movePiece();
+        new Move(newBoard, new Point(5, 6), new Point(3, 4)).movePiece();
+        new Move(newBoard, new Point(6, 1), new Point(4, 0)).movePiece();
         assertEquals(45, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
@@ -166,14 +166,14 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void givesHigherScoreToPathWithFirstOccurrenceOfAKing() throws Exception {
+    void givesHigherScoreToPathWithFirstOccurrenceOfAKing() {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         newBoard.getPieceAtTile(2, 3).upgradeToKing();
-        Move.movePiece(newBoard, new Point(5, 6), new Point(3, 4));
-        Move.movePiece(newBoard, new Point(6, 1), new Point(3, 2));
-        Move.movePiece(newBoard, new Point(6, 3), new Point(4, 7));
-        Move.movePiece(newBoard, new Point(5, 0), new Point(4, 1));
+        new Move(newBoard, new Point(5, 6), new Point(3, 4)).movePiece();
+        new Move(newBoard, new Point(6, 1), new Point(3, 2)).movePiece();
+        new Move(newBoard, new Point(6, 3), new Point(4, 7)).movePiece();
+        new Move(newBoard, new Point(5, 0), new Point(4, 1)).movePiece();
         newBoard.getPieceAtTile(3, 2).upgradeToKing();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
         assertEquals(38, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()

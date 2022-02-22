@@ -29,7 +29,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testTurnBehaviour() throws Exception {
+    void testTurnBehaviour() {
         String fakeInput = "4 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
@@ -99,7 +99,7 @@ public class TestIfGame {
     }
 
     @Test
-    void GameEndForEndOfPieces() throws InvalidIndexException {
+    void GameEndForEndOfPieces() {
         Board board = new Board();
         for (int row = 0; row < BoardSpecifications.numberOfRows() / 2; ++row) {
             for (int column = 0; column < BoardSpecifications.numberOfColumns(); ++column) {
@@ -127,13 +127,13 @@ public class TestIfGame {
         setFakeStdInput(fakeInput);
 
         Board board = new Board();
-        Move.moveDecider(board, new Point(2, 3), new Point(3, 4));
-        Move.moveDecider(board, new Point(5, 4), new Point(4, 5));
-        Move.moveDecider(board, new Point(1, 4), new Point(2, 3));
-        Move.moveDecider(board, new Point(5, 2), new Point(4, 1));
-        Move.moveDecider(board, new Point(2, 1), new Point(3, 2));
-        Move.moveDecider(board, new Point(4, 1), new Point(3, 0));
-        Move.moveDecider(board, new Point(3, 2), new Point(4, 1));
+        new Move(board, new Point(2, 3), new Point(3, 4)).moveDecider();
+        new Move(board, new Point(5, 4), new Point(4, 5)).moveDecider();
+        new Move(board, new Point(1, 4), new Point(2, 3)).moveDecider();
+        new Move(board, new Point(5, 2), new Point(4, 1)).moveDecider();
+        new Move(board, new Point(2, 1), new Point(3, 2)).moveDecider();
+        new Move(board, new Point(4, 1), new Point(3, 0)).moveDecider();
+        new Move(board, new Point(3, 2), new Point(4, 1)).moveDecider();
 
         Game game = new Game();
         game.loadGame(board, 1);
