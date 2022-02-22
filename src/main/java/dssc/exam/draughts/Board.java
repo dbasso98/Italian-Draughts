@@ -106,17 +106,8 @@ public class Board {
         return getTile(row, column).getPiece();
     }
 
-    public Tile getSymmetricTile(int tileIndex) {
-        return boardArray.get(getSymmetricIndexOf(tileIndex));
-    }
-
     private int getSymmetricIndexOf(int index) {
         return lastIndexOfBoardArray - index;
-    }
-
-    public Color getColorOfPieceAtTile(int index) {
-        // eliminate method and put chain inside the test where its called
-        return getTile(index).getPiece().getColor();
     }
 
     public Color getColorOfPieceAtTile(Point position) {

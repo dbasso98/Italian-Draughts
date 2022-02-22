@@ -47,7 +47,8 @@ public class TestIfBoard {
             "BLACK, 49", "BLACK, 51", "BLACK, 53", "BLACK, 55",
             "BLACK, 40", "BLACK, 42", "BLACK, 44", "BLACK, 46"})
     void has12BlackPiecesInLastThreeRows(Color color, int position) {
-        assertEquals(board.getColorOfPieceAtTile(position), color);
+        // eliminate method and put chain inside the test where its called
+        assertEquals(board.getTile(position).getPiece().getColor(), color);
     }
 
     @ParameterizedTest
@@ -58,7 +59,7 @@ public class TestIfBoard {
 
     @Property
     void isColorSymmetric(@ForAll("validPositionGenerator") int position) throws Exception{
-        assertSame(board.getTile(position).getColor(), board.getSymmetricTile(position).getColor());
+        assertSame(board.getTile(position).getColor(), board.getTile(63 - position).getColor());
     }
     @Provide
     Arbitrary<Integer> validPositionGenerator () {
