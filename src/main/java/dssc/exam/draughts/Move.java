@@ -5,6 +5,7 @@ import dssc.exam.draughts.exceptions.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.stream.*;
 
 public class Move {
@@ -20,41 +21,59 @@ public class Move {
 
     public void moveDecider() throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
-        var candidateTiles = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
-        int maxWeight;
-        if (!candidateTiles.isEmpty())
-            maxWeight = Collections.max(candidateTiles.values().stream()
-                                                       .map(path -> path.getWeight())
-                                                       .collect(Collectors.toList()));
-        else
-            maxWeight = 0;
-        var bestTilesToStartTheSkip = new ArrayList<>(candidateTiles.values().stream()
+        var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
+        var maxWeight = getWeightOfBestPath(candidatePaths);
+        var bestTilesToStartTheSkip = new ArrayList<>(candidatePaths.values().stream()
                                                                     .filter(entry -> entry.getWeight() == maxWeight)
                                                                     .map(path -> path.getSource())
                                                                     .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
                 .filter(entry -> entry.getPiece().isKing())
                 .collect(Collectors.toList()));
-
         if (isASimpleMove()) {
-            if (candidateTiles.isEmpty())
-                diagonalMove();
-            else
-                throw new InvalidMoveException("There are pieces that must capture, try these positions:"
-                        + printPositionsOfTiles(bestTilesToStartTheSkip));
+            doASimpleMove(candidatePaths, bestTilesToStartTheSkip);
         } else {
-            if (bestTilesToStartTheSkip.contains(board.getTile(source))) {
-                if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).getPiece().isKing())
-                    skipMove();
-                else
-                    throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
-                        + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
-                if (candidateTiles.get(board.getTile(source)).getWeight() > 18)
-                    throw new IncompleteMoveException("You can continue to skip!", destination, candidateTiles.get(board.getTile(source)));
-            } else
-                throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions:"
-                        + printPositionsOfTiles(bestTilesToStartTheSkip));
+            doASkipMove(candidatePaths, bestTilesToStartTheSkip, tilesContainingKingsAmongBestTiles);
         }
+    }
+
+    private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles, ArrayList<Tile> sourceTilesContainingKings) throws Exception {
+        if (bestSourceTiles.contains(board.getTile(source))) {
+            doTheBestSkip(sourceTilesContainingKings);
+            canContinueToSkip(candidatePaths);
+        } else
+            throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions:"
+                    + printPositionsOfTiles(bestSourceTiles));
+    }
+
+    private void canContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
+        if (candidatePaths.get(board.getTile(source)).getWeight() > 18)
+            throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
+    }
+
+    private void doTheBestSkip(ArrayList<Tile> tilesContainingKingsAmongBestTiles) throws Exception {
+        if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).getPiece().isKing())
+            skipMove();
+        else
+            throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
+                + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
+    }
+
+    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestTilesToStartTheSkip) throws Exception {
+        if (candidatePaths.isEmpty())
+            diagonalMove();
+        else
+            throw new InvalidMoveException("There are pieces that must capture, try these positions:"
+                    + printPositionsOfTiles(bestTilesToStartTheSkip));
+    }
+
+    private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
+        if (candidateTiles.isEmpty())
+            return 0;
+        else
+            return Collections.max(candidateTiles.values().stream()
+                                                    .map(path -> path.getWeight())
+                                                    .collect(Collectors.toList()));
     }
 
     public void continueToSkip(ArrayList<Tile> path) throws Exception {
@@ -80,12 +99,10 @@ public class Move {
     void skipMove() throws Exception {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
-
         if (middleTile.isEmpty())
             throw new EmptyTileException("Skip move over two empty tiles is not accepted");
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new SameColorException("Color of piece to skip cannot be the same as source piece");
-
         diagonalMove();
         middleTile.popPiece();
     }
@@ -93,10 +110,8 @@ public class Move {
     public  void diagonalMove() throws Exception {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
-
         MoveRules.checkTileEmptiness(sourceTile);
         MoveRules.checkTileNonEmptiness(destinationTile);
-
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }
