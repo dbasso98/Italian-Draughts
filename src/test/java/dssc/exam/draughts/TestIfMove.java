@@ -1,6 +1,5 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.InvalidMoveException;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestIfMove {
 
     @Test
-    void doesntMoveDiagonallyIfTileIsOccupied(){
+    void doesntMoveDiagonallyIfTileIsOccupied() {
         var board = new Board();
         assertTrue(board.getTile(1, 2).isNotEmpty());
         assertTrue(board.getTile(2, 1).isNotEmpty());
@@ -20,7 +19,7 @@ public class TestIfMove {
     }
 
     @Test
-    void doesASimpleMove() throws Exception{
+    void doesASimpleMove() throws Exception {
         var newBoard = new Board();
         Move.moveDecider(newBoard, new Point(2, 1), new Point(3, 2));
         assertTrue(newBoard.getTile(2, 1).isEmpty());
@@ -29,7 +28,7 @@ public class TestIfMove {
     }
 
     @Test
-    void doesASkipMove() throws Exception{
+    void doesASkipMove() throws Exception {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
         Move.moveDecider(newBoard, new Point(2, 1), new Point(4, 3));

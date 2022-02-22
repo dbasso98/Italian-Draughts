@@ -72,23 +72,6 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void checksPresenceOfManInAdjacentDiagonals() throws Exception{
-        var newBoard = new Board();
-        Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
-        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
-        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
-        assertEquals(10, bestPath.getWeight());
-    }
-
-    @Test
-    void checksAbsenceOfManInAdjacentDiagonals() {
-        var newBoard = new Board();
-        var bestPath = new Path(newBoard.getTile(new Point(2, 1)));
-        MoveRules.buildPathStartingFromMan(newBoard, newBoard.getTile(new Point(2, 1)), bestPath);
-        assertEquals(0, bestPath.getWeight());
-    }
-
-    @Test
     void checksCandidateTilesForSkipMove() throws Exception {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(5, 4), new Point(3, 2));
@@ -125,7 +108,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void doesntAllowTooLongMove() {
+    void allowsToMoveOnlyByOneOrTwoTiles() {
         var newBoard = new Board();
         Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(6,5)));
         assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
@@ -146,13 +129,13 @@ public class TestIfMoveRules {
         Move.movePiece(newBoard, new Point(6, 1), new Point(5, 4));
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 6));
         Move.movePiece(newBoard, new Point(2, 5), new Point(3, 4));
-        assertEquals(60, Collections.max(MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
-                                                                                                            .map(path -> path.getWeight())
+        assertEquals(3, Collections.max(MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+                                                                                                            .map(path -> path.getNumberOfSkips())
                                                                                                             .collect(Collectors.toList())));
     }
 
     @Test
-    void doesNotAllowAManToSkipAKing() throws Exception{
+    void doesNotAllowAManToSkipAKing() throws Exception {
         var newBoard = new Board();
         Move.movePiece(newBoard, new Point(6, 5), new Point(3, 2));
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
@@ -163,7 +146,7 @@ public class TestIfMoveRules {
     }
 
     @Test
-    void givesHigherScoreToPathWithMostKingsToEat() throws Exception{
+    void givesHigherScoreToPathWithMostKingsToEat() throws Exception {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         newBoard.getPieceAtTile(6, 5).upgradeToKing();
@@ -175,6 +158,11 @@ public class TestIfMoveRules {
         assertEquals(45, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
+        assertEquals(newBoard.getTile(2,1), MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+                                                                                                            .filter(path -> path.getWeight() == 45)
+                                                                                                            .map(path -> path.getSource())
+                                                                                                            .collect(Collectors.toList())
+                                                                                                            .get(0));
     }
 
     @Test
@@ -191,5 +179,10 @@ public class TestIfMoveRules {
         assertEquals(38, Collections.max((MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
                                                                                                             .map(path -> path.getWeight())
                                                                                                             .collect(Collectors.toList()))));
+        assertEquals(newBoard.getTile(2,1), MoveRules.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+                                                                                                            .filter(path -> path.getWeight() == 38)
+                                                                                                            .map(path -> path.getSource())
+                                                                                                            .collect(Collectors.toList())
+                                                                                                            .get(0));
     }
 }
