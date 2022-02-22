@@ -8,8 +8,17 @@ import java.util.Collections;
 import java.util.stream.*;
 
 public class Move {
+    private Board board;
+    private Point source;
+    private Point destination;
 
-    public static void moveDecider(Board board, Point source, Point destination) throws Exception {
+    public Move (Board board, Point source, Point destination) {
+        this.board = board;
+        this.source = source;
+        this.destination = destination;
+    }
+
+    public void moveDecider() throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
         var candidateTiles = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         int maxWeight;
@@ -27,16 +36,16 @@ public class Move {
                 .filter(entry -> entry.getPiece().isKing())
                 .collect(Collectors.toList()));
 
-        if (isASimpleMove(source, destination)) {
+        if (isASimpleMove()) {
             if (candidateTiles.isEmpty())
-                diagonalMove(board, source, destination);
+                diagonalMove();
             else
                 throw new InvalidMoveException("There are pieces that must capture, try these positions:"
                         + printPositionsOfTiles(bestTilesToStartTheSkip));
         } else {
             if (bestTilesToStartTheSkip.contains(board.getTile(source))) {
                 if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).getPiece().isKing())
-                    skipMove(board, source, destination);
+                    skipMove();
                 else
                     throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
                         + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
@@ -48,15 +57,15 @@ public class Move {
         }
     }
 
-    public static void continueToSkip(Board board, Point source, Point destination, ArrayList<Tile> path) throws Exception {
+    public void continueToSkip(ArrayList<Tile> path) throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
         if (path.stream().map(tile -> tile.getPosition()).collect(Collectors.toList()).contains(destination))
-            skipMove(board, source, destination);
+            skipMove();
         else
             throw new InvalidMoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
     }
 
-    private static String printPositionsOfTiles(ArrayList<Tile> tiles) {
+    private String printPositionsOfTiles(ArrayList<Tile> tiles) {
         StringBuilder result = new StringBuilder();
         for (var tile : tiles) {
             result.append(" (")
@@ -68,7 +77,7 @@ public class Move {
         return result.toString();
     }
 
-    static void skipMove(Board board, Point source, Point destination) throws Exception {
+    void skipMove() throws Exception {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
 
@@ -77,11 +86,11 @@ public class Move {
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new SameColorException("Color of piece to skip cannot be the same as source piece");
 
-        diagonalMove(board, source, destination);
+        diagonalMove();
         middleTile.popPiece();
     }
 
-    public static void diagonalMove(Board board, Point source, Point destination) throws Exception {
+    public  void diagonalMove() throws Exception {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
 
@@ -92,20 +101,20 @@ public class Move {
         updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }
 
-    public static boolean isASimpleMove(Point source, Point destination){
+    public boolean isASimpleMove(){
         return Math.abs(destination.x - source.x) == 1;
     }
 
-    public static void movePiece(Tile sourceTile, Tile destinationTile) {
+    public void movePiece(Tile sourceTile, Tile destinationTile) {
         var piece = sourceTile.popPiece();
         destinationTile.setPiece(piece);
     }
 
-    public static void movePiece(Board board, Point source, Point destination) throws Exception {
+    public void movePiece() {
         movePiece(board.getTile(source), board.getTile(destination));
     }
 
-    private static void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow){
+    private void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow){
         var destinationTilePiece = destinationTile.getPiece();
         if (!destinationTilePiece.isKing()){
             if ((destinationTilePiece.getColor() == Color.WHITE && destinationRow == 7) ||
