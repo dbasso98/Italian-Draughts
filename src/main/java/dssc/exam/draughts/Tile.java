@@ -62,6 +62,10 @@ public class Tile {
         return isNotEmpty() && getPiece().getColor() == color;
     }
 
+    public boolean containsAKing() {
+        return getPiece().isKing();
+    }
+
     private String displayEmptyTile() {
         return "[ ]";
     }

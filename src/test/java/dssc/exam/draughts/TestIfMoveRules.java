@@ -118,7 +118,7 @@ public class TestIfMoveRules {
     void checksForCorrectDirectionOfAPiece(){
         var newBoard = new Board();
         Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(1,0)));
-        assertEquals("You are moving in the opposite direction!", exception.getMessage());
+        assertEquals("You are moving in the opposite rowOffset!", exception.getMessage());
     }
 
     @Test

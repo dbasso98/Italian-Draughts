@@ -28,7 +28,7 @@ public class Move {
                                                                     .map(path -> path.getSource())
                                                                     .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
-                                                                    .filter(entry -> entry.getPiece().isKing())
+                                                                    .filter(entry -> entry.containsAKing())
                                                                     .collect(Collectors.toList()));
         if (isASimpleMove()) {
             doASimpleMove(candidatePaths, bestTilesToStartTheSkip);
@@ -52,7 +52,7 @@ public class Move {
     }
 
     private void doTheBestSkip(ArrayList<Tile> tilesContainingKingsAmongBestTiles) throws Exception {
-        if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).getPiece().isKing())
+        if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).containsAKing())
             skipMove();
         else
             throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
