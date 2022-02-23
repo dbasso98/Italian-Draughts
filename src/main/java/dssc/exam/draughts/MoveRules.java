@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MoveRules {
 
-    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
+    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws DraughtsException {
         if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isBlackTile(board, source);
