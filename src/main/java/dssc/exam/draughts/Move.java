@@ -42,7 +42,7 @@ public class Move {
             doTheBestSkip(sourceTilesContainingKings);
             canContinueToSkip(candidatePaths);
         } else
-            throw new InvalidMoveException("You can select a better skip! Choose one of the tiles at these positions:"
+            throw new MoveException("You can select a better skip! Choose one of the tiles at these positions:"
                     + printPositionsOfTiles(bestSourceTiles));
     }
 
@@ -55,7 +55,7 @@ public class Move {
         if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).containsAKing())
             skipMove();
         else
-            throw new InvalidMoveException("You should skip with a King instead of a Man! Choose one of these positions:"
+            throw new MoveException("You should skip with a King instead of a Man! Choose one of these positions:"
                 + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
     }
 
@@ -63,7 +63,7 @@ public class Move {
         if (candidatePaths.isEmpty())
             diagonalMove();
         else
-            throw new InvalidMoveException("There are pieces that must capture, try these positions:"
+            throw new MoveException("There are pieces that must capture, try these positions:"
                     + printPositionsOfTiles(bestTilesToStartTheSkip));
     }
 
@@ -81,7 +81,7 @@ public class Move {
         if (path.stream().map(Tile::getPosition).collect(Collectors.toList()).contains(destination))
             skipMove();
         else
-            throw new InvalidMoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
+            throw new MoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
     }
 
     private String printPositionsOfTiles(ArrayList<Tile> tiles) {
@@ -102,7 +102,7 @@ public class Move {
         if (middleTile.isEmpty())
             throw new TileException("Skip move over an empty tile is not accepted");
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
-            throw new SameColorException("Color of piece to skip cannot be the same as source piece");
+            throw new MoveException("Color of piece to skip cannot be the same as source piece");
         diagonalMove();
         middleTile.popPiece();
     }

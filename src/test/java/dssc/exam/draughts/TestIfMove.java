@@ -1,6 +1,6 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.InvalidMoveException;
+import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +53,7 @@ public class TestIfMove {
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
         new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
-        InvalidMoveException exception = assertThrows(InvalidMoveException.class, () -> new Move(newBoard, new Point(2, 1), new Point(3, 0)).moveDecider());
+        MoveException exception = assertThrows(MoveException.class, () -> new Move(newBoard, new Point(2, 1), new Point(3, 0)).moveDecider());
         assertEquals("There are pieces that must capture, try these positions: (2,3)", exception.getMessage());
     }
 
@@ -64,7 +64,7 @@ public class TestIfMove {
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
         new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
-        InvalidMoveException exception = assertThrows(InvalidMoveException.class, () -> new Move(newBoard, new Point(2, 3), new Point(4, 1)).moveDecider());
+        MoveException exception = assertThrows(MoveException.class, () -> new Move(newBoard, new Point(2, 3), new Point(4, 1)).moveDecider());
         assertEquals("You can select a better skip! Choose one of the tiles at these positions: (2,3)", exception.getMessage());
     }
 
@@ -73,7 +73,7 @@ public class TestIfMove {
         var newBoard = new Board();
         newBoard.getPieceAtTile(2, 1).upgradeToKing();
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
-        InvalidMoveException exception = assertThrows(InvalidMoveException.class, () -> new Move(newBoard, new Point(2, 3), new Point(4, 1)).moveDecider());
+        MoveException exception = assertThrows(MoveException.class, () -> new Move(newBoard, new Point(2, 3), new Point(4, 1)).moveDecider());
         assertEquals("You should skip with a King instead of a Man! Choose one of these positions: (2,3)", exception.getMessage());
     }
 }

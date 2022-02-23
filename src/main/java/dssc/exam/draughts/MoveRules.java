@@ -20,13 +20,13 @@ public class MoveRules {
         return true;
     }
 
-    private static void isCorrectDirection(Board board, Point source, Point destination) throws InvalidMoveException{
+    private static void isCorrectDirection(Board board, Point source, Point destination) throws MoveException{
         var colorOfSourceTile = board.getColorOfPieceAtTile(source);
         var isSourceTileAKing = board.getPieceAtTile(source.x, source.y).isKing();
         var direction = destination.x - source.x;
         if (!isSourceTileAKing &&
             ((colorOfSourceTile == Color.WHITE && direction < 0) || (colorOfSourceTile == Color.BLACK && direction > 0)))
-            throw new InvalidMoveException("You are moving in the opposite rowOffset!");
+            throw new MoveException("You are moving in the opposite rowOffset!");
     }
 
     private static void isBlackTile(Board board, Point position) throws TileException {
@@ -34,20 +34,20 @@ public class MoveRules {
             throw new TileException("Cannot play on white tiles, only black ones, please change position!");
     }
 
-    private static void isValidDistance(Point source, Point destination) throws InvalidMoveException {
+    private static void isValidDistance(Point source, Point destination) throws MoveException {
         var distance = Math.abs(destination.x - source.x);
         if (distance != 1 && distance != 2)
-            throw new InvalidMoveException(("Checker can move only by one or two tiles!"));
+            throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    static void isDiagonal(Point source, Point destination) throws NotDiagonalMoveException {
+    static void isDiagonal(Point source, Point destination) throws MoveException {
         if (Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y))
-            throw new NotDiagonalMoveException("Checker can only move diagonally!");
+            throw new MoveException("Checker can only move diagonally!");
     }
 
-    static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
+    static void isNotSamePosition(Point source, Point destination) throws MoveException {
         if (source.equals(destination))
-            throw new SamePositionException("Source and destination position cannot be the same!");
+            throw new MoveException("Source and destination position cannot be the same!");
     }
 
     static void checkTileNonEmptiness(Tile destinationTile) throws TileException {

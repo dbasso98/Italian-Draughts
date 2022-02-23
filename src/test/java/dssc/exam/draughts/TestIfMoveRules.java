@@ -37,7 +37,7 @@ public class TestIfMoveRules {
     @Property
     void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
         if (checkIfTileIsBlack(row, column)) {
-            Exception exception = assertThrows(SamePositionException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
+            Exception exception = assertThrows(MoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
             assertEquals("Source and destination position cannot be the same!", exception.getMessage());
         }
     }
@@ -50,7 +50,7 @@ public class TestIfMoveRules {
     @Property
     void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
         if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
-            Exception exception = assertThrows(NotDiagonalMoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
+            Exception exception = assertThrows(MoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
                     new Point(row + offset[0], column + offset[1])));
             assertEquals("Checker can only move diagonally!", exception.getMessage());
         }
