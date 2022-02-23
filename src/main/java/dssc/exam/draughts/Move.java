@@ -37,7 +37,29 @@ public class Move {
         }
     }
 
-    private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles, ArrayList<Tile> sourceTilesContainingKings) throws Exception {
+    private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
+        if (candidateTiles.isEmpty())
+            return 0;
+        else
+            return Collections.max(candidateTiles.values().stream()
+                    .map(path -> path.getWeight())
+                    .collect(Collectors.toList()));
+    }
+
+    private boolean isASimpleMove(){
+        return Math.abs(destination.x - source.x) == 1;
+    }
+
+    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles) throws Exception {
+        if (candidatePaths.isEmpty())
+            diagonalMove();
+        else
+            throw new MoveException("There are pieces that must capture, try these positions:"
+                    + printPositionsOfTiles(bestSourceTiles));
+    }
+
+    private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
+                             ArrayList<Tile> sourceTilesContainingKings) throws Exception {
         if (bestSourceTiles.contains(board.getTile(source))) {
             doTheBestSkip(sourceTilesContainingKings);
             canContinueToSkip(candidatePaths);
@@ -46,34 +68,17 @@ public class Move {
                     + printPositionsOfTiles(bestSourceTiles));
     }
 
-    private void canContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
-        if (candidatePaths.get(board.getTile(source)).getWeight() > 18)
-            throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
-    }
-
-    private void doTheBestSkip(ArrayList<Tile> tilesContainingKingsAmongBestTiles) throws Exception {
-        if (tilesContainingKingsAmongBestTiles.isEmpty() || board.getTile(source).containsAKing())
+    private void doTheBestSkip(ArrayList<Tile> sourceTilesContainingKings) throws Exception {
+        if (sourceTilesContainingKings.isEmpty() || board.getTile(source).containsAKing())
             skipMove();
         else
             throw new MoveException("You should skip with a King instead of a Man! Choose one of these positions:"
-                + printPositionsOfTiles(tilesContainingKingsAmongBestTiles));
+                    + printPositionsOfTiles(sourceTilesContainingKings));
     }
 
-    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestTilesToStartTheSkip) throws Exception {
-        if (candidatePaths.isEmpty())
-            diagonalMove();
-        else
-            throw new MoveException("There are pieces that must capture, try these positions:"
-                    + printPositionsOfTiles(bestTilesToStartTheSkip));
-    }
-
-    private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
-        if (candidateTiles.isEmpty())
-            return 0;
-        else
-            return Collections.max(candidateTiles.values().stream()
-                                                    .map(Path::getWeight)
-                                                    .collect(Collectors.toList()));
+    private void canContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
+        if (candidatePaths.get(board.getTile(source)).getWeight() > 18)
+            throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
     }
 
     public void continueToSkip(ArrayList<Tile> path) throws Exception {
@@ -84,19 +89,7 @@ public class Move {
             throw new MoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
     }
 
-    private String printPositionsOfTiles(ArrayList<Tile> tiles) {
-        StringBuilder result = new StringBuilder();
-        for (var tile : tiles) {
-            result.append(" (")
-                    .append(tile.getColumn() + 1)
-                    .append(",")
-                    .append(tile.getRow() + 1)
-                    .append(")");
-        }
-        return result.toString();
-    }
-
-    void skipMove() throws Exception {
+    private void skipMove() throws Exception {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
         if (middleTile.isEmpty())
@@ -107,7 +100,7 @@ public class Move {
         middleTile.popPiece();
     }
 
-    public  void diagonalMove() throws Exception {
+    public void diagonalMove() throws Exception {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
         MoveRules.checkTileEmptiness(sourceTile);
@@ -116,11 +109,7 @@ public class Move {
         updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }
 
-    public boolean isASimpleMove(){
-        return Math.abs(destination.x - source.x) == 1;
-    }
-
-    public void movePiece(Tile sourceTile, Tile destinationTile) {
+    private void movePiece(Tile sourceTile, Tile destinationTile) {
         var piece = sourceTile.popPiece();
         destinationTile.setPiece(piece);
     }
@@ -136,5 +125,17 @@ public class Move {
                 (destinationTilePiece.getColor() == Color.BLACK && destinationRow == 0))
                 destinationTilePiece.upgradeToKing();
         }
+    }
+
+    private String printPositionsOfTiles(ArrayList<Tile> tiles) {
+        StringBuilder result = new StringBuilder();
+        for (var tile : tiles) {
+            result.append(" (")
+                    .append(tile.getColumn() + 1)
+                    .append(",")
+                    .append(tile.getRow() + 1)
+                    .append(")");
+        }
+        return result.toString();
     }
 }

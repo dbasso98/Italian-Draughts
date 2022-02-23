@@ -20,7 +20,6 @@ public class Piece {
 
     private void updateRepresentation() {
         this.representation = StringRepresentationOfPiece.representation(this);
-
     }
 
     public boolean isKing() {

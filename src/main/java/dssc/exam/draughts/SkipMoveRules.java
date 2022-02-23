@@ -6,7 +6,7 @@ public class SkipMoveRules {
     private final int columnOffset;
     private Tile firstDiagonalTile;
     private Tile secondDiagonalTile;
-    private boolean diagonalCheck;
+    private boolean skipCheck;
 
     SkipMoveRules(Tile source, int rowOffset, int columnOffset) {
         sourceTile = source;
@@ -17,13 +17,13 @@ public class SkipMoveRules {
     public void manDiagonalCheck(Board board, Color color) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        diagonalCheck = canSkip(color) && checkThatIsSkippingAMan();
+        skipCheck = canSkip(color) && checkThatIsSkippingAMan();
     }
 
     public void kingDiagonalCheck(Board board, Color color, Path path) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        diagonalCheck = tileWasNotVisitedYet(path) && canSkip(color);
+        skipCheck = tileWasNotVisitedYet(path) && canSkip(color);
     }
 
     private boolean canSkip(Color color) {
@@ -56,7 +56,7 @@ public class SkipMoveRules {
         return secondDiagonalTile;
     }
 
-    public boolean getCheck() {
-        return diagonalCheck;
+    public boolean getSkipCheck() {
+        return skipCheck;
     }
 }
