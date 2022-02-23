@@ -35,7 +35,7 @@ public class MoveRules {
         var isSourceTileAKing = board.getPieceAtTile(source.x, source.y).isKing();
         var direction = destination.x - source.x;
         if (!isSourceTileAKing &&
-                ((colorOfSourceTile == Color.WHITE && direction < 0) || (colorOfSourceTile == Color.BLACK && direction > 0)))
+                colorOfSourceTile.associatedDirection()*direction < 0 )
             throw new MoveException("You are moving in the opposite rowOffset!");
     }
 

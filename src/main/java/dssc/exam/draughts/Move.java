@@ -20,7 +20,7 @@ public class Move {
     }
 
     public void moveDecider() throws DraughtsException {
-        MoveRules.checkIfPositionsAreValid(board, source, destination);
+        MoveRules.checkIfPositionsAreValid(board, source, destination); // maybe this should be in the ctor? You only construct a move if its valid.
         var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         var maxWeight = getWeightOfBestPath(candidatePaths);
         var bestTilesToStartTheSkip = new ArrayList<>(candidatePaths.values().stream()
