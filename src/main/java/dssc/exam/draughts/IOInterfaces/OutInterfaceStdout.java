@@ -4,6 +4,8 @@ import dssc.exam.draughts.Board;
 import dssc.exam.draughts.BoardSpecifications;
 import dssc.exam.draughts.Player;
 import dssc.exam.draughts.exceptions.IndexException;
+import dssc.exam.draughts.Tile;
+import dssc.exam.draughts.exceptions.InvalidIndexException;
 
 public class OutInterfaceStdout implements OutInterface {
     @Override
@@ -28,10 +30,22 @@ public class OutInterfaceStdout implements OutInterface {
         for (int row = BoardSpecifications.numberOfRows() - 1; row >= 0; row--) {
             System.out.print((row + 1) + " ");
             for (int col = 0; col < BoardSpecifications.numberOfRows(); col++) {
-                System.out.print(board.getTile(row, col).display());
+                Tile tile = board.getTile(row, col);
+                System.out.print(displayTile(tile));
             }
             System.out.println(" " + (row + 1));
         }
+    }
+
+    private String displayTile(Tile tile) {
+        if (tile.isEmpty()) {
+            return displayEmptyTile();
+        }
+        return tile.getPiece().display();
+    }
+
+    private String displayEmptyTile() {
+        return "[ ]";
     }
 
 
