@@ -1,7 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.InvalidMoveException;
-import dssc.exam.draughts.exceptions.NonEmptyTileException;
+import dssc.exam.draughts.exceptions.TileException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class TestIfMove {
         var board = new Board();
         assertTrue(board.getTile(1, 2).isNotEmpty());
         assertTrue(board.getTile(2, 1).isNotEmpty());
-        NonEmptyTileException exception = assertThrows(NonEmptyTileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).diagonalMove());
+        TileException exception = assertThrows(TileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).diagonalMove());
         assertEquals("Cannot move since tile at (2,3) is not empty", exception.getMessage());
     }
 

@@ -1,6 +1,5 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.InvalidIndexException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -59,7 +58,7 @@ public class TestIfGame {
                 "3 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
-        String expectedOut = "Invalid move: The first Tile you selected contains no Piece";
+        String expectedOut = "Invalid move: The first Tile you selected is empty";
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));

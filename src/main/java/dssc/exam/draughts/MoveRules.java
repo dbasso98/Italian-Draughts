@@ -29,9 +29,9 @@ public class MoveRules {
             throw new InvalidMoveException("You are moving in the opposite rowOffset!");
     }
 
-    private static void isBlackTile(Board board, Point position) throws WhiteTileException {
+    private static void isBlackTile(Board board, Point position) throws TileException {
         if (board.getTile(position).isWhite())
-            throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
+            throw new TileException("Cannot play on white tiles, only black ones, please change position!");
     }
 
     private static void isValidDistance(Point source, Point destination) throws InvalidMoveException {
@@ -50,15 +50,15 @@ public class MoveRules {
             throw new SamePositionException("Source and destination position cannot be the same!");
     }
 
-    static void checkTileNonEmptiness(Tile destinationTile) throws NonEmptyTileException {
+    static void checkTileNonEmptiness(Tile destinationTile) throws TileException {
         if (destinationTile.isNotEmpty())
-            throw new NonEmptyTileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
+            throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
                                             + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void checkTileEmptiness(Tile sourceTile) throws EmptyTileException {
+    static void checkTileEmptiness(Tile sourceTile) throws TileException {
         if (sourceTile.isEmpty())
-            throw new EmptyTileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
+            throw new TileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
                                          + "," + (sourceTile.getRow() + 1) + ") is empty");
     }
 

@@ -100,7 +100,7 @@ public class Move {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
         if (middleTile.isEmpty())
-            throw new EmptyTileException("Skip move over an empty tile is not accepted");
+            throw new TileException("Skip move over an empty tile is not accepted");
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new SameColorException("Color of piece to skip cannot be the same as source piece");
         diagonalMove();

@@ -2,9 +2,9 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.OutInterface;
 import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
-import dssc.exam.draughts.exceptions.EmptyTileException;
 import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.InvalidColorException;
+import dssc.exam.draughts.exceptions.TileException;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -103,7 +103,7 @@ public class Game {
     private void TestSourceValidity(Point source) throws Exception {
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
-            throw new EmptyTileException("The first Tile you selected contains no Piece");
+            throw new TileException("The first Tile you selected is empty");
         if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
             throw new InvalidColorException("The piece you intend to move belongs to your opponent");
     }
