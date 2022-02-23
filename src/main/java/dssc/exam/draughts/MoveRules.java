@@ -10,7 +10,7 @@ public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
         if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
-            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
+            throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isBlackTile(board, source);
         isBlackTile(board, destination);
         isNotSamePosition(source, destination); // Forse questo dovrebbe essere resp. di Game?

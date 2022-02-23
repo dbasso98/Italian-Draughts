@@ -6,7 +6,7 @@ import dssc.exam.draughts.Tile;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class IncompleteMoveException extends Exception {
+public class IncompleteMoveException extends MoveException {
     private final Path skipPath;
     private final Point newSource;
 

@@ -18,7 +18,7 @@ public class TestIfMoveRules {
     @Property
     void throwsInvalidPositionException(@ForAll("invalidIndexGenerator") int sourceRow, @ForAll("invalidIndexGenerator") int sourceCol,
                                         @ForAll("invalidIndexGenerator") int destinationRow, @ForAll("invalidIndexGenerator") int destinationCol) {
-        Exception exception = assertThrows(InvalidIndexException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+        Exception exception = assertThrows(IndexException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
         assertEquals("Position is not valid! Index must be between 1 and 8 for each axis!", exception.getMessage());
     }
 

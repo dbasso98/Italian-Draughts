@@ -65,9 +65,9 @@ public class Board {
         return Math.min(startIndex, endIndex) + distance / 2;
     }
 
-    int getMiddlePosition(Point source, Point destination) throws InvalidIndexException {
+    int getMiddlePosition(Point source, Point destination) throws IndexException {
         if(!isValidPosition(source) && !isValidPosition(destination))
-            throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
+            throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
 
