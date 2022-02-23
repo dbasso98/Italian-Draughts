@@ -19,7 +19,7 @@ public class Move {
         this.destination = destination;
     }
 
-    public void moveDecider() throws Exception {
+    public void moveDecider() throws DraughtsException {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
         var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         var maxWeight = getWeightOfBestPath(candidatePaths);
@@ -50,7 +50,7 @@ public class Move {
         return Math.abs(destination.x - source.x) == 1;
     }
 
-    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles) throws Exception {
+    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles) throws DraughtsException {
         if (candidatePaths.isEmpty())
             diagonalMove();
         else
@@ -59,7 +59,7 @@ public class Move {
     }
 
     private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
-                             ArrayList<Tile> sourceTilesContainingKings) throws Exception {
+                             ArrayList<Tile> sourceTilesContainingKings) throws DraughtsException {
         if (bestSourceTiles.contains(board.getTile(source))) {
             doTheBestSkip(sourceTilesContainingKings);
             canContinueToSkip(candidatePaths);
@@ -68,7 +68,7 @@ public class Move {
                     + printPositionsOfTiles(bestSourceTiles));
     }
 
-    private void doTheBestSkip(ArrayList<Tile> sourceTilesContainingKings) throws Exception {
+    private void doTheBestSkip(ArrayList<Tile> sourceTilesContainingKings) throws DraughtsException {
         if (sourceTilesContainingKings.isEmpty() || board.getTile(source).containsAKing())
             skipMove();
         else
@@ -81,7 +81,7 @@ public class Move {
             throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
     }
 
-    public void continueToSkip(ArrayList<Tile> path) throws Exception {
+    public void continueToSkip(ArrayList<Tile> path) throws DraughtsException {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
         if (path.stream().map(Tile::getPosition).collect(Collectors.toList()).contains(destination))
             skipMove();
@@ -89,7 +89,7 @@ public class Move {
             throw new MoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
     }
 
-    private void skipMove() throws Exception {
+    private void skipMove() throws DraughtsException {
         var sourceTile = board.getTile(source);
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
         if (middleTile.isEmpty())
@@ -100,7 +100,8 @@ public class Move {
         middleTile.popPiece();
     }
 
-    public void diagonalMove() throws Exception {
+
+    public void diagonalMove() throws DraughtsException {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
         MoveRules.checkTileEmptiness(sourceTile);
@@ -118,7 +119,7 @@ public class Move {
         movePiece(board.getTile(source), board.getTile(destination));
     }
 
-    private void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow){
+    private void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow) {
         var destinationTilePiece = destinationTile.getPiece();
         if (!destinationTilePiece.isKing()){
             if ((destinationTilePiece.getColor() == Color.WHITE && destinationRow == 7) ||

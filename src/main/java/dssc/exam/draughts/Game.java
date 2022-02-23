@@ -2,6 +2,7 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.OutInterface;
 import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
+import dssc.exam.draughts.exceptions.DraughtsException;
 import dssc.exam.draughts.exceptions.IncompleteMoveException;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
@@ -44,7 +45,7 @@ public class Game {
         play();
     }
 
-    private void performSimpleAction() throws Exception {
+    private void performSimpleAction() throws DraughtsException {
         Point source = currentPlayer.readSource();
         TestSourceValidity(source);
 
@@ -69,7 +70,7 @@ public class Game {
             } catch (IncompleteMoveException e) {
                 continueSkipMove(e);
                 break;
-            } catch (Exception e) {
+            } catch (DraughtsException e) {
                 out.signalInvalidMove(e);
             }
         }
@@ -93,14 +94,14 @@ public class Game {
                 new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;
-            } catch (Exception e) {
+            } catch (DraughtsException e) {
                 out.signalInvalidMove(e);
             }
         }
         return source;
     }
 
-    private void TestSourceValidity(Point source) throws Exception {
+    private void TestSourceValidity(Point source) throws DraughtsException {
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new TileException("The first Tile you selected is empty");
