@@ -12,15 +12,11 @@ public class Board {
 
 
     private void createOddRow(int row) {
-        Color firstColor = Color.BLACK;
-        Color secondColor = Color.WHITE;
-        createRow(row, firstColor, secondColor);
+        createRow(row, Color.BLACK, Color.WHITE);
     }
 
     private void createEvenRow(int row) {
-        Color firstColor = Color.WHITE;
-        Color secondColor = Color.BLACK;
-        createRow(row, firstColor, secondColor);
+        createRow(row, Color.WHITE, Color.BLACK);
     }
 
     private void createRow(int row, Color firstColor, Color secondColor) {
@@ -52,12 +48,12 @@ public class Board {
         return BoardSpecifications.numberOfColumns() * row + column;
     }
 
-    private boolean isValidPosition(int row, int column) {
+    private boolean isPositionInsideTheBoard(int row, int column) {
         return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
-    public boolean isValidPosition(Point position) {
-        return isValidPosition(position.x, position.y);
+    public boolean isPositionInsideTheBoard(Point position) {
+        return isPositionInsideTheBoard(position.x, position.y);
     }
 
     private int getMiddleIndex(int startIndex, int endIndex) {
@@ -66,7 +62,7 @@ public class Board {
     }
 
     int getMiddlePosition(Point source, Point destination) throws InvalidIndexException {
-        if(!isValidPosition(source) && !isValidPosition(destination))
+        if(!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
@@ -90,7 +86,7 @@ public class Board {
         return listOfTiles;
     }
 
-    public Tile getTile(int index) { // dovrebbe andar bene
+    public Tile getTile(int index) {
         return boardArray.get(index);
     }
 
@@ -115,10 +111,9 @@ public class Board {
     }
 
     public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        if (tile != null && isValidPosition(tile.getRow() + offset1, tile.getColumn() + offset2))
+        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset1, tile.getColumn() + offset2))
             return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
         else
             return null;
     }
 }
-

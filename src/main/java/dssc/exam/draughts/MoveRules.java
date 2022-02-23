@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class MoveRules {
 
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
-        if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
+        if (!(board.isPositionInsideTheBoard(source) || board.isPositionInsideTheBoard(destination)))
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isWhiteTile(board, source);
         isWhiteTile(board, destination);
