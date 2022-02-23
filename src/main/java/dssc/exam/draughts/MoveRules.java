@@ -77,18 +77,11 @@ public class MoveRules {
         return tilesToStartSkippingFrom;
     }
 
-    private static int getMovingDirection(Color color) {
-        if (color == Color.BLACK)
-            return -1;
-        else
-            return 1;
-    }
-
     static void buildPathStartingFromKing(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
-            var movingDirection = getMovingDirection(colorOfSourcePiece);
+            var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
             rightDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
             var oppositeRightDiagonalMove = new SkipMoveRules(currentTile, -1 * movingDirection, 1);
@@ -117,7 +110,7 @@ public class MoveRules {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
-            var movingDirection = getMovingDirection(colorOfSourcePiece);
+            var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
             rightDiagonalMove.manDiagonalCheck(board, colorOfSourcePiece);
             var leftDiagonalMove = new SkipMoveRules(currentTile, movingDirection, -1);
