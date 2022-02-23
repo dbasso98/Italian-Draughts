@@ -11,9 +11,9 @@ public class MoveRules {
     public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws Exception {
         if (!(board.isValidPosition(source) || board.isValidPosition(destination)))
             throw new InvalidIndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        isWhiteTile(board, source);
-        isWhiteTile(board, destination);
-        isSamePosition(source, destination);
+        isBlackTile(board, source);
+        isBlackTile(board, destination);
+        isNotSamePosition(source, destination); // Forse questo dovrebbe essere resp. di Game?
         isCorrectDirection(board, source, destination);
         isDiagonal(source, destination);
         isValidDistance(source, destination);
@@ -29,7 +29,7 @@ public class MoveRules {
             throw new InvalidMoveException("You are moving in the opposite rowOffset!");
     }
 
-    private static void isWhiteTile(Board board, Point position) throws WhiteTileException {
+    private static void isBlackTile(Board board, Point position) throws WhiteTileException {
         if (board.getTile(position).isWhite())
             throw new WhiteTileException("Cannot play on white tiles, only black ones, please change position!");
     }
@@ -45,7 +45,7 @@ public class MoveRules {
             throw new NotDiagonalMoveException("Checker can only move diagonally!");
     }
 
-    static void isSamePosition(Point source, Point destination) throws SamePositionException {
+    static void isNotSamePosition(Point source, Point destination) throws SamePositionException {
         if (source.equals(destination))
             throw new SamePositionException("Source and destination position cannot be the same!");
     }

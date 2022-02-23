@@ -10,8 +10,8 @@ import java.util.stream.*;
 
 public class Move {
     private Board board;
-    private Point source;
-    private Point destination;
+    private Point source; // non sarebbe piu sensato che path includa una destination anche e uno gli passa direttamente
+    private Point destination; // la path?
 
     public Move (Board board, Point source, Point destination) {
         this.board = board;
@@ -25,10 +25,10 @@ public class Move {
         var maxWeight = getWeightOfBestPath(candidatePaths);
         var bestTilesToStartTheSkip = new ArrayList<>(candidatePaths.values().stream()
                                                                     .filter(entry -> entry.getWeight() == maxWeight)
-                                                                    .map(path -> path.getSource())
+                                                                    .map(Path::getSource)
                                                                     .collect(Collectors.toList()));
         var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
-                                                                    .filter(entry -> entry.containsAKing())
+                                                                    .filter(Tile::containsAKing)
                                                                     .collect(Collectors.toList()));
         if (isASimpleMove()) {
             doASimpleMove(candidatePaths, bestTilesToStartTheSkip);
@@ -72,13 +72,13 @@ public class Move {
             return 0;
         else
             return Collections.max(candidateTiles.values().stream()
-                                                    .map(path -> path.getWeight())
+                                                    .map(Path::getWeight)
                                                     .collect(Collectors.toList()));
     }
 
     public void continueToSkip(ArrayList<Tile> path) throws Exception {
         MoveRules.checkIfPositionsAreValid(board, source, destination);
-        if (path.stream().map(tile -> tile.getPosition()).collect(Collectors.toList()).contains(destination))
+        if (path.stream().map(Tile::getPosition).collect(Collectors.toList()).contains(destination))
             skipMove();
         else
             throw new InvalidMoveException("You HAVE to continue to skip! Look carefully at the board and choose the right position");
