@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Path {
     private ArrayList<Tile> path = new ArrayList<>();
-    private Tile source;
+    private final Tile source;
     private int weight;
 
     public Path (Tile source) {

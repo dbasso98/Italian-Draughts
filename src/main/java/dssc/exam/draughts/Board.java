@@ -10,7 +10,6 @@ public class Board {
     private final ArrayList<Tile> boardArray = new ArrayList<>(BoardSpecifications.boardSize());
     private final int lastIndexOfBoardArray = BoardSpecifications.boardSize() - 1;
 
-
     private void createOddRow(int row) {
         createRow(row, Color.BLACK, Color.WHITE);
     }
