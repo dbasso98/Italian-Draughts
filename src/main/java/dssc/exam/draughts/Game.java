@@ -3,7 +3,7 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.IOInterfaces.OutInterface;
 import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import dssc.exam.draughts.exceptions.IncompleteMoveException;
-import dssc.exam.draughts.exceptions.InvalidColorException;
+import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
 
 import java.awt.*;
@@ -105,7 +105,7 @@ public class Game {
         if (sourceTile.isEmpty())
             throw new TileException("The first Tile you selected is empty");
         if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
-            throw new InvalidColorException("The piece you intend to move belongs to your opponent");
+            throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
     void changePlayer() {
