@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.exceptions.CannotMoveException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -30,7 +31,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testTurnBehaviour() {
+    void testTurnBehaviour() throws CannotMoveException {
         // To be refactored with doubles
         String fakeInput = "4 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator();
@@ -54,7 +55,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidEmptyTileInput() {
+    void testInvalidEmptyTileInput() throws CannotMoveException {
         // To be refactored with doubles
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
@@ -79,7 +80,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidPieceColorInput() {
+    void testInvalidPieceColorInput() throws CannotMoveException {
         // To be refactored with doubles
         String fakeInput = "1 6" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +

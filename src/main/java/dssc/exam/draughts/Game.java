@@ -2,10 +2,7 @@ package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.OutInterface;
 import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
-import dssc.exam.draughts.exceptions.DraughtsException;
-import dssc.exam.draughts.exceptions.IncompleteMoveException;
-import dssc.exam.draughts.exceptions.MoveException;
-import dssc.exam.draughts.exceptions.TileException;
+import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,7 +26,11 @@ public class Game {
 
     void play() {
         while (whitePlayerHasPieces() & blackPlayerHasPieces()) {
-            playRound();
+            try {
+                playRound();
+            } catch (CannotMoveException exception) {
+                break;
+            }
         }
         changePlayer();
         out.displayWinner(currentPlayer);
@@ -53,23 +54,27 @@ public class Game {
     }
 
 
-    void playRound() {
+    void playRound() throws CannotMoveException {
         out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
         readAndPerformMove();
         changePlayer();
         ++round;
     }
 
-    private void readAndPerformMove() {
+    private void readAndPerformMove() throws CannotMoveException {
         while (true) {
             try {
                 getMoveFromPlayer().moveDecider();
                 break;
-            } catch (IncompleteMoveException e) {
-                continueSkipMove(e);
+            } catch (IncompleteMoveException exception) {
+                continueSkipMove(exception);
                 break;
-            } catch (DraughtsException e) {
-                out.signalInvalidMove(e);
+
+            } catch (CannotMoveException cannotMoveException) {
+                throw cannotMoveException;
+
+            } catch (DraughtsException exception) {
+                out.signalInvalidMove(exception);
             }
         }
     }
