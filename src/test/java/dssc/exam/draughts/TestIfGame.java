@@ -18,7 +18,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testChangePlayer() {
+    void changesPlayer() {
         Game game = new Game();
         assertEquals(game.whitePlayer, game.currentPlayer);
         game.changePlayer();
@@ -28,7 +28,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testTurnBehaviour() {
+    void allowsToMakeAMoveAndUpdatesRoundNumber() {
         String fakeInput = "4 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
@@ -51,7 +51,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidEmptyTileInput() {
+    void doesntAllowToStartMovingFromAnEmptyTile() {
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
@@ -75,7 +75,7 @@ public class TestIfGame {
     }
 
     @Test
-    void testInvalidPieceColorInput() {
+    void doesntAllowToMoveAnOpponentPiece() {
         String fakeInput = "1 6" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
                 "3 4" + System.lineSeparator();
@@ -98,7 +98,7 @@ public class TestIfGame {
     }
 
     @Test
-    void GameEndForEndOfPieces() {
+    void endsWhenOnePlayerHasNoPiecesLeft() {
         Board board = new Board();
         for (int row = 0; row < BoardSpecifications.numberOfRows() / 2; ++row) {
             for (int column = 0; column < BoardSpecifications.numberOfColumns(); ++column) {
@@ -119,7 +119,7 @@ public class TestIfGame {
     }
 
     @Test
-    void ValidDoubleSkipTest() throws Exception {
+    void informsThePlayerThatCanContinueToSkip() throws Exception {
 
         String fakeInput = "1 6 3 4" + System.lineSeparator()
                 + "5 2" + System.lineSeparator();
@@ -151,6 +151,4 @@ public class TestIfGame {
         assertEquals(expected11, actualLines[11]);
         assertEquals(expected23, actualLines[23]);
     }
-
-
 }
