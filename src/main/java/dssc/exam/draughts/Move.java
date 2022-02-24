@@ -10,8 +10,8 @@ import java.util.stream.*;
 
 public class Move {
     private Board board;
-    private Point source; // non sarebbe piu sensato che path includa una destination anche e uno gli passa direttamente
-    private Point destination; // la path?
+    private Point source;
+    private Point destination;
 
     public Move (Board board, Point source, Point destination) {
         this.board = board;
@@ -20,21 +20,56 @@ public class Move {
     }
 
     public void moveDecider() throws DraughtsException {
-        MoveRules.checkIfPositionsAreValid(board, source, destination); // maybe this should be in the ctor? You only construct a move if its valid.
+        MoveRules.checkIfPositionsAreValid(board, source, destination);
         var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
-        var maxWeight = getWeightOfBestPath(candidatePaths);
-        var bestTilesToStartTheSkip = new ArrayList<>(candidatePaths.values().stream()
-                                                                    .filter(entry -> entry.getWeight() == maxWeight)
+        var maxWeightOfCandidatePaths = getWeightOfBestPath(candidatePaths);
+        var tilesWithMaxWeight = new ArrayList<>(candidatePaths.values().stream()
+                                                                    .filter(entry -> entry.getWeight() == maxWeightOfCandidatePaths)
                                                                     .map(Path::getSource)
                                                                     .collect(Collectors.toList()));
-        var tilesContainingKingsAmongBestTiles = new ArrayList<>(bestTilesToStartTheSkip.stream()
+        var tilesContainingKingsAmongTilesWithMaxWeight = new ArrayList<>(tilesWithMaxWeight.stream()
                                                                     .filter(Tile::containsAKing)
                                                                     .collect(Collectors.toList()));
         if (isASimpleMove()) {
-            doASimpleMove(candidatePaths, bestTilesToStartTheSkip);
+            doASimpleMove(candidatePaths, tilesWithMaxWeight);
         } else {
-            doASkipMove(candidatePaths, bestTilesToStartTheSkip, tilesContainingKingsAmongBestTiles);
+            doASkipMove(candidatePaths, tilesWithMaxWeight, tilesContainingKingsAmongTilesWithMaxWeight);
         }
+    }
+
+    private boolean isASimpleMove(){
+        return Math.abs(destination.x - source.x) == 1;
+    }
+
+    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> tilesWithMaxWeight) throws DraughtsException {
+        if (candidatePaths.isEmpty())
+            doADiagonalMove();
+        else
+            throw new MoveException("There are pieces that must capture, try these positions:"
+                    + printPositionsOfTiles(tilesWithMaxWeight));
+    }
+
+    void doADiagonalMove() {
+        var sourceTile = board.getTile(source);
+        var destinationTile = board.getTile(destination);
+        movePiece(sourceTile, destinationTile);
+        updateToKingWhenLastRowIsReached(destinationTile.getPiece(), destinationTile.getRow());
+    }
+
+    private void updateToKingWhenLastRowIsReached(Piece destinationTilePiece, int destinationRow) {
+        if (!destinationTilePiece.isKing()){
+            if (destinationTilePiece.getColor().associatedEndOfBoardRow() == destinationRow)
+                destinationTilePiece.upgradeToKing();
+        }
+    }
+
+    private void movePiece(Tile sourceTile, Tile destinationTile) {
+        var piece = sourceTile.popPiece();
+        destinationTile.setPiece(piece);
+    }
+
+    public void movePiece() {
+        movePiece(board.getTile(source), board.getTile(destination));
     }
 
     private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
@@ -44,18 +79,6 @@ public class Move {
             return Collections.max(candidateTiles.values().stream()
                     .map(path -> path.getWeight())
                     .collect(Collectors.toList()));
-    }
-
-    private boolean isASimpleMove(){
-        return Math.abs(destination.x - source.x) == 1;
-    }
-
-    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles) throws DraughtsException {
-        if (candidatePaths.isEmpty())
-            diagonalMove();
-        else
-            throw new MoveException("There are pieces that must capture, try these positions:"
-                    + printPositionsOfTiles(bestSourceTiles));
     }
 
     private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
@@ -96,34 +119,8 @@ public class Move {
             throw new TileException("Skip move over an empty tile is not accepted");
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new MoveException("Color of piece to skip cannot be the same as source piece");
-        diagonalMove();
+        doADiagonalMove();
         middleTile.popPiece();
-    }
-
-
-    public void diagonalMove() {
-        var sourceTile = board.getTile(source);
-        var destinationTile = board.getTile(destination);
-        movePiece(sourceTile, destinationTile);
-        updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
-    }
-
-    private void movePiece(Tile sourceTile, Tile destinationTile) {
-        var piece = sourceTile.popPiece();
-        destinationTile.setPiece(piece);
-    }
-
-    public void movePiece() {
-        movePiece(board.getTile(source), board.getTile(destination));
-    }
-
-    private void updateToKingWhenLastRowIsReached(Tile destinationTile, int destinationRow) {
-        var destinationTilePiece = destinationTile.getPiece();
-        if (!destinationTilePiece.isKing()){
-            if ((destinationTilePiece.getColor() == Color.WHITE && destinationRow == 7) ||
-                (destinationTilePiece.getColor() == Color.BLACK && destinationRow == 0))
-                destinationTilePiece.upgradeToKing();
-        }
     }
 
     private String printPositionsOfTiles(ArrayList<Tile> tiles) {
