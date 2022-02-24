@@ -53,6 +53,7 @@ public class Game {
         return new Move(board, source, destination);
     }
 
+
     void playRound() {
         out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
         readAndPerformMove();
