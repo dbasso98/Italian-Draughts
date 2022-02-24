@@ -37,7 +37,7 @@ public class TestIfPlayer {
     void testReadPosition(List<Integer> inputList,
                           int rowExpected, int columnExpected) {
 
-        Point point = getPlayerWithDoubledInput(inputList).readPosition();
+        Point point = getPlayerWithDoubledInput(inputList).readSource();
 
         assertEquals(point.x, columnExpected);
         assertEquals(point.y, rowExpected);
@@ -90,7 +90,7 @@ public class TestIfPlayer {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
-        player.readPosition();
+        player.readSource();
 
         String expected = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)" +
                 System.lineSeparator() +

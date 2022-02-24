@@ -5,7 +5,6 @@ import dssc.exam.draughts.BoardSpecifications;
 import dssc.exam.draughts.Player;
 import dssc.exam.draughts.exceptions.IndexException;
 import dssc.exam.draughts.Tile;
-import dssc.exam.draughts.exceptions.InvalidIndexException;
 
 public class OutInterfaceStdout implements OutInterface {
     @Override
