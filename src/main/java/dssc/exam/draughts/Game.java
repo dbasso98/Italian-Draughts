@@ -50,8 +50,7 @@ public class Game {
         TestSourceValidity(source);
 
         Point destination = currentPlayer.readDestination();
-        Move move = new Move(board, source, destination);
-        move.moveDecider();
+        new Move(board, source, destination).moveDecider();
     }
 
 

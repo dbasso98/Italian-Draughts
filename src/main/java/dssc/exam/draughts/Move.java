@@ -104,8 +104,6 @@ public class Move {
     public void diagonalMove() throws DraughtsException {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
-        MoveRules.checkTileEmptiness(sourceTile);
-        MoveRules.checkTileNonEmptiness(destinationTile);
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile, destinationTile.getRow());
     }

@@ -15,7 +15,7 @@ public class TestIfMove {
         var board = new Board();
         assertTrue(board.getTile(1, 2).isNotEmpty());
         assertTrue(board.getTile(2, 1).isNotEmpty());
-        TileException exception = assertThrows(TileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).diagonalMove());
+        TileException exception = assertThrows(TileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).moveDecider());
         assertEquals("Cannot move since tile at (2,3) is not empty", exception.getMessage());
     }
 

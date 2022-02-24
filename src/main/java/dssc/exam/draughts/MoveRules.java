@@ -17,6 +17,8 @@ public class MoveRules {
         isCorrectDirection(board, source, destination);
         isMovingInDiagonal(source, destination);
         isItMovingByOneOrTwoTiles(source, destination);
+        MoveRules.checkTileEmptiness(board, source);
+        MoveRules.checkTileNonEmptiness(board, destination);
         return true;
     }
 
@@ -50,13 +52,16 @@ public class MoveRules {
             throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    static void checkTileNonEmptiness(Tile destinationTile) throws TileException {
+    static void checkTileNonEmptiness(Board board, Point destination) throws TileException {
+        var destinationTile = board.getTile(destination);
         if (destinationTile.isNotEmpty())
             throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
                     + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void checkTileEmptiness(Tile sourceTile) throws TileException {
+    static void checkTileEmptiness(Board board, Point source) throws TileException {
+        var sourceTile = board.getTile(source);
+
         if (sourceTile.isEmpty())
             throw new TileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
                     + "," + (sourceTile.getRow() + 1) + ") is empty");
