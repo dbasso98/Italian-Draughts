@@ -47,8 +47,7 @@ public class Game {
 
     private void performSimpleAction() throws DraughtsException {
         Point source = currentPlayer.readSource();
-        TestSourceValidity(source);
-
+        testSourceValidity(source);
         Point destination = currentPlayer.readDestination();
         new Move(board, source, destination).moveDecider();
     }
@@ -100,7 +99,7 @@ public class Game {
         return source;
     }
 
-    private void TestSourceValidity(Point source) throws DraughtsException {
+    private void testSourceValidity(Point source) throws DraughtsException {
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new TileException("The first Tile you selected is empty");
@@ -139,5 +138,4 @@ public class Game {
     Game() {
         this.out = new OutInterfaceStdout();
     }
-
 }

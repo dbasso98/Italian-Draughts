@@ -30,11 +30,12 @@ public class Move {
         var tilesContainingKingsAmongTilesWithMaxWeight = new ArrayList<>(tilesWithMaxWeight.stream()
                                                                     .filter(Tile::containsAKing)
                                                                     .collect(Collectors.toList()));
-        if (isASimpleMove()) {
+        if (isASimpleMove())
             doASimpleMove(candidatePaths, tilesWithMaxWeight);
-        } else {
+        else if (isASkipMove())
             doASkipMove(candidatePaths, tilesWithMaxWeight, tilesContainingKingsAmongTilesWithMaxWeight);
-        }
+        else
+            throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
     }
 
     private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
@@ -48,6 +49,10 @@ public class Move {
 
     private boolean isASimpleMove(){
         return Math.abs(destination.x - source.x) == 1;
+    }
+
+    private boolean isASkipMove(){
+        return Math.abs(destination.x - source.x) == 2;
     }
 
     private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> tilesWithMaxWeight) throws DraughtsException {
