@@ -22,7 +22,6 @@ public class TestIfGame {
         Player whitePlayer = new Player(Color.WHITE);
         Player blackPlayer = new Player(Color.BLACK);
         Game game = new Game(whitePlayer, blackPlayer);
-//        assertEquals(whitePlayer, game.currentPlayer);
         assertEquals(whitePlayer, game.getCurrentPlayer());
         game.changePlayer();
         assertEquals(blackPlayer, game.getCurrentPlayer());
@@ -32,6 +31,7 @@ public class TestIfGame {
 
     @Test
     void testTurnBehaviour() {
+        // To be refactored with doubles
         String fakeInput = "4 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
@@ -55,6 +55,7 @@ public class TestIfGame {
 
     @Test
     void testInvalidEmptyTileInput() {
+        // To be refactored with doubles
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
@@ -79,6 +80,7 @@ public class TestIfGame {
 
     @Test
     void testInvalidPieceColorInput() {
+        // To be refactored with doubles
         String fakeInput = "1 6" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
                 "3 4" + System.lineSeparator();
@@ -133,6 +135,7 @@ public class TestIfGame {
         setFakeStdInput(fakeInput);
 
         Board board = new Board();
+        // maybe it is better to think something cleaner
         new Move(board, new Point(2, 3), new Point(3, 4)).moveDecider();
         new Move(board, new Point(5, 4), new Point(4, 5)).moveDecider();
         new Move(board, new Point(1, 4), new Point(2, 3)).moveDecider();
