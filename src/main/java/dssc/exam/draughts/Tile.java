@@ -12,13 +12,7 @@ public class Tile {
         this.position = position;
     }
 
-    public boolean isEmpty() {
-        return piece == null;
-    }
-
-    public Piece popPiece() {
-        var piece = this.piece;
-        this.piece = null;
+    public Piece getPiece() {
         return piece;
     }
 
@@ -26,11 +20,9 @@ public class Tile {
         this.piece = piece;
     }
 
-    public boolean isNotEmpty() {
-        return !(isEmpty());
-    }
-
-    public Piece getPiece() {
+    public Piece popPiece() {
+        var piece = this.piece;
+        this.piece = null;
         return piece;
     }
 
@@ -48,6 +40,14 @@ public class Tile {
 
     public int getColumn() {
         return position.y;
+    }
+
+    public boolean isEmpty() {
+        return piece == null;
+    }
+
+    public boolean isNotEmpty() {
+        return !(isEmpty());
     }
 
     public boolean isBlack() {
