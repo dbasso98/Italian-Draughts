@@ -1,10 +1,8 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import dssc.exam.draughts.exceptions.CannotMoveException;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -24,7 +22,7 @@ public class TestIfGame {
     }
 
     @Test
-        void changesPlayer() {
+    void changesPlayer() {
         Player whitePlayer = new Player(Color.WHITE);
         Player blackPlayer = new Player(Color.BLACK);
         Game game = new Game(whitePlayer, blackPlayer);
@@ -107,7 +105,7 @@ public class TestIfGame {
 
     @Test
     void endsWhenOnePlayerHasNoPiecesLeft() {
-        FakeBoard board = new FakeBoard();
+        CustomizableBoard board = new CustomizableBoard();
 
         board.popPiecesAt(Stream.iterate(1, n -> n + 1)
                 .limit(board.getSize() / 2)
@@ -136,7 +134,7 @@ public class TestIfGame {
                 + "5 2" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
-        FakeBoard board = new FakeBoard();
+        CustomizableBoard board = new CustomizableBoard();
         board.popPiecesAt(Arrays.asList(12, 17, 33, 42, 44));
         board.setMultipleManAt(Arrays.asList(28, 33), Color.WHITE);
         board.setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
@@ -158,34 +156,4 @@ public class TestIfGame {
         assertEquals(expected11, actualLines[11]);
         assertEquals(expected23, actualLines[23]);
     }
-
-    class FakeBoard extends Board {
-
-        void setManAtTile(int x, int y, Color color) {
-            getTile(x, y).setPiece(new Piece(0, color));
-        }
-
-        void setKingAtTile(int x, int y, Color color) {
-            setManAtTile(x, y, color);
-            getPieceAtTile(x, y).upgradeToKing();
-        }
-
-        void popPieceAtTile(int x, int y) {
-            getTile(x, y).popPiece();
-        }
-
-        void popPiecesAt(List<Integer> indexesToPop) {
-            for (Integer index : indexesToPop) {
-                getTile(index).popPiece();
-            }
-        }
-
-        void setMultipleManAt(List<Integer> indexesOfPieces, Color color) {
-            for (Integer index : indexesOfPieces) {
-                getTile(index).setPiece(new Piece(0, color));
-            }
-        }
-
-    }
-
 }
