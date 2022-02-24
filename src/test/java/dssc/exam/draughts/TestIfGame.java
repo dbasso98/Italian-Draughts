@@ -22,11 +22,12 @@ public class TestIfGame {
         Player whitePlayer = new Player(Color.WHITE);
         Player blackPlayer = new Player(Color.BLACK);
         Game game = new Game(whitePlayer, blackPlayer);
-        assertEquals(whitePlayer, game.currentPlayer);
+//        assertEquals(whitePlayer, game.currentPlayer);
+        assertEquals(whitePlayer, game.getCurrentPlayer());
         game.changePlayer();
-        assertEquals(blackPlayer, game.currentPlayer);
+        assertEquals(blackPlayer, game.getCurrentPlayer());
         game.changePlayer();
-        assertEquals(whitePlayer, game.currentPlayer);
+        assertEquals(whitePlayer, game.getCurrentPlayer());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class TestIfGame {
         Board board = new Board();
         Game game = new Game();
         game.loadGame(board, 0);
-        assertEquals(Color.WHITE, game.currentPlayer.getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
         String actualOut = fakeStandardOutput.toString();
         String[] actualLines = actualOut.split(System.lineSeparator());
@@ -91,7 +92,7 @@ public class TestIfGame {
         Board board = new Board();
         Game game = new Game();
         game.loadGame(board, 0);
-        assertEquals(Color.WHITE, game.currentPlayer.getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
         String actualOut = fakeStandardOutput.toString();
         String[] actualLines = actualOut.split(System.lineSeparator());
