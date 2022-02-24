@@ -36,7 +36,7 @@ public class TestIfGame {
     }
 
     @Test
-    void allowsToMakeAMoveAndUpdatesRoundNumber() {
+    void allowsToMakeAMoveAndUpdatesRoundNumber() throws CannotMoveException {
         String fakeInput = "4 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator();
         setFakeStdInput(fakeInput);
@@ -59,7 +59,7 @@ public class TestIfGame {
     }
 
     @Test
-    void doesntAllowToStartMovingFromAnEmptyTile() {
+    void doesntAllowToStartMovingFromAnEmptyTile() throws CannotMoveException {
         String fakeInput = "1 3" + System.lineSeparator() +
                 "5 4" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
@@ -83,7 +83,7 @@ public class TestIfGame {
     }
 
     @Test
-    void doesntAllowToMoveAnOpponentPiece() {
+    void doesntAllowToMoveAnOpponentPiece() throws CannotMoveException {
         String fakeInput = "1 6" + System.lineSeparator() +
                 "2 3" + System.lineSeparator() +
                 "3 4" + System.lineSeparator();
