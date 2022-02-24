@@ -13,23 +13,17 @@ public class MoveRules {
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isBlackTile(board, source);
         isBlackTile(board, destination);
-        isNotSamePosition(source, destination); // Forse questo dovrebbe essere resp. di Game?
-        isCorrectDirection(board, source, destination);
         isMovingInDiagonal(source, destination);
         isItMovingByOneOrTwoTiles(source, destination);
         MoveRules.checkTileEmptiness(board, source);
         MoveRules.checkTileNonEmptiness(board, destination);
+        isCorrectDirection(board, source, destination);
         return true;
     }
 
     private static void isBlackTile(Board board, Point position) throws TileException {
         if (board.getTile(position).isWhite())
             throw new TileException("Cannot play on white tiles, only black ones, please change position!");
-    }
-
-    static void isNotSamePosition(Point source, Point destination) throws MoveException {
-        if (source.equals(destination))
-            throw new MoveException("Source and destination position cannot be the same!");
     }
 
     private static void isCorrectDirection(Board board, Point source, Point destination) throws MoveException {

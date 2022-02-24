@@ -139,4 +139,5 @@ public class Game {
     Game() {
         this.out = new OutInterfaceStdout();
     }
+
 }

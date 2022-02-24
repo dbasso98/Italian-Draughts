@@ -77,7 +77,7 @@ public class Move {
     }
 
     private void canContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
-        if (candidatePaths.get(board.getTile(source)).getWeight() > 18)
+        if (candidatePaths.get(board.getTile(source)).getWeight() > 18) // clarify
             throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
     }
 
@@ -101,7 +101,7 @@ public class Move {
     }
 
 
-    public void diagonalMove() throws DraughtsException {
+    public void diagonalMove() {
         var sourceTile = board.getTile(source);
         var destinationTile = board.getTile(destination);
         movePiece(sourceTile, destinationTile);
