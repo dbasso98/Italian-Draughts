@@ -13,10 +13,11 @@ public class MoveRules {
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isBlackTile(board, source);
         isBlackTile(board, destination);
-        isNotSamePosition(source, destination); // Forse questo dovrebbe essere resp. di Game?
-        isCorrectDirection(board, source, destination);
         isMovingInDiagonal(source, destination);
         isItMovingByOneOrTwoTiles(source, destination);
+        MoveRules.checkTileEmptiness(board, source);
+        MoveRules.checkTileNonEmptiness(board, destination);
+        isCorrectDirection(board, source, destination);
         return true;
     }
 
@@ -25,17 +26,12 @@ public class MoveRules {
             throw new TileException("Cannot play on white tiles, only black ones, please change position!");
     }
 
-    static void isNotSamePosition(Point source, Point destination) throws MoveException {
-        if (source.equals(destination))
-            throw new MoveException("Source and destination position cannot be the same!");
-    }
-
     private static void isCorrectDirection(Board board, Point source, Point destination) throws MoveException {
         var colorOfSourceTile = board.getColorOfPieceAtTile(source);
         var isSourceTileAKing = board.getPieceAtTile(source.x, source.y).isKing();
         var direction = destination.x - source.x;
         if (!isSourceTileAKing &&
-                ((colorOfSourceTile == Color.WHITE && direction < 0) || (colorOfSourceTile == Color.BLACK && direction > 0)))
+                colorOfSourceTile.associatedDirection()*direction < 0 )
             throw new MoveException("You are moving in the opposite rowOffset!");
     }
 
@@ -50,13 +46,16 @@ public class MoveRules {
             throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    static void checkTileNonEmptiness(Tile destinationTile) throws TileException {
+    static void checkTileNonEmptiness(Board board, Point destination) throws TileException {
+        var destinationTile = board.getTile(destination);
         if (destinationTile.isNotEmpty())
             throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
                     + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void checkTileEmptiness(Tile sourceTile) throws TileException {
+    static void checkTileEmptiness(Board board, Point source) throws TileException {
+        var sourceTile = board.getTile(source);
+
         if (sourceTile.isEmpty())
             throw new TileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
                     + "," + (sourceTile.getRow() + 1) + ") is empty");
@@ -77,18 +76,11 @@ public class MoveRules {
         return tilesToStartSkippingFrom;
     }
 
-    private static int getMovingDirection(Color color) {
-        if (color == Color.BLACK)
-            return -1;
-        else
-            return 1;
-    }
-
     static void buildPathStartingFromKing(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
-            var movingDirection = getMovingDirection(colorOfSourcePiece);
+            var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
             rightDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
             var oppositeRightDiagonalMove = new SkipMoveRules(currentTile, -1 * movingDirection, 1);
@@ -117,7 +109,7 @@ public class MoveRules {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
-            var movingDirection = getMovingDirection(colorOfSourcePiece);
+            var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
             rightDiagonalMove.manDiagonalCheck(board, colorOfSourcePiece);
             var leftDiagonalMove = new SkipMoveRules(currentTile, movingDirection, -1);

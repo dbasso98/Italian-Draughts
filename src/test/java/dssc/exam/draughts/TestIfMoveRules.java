@@ -35,19 +35,6 @@ public class TestIfMoveRules {
     }
 
     @Property
-    void checksSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
-        if (checkIfTileIsBlack(row, column)) {
-            Exception exception = assertThrows(MoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
-            assertEquals("Source and destination position cannot be the same!", exception.getMessage());
-        }
-    }
-
-    @Provide
-    Arbitrary<Integer> validIndexGenerator() {
-        return Arbitraries.integers().between(0, 7);
-    }
-
-    @Property
     void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset){
         if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
             Exception exception = assertThrows(MoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column),
@@ -65,6 +52,20 @@ public class TestIfMoveRules {
     Arbitrary<Integer[]> offset() {
         Arbitrary<Integer> integerArbitrary = Arbitraries.integers().between(-1, 1);
         return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> x[0] != x[1] && (x[0] == 0 || x[1] == 0));
+    }
+
+    @Property
+    void throwsErrorIfSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
+        Board board = new Board();
+        if (checkIfTileIsBlack(row, column)) {
+            Exception exception = assertThrows(MoveException.class, () -> MoveRules.checkIfPositionsAreValid(board, new Point(row, column), new Point(row, column)));
+            assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
+        }
+    }
+
+    @Provide
+    Arbitrary<Integer> validIndexGenerator() {
+        return Arbitraries.integers().between(0, 7);
     }
 
     private boolean checkIfTileIsBlack(int row, int column){
@@ -117,6 +118,7 @@ public class TestIfMoveRules {
     @Test
     void checksForCorrectDirectionOfAPiece(){
         var newBoard = new Board();
+        newBoard.getTile(1,0).popPiece();
         Exception exception = assertThrows(Exception.class, () -> MoveRules.checkIfPositionsAreValid(newBoard, new Point(2,1), new Point(1,0)));
         assertEquals("You are moving in the opposite rowOffset!", exception.getMessage());
     }
@@ -185,4 +187,5 @@ public class TestIfMoveRules {
                                                                                                             .collect(Collectors.toList())
                                                                                                             .get(0));
     }
+
 }

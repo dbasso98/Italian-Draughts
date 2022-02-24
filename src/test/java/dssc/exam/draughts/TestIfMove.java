@@ -15,7 +15,7 @@ public class TestIfMove {
         var board = new Board();
         assertTrue(board.getTile(1, 2).isNotEmpty());
         assertTrue(board.getTile(2, 1).isNotEmpty());
-        TileException exception = assertThrows(TileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).diagonalMove());
+        TileException exception = assertThrows(TileException.class, () -> new Move(board, new Point(1, 2), new Point(2, 1)).moveDecider());
         assertEquals("Cannot move since tile at (2,3) is not empty", exception.getMessage());
     }
 
@@ -42,7 +42,7 @@ public class TestIfMove {
     @Test
     void updatesManToKingWhenLastRowIsReached() throws Exception {
         var newBoard = new Board();
-        new Move(newBoard, new Point(2,1), new Point(7,7)).diagonalMove();
+        new Move(newBoard, new Point(2,1), new Point(7,7)).doADiagonalMove();
         assertTrue(newBoard.getPieceAtTile(7,7).isKing());
     }
 
