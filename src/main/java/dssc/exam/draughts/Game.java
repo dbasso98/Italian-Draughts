@@ -45,14 +45,13 @@ public class Game {
         play();
     }
 
-    private void performSimpleAction() throws DraughtsException {
+    private Move getMoveFromPlayer() throws DraughtsException {
         Point source = currentPlayer.readSource();
         TestSourceValidity(source);
 
         Point destination = currentPlayer.readDestination();
-        new Move(board, source, destination).moveDecider();
+        return new Move(board, source, destination);
     }
-
 
     void playRound() {
         out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
@@ -64,7 +63,7 @@ public class Game {
     private void readAndPerformMove() {
         while (true) {
             try {
-                performSimpleAction();
+                getMoveFromPlayer().moveDecider();
                 break;
             } catch (IncompleteMoveException e) {
                 continueSkipMove(e);
