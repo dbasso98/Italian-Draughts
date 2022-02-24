@@ -11,9 +11,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Game {
-    Player whitePlayer = new Player(Color.WHITE);
-    Player blackPlayer = new Player(Color.BLACK);
-    Player currentPlayer = whitePlayer;
+    //    private final Player whitePlayer = new Player(Color.WHITE);
+    private final Player whitePlayer;
+    private final Player blackPlayer;
+    Player currentPlayer;
     private Board board = new Board();
     public int round = 0;
     private final OutInterface out;
@@ -132,12 +133,27 @@ public class Game {
         return currentPlayer;
     }
 
-    Game(OutInterface outInterface) {
+    Game(OutInterface outInterface, Player whitePlayer, Player blackPlayer) {
         this.out = outInterface;
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+        this.currentPlayer = whitePlayer;
+    }
+
+    Game(Player whitePlayer, Player blackPlayer) {
+        this(new OutInterfaceStdout(), whitePlayer, blackPlayer);
+    }
+
+    Game(OutInterface outInterface) {
+//        this.out = outInterface;
+//        this.whitePlayer = new Player(Color.WHITE);
+//        this.blackPlayer = new Player(Color.BLACK);
+        this(outInterface, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     Game() {
-        this.out = new OutInterfaceStdout();
+//        this.out = new OutInterfaceStdout();
+        this(new OutInterfaceStdout());
     }
 
 }

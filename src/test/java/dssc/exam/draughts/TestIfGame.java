@@ -19,12 +19,14 @@ public class TestIfGame {
 
     @Test
     void testChangePlayer() {
-        Game game = new Game();
-        assertEquals(game.whitePlayer, game.currentPlayer);
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
+        Game game = new Game(whitePlayer, blackPlayer);
+        assertEquals(whitePlayer, game.currentPlayer);
         game.changePlayer();
-        assertEquals(game.blackPlayer, game.currentPlayer);
+        assertEquals(blackPlayer, game.currentPlayer);
         game.changePlayer();
-        assertEquals(game.whitePlayer, game.currentPlayer);
+        assertEquals(whitePlayer, game.currentPlayer);
     }
 
     @Test
@@ -109,9 +111,13 @@ public class TestIfGame {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
-        Game game = new Game();
-        game.whitePlayer.setName("Player 1");
-        game.blackPlayer.setName("Player 2");
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
+
+        whitePlayer.setName("Player 1");
+        blackPlayer.setName("Player 2");
+
+        Game game = new Game(whitePlayer, blackPlayer);
         game.loadGame(board, 0);
         game.play();
         String expected = "The winner is Player 2" + System.lineSeparator();
