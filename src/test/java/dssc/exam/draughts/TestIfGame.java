@@ -18,13 +18,15 @@ public class TestIfGame {
     }
 
     @Test
-    void changesPlayer() {
-        Game game = new Game();
-        assertEquals(game.whitePlayer, game.currentPlayer);
+        void changesPlayer() {
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
+        Game game = new Game(whitePlayer, blackPlayer);
+        assertEquals(whitePlayer, game.getCurrentPlayer());
         game.changePlayer();
-        assertEquals(game.blackPlayer, game.currentPlayer);
+        assertEquals(blackPlayer, game.getCurrentPlayer());
         game.changePlayer();
-        assertEquals(game.whitePlayer, game.currentPlayer);
+        assertEquals(whitePlayer, game.getCurrentPlayer());
     }
 
     @Test
@@ -66,7 +68,7 @@ public class TestIfGame {
         Board board = new Board();
         Game game = new Game();
         game.loadGame(board, 0);
-        assertEquals(Color.WHITE, game.currentPlayer.getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
         String actualOut = fakeStandardOutput.toString();
         String[] actualLines = actualOut.split(System.lineSeparator());
@@ -89,7 +91,7 @@ public class TestIfGame {
         Board board = new Board();
         Game game = new Game();
         game.loadGame(board, 0);
-        assertEquals(Color.WHITE, game.currentPlayer.getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
         String actualOut = fakeStandardOutput.toString();
         String[] actualLines = actualOut.split(System.lineSeparator());
@@ -109,9 +111,13 @@ public class TestIfGame {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
-        Game game = new Game();
-        game.whitePlayer.setName("Player 1");
-        game.blackPlayer.setName("Player 2");
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
+
+        whitePlayer.setName("Player 1");
+        blackPlayer.setName("Player 2");
+
+        Game game = new Game(whitePlayer, blackPlayer);
         game.loadGame(board, 0);
         game.play();
         String expected = "The winner is Player 2" + System.lineSeparator();
@@ -126,6 +132,7 @@ public class TestIfGame {
         setFakeStdInput(fakeInput);
 
         Board board = new Board();
+        // maybe it is better to think something cleaner
         new Move(board, new Point(2, 3), new Point(3, 4)).moveDecider();
         new Move(board, new Point(5, 4), new Point(4, 5)).moveDecider();
         new Move(board, new Point(1, 4), new Point(2, 3)).moveDecider();

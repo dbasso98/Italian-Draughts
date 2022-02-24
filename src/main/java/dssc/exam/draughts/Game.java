@@ -11,11 +11,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Game {
-    Player whitePlayer = new Player(Color.WHITE);
-    Player blackPlayer = new Player(Color.BLACK);
-    Player currentPlayer = whitePlayer;
+    private final Player whitePlayer;
+    private final Player blackPlayer;
+    private Player currentPlayer;
     private Board board = new Board();
-    public int round = 0;
+    private int round = 0;
     private final OutInterface out;
 
     void loadGame(Board board, int round) {
@@ -45,11 +45,11 @@ public class Game {
         play();
     }
 
-    private void performSimpleAction() throws DraughtsException {
+    private Move getMoveFromPlayer() throws DraughtsException {
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
         Point destination = currentPlayer.readDestination();
-        new Move(board, source, destination).moveDecider();
+        return new Move(board, source, destination);
     }
 
 
@@ -63,7 +63,7 @@ public class Game {
     private void readAndPerformMove() {
         while (true) {
             try {
-                performSimpleAction();
+                getMoveFromPlayer().moveDecider();
                 break;
             } catch (IncompleteMoveException e) {
                 continueSkipMove(e);
@@ -131,11 +131,22 @@ public class Game {
         return currentPlayer;
     }
 
-    Game(OutInterface outInterface) {
+    Game(OutInterface outInterface, Player whitePlayer, Player blackPlayer) {
         this.out = outInterface;
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+        this.currentPlayer = whitePlayer;
+    }
+
+    Game(Player whitePlayer, Player blackPlayer) {
+        this(new OutInterfaceStdout(), whitePlayer, blackPlayer);
+    }
+
+    Game(OutInterface outInterface) {
+        this(outInterface, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     Game() {
-        this.out = new OutInterfaceStdout();
+        this(new OutInterfaceStdout());
     }
 }
