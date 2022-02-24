@@ -163,5 +163,24 @@ public class TestIfGame {
         assertEquals(expected23, actualLines[23]);
     }
 
+    class FakeBoard extends Board {
+
+        void setManAtTile(int x, int y, Color color) {
+            getTile(x, y).setPiece(new Piece(0, color));
+        }
+
+        void setKingAtTile(int x, int y, Color color) {
+            setManAtTile(x, y, color);
+            getPieceAtTile(x, y).upgradeToKing();
+        }
+
+        void popPieceAtTile(int x, int y) {
+            getTile(x, y).popPiece();
+        }
+
+        FakeBoard(){
+            initializeEmptyBoard();
+        }
+    }
 
 }
