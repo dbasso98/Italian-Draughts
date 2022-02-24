@@ -31,15 +31,19 @@ public class Board {
     }
 
     public Board() {
-        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
-            createEvenRow(row);
-            createOddRow(row + 1);
-        }
+        initializeEmptyBoard();
         for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
             if (getTile(tileIndex).isBlack()) {
                 setNewPieceAtIndex(tileIndex, Color.WHITE);
                 setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
             }
+        }
+    }
+
+    void initializeEmptyBoard() {
+        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
+            createEvenRow(row);
+            createOddRow(row + 1);
         }
     }
 
@@ -61,7 +65,7 @@ public class Board {
     }
 
     int getMiddlePosition(Point source, Point destination) throws IndexException {
-        if(!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
+        if (!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
