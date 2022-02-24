@@ -51,7 +51,7 @@ public class Board {
         return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
-    public boolean isPositionInsideTheBoard(Point position) {
+    boolean isPositionInsideTheBoard(Point position) {
         return isPositionInsideTheBoard(position.x, position.y);
     }
 
@@ -70,13 +70,13 @@ public class Board {
         return boardArray.size();
     }
 
-    public int getNumberOfPiecesOfColor(Color color) {
+    int getNumberOfPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(Tile::getPiece)
                 .collect(Collectors.toList())).size();
     }
 
-    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+    ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(BoardSpecifications.numberOfPiecesPerPlayer());
         for (Tile tile : boardArray) {
             if (tile.containsPieceOfColor(color))
