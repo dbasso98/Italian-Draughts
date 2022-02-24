@@ -1,11 +1,17 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
+import dssc.exam.draughts.exceptions.CannotMoveException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -101,12 +107,11 @@ public class TestIfGame {
 
     @Test
     void endsWhenOnePlayerHasNoPiecesLeft() {
-        Board board = new Board();
-        for (int row = 0; row < BoardSpecifications.numberOfRows() / 2; ++row) {
-            for (int column = 0; column < BoardSpecifications.numberOfColumns(); ++column) {
-                board.getTile(row, column).setPiece(null);
-            }
-        }
+        FakeBoard board = new FakeBoard();
+
+        board.popPiecesAt(Stream.iterate(1, n -> n + 1)
+                .limit(board.getSize() / 2)
+                .collect(Collectors.toList()));
 
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
@@ -131,15 +136,10 @@ public class TestIfGame {
                 + "5 2" + System.lineSeparator();
         setFakeStdInput(fakeInput);
 
-        Board board = new Board();
-        // maybe it is better to think something cleaner
-        new Move(board, new Point(2, 3), new Point(3, 4)).moveDecider();
-        new Move(board, new Point(5, 4), new Point(4, 5)).moveDecider();
-        new Move(board, new Point(1, 4), new Point(2, 3)).moveDecider();
-        new Move(board, new Point(5, 2), new Point(4, 1)).moveDecider();
-        new Move(board, new Point(2, 1), new Point(3, 2)).moveDecider();
-        new Move(board, new Point(4, 1), new Point(3, 0)).moveDecider();
-        new Move(board, new Point(3, 2), new Point(4, 1)).moveDecider();
+        FakeBoard board = new FakeBoard();
+        board.popPiecesAt(Arrays.asList(12, 17, 33, 42, 44));
+        board.setMultipleManAt(Arrays.asList(28, 33), Color.WHITE);
+        board.setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
 
         Game game = new Game();
         game.loadGame(board, 1);
@@ -158,4 +158,34 @@ public class TestIfGame {
         assertEquals(expected11, actualLines[11]);
         assertEquals(expected23, actualLines[23]);
     }
+
+    class FakeBoard extends Board {
+
+        void setManAtTile(int x, int y, Color color) {
+            getTile(x, y).setPiece(new Piece(0, color));
+        }
+
+        void setKingAtTile(int x, int y, Color color) {
+            setManAtTile(x, y, color);
+            getPieceAtTile(x, y).upgradeToKing();
+        }
+
+        void popPieceAtTile(int x, int y) {
+            getTile(x, y).popPiece();
+        }
+
+        void popPiecesAt(List<Integer> indexesToPop) {
+            for (Integer index : indexesToPop) {
+                getTile(index).popPiece();
+            }
+        }
+
+        void setMultipleManAt(List<Integer> indexesOfPieces, Color color) {
+            for (Integer index : indexesOfPieces) {
+                getTile(index).setPiece(new Piece(0, color));
+            }
+        }
+
+    }
+
 }

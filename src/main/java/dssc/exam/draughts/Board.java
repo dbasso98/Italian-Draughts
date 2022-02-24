@@ -31,15 +31,19 @@ public class Board {
     }
 
     public Board() {
-        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
-            createEvenRow(row);
-            createOddRow(row + 1);
-        }
+        initializeEmptyBoard();
         for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
             if (getTile(tileIndex).isBlack()) {
                 setNewPieceAtIndex(tileIndex, Color.WHITE);
                 setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
             }
+        }
+    }
+
+    void initializeEmptyBoard() {
+        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
+            createEvenRow(row);
+            createOddRow(row + 1);
         }
     }
 
@@ -51,7 +55,7 @@ public class Board {
         return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
-    public boolean isPositionInsideTheBoard(Point position) {
+    boolean isPositionInsideTheBoard(Point position) {
         return isPositionInsideTheBoard(position.x, position.y);
     }
 
@@ -61,7 +65,7 @@ public class Board {
     }
 
     int getMiddlePosition(Point source, Point destination) throws IndexException {
-        if(!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
+        if (!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
@@ -70,13 +74,13 @@ public class Board {
         return boardArray.size();
     }
 
-    public int getNumberOfPiecesOfColor(Color color) {
+    int getNumberOfPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(Tile::getPiece)
                 .collect(Collectors.toList())).size();
     }
 
-    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+    ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         ArrayList<Tile> listOfTiles = new ArrayList<>(BoardSpecifications.numberOfPiecesPerPlayer());
         for (Tile tile : boardArray) {
             if (tile.containsPieceOfColor(color))
