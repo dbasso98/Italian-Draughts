@@ -3,6 +3,7 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.exceptions.CannotMoveException;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -66,8 +67,7 @@ public class TestIfGame {
 
         String expectedOut = "Invalid move: The first Tile you selected is empty";
 
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
+        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         Board board = new Board();
         Game game = new Game();
@@ -89,8 +89,7 @@ public class TestIfGame {
 
         String expectedOut = "Invalid move: The piece you intend to move belongs to your opponent";
 
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
+        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         Board board = new Board();
         Game game = new Game();
@@ -111,8 +110,7 @@ public class TestIfGame {
                 .limit(board.getSize() / 2)
                 .collect(Collectors.toList()));
 
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
+        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         Player whitePlayer = new Player(Color.WHITE);
         Player blackPlayer = new Player(Color.BLACK);
@@ -129,31 +127,56 @@ public class TestIfGame {
 
     @Test
     void informsThePlayerThatCanContinueToSkip() throws Exception {
+        List<Point> input = Arrays.asList(new Point(5, 0),
+                new Point(3, 2),
+                new Point(1, 4));
 
-        String fakeInput = "1 6 3 4" + System.lineSeparator()
-                + "5 2" + System.lineSeparator();
-        setFakeStdInput(fakeInput);
+        var whitePlayerStub = new PlayerStub(Color.WHITE, input);
+        var blackPlayerStub = new PlayerStub(Color.BLACK, input);
 
         CustomizableBoard board = new CustomizableBoard();
         board.popPiecesAt(Arrays.asList(12, 17, 33, 42, 44));
         board.setMultipleManAt(Arrays.asList(28, 33), Color.WHITE);
         board.setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
 
-        Game game = new Game();
+        Game game = new Game(whitePlayerStub, blackPlayerStub);
         game.loadGame(board, 1);
 
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
+        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         game.playRound();
 
-        String actualOut = fakeStandardOutput.toString();
-        String[] actualLines = actualOut.split(System.lineSeparator());
+        String[] actualLines = fakeStandardOutput.toString()
+                .split(System.lineSeparator());
 
-        String expected11 = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
-        String expected23 = "You can continue to skip!";
         assertEquals("Player [BLACK]:", actualLines[10]);
-        assertEquals(expected11, actualLines[11]);
-        assertEquals(expected23, actualLines[23]);
+        assertEquals("You can continue to skip!", actualLines[21]);
+    }
+
+    private ByteArrayOutputStream getFakeStandardOutput() {
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+        return fakeStandardOutput;
+    }
+
+    @Test
+    void HandlingCannotMoveException() {
+
+    }
+
+    class PlayerStub extends Player {
+        private static int nextPointToReadIndex = 0;
+        private final List<Point> fakeReadPoints;
+
+        PlayerStub(Color color, List<Point> points) {
+            super(color);
+            fakeReadPoints = points;
+        }
+
+        @Override
+        Point readPosition(String message) {
+            return fakeReadPoints.get(nextPointToReadIndex++);
+        }
+
     }
 }
