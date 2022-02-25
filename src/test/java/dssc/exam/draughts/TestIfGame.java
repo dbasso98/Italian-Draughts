@@ -173,7 +173,7 @@ public class TestIfGame {
         return fakeStandardOutput;
     }
 
-    class PlayerStub extends Player {
+    static class PlayerStub extends Player {
 
         private static int nextPointToReadIndex = 0;
         private final List<Point> fakeReadPoints;
