@@ -150,11 +150,10 @@ public class TestIfMoveRules {
 
     @Test
     void givesHigherScoreToPathWithMostKingsToEat() {
-        CustomizableBoard board = new CustomizableBoard();
-        board.popPiecesAt(Arrays.asList(46, 49, 53));
-        board.setMultipleManAt(Arrays.asList(26, 28, 32, 40),
-                Color.BLACK);
-        board.upgradeToKing(Arrays.asList(17, 21, 26, 44));
+        CustomizableBoard board = new CustomizableBoard()
+                .popPiecesAt(Arrays.asList(46, 49, 53))
+                .setMultipleManAt(Arrays.asList(26, 28, 32, 40), Color.BLACK)
+                .upgradeToKing(Arrays.asList(17, 21, 26, 44));
 
         var pathValues = MoveRules.candidatePathsForSkipMove(board, Color.WHITE)
                 .values();
