@@ -13,22 +13,25 @@ class CustomizableBoard extends Board {
         getPieceAtTile(x, y).upgradeToKing();
     }
 
-    void popPiecesAt(List<Integer> indexesToPop) {
+    CustomizableBoard popPiecesAt(List<Integer> indexesToPop) {
         for (Integer index : indexesToPop) {
             getTile(index).popPiece();
         }
+        return this;
     }
 
-    void setMultipleManAt(List<Integer> indexesOfPieces, Color color) {
+    CustomizableBoard setMultipleManAt(List<Integer> indexesOfPieces, Color color) {
         for (Integer index : indexesOfPieces) {
             getTile(index).setPiece(new Piece(0, color));
         }
+        return this;
     }
 
-    void upgradeToKing(List<Integer> indexesOfPieces) {
+    CustomizableBoard upgradeToKing(List<Integer> indexesOfPieces) {
         for (Integer index : indexesOfPieces) {
             getTile(index).getPiece().upgradeToKing();
         }
+        return this;
     }
 
 }

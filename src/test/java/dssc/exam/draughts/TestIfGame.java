@@ -127,23 +127,23 @@ public class TestIfGame {
 
     @Test
     void informsThePlayerThatCanContinueToSkip() throws Exception {
-        List<Point> input = Arrays.asList(new Point(5, 0),
+        List<Point> input = Arrays.asList(
+                new Point(5, 0),
                 new Point(3, 2),
-                new Point(1, 4));
+                new Point(1, 4)
+        );
 
-        var whitePlayerStub = new PlayerStub(Color.WHITE, input);
-        var blackPlayerStub = new PlayerStub(Color.BLACK, input);
+        CustomizableBoard board = new CustomizableBoard()
+                .popPiecesAt(Arrays.asList(12, 17, 33, 42, 44))
+                .setMultipleManAt(Arrays.asList(28, 33), Color.WHITE)
+                .setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
 
-        CustomizableBoard board = new CustomizableBoard();
-        board.popPiecesAt(Arrays.asList(12, 17, 33, 42, 44));
-        board.setMultipleManAt(Arrays.asList(28, 33), Color.WHITE);
-        board.setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
+        Game game = new Game(
+                new PlayerStub(Color.WHITE, input),
+                new PlayerStub(Color.BLACK, input));
 
-        Game game = new Game(whitePlayerStub, blackPlayerStub);
         game.loadGame(board, 1);
-
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
-
         game.playRound();
 
         String[] actualLines = fakeStandardOutput.toString()
