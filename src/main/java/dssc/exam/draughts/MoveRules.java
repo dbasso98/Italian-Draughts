@@ -6,6 +6,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MoveRules {
 
@@ -47,14 +49,14 @@ public class MoveRules {
             throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    static void throwExceptionIfTileIsNonEmpty(Board board, Point destination) throws TileException {
+    private static void throwExceptionIfTileIsNonEmpty(Board board, Point destination) throws TileException {
         Tile destinationTile = board.getTile(destination);
         if (destinationTile.isNotEmpty())
             throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
                     + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void throwExceptionIfTileIsEmpty(Board board, Point source) throws TileException {
+    private static void throwExceptionIfTileIsEmpty(Board board, Point source) throws TileException {
         Tile sourceTile = board.getTile(source);
 
         if (sourceTile.isEmpty())
@@ -77,38 +79,40 @@ public class MoveRules {
         return tilesToStartSkippingFrom;
     }
 
-    static void buildPathStartingFromKing(Board board, Tile currentTile, Path path) {
+    private static void buildPathStartingFromKing(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
             var movingDirection = colorOfSourcePiece.associatedDirection();
+            List<SkipMoveRules> forwardSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
+            List<SkipMoveRules> backwardSkipMoves = getListOfSameDirectionSkipMove(currentTile, -movingDirection);
+            List<SkipMoveRules> candidateSkipMoves = Stream.
+                    concat(forwardSkipMoves.stream(), backwardSkipMoves.stream())
+                    .collect(Collectors.toList());
 
-            var rightMove = new SkipMoveRules(currentTile, movingDirection, 1);
-            var oppositeRightMove = new SkipMoveRules(currentTile, -movingDirection, 1);
-            var leftMove = new SkipMoveRules(currentTile, movingDirection, -1);
-            var oppositeLeftMove = new SkipMoveRules(currentTile, -movingDirection, -1);
-
-            List<SkipMoveRules> candidateSkipMoves = List.of(rightMove, leftMove,
-                    oppositeLeftMove, oppositeRightMove);
             candidateSkipMoves.forEach(move -> move.evaluateIfKingCanSkip(board, colorOfSourcePiece, path));
 
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
     }
 
-    static void buildPathStartingFromMan(Board board, Tile currentTile, Path path) {
+
+    private static void buildPathStartingFromMan(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var sourcePieceColor = path.getPieceContainedInSource().getColor();
             var movingDirection = sourcePieceColor.associatedDirection();
 
-            var rightMove = new SkipMoveRules(currentTile, movingDirection, 1);
-            var leftMove = new SkipMoveRules(currentTile, movingDirection, -1);
-
-            List<SkipMoveRules> candidateSkipMoves = List.of(rightMove, leftMove);
+            List<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
             candidateSkipMoves.forEach(move -> move.evaluateIfManCanSkip(board, sourcePieceColor));
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
+    }
+
+    private static List<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction) {
+        var rightMove = new SkipMoveRules(currentTile, Direction, 1);
+        var leftMove = new SkipMoveRules(currentTile, Direction, -1);
+        return List.of(rightMove, leftMove);
     }
 
     private static void extendPathIfPossible(Board board, Path path,
