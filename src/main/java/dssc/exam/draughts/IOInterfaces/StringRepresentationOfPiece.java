@@ -1,6 +1,9 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.IOInterfaces;
 
-public class StringRepresentationOfPiece implements RepresentationOfPiece{
+import dssc.exam.draughts.Color;
+import dssc.exam.draughts.Piece;
+
+public class StringRepresentationOfPiece implements RepresentationOfPiece {
 
     private final String pieceRepresentation;
 

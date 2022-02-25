@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.StringRepresentationOfPiece;
+
 public class Piece {
     private final int id;
     private final Color pieceColor;
