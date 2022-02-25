@@ -82,24 +82,27 @@ public class TestIfGame {
 
     @Test
     void doesntAllowToMoveAnOpponentPiece() throws CannotMoveException {
-        String fakeInput = "1 6" + System.lineSeparator() +
-                "2 3" + System.lineSeparator() +
-                "3 4" + System.lineSeparator();
-        setFakeStdInput(fakeInput);
-
-        String expectedOut = "Invalid move: The piece you intend to move belongs to your opponent";
+        List<Point> fakeInputList = Arrays.asList(
+                new Point(5, 0),
+                new Point(2, 1),
+                new Point(3, 2));
 
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         Board board = new Board();
-        Game game = new Game();
+        Game game = new Game(
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
+
         game.loadGame(board, 0);
         assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
-        String actualOut = fakeStandardOutput.toString();
-        String[] actualLines = actualOut.split(System.lineSeparator());
+        String[] actualLines = fakeStandardOutput
+                .toString()
+                .split(System.lineSeparator());
 
-        assertEquals(expectedOut, actualLines[actualLines.length - 3]);
+        String expectedOut = "Invalid move: The piece you intend to move belongs to your opponent";
+        assertEquals(expectedOut, actualLines[actualLines.length - 1]);
     }
 
     @Test
@@ -127,7 +130,7 @@ public class TestIfGame {
 
     @Test
     void informsThePlayerThatCanContinueToSkip() throws Exception {
-        List<Point> input = Arrays.asList(
+        List<Point> fakeInputList = Arrays.asList(
                 new Point(5, 0),
                 new Point(3, 2),
                 new Point(1, 4)
@@ -139,8 +142,8 @@ public class TestIfGame {
                 .setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
 
         Game game = new Game(
-                new PlayerStub(Color.WHITE, input),
-                new PlayerStub(Color.BLACK, input));
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
 
         game.loadGame(board, 1);
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
