@@ -14,13 +14,13 @@ public class SkipMoveRules {
         this.columnOffset = columnOffset;
     }
 
-    public void manCanSkip(Board board, Color manColor) {
+    public void evaluateIfManCanSkip(Board board, Color manColor) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
         skipCheck = isSkipValid(manColor) && checkThatIsSkippingAMan();
     }
 
-    public void kingCanSkip(Board board, Color kingColor, Path path) {
+    public void evaluateIfKingCanSkip(Board board, Color kingColor, Path path) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
         skipCheck = tileWasNotVisitedYet(path) && isSkipValid(kingColor);
