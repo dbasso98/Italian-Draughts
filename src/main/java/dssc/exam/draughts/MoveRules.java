@@ -14,9 +14,9 @@ public class MoveRules {
         isBlackTile(board, source);
         isBlackTile(board, destination);
         isMovingInDiagonal(source, destination);
-        isItMovingByOneOrTwoTiles(source, destination);
-        MoveRules.checkTileEmptiness(board, source);
-        MoveRules.checkTileNonEmptiness(board, destination);
+        isMoveByOneOrTwoTiles(source, destination);
+        MoveRules.throwExceptionIfTileIsEmpty(board, source);
+        MoveRules.throwExceptionIfTileIsNonEmpty(board, destination);
         isCorrectDirection(board, source, destination);
     }
 
@@ -26,11 +26,12 @@ public class MoveRules {
     }
 
     private static void isCorrectDirection(Board board, Point source, Point destination) throws MoveException {
-        var colorOfSourceTile = board.getColorOfPieceAtTile(source);
-        var isSourceTileAKing = board.getPieceAtTile(source.x, source.y).isKing();
+        if (board.getPieceAtTile(source.x, source.y).isKing())
+            return;
+
+        var movingPieceColor = board.getColorOfPieceAtTile(source);
         var direction = destination.x - source.x;
-        if (!isSourceTileAKing &&
-                colorOfSourceTile.associatedDirection()*direction < 0 )
+        if (movingPieceColor.associatedDirection() * direction < 0)
             throw new MoveException("You are moving in the opposite rowOffset!");
     }
 
@@ -39,31 +40,31 @@ public class MoveRules {
             throw new MoveException("Checker can only move diagonally!");
     }
 
-    private static void isItMovingByOneOrTwoTiles(Point source, Point destination) throws MoveException {
+    private static void isMoveByOneOrTwoTiles(Point source, Point destination) throws MoveException {
         var distance = Math.abs(destination.x - source.x);
         if (distance != 1 && distance != 2)
             throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    static void checkTileNonEmptiness(Board board, Point destination) throws TileException {
-        var destinationTile = board.getTile(destination);
+    static void throwExceptionIfTileIsNonEmpty(Board board, Point destination) throws TileException {
+        Tile destinationTile = board.getTile(destination);
         if (destinationTile.isNotEmpty())
             throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
                     + "," + (destinationTile.getRow() + 1) + ") is not empty");
     }
 
-    static void checkTileEmptiness(Board board, Point source) throws TileException {
-        var sourceTile = board.getTile(source);
+    static void throwExceptionIfTileIsEmpty(Board board, Point source) throws TileException {
+        Tile sourceTile = board.getTile(source);
 
         if (sourceTile.isEmpty())
             throw new TileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
                     + "," + (sourceTile.getRow() + 1) + ") is empty");
     }
 
-    static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color color) {
-        var tilesContainingPieceOfColor = board.getTilesContainingPieceOfColor(color);
-        var tilesToStartSkippingFrom = new HashMap<Tile, Path>();
-        for (Tile tile : tilesContainingPieceOfColor) {
+    static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
+        ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
+        HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
+        for (Tile tile : tilesContainingPieceOfSameColor) {
             var skipPath = new Path(tile);
             if (tile.containsAKing())
                 buildPathStartingFromKing(board, tile, skipPath);
