@@ -59,25 +59,24 @@ public class TestIfGame {
 
     @Test
     void doesntAllowToStartMovingFromAnEmptyTile() throws CannotMoveException {
-        String fakeInput = "1 3" + System.lineSeparator() +
-                "5 4" + System.lineSeparator() +
-                "2 3" + System.lineSeparator() +
-                "3 4" + System.lineSeparator();
-        setFakeStdInput(fakeInput);
-
-        String expectedOut = "Invalid move: The first Tile you selected is empty";
+        List<Point> fakeInputList = Arrays.asList(
+                new Point(0, 2),
+                new Point(2, 1),
+                new Point(3, 2));
 
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
-
         Board board = new Board();
-        Game game = new Game();
+        Game game = new Game(
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
+
         game.loadGame(board, 0);
         assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
-        String actualOut = fakeStandardOutput.toString();
-        String[] actualLines = actualOut.split(System.lineSeparator());
+        String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
 
-        assertEquals(expectedOut, actualLines[actualLines.length - 3]);
+        String expectedOut = "Invalid move: The first Tile you selected is empty";
+        assertEquals(expectedOut, actualLines[actualLines.length - 1]);
     }
 
     @Test
@@ -86,7 +85,6 @@ public class TestIfGame {
                 new Point(5, 0),
                 new Point(2, 1),
                 new Point(3, 2));
-
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
         Board board = new Board();
@@ -96,7 +94,9 @@ public class TestIfGame {
 
         game.loadGame(board, 0);
         assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
+
         game.playRound();
+
         String[] actualLines = fakeStandardOutput
                 .toString()
                 .split(System.lineSeparator());
@@ -174,12 +174,12 @@ public class TestIfGame {
         PlayerStub(Color color, List<Point> points) {
             super(color);
             fakeReadPoints = points;
+            nextPointToReadIndex=0;
         }
 
         @Override
         Point readPosition(String message) {
             return fakeReadPoints.get(nextPointToReadIndex++);
         }
-
     }
 }
