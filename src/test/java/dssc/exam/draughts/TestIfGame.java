@@ -1,10 +1,10 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.exceptions.CannotMoveException;
+import dssc.exam.draughts.exceptions.DraughtsException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -16,11 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestIfGame {
-
-    void setFakeStdInput(String fakeInput) {
-        ByteArrayInputStream fakeStandardInput = new ByteArrayInputStream(fakeInput.getBytes());
-        System.setIn(fakeStandardInput);
-    }
 
     @Test
     void changesPlayer() {
@@ -35,12 +30,15 @@ public class TestIfGame {
     }
 
     @Test
-    void allowsToMakeAMoveAndUpdatesRoundNumber() throws CannotMoveException {
-        String fakeInput = "4 3" + System.lineSeparator() +
-                "5 4" + System.lineSeparator();
-        setFakeStdInput(fakeInput);
+    void performAMoveAndUpdatesRoundNumber() throws CannotMoveException {
+        List<Point> fakeInputList = Arrays.asList(
+                new Point(2, 3),
+                new Point(3, 4));
 
-        Game game = new Game();
+        Game game = new Game(
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
+
         Board board = new Board();
         game.loadGame(board, 0);
 
@@ -156,30 +154,50 @@ public class TestIfGame {
         assertEquals("You can continue to skip!", actualLines[21]);
     }
 
+    @Test
+    void EndGameWhenAPlayerCannotMove() {
+        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        Player blackPlayer = new Player(Color.BLACK);
+        Player whitePlayer = new Player(Color.WHITE);
+        blackPlayer.setName("Player2");
+        Game game = new GameWithPlayRoundThatThrowsCannotMoveException(
+                whitePlayer, blackPlayer);
+        game.play();
+        assertEquals("The winner is Player2" + System.lineSeparator(),
+                fakeStandardOutput.toString());
+    }
+
     private ByteArrayOutputStream getFakeStandardOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         return fakeStandardOutput;
     }
 
-    @Test
-    void HandlingCannotMoveException() {
-
-    }
-
     class PlayerStub extends Player {
+
         private static int nextPointToReadIndex = 0;
         private final List<Point> fakeReadPoints;
 
         PlayerStub(Color color, List<Point> points) {
             super(color);
             fakeReadPoints = points;
-            nextPointToReadIndex=0;
+            nextPointToReadIndex = 0;
         }
 
         @Override
         Point readPosition(String message) {
             return fakeReadPoints.get(nextPointToReadIndex++);
+        }
+    }
+
+    class GameWithPlayRoundThatThrowsCannotMoveException extends Game{
+        public GameWithPlayRoundThatThrowsCannotMoveException(Player whitePlayer, Player blackPlayer) {
+            super(whitePlayer, blackPlayer);
+        }
+
+        @Override
+        void playRound() throws CannotMoveException{
+            throw new CannotMoveException("");
         }
     }
 }
