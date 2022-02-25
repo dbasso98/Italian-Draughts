@@ -9,18 +9,18 @@ import java.util.HashMap;
 import java.util.stream.*;
 
 public class Move {
-    private Board board;
-    private Point source;
-    private Point destination;
+    private final Board board;
+    private final Point source;
+    private final Point destination;
 
-    public Move (Board board, Point source, Point destination) {
+    public Move(Board board, Point source, Point destination) {
         this.board = board;
         this.source = source;
         this.destination = destination;
     }
 
     public void moveDecider() throws DraughtsException {
-        MoveRules.checkIfPositionsAreValid(board, source, destination);
+        MoveRules.throwExceptionIfPositionsAreInvalid(board, source, destination);
         var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         var maxWeightOfCandidatePaths = getWeightOfBestPath(candidatePaths);
         var tilesWithMaxWeight = new ArrayList<>(candidatePaths.values().stream()
@@ -110,7 +110,7 @@ public class Move {
     }
 
     public void continueToSkip(ArrayList<Tile> path) throws DraughtsException {
-        MoveRules.checkIfPositionsAreValid(board, source, destination);
+        MoveRules.throwExceptionIfPositionsAreInvalid(board, source, destination);
         if (path.stream().map(Tile::getPosition).collect(Collectors.toList()).contains(destination))
             skipMove();
         else

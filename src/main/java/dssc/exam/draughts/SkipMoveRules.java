@@ -14,23 +14,22 @@ public class SkipMoveRules {
         this.columnOffset = columnOffset;
     }
 
-    public void manDiagonalCheck(Board board, Color manColor) {
+    public void manCanSkip(Board board, Color manColor) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        skipCheck = canSkip(manColor) && checkThatIsSkippingAMan();
+        skipCheck = isSkipValid(manColor) && checkThatIsSkippingAMan();
     }
 
-    public void kingDiagonalCheck(Board board, Color kingColor, Path path) {
+    public void kingCanSkip(Board board, Color kingColor, Path path) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        skipCheck = tileWasNotVisitedYet(path) && canSkip(kingColor);
+        skipCheck = tileWasNotVisitedYet(path) && isSkipValid(kingColor);
     }
 
-    private boolean canSkip(Color color) {
-        return isTileInsideTheBoard(firstDiagonalTile) &&
-                isTileInsideTheBoard(secondDiagonalTile) &&
+    private boolean isSkipValid(Color movingPieceColor) {
+        return isTileInsideTheBoard(secondDiagonalTile) &&
                 firstDiagonalTile.isNotEmpty() &&
-                firstDiagonalTile.getPiece().getColor() != color &&
+                firstDiagonalTile.getPiece().getColor() != movingPieceColor &&
                 secondDiagonalTile.isEmpty();
     }
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MoveRules {
 
-    public static boolean checkIfPositionsAreValid(Board board, Point source, Point destination) throws DraughtsException {
+    public static void throwExceptionIfPositionsAreInvalid(Board board, Point source, Point destination) throws DraughtsException {
         if (!(board.isPositionInsideTheBoard(source) || board.isPositionInsideTheBoard(destination)))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         isBlackTile(board, source);
@@ -18,7 +18,6 @@ public class MoveRules {
         MoveRules.checkTileEmptiness(board, source);
         MoveRules.checkTileNonEmptiness(board, destination);
         isCorrectDirection(board, source, destination);
-        return true;
     }
 
     private static void isBlackTile(Board board, Point position) throws TileException {
@@ -82,13 +81,13 @@ public class MoveRules {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
             var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
-            rightDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
+            rightDiagonalMove.kingCanSkip(board, colorOfSourcePiece, path);
             var oppositeRightDiagonalMove = new SkipMoveRules(currentTile, -1 * movingDirection, 1);
-            oppositeRightDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
+            oppositeRightDiagonalMove.kingCanSkip(board, colorOfSourcePiece, path);
             var leftDiagonalMove = new SkipMoveRules(currentTile, movingDirection, -1);
-            leftDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
+            leftDiagonalMove.kingCanSkip(board, colorOfSourcePiece, path);
             var oppositeLeftDiagonalMove = new SkipMoveRules(currentTile, -1 * movingDirection, -1);
-            oppositeLeftDiagonalMove.kingDiagonalCheck(board, colorOfSourcePiece, path);
+            oppositeLeftDiagonalMove.kingCanSkip(board, colorOfSourcePiece, path);
             if (rightDiagonalMove.getSkipCheck() || leftDiagonalMove.getSkipCheck() ||
                 oppositeRightDiagonalMove.getSkipCheck() || oppositeLeftDiagonalMove.getSkipCheck()) {
                 var candidatesPaths = new ArrayList<Path>();
@@ -111,9 +110,9 @@ public class MoveRules {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
             var movingDirection = colorOfSourcePiece.associatedDirection();
             var rightDiagonalMove = new SkipMoveRules(currentTile, movingDirection, 1);
-            rightDiagonalMove.manDiagonalCheck(board, colorOfSourcePiece);
+            rightDiagonalMove.manCanSkip(board, colorOfSourcePiece);
             var leftDiagonalMove = new SkipMoveRules(currentTile, movingDirection, -1);
-            leftDiagonalMove.manDiagonalCheck(board, colorOfSourcePiece);
+            leftDiagonalMove.manCanSkip(board, colorOfSourcePiece);
             if (rightDiagonalMove.getSkipCheck() || leftDiagonalMove.getSkipCheck()) {
                 var candidatesPaths = new ArrayList<Path>();
                 if (leftDiagonalMove.getSkipCheck())

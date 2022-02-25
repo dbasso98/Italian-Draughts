@@ -113,10 +113,9 @@ public class Board {
         return getPieceAtTile(position.x, position.y).getColor();
     }
 
-    public Tile getTileInDiagonalOffset(Tile tile, int offset1, int offset2) {
-        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset1, tile.getColumn() + offset2))
-            return getTile(tile.getRow() + offset1, tile.getColumn() + offset2);
-        else
-            return null;
+    public Tile getTileInDiagonalOffset(Tile tile, int rowOffset, int colOffset) {
+        if (tile != null && isPositionInsideTheBoard(tile.getRow() + rowOffset, tile.getColumn() + colOffset))
+            return getTile(tile.getRow() + rowOffset, tile.getColumn() + colOffset);
+        return null;
     }
 }
