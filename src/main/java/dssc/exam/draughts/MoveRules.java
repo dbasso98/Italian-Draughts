@@ -1,7 +1,5 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.exceptions.*;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
