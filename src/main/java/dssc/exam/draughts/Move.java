@@ -21,7 +21,7 @@ public class Move {
 
     public void moveDecider() throws DraughtsException {
         new MoveValidator(board, source, destination).throwExceptionIfPositionsAreInvalid();
-        var candidatePaths = MoveRules.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
+        var candidatePaths = CandidateSkipPathBuilder.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
         var maxWeightOfCandidatePaths = getWeightOfBestPath(candidatePaths);
         var tilesWithMaxWeight = new ArrayList<>(candidatePaths.values().stream()
                                                                     .filter(entry -> entry.getWeight() == maxWeightOfCandidatePaths)

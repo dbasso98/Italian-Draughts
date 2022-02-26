@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class MoveRules {
+public class CandidateSkipPathBuilder {
 
     static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
