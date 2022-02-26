@@ -31,17 +31,14 @@ public class TestIfPiece {
         assertTrue(piece.isKing());
     }
 
-    private static final String piece =  "Piece{" +
-            ", color=" + "BLACK" +
-            ", isKing=" + false +
-            "}" + System.lineSeparator();
+    private static final String piece =  "[b]" + System.lineSeparator();
 
     @Test
     void printsToStdOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         var fakePiece = new Piece(Color.BLACK);
-        System.out.println(fakePiece);
+        System.out.println(fakePiece.display());
 
         assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());
     }

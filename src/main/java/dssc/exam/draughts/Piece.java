@@ -30,13 +30,6 @@ public class Piece {
         return this.pieceColor;
     }
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                ", color=" + pieceColor +
-                ", isKing=" + isKing +
-                '}';
-    }
 
     public String display() {
         return representation.getPieceRepresentation();
