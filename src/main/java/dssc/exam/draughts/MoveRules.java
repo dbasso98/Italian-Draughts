@@ -81,18 +81,18 @@ public class MoveRules {
             var sourcePieceColor = path.getPieceContainedInSource().getColor();
             var movingDirection = sourcePieceColor.associatedDirection();
 
-            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
+            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection, board);
             if (path.startsFromKing()) {
-                candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection));
+                candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection, board));
             }
-            candidateSkipMoves.forEach(move -> move.evaluateIfCanSkip(board, path));
+            candidateSkipMoves.forEach(move -> move.evaluateIfCanSkip(path));
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
     }
 
-    private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction) {
-        var rightMove = new SkipMoveRules(currentTile, Direction, 1);
-        var leftMove = new SkipMoveRules(currentTile, Direction, -1);
+    private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction, Board board) {
+        var rightMove = new SkipMoveRules(currentTile, new Point(Direction, 1), board);
+        var leftMove = new SkipMoveRules(currentTile, new Point(Direction, -1), board);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
 
     }

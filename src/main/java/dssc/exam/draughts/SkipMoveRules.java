@@ -1,39 +1,38 @@
 package dssc.exam.draughts;
 
+import java.awt.*;
+
 public class SkipMoveRules {
     private final Tile sourceTile;
-    private final int rowOffset;
-    private final int columnOffset;
+    private final Point offset;
     private Tile firstDiagonalTile;
     private Tile secondDiagonalTile;
     private boolean skipCheck;
 
-    SkipMoveRules(Tile source, int rowOffset, int columnOffset) {
+    SkipMoveRules(Tile source, Point offset, Board board) {
         sourceTile = source;
-        this.rowOffset = rowOffset;
-        this.columnOffset = columnOffset;
+        this.offset = offset;
+        evaluateFirstAndSecondDiagonalTile(board);
     }
 
-    void evaluateIfCanSkip(Board board, Path path) {
+    void evaluateIfCanSkip(Path path) {
         if (path.startsFromKing()) {
-            evaluateIfKingCanSkip(board, path);
+            evaluateIfKingCanSkip(path);
             return;
         }
-        evaluateIfManCanSkip(board, path);
+        evaluateIfManCanSkip(path);
     }
 
-    private void evaluateIfManCanSkip(Board board, Path path) {
-        evaluateFirstAndSecondDiagonalTile(board);
+    private void evaluateIfManCanSkip(Path path) {
         skipCheck = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
     }
 
     private void evaluateFirstAndSecondDiagonalTile(Board board) {
-        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
-        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
+        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, offset);
+        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, offset);
     }
 
-    private void evaluateIfKingCanSkip(Board board, Path path) {
-        evaluateFirstAndSecondDiagonalTile(board);
+    private void evaluateIfKingCanSkip(Path path) {
         skipCheck = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
     }
 
