@@ -11,56 +11,7 @@ import java.util.List;
 public class MoveRules {
 
     public static void throwExceptionIfPositionsAreInvalid(Board board, Point source, Point destination) throws DraughtsException {
-        if (!(board.isPositionInsideTheBoard(source) || board.isPositionInsideTheBoard(destination)))
-            throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
-        isBlackTile(board, source);
-        isBlackTile(board, destination);
-        isMovingInDiagonal(source, destination);
-        isMoveByOneOrTwoTiles(source, destination);
-        MoveRules.throwExceptionIfTileIsEmpty(board, source);
-        MoveRules.throwExceptionIfTileIsNonEmpty(board, destination);
-        isCorrectDirection(board, source, destination);
-    }
-
-    private static void isBlackTile(Board board, Point position) throws TileException {
-        if (board.getTile(position).isWhite())
-            throw new TileException("Cannot play on white tiles, only black ones, please change position!");
-    }
-
-    private static void isCorrectDirection(Board board, Point source, Point destination) throws MoveException {
-        if (board.getPieceAtTile(source.x, source.y).isKing())
-            return;
-
-        var movingPieceColor = board.getColorOfPieceAtTile(source);
-        var direction = destination.x - source.x;
-        if (movingPieceColor.associatedDirection() * direction < 0)
-            throw new MoveException("You are moving in the opposite rowOffset!");
-    }
-
-    private static void isMovingInDiagonal(Point source, Point destination) throws MoveException {
-        if (Math.abs(destination.x - source.x) != Math.abs(destination.y - source.y))
-            throw new MoveException("Checker can only move diagonally!");
-    }
-
-    private static void isMoveByOneOrTwoTiles(Point source, Point destination) throws MoveException {
-        var distance = Math.abs(destination.x - source.x);
-        if (distance != 1 && distance != 2)
-            throw new MoveException(("Checker can move only by one or two tiles!"));
-    }
-
-    private static void throwExceptionIfTileIsNonEmpty(Board board, Point destination) throws TileException {
-        Tile destinationTile = board.getTile(destination);
-        if (destinationTile.isNotEmpty())
-            throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
-                    + "," + (destinationTile.getRow() + 1) + ") is not empty");
-    }
-
-    private static void throwExceptionIfTileIsEmpty(Board board, Point source) throws TileException {
-        Tile sourceTile = board.getTile(source);
-
-        if (sourceTile.isEmpty())
-            throw new TileException("Cannot move since tile at (" + (sourceTile.getColumn() + 1)
-                    + "," + (sourceTile.getRow() + 1) + ") is empty");
+        new MoveValidator(board, source, destination).throwExceptionIfPositionsAreInvalid();
     }
 
     static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
@@ -78,8 +29,7 @@ public class MoveRules {
     private static void buildPath(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
-            var sourcePieceColor = path.getPieceContainedInSource().getColor();
-            var movingDirection = sourcePieceColor.associatedDirection();
+            var movingDirection = path.getSourceColor().associatedDirection();
 
             ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection, board);
             if (path.startsFromKing()) {
@@ -94,7 +44,6 @@ public class MoveRules {
         var rightMove = new SkipMoveRules(currentTile, new Point(Direction, 1), board);
         var leftMove = new SkipMoveRules(currentTile, new Point(Direction, -1), board);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
-
     }
 
     private static void extendPathIfPossible(Board board, Path path,
