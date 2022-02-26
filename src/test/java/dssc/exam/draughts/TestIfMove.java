@@ -42,8 +42,8 @@ public class TestIfMove {
     @Test
     void updatesManToKingWhenLastRowIsReached() throws Exception {
         var board = new Board();
-        new Move(board, new Point(2,1), new Point(7,7)).doADiagonalMove();
-        assertTrue(board.getPieceAtTile(7,7).isKing());
+        new Move(board, new Point(2, 1), new Point(7, 7)).doASimpleMove();
+        assertTrue(board.getPieceAtTile(7, 7).isKing());
     }
 
     @Test

@@ -31,14 +31,14 @@ public class Move {
 
     private void doTheMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> maxWeightTiles) throws DraughtsException {
         if (isASimpleMove())
-            doASimpleMove(candidatePaths, maxWeightTiles);
+            doASimpleMoveIfPossible(candidatePaths, maxWeightTiles);
         else if (isASkipMove())
-            doASkipMove(candidatePaths, maxWeightTiles, getTilesWithKingsAmongMaxWeightTiles(maxWeightTiles));
+            doASkipMove(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
         else
             throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
     }
 
-    private ArrayList<Tile> getTilesWithKingsAmongMaxWeightTiles(ArrayList<Tile> tilesWithMaxWeight) {
+    private ArrayList<Tile> getMaxWeightTilesWithKing(ArrayList<Tile> tilesWithMaxWeight) {
         return new ArrayList<>(tilesWithMaxWeight.stream()
                 .filter(Tile::containsAKing)
                 .collect(Collectors.toList()));
@@ -54,10 +54,10 @@ public class Move {
     private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
         if (candidateTiles.isEmpty())
             return 0;
-        else
-            return Collections.max(candidateTiles.values().stream()
-                    .map(path -> path.getWeight())
-                    .collect(Collectors.toList()));
+
+        return Collections.max(candidateTiles.values().stream()
+                .map(path -> path.getWeight())
+                .collect(Collectors.toList()));
     }
 
     private boolean isASimpleMove() {
@@ -68,15 +68,15 @@ public class Move {
         return Math.abs(destination.x - source.x) == 2;
     }
 
-    private void doASimpleMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> tilesWithMaxWeight) throws DraughtsException {
-        if (candidatePaths.isEmpty())
-            doADiagonalMove();
-        else
+    private void doASimpleMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> tilesWithMaxWeight) throws DraughtsException {
+        if (!candidatePaths.isEmpty()) {
             throw new MoveException("There are pieces that must capture, try these positions:"
                     + printPositionsOfTiles(tilesWithMaxWeight));
+        }
+        doASimpleMove();
     }
 
-    void doADiagonalMove() {
+    void doASimpleMove() {
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile.getPiece(), destinationTile.getRow());
     }
@@ -98,24 +98,24 @@ public class Move {
     }
 
     private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
-                             ArrayList<Tile> tilesContainingKingsAmongTilesWithMaxWeight) throws DraughtsException {
-        if (bestSourceTiles.contains(sourceTile)) {
-            doTheBestSkip(tilesContainingKingsAmongTilesWithMaxWeight);
-            canContinueToSkip(candidatePaths);
-        } else
+                             ArrayList<Tile> MaxWeightTilesWithKing) throws DraughtsException {
+        if (!bestSourceTiles.contains(sourceTile)) {
             throw new MoveException("You can select a better skip! Choose one of the tiles at these positions:"
                     + printPositionsOfTiles(bestSourceTiles));
+        }
+        doTheBestSkip(MaxWeightTilesWithKing);
+        throwIncompleteMoveIfContinueToSkip(candidatePaths);
     }
 
-    private void doTheBestSkip(ArrayList<Tile> tilesContainingKingsAmongTilesWithMaxWeight) throws DraughtsException {
-        if (tilesContainingKingsAmongTilesWithMaxWeight.isEmpty() || sourceTile.containsAKing())
-            skipMove();
-        else
+    private void doTheBestSkip(ArrayList<Tile> MaxWeightTilesWithKing) throws DraughtsException {
+        if (!MaxWeightTilesWithKing.isEmpty() && !sourceTile.containsAKing())
             throw new MoveException("You should skip with a King instead of a Man! Choose one of these positions:"
-                    + printPositionsOfTiles(tilesContainingKingsAmongTilesWithMaxWeight));
+                    + printPositionsOfTiles(MaxWeightTilesWithKing));
+        skipMove();
+
     }
 
-    private void canContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
+    private void throwIncompleteMoveIfContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
         if (candidatePaths.get(sourceTile).getWeight() > 18) // clarify
             throw new IncompleteMoveException("You can continue to skip!", destination, candidatePaths.get(board.getTile(source)));
     }
@@ -134,7 +134,7 @@ public class Move {
             throw new TileException("Skip move over an empty tile is not accepted");
         if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
             throw new MoveException("Color of piece to skip cannot be the same as source piece");
-        doADiagonalMove();
+        doASimpleMove();
         middleTile.popPiece();
     }
 
