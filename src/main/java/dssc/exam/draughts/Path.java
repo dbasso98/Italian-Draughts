@@ -53,4 +53,8 @@ public class Path {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    public boolean startsFromKing() {
+        return getPieceContainedInSource().isKing();
+    }
 }

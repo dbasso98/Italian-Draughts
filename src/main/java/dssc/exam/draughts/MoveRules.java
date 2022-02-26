@@ -71,38 +71,31 @@ public class MoveRules {
         for (Tile tile : tilesContainingPieceOfSameColor) {
             var skipPath = new Path(tile);
             if (tile.containsAKing())
-                buildPathStartingFromKing(board, tile, skipPath);
+                buildPath(board, tile, skipPath);
+//                buildPathStartingFromKing(board, tile, skipPath);
             else
-                buildPathStartingFromMan(board, tile, skipPath);
+                buildPath(board, tile, skipPath);
+//                buildPathStartingFromMan(board, tile, skipPath);
             if (skipPath.getWeight() > 0)
                 tilesToStartSkippingFrom.put(tile, skipPath);
         }
         return tilesToStartSkippingFrom;
     }
 
-    private static void buildPathStartingFromKing(Board board, Tile currentTile, Path path) {
-        path.addTile(currentTile);
-        if (path.getNumberOfSkips() < 3) {
-            var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
-            var movingDirection = colorOfSourcePiece.associatedDirection();
-
-            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
-            candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection));
-            candidateSkipMoves.forEach(move -> move.evaluateIfKingCanSkip(board, colorOfSourcePiece, path));
-
-            extendPathIfPossible(board, path, candidateSkipMoves);
-        }
-    }
-
-
-    private static void buildPathStartingFromMan(Board board, Tile currentTile, Path path) {
+    private static void buildPath(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var sourcePieceColor = path.getPieceContainedInSource().getColor();
             var movingDirection = sourcePieceColor.associatedDirection();
 
-            List<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
-            candidateSkipMoves.forEach(move -> move.evaluateIfManCanSkip(board, sourcePieceColor));
+            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
+            if (path.startsFromKing()) {
+                candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection));
+                candidateSkipMoves.forEach(move -> move.evaluateIfKingCanSkip(board, sourcePieceColor, path));
+            } else {
+                candidateSkipMoves.forEach(move -> move.evaluateIfManCanSkip(board, sourcePieceColor));
+            }
+
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
     }
@@ -132,12 +125,14 @@ public class MoveRules {
 
     private static void continueToBuildPath(Board board, Path path, SkipMoveRules diagonalMove, ArrayList<Path> candidatesPaths) {
         var nextPath = Path.copy(path);
-        if (path.getSource().containsAKing()) {
+        if (path.startsFromKing()) {
             nextPath.setWeight(getCurrentWeight(path.getNumberOfSkips(), diagonalMove.getFirstTile().containsAKing()));
-            buildPathStartingFromKing(board, diagonalMove.getSecondTile(), nextPath);
+            buildPath(board, diagonalMove.getSecondTile(), nextPath);
+//            buildPathStartingFromKing(board, diagonalMove.getSecondTile(), nextPath);
         } else {
             nextPath.setWeight(10 * (path.getNumberOfSkips() + 1));
-            buildPathStartingFromMan(board, diagonalMove.getSecondTile(), nextPath);
+            buildPath(board, diagonalMove.getSecondTile(), nextPath);
+//            buildPathStartingFromMan(board, diagonalMove.getSecondTile(), nextPath);
         }
         candidatesPaths.add(nextPath);
     }
