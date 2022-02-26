@@ -10,10 +10,6 @@ import java.util.List;
 
 public class MoveRules {
 
-    public static void throwExceptionIfPositionsAreInvalid(Board board, Point source, Point destination) throws DraughtsException {
-        new MoveValidator(board, source, destination).throwExceptionIfPositionsAreInvalid();
-    }
-
     static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();

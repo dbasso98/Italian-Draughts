@@ -20,7 +20,8 @@ public class TestIfMoveRules {
     @Property
     void throwsInvalidPositionException(@ForAll("invalidIndexGenerator") int sourceRow, @ForAll("invalidIndexGenerator") int sourceCol,
                                         @ForAll("invalidIndexGenerator") int destinationRow, @ForAll("invalidIndexGenerator") int destinationCol) {
-        Exception exception = assertThrows(IndexException.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+        MoveValidator moveValidator = new MoveValidator(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol));
+        Exception exception = assertThrows(IndexException.class, moveValidator::throwExceptionIfPositionsAreInvalid);
         assertEquals("Position is not valid! Index must be between 1 and 8 for each axis!", exception.getMessage());
     }
 
@@ -32,15 +33,17 @@ public class TestIfMoveRules {
     @ParameterizedTest
     @CsvSource({"0,0,1,1", "3,3,4,4", "5,5,6,6", "0,2,1,3"})
     void throwsInvalidTileException(int sourceRow, int sourceCol, int destinationRow, int destinationCol) {
-        Exception exception = assertThrows(TileException.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol)));
+        MoveValidator moveValidator = new MoveValidator(board, new Point(sourceRow, sourceCol), new Point(destinationRow, destinationCol));
+        Exception exception = assertThrows(TileException.class, moveValidator::throwExceptionIfPositionsAreInvalid);
         assertEquals("Cannot play on white tiles, only black ones, please change position!", exception.getMessage());
     }
 
     @Property
     void checksDiagonalPosition(@ForAll("subSquareGenerator") int row, @ForAll("subSquareGenerator") int column, @ForAll("offset") Integer[] offset) {
         if (checkIfTileIsBlack(row, column) && checkIfTileIsBlack(row + offset[0], column + offset[1])) {
-            Exception exception = assertThrows(MoveException.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(board, new Point(row, column),
-                    new Point(row + offset[0], column + offset[1])));
+            MoveValidator moveValidator = new MoveValidator(board, new Point(row, column),
+                    new Point(row + offset[0], column + offset[1]));
+            Exception exception = assertThrows(MoveException.class, moveValidator::throwExceptionIfPositionsAreInvalid);
             assertEquals("Checker can only move diagonally!", exception.getMessage());
         }
     }
@@ -60,7 +63,8 @@ public class TestIfMoveRules {
     void throwsErrorIfSamePosition(@ForAll("validIndexGenerator") int row, @ForAll("validIndexGenerator") int column) {
         Board board = new Board();
         if (checkIfTileIsBlack(row, column)) {
-            Exception exception = assertThrows(MoveException.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(board, new Point(row, column), new Point(row, column)));
+            MoveValidator moveValidator = new MoveValidator(board, new Point(row, column), new Point(row, column));
+            Exception exception = assertThrows(MoveException.class, moveValidator::throwExceptionIfPositionsAreInvalid);
             assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
         }
     }
@@ -112,7 +116,8 @@ public class TestIfMoveRules {
     @Test
     void allowsToMoveOnlyByOneOrTwoTiles() {
         var newBoard = new Board();
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(newBoard, new Point(2, 1), new Point(6, 5)));
+        MoveValidator moveValidator = new MoveValidator(newBoard, new Point(2, 1), new Point(6, 5));
+        Exception exception = assertThrows(Exception.class, moveValidator::throwExceptionIfPositionsAreInvalid);
         assertEquals("Checker can move only by one or two tiles!", exception.getMessage());
     }
 
@@ -120,7 +125,8 @@ public class TestIfMoveRules {
     void checksForCorrectDirectionOfAPiece() {
         var newBoard = new Board();
         newBoard.getTile(1, 0).popPiece();
-        Exception exception = assertThrows(Exception.class, () -> MoveRules.throwExceptionIfPositionsAreInvalid(newBoard, new Point(2, 1), new Point(1, 0)));
+        MoveValidator moveValidator = new MoveValidator(newBoard, new Point(2, 1), new Point(1, 0));
+        Exception exception = assertThrows(Exception.class, moveValidator::throwExceptionIfPositionsAreInvalid);
         assertEquals("You are moving in the opposite rowOffset!", exception.getMessage());
     }
 

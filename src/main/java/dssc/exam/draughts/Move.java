@@ -110,7 +110,7 @@ public class Move {
     }
 
     public void continueToSkip(ArrayList<Tile> path) throws DraughtsException {
-        MoveRules.throwExceptionIfPositionsAreInvalid(board, source, destination);
+        new MoveValidator(board, source, destination).throwExceptionIfPositionsAreInvalid();
         if (path.stream().map(Tile::getPosition).collect(Collectors.toList()).contains(destination))
             skipMove();
         else
