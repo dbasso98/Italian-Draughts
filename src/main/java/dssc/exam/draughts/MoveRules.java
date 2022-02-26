@@ -4,6 +4,7 @@ import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,12 +85,9 @@ public class MoveRules {
         if (path.getNumberOfSkips() < 3) {
             var colorOfSourcePiece = path.getPieceContainedInSource().getColor();
             var movingDirection = colorOfSourcePiece.associatedDirection();
-            List<SkipMoveRules> forwardSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
-            List<SkipMoveRules> backwardSkipMoves = getListOfSameDirectionSkipMove(currentTile, -movingDirection);
-            List<SkipMoveRules> candidateSkipMoves = Stream.
-                    concat(forwardSkipMoves.stream(), backwardSkipMoves.stream())
-                    .collect(Collectors.toList());
 
+            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
+            candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection));
             candidateSkipMoves.forEach(move -> move.evaluateIfKingCanSkip(board, colorOfSourcePiece, path));
 
             extendPathIfPossible(board, path, candidateSkipMoves);
@@ -109,10 +107,12 @@ public class MoveRules {
         }
     }
 
-    private static List<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction) {
+    private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction) {
         var rightMove = new SkipMoveRules(currentTile, Direction, 1);
         var leftMove = new SkipMoveRules(currentTile, Direction, -1);
-        return List.of(rightMove, leftMove);
+//        return List.of(rightMove, leftMove);
+        return new ArrayList<>(Arrays.asList(rightMove, leftMove));
+
     }
 
     private static void extendPathIfPossible(Board board, Path path,
