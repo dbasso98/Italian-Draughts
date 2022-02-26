@@ -23,14 +23,17 @@ public class SkipMoveRules {
     }
 
     private void evaluateIfManCanSkip(Board board, Path path) {
-        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
-        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
+        evaluateFirstAndSecondDiagonalTile(board);
         skipCheck = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
     }
 
-    private void evaluateIfKingCanSkip(Board board, Path path) {
+    private void evaluateFirstAndSecondDiagonalTile(Board board) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
+    }
+
+    private void evaluateIfKingCanSkip(Board board, Path path) {
+        evaluateFirstAndSecondDiagonalTile(board);
         skipCheck = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
     }
 
