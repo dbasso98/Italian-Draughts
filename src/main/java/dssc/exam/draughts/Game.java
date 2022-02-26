@@ -6,6 +6,7 @@ import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
     private final Player whitePlayer;
@@ -29,6 +30,7 @@ public class Game {
             try {
                 playRound();
             } catch (CannotMoveException exception) {
+                System.out.println(exception.getMessage());
                 break;
             }
         }
@@ -56,9 +58,42 @@ public class Game {
 
     void playRound() throws CannotMoveException {
         out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
+        throwExceptionIfCannotMakeAtLeastOneMove();
         readAndPerformMove();
         changePlayer();
         ++round;
+    }
+
+    private void throwExceptionIfCannotMakeAtLeastOneMove() throws CannotMoveException {
+        var canNotMakeASkip = CandidateSkipPathBuilder.build(board, currentPlayer.getColor()).isEmpty();
+        var canNotMakeASimpleMove = CanNotMakeASimpleMove(currentPlayer.getColor().associatedDirection());
+        if (canNotMakeASkip && canNotMakeASimpleMove)
+            throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
+    }
+
+    private boolean CanNotMakeASimpleMove(int movingDirection) {
+        ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(currentPlayer.getColor());
+        var assertCanDoASimpleMove = new ArrayList<Boolean>();
+        for (var tile : tilesContainingPieceOfSameColor) {
+            canDoAtLeastASimpleMove(assertCanDoASimpleMove, movingDirection, tile);
+        }
+        return assertCanDoASimpleMove.stream().allMatch(check -> check.equals(false));
+    }
+
+    private void canDoAtLeastASimpleMove(ArrayList<Boolean> assertCanDoASimpleMove, int movingDirection, Tile tile) {
+        ArrayList<SimpleMoveRules> candidateSimpleMoves = getListOfSameDirectionMove(tile, movingDirection, board);
+        if (tile.containsAKing())
+            candidateSimpleMoves.addAll(getListOfSameDirectionMove(tile, -movingDirection, board));
+        candidateSimpleMoves.forEach(move -> move.evaluateIfCanSimplyMove());
+        assertCanDoASimpleMove.add(candidateSimpleMoves.stream()
+                    .map(simpleMove -> simpleMove.canSimplyMove())
+                    .reduce(false, (firstMove, secondMove) -> firstMove || secondMove));
+    }
+
+    private ArrayList<SimpleMoveRules> getListOfSameDirectionMove(Tile currentTile, int direction, Board board) {
+        var rightMove = new SimpleMoveRules(currentTile, new Point(direction, 1), board);
+        var leftMove = new SimpleMoveRules(currentTile, new Point(direction, -1), board);
+        return new ArrayList<>(Arrays.asList(rightMove, leftMove));
     }
 
     private void readAndPerformMove() throws CannotMoveException {

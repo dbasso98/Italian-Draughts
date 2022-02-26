@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
 import dssc.exam.draughts.exceptions.CannotMoveException;
 import dssc.exam.draughts.exceptions.DraughtsException;
 import org.junit.jupiter.api.Test;
@@ -156,15 +157,32 @@ public class TestIfGame {
 
     @Test
     void EndGameWhenAPlayerCannotMove() {
+        CustomizableBoard board = new CustomizableBoard();
+
+        board.popPiecesAt(Stream.iterate(1, n -> n + 1)
+                .limit(board.getSize() - 1)
+                .collect(Collectors.toList()));
+        board.setManAtTile(0,1, Color.WHITE);
+        board.setManAtTile(1,0, Color.BLACK);
+        board.setKingAtTile(1,2, Color.BLACK);
+
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
-        Player blackPlayer = new Player(Color.BLACK);
+
         Player whitePlayer = new Player(Color.WHITE);
-        blackPlayer.setName("Player2");
-        Game game = new GameWithPlayRoundThatThrowsCannotMoveException(
-                whitePlayer, blackPlayer);
+        Player blackPlayer = new Player(Color.BLACK);
+
+        whitePlayer.setName("Player 1");
+        blackPlayer.setName("Player 2");
+
+        Game game = new Game(whitePlayer, blackPlayer);
+        game.loadGame(board,0);
         game.play();
-        assertEquals("The winner is Player2" + System.lineSeparator(),
-                fakeStandardOutput.toString());
+
+        String[] actualLines = fakeStandardOutput.toString()
+                .split(System.lineSeparator());
+        assertEquals("Cannot perform any move!", actualLines[11]);
+        assertEquals("*******GAME OVER*******", actualLines[12]);
+        assertEquals("The winner is Player 2", actualLines[13]);
     }
 
     private ByteArrayOutputStream getFakeStandardOutput() {
@@ -187,17 +205,6 @@ public class TestIfGame {
         @Override
         Point readPosition(String message) {
             return fakeReadPoints.get(nextPointToReadIndex++);
-        }
-    }
-
-    class GameWithPlayRoundThatThrowsCannotMoveException extends Game{
-        public GameWithPlayRoundThatThrowsCannotMoveException(Player whitePlayer, Player blackPlayer) {
-            super(whitePlayer, blackPlayer);
-        }
-
-        @Override
-        void playRound() throws CannotMoveException{
-            throw new CannotMoveException("");
         }
     }
 }
