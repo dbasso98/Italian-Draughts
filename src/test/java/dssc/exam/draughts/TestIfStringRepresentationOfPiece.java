@@ -2,32 +2,46 @@ package dssc.exam.draughts;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestIfStringRepresentationOfPiece {
+    ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+
+
     @Test
     void displayBlackMan(){
+        System.setOut(new PrintStream(fakeStandardOutput));
         Piece blackMan = new Piece(Color.BLACK);
-        assertEquals("[b]", blackMan.display());
+        blackMan.display();
+        assertEquals("[b]", fakeStandardOutput.toString());
     }
 
     @Test
     void displayWhiteMan(){
+        System.setOut(new PrintStream(fakeStandardOutput));
         Piece whiteMan = new Piece(Color.WHITE);
-        assertEquals("[w]", whiteMan.display());
+        whiteMan.display();
+        assertEquals("[w]", fakeStandardOutput.toString());
     }
 
     @Test
     void displayBlackKing(){
+        System.setOut(new PrintStream(fakeStandardOutput));
         Piece blackKing = new Piece(Color.BLACK);
         blackKing.upgradeToKing();
-        assertEquals("[B]", blackKing.display() );
+        blackKing.display();
+        assertEquals("[B]", fakeStandardOutput.toString() );
     }
 
     @Test
     void displayWhiteKing(){
+        System.setOut(new PrintStream(fakeStandardOutput));
         Piece whiteKing = new Piece(Color.WHITE);
         whiteKing.upgradeToKing();
-        assertEquals("[W]", whiteKing.display() );
+        whiteKing.display();
+        assertEquals("[W]", fakeStandardOutput.toString());
     }
 }

@@ -1,25 +1,18 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.IOInterfaces.StringRepresentationOfPiece;
+import dssc.exam.draughts.display.DisplayPiece;
 
 public class Piece {
     private final Color pieceColor;
     private boolean isKing;
-    private StringRepresentationOfPiece representation;
 
     public Piece(Color pieceColor) {
         this.pieceColor = pieceColor;
         this.isKing = false;
-        this.representation = StringRepresentationOfPiece.representation(this);
     }
 
     public void upgradeToKing() {
         this.isKing = true;
-        updateRepresentation();
-    }
-
-    private void updateRepresentation() {
-        this.representation = StringRepresentationOfPiece.representation(this);
     }
 
     public boolean isKing() {
@@ -31,7 +24,7 @@ public class Piece {
     }
 
 
-    public String display() {
-        return representation.getPieceRepresentation();
+    public void display() {
+        new DisplayPiece().display(this);
     }
 }

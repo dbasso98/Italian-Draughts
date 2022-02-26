@@ -66,10 +66,10 @@ public class Tile {
         return getPiece().isKing();
     }
 
-    public String display() {
+    public void display() {
         if (isEmpty()) {
-            return "[ ]";
+            System.out.println("[ ]");
         }
-        return piece.display();
+        piece.display();
     }
 }

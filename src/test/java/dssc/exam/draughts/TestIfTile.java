@@ -1,6 +1,5 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.display.DisplayTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,21 +34,5 @@ public class TestIfTile {
     @Test
     void isNotEmptyIfPieceIsSetOnIt() {
         assertFalse(blackTileBlackMan.isEmpty());
-    }
-
-    @Test
-    void correctlyDisplaysEmptyTile(){
-        assertEquals("[ ]", DisplayTile.display(emptyTile));
-    }
-
-    @Test
-    void correctlyDisplaysTileOnceBlackPieceIsSetOnIt(){
-        assertEquals("[b]", blackTileBlackMan.display());
-    }
-
-    @Test
-    void correctlyDisplaysTileOnceBlackKingIsPlacedOnIt(){
-        blackTileBlackMan.getPiece().upgradeToKing();
-        assertEquals("[B]", blackTileBlackMan.display());
     }
 }

@@ -1,7 +1,7 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.IOInterfaces.OutInterface;
-import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
+import dssc.exam.draughts.display.DisplayBoard;
+import dssc.exam.draughts.display.DisplayPlayer;
 import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
@@ -13,7 +13,9 @@ public class Game {
     private Player currentPlayer;
     private Board board = new Board();
     private int round = 0;
-    private final OutInterface out;
+    private DisplayPlayer displayPlayer;
+    private DisplayBoard displayBoard;
+
 
     void loadGame(Board board, int round) {
         this.board = board;
@@ -33,7 +35,7 @@ public class Game {
             }
         }
         changePlayer();
-        out.displayWinner(currentPlayer);
+        System.out.println("The winner is " + currentPlayer.name);
     }
 
     void initPlayers() {
@@ -55,7 +57,7 @@ public class Game {
 
 
     void playRound() throws CannotMoveException {
-        out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
+        displayPlayer.initialInformation(board, currentPlayer);
         readAndPerformMove();
         changePlayer();
         ++round;
@@ -74,7 +76,7 @@ public class Game {
                 throw cannotMoveException;
 
             } catch (DraughtsException exception) {
-                out.signalInvalidMove(exception);
+                System.out.println("Invalid move: " + exception.getMessage());
             }
         }
     }
@@ -83,8 +85,8 @@ public class Game {
         int movesToCompleteTurn = e.getNumberOfSkips();
         Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
-            out.displayBoard(board);
-            out.displayMessage(e.getMessage());
+            displayBoard.display(board);
+            System.out.println(e.getMessage());
             newSource = makeAStepInMultipleSkip(e.getSkipPath(), newSource);
             --movesToCompleteTurn;
         }
@@ -98,7 +100,7 @@ public class Game {
                 source = destination;
                 break;
             } catch (DraughtsException e) {
-                out.signalInvalidMove(e);
+                System.out.println("Invalid move: " + e.getMessage());
             }
         }
         return source;
@@ -136,22 +138,23 @@ public class Game {
         return currentPlayer;
     }
 
-    Game(OutInterface outInterface, Player whitePlayer, Player blackPlayer) {
-        this.out = outInterface;
+    Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
+        this.displayPlayer = displayPlayer;
+        this.displayBoard = displayBoard;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentPlayer = whitePlayer;
     }
 
-    Game(Player whitePlayer, Player blackPlayer) {
-        this(new OutInterfaceStdout(), whitePlayer, blackPlayer);
+    Game(Player whitePlayer, Player blackPlayer) { // solo nei test viene usato.
+        this(new DisplayPlayer(), new DisplayBoard(), whitePlayer, blackPlayer);
     }
 
-    Game(OutInterface outInterface) {
-        this(outInterface, new Player(Color.WHITE), new Player(Color.BLACK));
+    Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
+        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     Game() {
-        this(new OutInterfaceStdout());
+        this(new DisplayPlayer(), new DisplayBoard());
     }
 }

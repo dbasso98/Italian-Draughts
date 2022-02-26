@@ -1,6 +1,6 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.IOInterfaces.OutInterfaceStdout;
+import dssc.exam.draughts.display.DisplayBoard;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -106,8 +106,8 @@ public class TestIfCandidateSkipPathBuilder {
         newBoard.getPieceAtTile(3, 2).upgradeToKing();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
 
-        new OutInterfaceStdout().displayBoard(newBoard);
-        new OutInterfaceStdout().displayBoard(board);
+        new DisplayBoard().display(newBoard);
+        new DisplayBoard().display(board);
 
         var pathValues = CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE)
                 .values();

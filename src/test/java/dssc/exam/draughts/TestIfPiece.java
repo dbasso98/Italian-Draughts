@@ -38,7 +38,7 @@ public class TestIfPiece {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         var fakePiece = new Piece(Color.BLACK);
-        System.out.println(fakePiece.display());
+        fakePiece.display();
 
         assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());
     }
