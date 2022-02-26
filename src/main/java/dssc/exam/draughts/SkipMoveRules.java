@@ -7,7 +7,7 @@ public class SkipMoveRules {
     private final Point offset;
     private Tile firstDiagonalTile;
     private Tile secondDiagonalTile;
-    private boolean skipCheck;
+    private boolean canSkip;
 
     SkipMoveRules(Tile source, Point offset, Board board) {
         sourceTile = source;
@@ -24,7 +24,7 @@ public class SkipMoveRules {
     }
 
     private void evaluateIfManCanSkip(Path path) {
-        skipCheck = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
+        canSkip = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
     }
 
     private void evaluateFirstAndSecondDiagonalTile(Board board) {
@@ -33,7 +33,7 @@ public class SkipMoveRules {
     }
 
     private void evaluateIfKingCanSkip(Path path) {
-        skipCheck = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
+        canSkip = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
     }
 
     private boolean isSkipValid(Color movingPieceColor) {
@@ -65,7 +65,7 @@ public class SkipMoveRules {
         return secondDiagonalTile;
     }
 
-    boolean getSkipCheck() {
-        return skipCheck;
+    boolean canSkip() {
+        return canSkip;
     }
 }

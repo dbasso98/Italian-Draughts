@@ -16,15 +16,15 @@ public class TestIfCandidateSkipPathBuilder {
     void checksCandidateTilesForSkipMove() {
         var newBoard = new Board();
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
-        assertEquals(2, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(0, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.BLACK).size());
+        assertEquals(2, CandidateSkipPathBuilder.build(newBoard, Color.WHITE).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(newBoard, Color.BLACK).size());
     }
 
     @Test
     void checksCandidateTilesForSkipMoveIsEmptyAtBeginning() {
         var newBoard = new Board();
-        assertEquals(0, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(0, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.BLACK).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(newBoard, Color.WHITE).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(newBoard, Color.BLACK).size());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class TestIfCandidateSkipPathBuilder {
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
         new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
-        assertEquals(4, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
+        assertEquals(4, CandidateSkipPathBuilder.build(newBoard, Color.WHITE).size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TestIfCandidateSkipPathBuilder {
         new Move(newBoard, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
         new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
-        assertEquals(60, Collections.max((CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(60, Collections.max((CandidateSkipPathBuilder.build(newBoard, Color.WHITE).values().stream()
                 .map(Path::getWeight).collect(Collectors.toList()))));
     }
 
@@ -55,7 +55,7 @@ public class TestIfCandidateSkipPathBuilder {
         new Move(newBoard, new Point(6, 1), new Point(5, 4)).movePiece();
         new Move(newBoard, new Point(6, 5), new Point(3, 6)).movePiece();
         new Move(newBoard, new Point(2, 5), new Point(3, 4)).movePiece();
-        assertEquals(3, Collections.max(CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(3, Collections.max(CandidateSkipPathBuilder.build(newBoard, Color.WHITE).values().stream()
                 .map(Path::getNumberOfSkips)
                 .collect(Collectors.toList())));
     }
@@ -65,8 +65,8 @@ public class TestIfCandidateSkipPathBuilder {
         var newBoard = new Board();
         new Move(newBoard, new Point(6, 5), new Point(3, 2)).movePiece();
         newBoard.getPieceAtTile(5, 4).upgradeToKing();
-        assertEquals(2, CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).size());
-        assertEquals(10, Collections.max((CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE).values().stream()
+        assertEquals(2, CandidateSkipPathBuilder.build(newBoard, Color.WHITE).size());
+        assertEquals(10, Collections.max((CandidateSkipPathBuilder.build(newBoard, Color.WHITE).values().stream()
                 .map(Path::getWeight)
                 .collect(Collectors.toList()))));
     }
@@ -78,7 +78,7 @@ public class TestIfCandidateSkipPathBuilder {
                 .setMultipleManAt(Arrays.asList(26, 28, 32, 40), Color.BLACK)
                 .upgradeToKing(Arrays.asList(17, 21, 26, 44));
 
-        var pathValues = CandidateSkipPathBuilder.candidatePathsForSkipMove(board, Color.WHITE)
+        var pathValues = CandidateSkipPathBuilder.build(board, Color.WHITE)
                 .values();
 
         assertEquals(45, Collections.max((pathValues.stream().
@@ -109,7 +109,7 @@ public class TestIfCandidateSkipPathBuilder {
         new OutInterfaceStdout().displayBoard(newBoard);
         new OutInterfaceStdout().displayBoard(board);
 
-        var pathValues = CandidateSkipPathBuilder.candidatePathsForSkipMove(newBoard, Color.WHITE)
+        var pathValues = CandidateSkipPathBuilder.build(newBoard, Color.WHITE)
                 .values();
 
         assertEquals(38, Collections.max((pathValues.stream()
