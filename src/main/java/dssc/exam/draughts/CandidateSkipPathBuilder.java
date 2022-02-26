@@ -8,7 +8,10 @@ import java.util.List;
 
 public class CandidateSkipPathBuilder {
 
+    private static Board board;
+
     static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
+        CandidateSkipPathBuilder.board = board;
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
         for (Tile tile : tilesContainingPieceOfSameColor) {

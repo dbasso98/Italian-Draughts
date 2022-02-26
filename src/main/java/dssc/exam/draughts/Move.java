@@ -22,20 +22,30 @@ public class Move {
     public void moveDecider() throws DraughtsException {
         new MoveValidator(board, source, destination).throwExceptionIfPositionsAreInvalid();
         var candidatePaths = CandidateSkipPathBuilder.candidatePathsForSkipMove(board, board.getColorOfPieceAtTile(source));
-        var maxWeightOfCandidatePaths = getWeightOfBestPath(candidatePaths);
-        var tilesWithMaxWeight = new ArrayList<>(candidatePaths.values().stream()
-                                                                    .filter(entry -> entry.getWeight() == maxWeightOfCandidatePaths)
-                                                                    .map(Path::getSource)
-                                                                    .collect(Collectors.toList()));
-        var tilesContainingKingsAmongTilesWithMaxWeight = new ArrayList<>(tilesWithMaxWeight.stream()
-                                                                    .filter(Tile::containsAKing)
-                                                                    .collect(Collectors.toList()));
+        ArrayList<Tile> maxWeightTiles = getMaxWeightTiles(candidatePaths);
+        doTheMoveIfPossible(candidatePaths, maxWeightTiles);
+    }
+
+    private void doTheMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> maxWeightTiles) throws DraughtsException {
         if (isASimpleMove())
-            doASimpleMove(candidatePaths, tilesWithMaxWeight);
+            doASimpleMove(candidatePaths, maxWeightTiles);
         else if (isASkipMove())
-            doASkipMove(candidatePaths, tilesWithMaxWeight, tilesContainingKingsAmongTilesWithMaxWeight);
+            doASkipMove(candidatePaths, maxWeightTiles, getTilesWithKingsAmongMaxWeightTiles(maxWeightTiles));
         else
             throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
+    }
+
+    private ArrayList<Tile> getTilesWithKingsAmongMaxWeightTiles(ArrayList<Tile> tilesWithMaxWeight) {
+        return new ArrayList<>(tilesWithMaxWeight.stream()
+                .filter(Tile::containsAKing)
+                .collect(Collectors.toList()));
+    }
+
+    private ArrayList<Tile> getMaxWeightTiles(HashMap<Tile, Path> candidatePaths) {
+        return new ArrayList<>(candidatePaths.values().stream()
+                .filter(entry -> entry.getWeight() == getWeightOfBestPath(candidatePaths))
+                .map(Path::getSource)
+                .collect(Collectors.toList()));
     }
 
     private int getWeightOfBestPath(HashMap<Tile, Path> candidateTiles) {
@@ -47,11 +57,11 @@ public class Move {
                     .collect(Collectors.toList()));
     }
 
-    private boolean isASimpleMove(){
+    private boolean isASimpleMove() {
         return Math.abs(destination.x - source.x) == 1;
     }
 
-    private boolean isASkipMove(){
+    private boolean isASkipMove() {
         return Math.abs(destination.x - source.x) == 2;
     }
 
@@ -80,7 +90,7 @@ public class Move {
     }
 
     private void updateToKingWhenLastRowIsReached(Piece destinationTilePiece, int destinationRow) {
-        if (!destinationTilePiece.isKing()){
+        if (!destinationTilePiece.isKing()) {
             if (destinationTilePiece.getColor().associatedEndOfBoardRow() == destinationRow)
                 destinationTilePiece.upgradeToKing();
         }
