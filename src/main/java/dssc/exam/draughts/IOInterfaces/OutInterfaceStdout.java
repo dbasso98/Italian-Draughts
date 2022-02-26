@@ -3,6 +3,7 @@ package dssc.exam.draughts.IOInterfaces;
 import dssc.exam.draughts.Board;
 import dssc.exam.draughts.BoardSpecifications;
 import dssc.exam.draughts.Player;
+import dssc.exam.draughts.display.DisplayTile;
 import dssc.exam.draughts.exceptions.IndexException;
 import dssc.exam.draughts.Tile;
 
@@ -24,7 +25,7 @@ public class OutInterfaceStdout implements OutInterface {
             System.out.print((row + 1) + " ");
             for (int col = 0; col < BoardSpecifications.numberOfRows(); col++) {
                 Tile tile = board.getTile(row, col);
-                System.out.print(displayTile(tile));
+                System.out.print(DisplayTile.display(tile));
             }
             System.out.println(" " + (row + 1));
         }
@@ -34,13 +35,6 @@ public class OutInterfaceStdout implements OutInterface {
         System.out.println("ERROR: Unable to print the board, the tiles are corrupted: ");
         System.out.println(e.getMessage());
         System.exit(1);
-    }
-
-    private String displayTile(Tile tile) {
-        if (tile.isEmpty()) {
-            return "[ ]";
-        }
-        return tile.getPiece().display();
     }
 
 

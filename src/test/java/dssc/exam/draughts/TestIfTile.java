@@ -1,5 +1,6 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.display.DisplayTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +39,7 @@ public class TestIfTile {
 
     @Test
     void correctlyDisplaysEmptyTile(){
-        assertEquals("[ ]", emptyTile.display());
+        assertEquals("[ ]", DisplayTile.display(emptyTile));
     }
 
     @Test
