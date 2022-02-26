@@ -19,12 +19,6 @@ public class OutInterfaceStdout implements OutInterface {
         }
     }
 
-    private void handleInvalidIndexInDisplay(IndexException e) {
-        System.out.println("ERROR: Unable to print the board, the Tile are corrupted: ");
-        System.out.println(e.getMessage());
-        System.exit(1);
-    }
-
     private void displayInnerPartOfBoard(Board board) throws IndexException {
         for (int row = BoardSpecifications.numberOfRows() - 1; row >= 0; row--) {
             System.out.print((row + 1) + " ");
@@ -34,6 +28,12 @@ public class OutInterfaceStdout implements OutInterface {
             }
             System.out.println(" " + (row + 1));
         }
+    }
+
+    private void handleInvalidIndexInDisplay(IndexException e) {
+        System.out.println("ERROR: Unable to print the board, the tiles are corrupted: ");
+        System.out.println(e.getMessage());
+        System.exit(1);
     }
 
     private String displayTile(Tile tile) {

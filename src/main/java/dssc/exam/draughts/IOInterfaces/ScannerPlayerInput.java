@@ -6,10 +6,6 @@ import java.util.Scanner;
 public class ScannerPlayerInput implements PlayerInputInterface {
     Scanner scanner;
 
-    public ScannerPlayerInput(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     public ScannerPlayerInput() {
         this.scanner = new Scanner(System.in);
     }

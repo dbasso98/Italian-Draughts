@@ -7,7 +7,6 @@ import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 
 import java.awt.*;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Player {
     public String name = "";
@@ -18,6 +17,19 @@ public class Player {
     private static final String readSourceMessage = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
     private static final String readDestinationMessage = "What are the coordinates (x, y) of the Tile you intend to move the piece to? (e.g. 3 4)";
 
+    Player(Color color, PlayerInputInterface inputInterface, OutInterface outInterface) {
+        this.color = color;
+        this.inputInterface = inputInterface;
+        this.out = outInterface;
+    }
+
+    Player(Color color, PlayerInputInterface inputInterface) {
+        this(color, inputInterface, new OutInterfaceStdout());
+    }
+
+    Player(Color color) {
+        this(color, new ScannerPlayerInput());
+    }
 
     void initializePlayerName(int playerNum) {
         setName(getName(playerNum));
@@ -65,18 +77,5 @@ public class Player {
         return color;
     }
 
-    Player(Color color) {
-        this(color, new ScannerPlayerInput(new Scanner(System.in)));
-    }
-
-    Player(Color color, PlayerInputInterface inputInterface) {
-        this(color, inputInterface, new OutInterfaceStdout());
-    }
-
-    Player(Color color, PlayerInputInterface inputInterface, OutInterface outInterface) {
-        this.color = color;
-        this.inputInterface = inputInterface;
-        this.out = outInterface;
-    }
 
 }
