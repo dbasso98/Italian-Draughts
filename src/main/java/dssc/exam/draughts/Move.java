@@ -32,10 +32,8 @@ public class Move {
     private void doTheMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> maxWeightTiles) throws DraughtsException {
         if (isASimpleMove())
             doASimpleMoveIfPossible(candidatePaths, maxWeightTiles);
-        else if (isASkipMove())
-            doASkipMove(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
         else
-            throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
+            doASkipMove(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
     }
 
     private ArrayList<Tile> getMaxWeightTilesWithKing(ArrayList<Tile> tilesWithMaxWeight) {
@@ -62,10 +60,6 @@ public class Move {
 
     private boolean isASimpleMove() {
         return Math.abs(destination.x - source.x) == 1;
-    }
-
-    private boolean isASkipMove() {
-        return Math.abs(destination.x - source.x) == 2;
     }
 
     private void doASimpleMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> tilesWithMaxWeight) throws DraughtsException {

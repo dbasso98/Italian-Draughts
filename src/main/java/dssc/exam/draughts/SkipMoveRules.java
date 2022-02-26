@@ -2,17 +2,17 @@ package dssc.exam.draughts;
 
 import java.awt.*;
 
-public class SkipMoveRules {
-    private final Tile sourceTile;
-    private final Point offset;
-    private Tile firstDiagonalTile;
+public class SkipMoveRules extends MoveRules{
     private Tile secondDiagonalTile;
     private boolean canSkip;
 
-    SkipMoveRules(Tile source, Point offset, Board board) {
-        sourceTile = source;
-        this.offset = offset;
-        evaluateFirstAndSecondDiagonalTile(board);
+    SkipMoveRules(Tile source, Point offset, Board board){
+        super(source, offset, board);
+        getSecondDiagonalTile(board);
+    }
+
+    void getSecondDiagonalTile(Board board) {
+        secondDiagonalTile = board.getTileInDiagonalOffset(this.firstDiagonalTile, offset);
     }
 
     void evaluateIfCanSkip(Path path) {
@@ -27,11 +27,6 @@ public class SkipMoveRules {
         canSkip = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
     }
 
-    private void evaluateFirstAndSecondDiagonalTile(Board board) {
-        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, offset);
-        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, offset);
-    }
-
     private void evaluateIfKingCanSkip(Path path) {
         canSkip = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
     }
@@ -43,6 +38,10 @@ public class SkipMoveRules {
                 secondDiagonalTile.isEmpty();
     }
 
+    private boolean isTileInsideTheBoard(Tile tile) {
+        return tile != null;
+    }
+
     private boolean checkThatIsSkippingAMan() {
         if (firstDiagonalTile.isNotEmpty())
             return !firstDiagonalTile.containsAKing();
@@ -51,14 +50,6 @@ public class SkipMoveRules {
 
     private boolean tileWasNotVisitedYet(Path path) {
         return !(path.containsTile(secondDiagonalTile));
-    }
-
-    private boolean isTileInsideTheBoard(Tile tile) {
-        return tile != null;
-    }
-
-    Tile getFirstTile() {
-        return firstDiagonalTile;
     }
 
     Tile getSecondTile() {
