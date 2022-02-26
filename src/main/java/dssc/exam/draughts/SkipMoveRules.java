@@ -14,16 +14,24 @@ public class SkipMoveRules {
         this.columnOffset = columnOffset;
     }
 
-    public void evaluateIfManCanSkip(Board board, Color manColor) {
-        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
-        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        skipCheck = isSkipValid(manColor) && checkThatIsSkippingAMan();
+    void evaluateIfCanSkip(Board board, Path path) {
+        if (path.startsFromKing()) {
+            evaluateIfKingCanSkip(board, path);
+            return;
+        }
+        evaluateIfManCanSkip(board, path);
     }
 
-    public void evaluateIfKingCanSkip(Board board, Color kingColor, Path path) {
+    private void evaluateIfManCanSkip(Board board, Path path) {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
         secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
-        skipCheck = tileWasNotVisitedYet(path) && isSkipValid(kingColor);
+        skipCheck = isSkipValid(path.getSourceColor()) && checkThatIsSkippingAMan();
+    }
+
+    private void evaluateIfKingCanSkip(Board board, Path path) {
+        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, rowOffset, columnOffset);
+        secondDiagonalTile = board.getTileInDiagonalOffset(firstDiagonalTile, rowOffset, columnOffset);
+        skipCheck = tileWasNotVisitedYet(path) && isSkipValid(path.getSourceColor());
     }
 
     private boolean isSkipValid(Color movingPieceColor) {
@@ -47,15 +55,15 @@ public class SkipMoveRules {
         return tile != null;
     }
 
-    public Tile getFirstTile() {
+    Tile getFirstTile() {
         return firstDiagonalTile;
     }
 
-    public Tile getSecondTile() {
+    Tile getSecondTile() {
         return secondDiagonalTile;
     }
 
-    public boolean getSkipCheck() {
+    boolean getSkipCheck() {
         return skipCheck;
     }
 }

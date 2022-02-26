@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MoveRules {
 
@@ -70,12 +68,7 @@ public class MoveRules {
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
         for (Tile tile : tilesContainingPieceOfSameColor) {
             var skipPath = new Path(tile);
-            if (tile.containsAKing())
-                buildPath(board, tile, skipPath);
-//                buildPathStartingFromKing(board, tile, skipPath);
-            else
-                buildPath(board, tile, skipPath);
-//                buildPathStartingFromMan(board, tile, skipPath);
+            buildPath(board, tile, skipPath);
             if (skipPath.getWeight() > 0)
                 tilesToStartSkippingFrom.put(tile, skipPath);
         }
@@ -91,11 +84,8 @@ public class MoveRules {
             ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection);
             if (path.startsFromKing()) {
                 candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection));
-                candidateSkipMoves.forEach(move -> move.evaluateIfKingCanSkip(board, sourcePieceColor, path));
-            } else {
-                candidateSkipMoves.forEach(move -> move.evaluateIfManCanSkip(board, sourcePieceColor));
             }
-
+            candidateSkipMoves.forEach(move -> move.evaluateIfCanSkip(board, path));
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
     }
@@ -103,7 +93,6 @@ public class MoveRules {
     private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction) {
         var rightMove = new SkipMoveRules(currentTile, Direction, 1);
         var leftMove = new SkipMoveRules(currentTile, Direction, -1);
-//        return List.of(rightMove, leftMove);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
 
     }
@@ -125,15 +114,14 @@ public class MoveRules {
 
     private static void continueToBuildPath(Board board, Path path, SkipMoveRules diagonalMove, ArrayList<Path> candidatesPaths) {
         var nextPath = Path.copy(path);
+        int newWeight;
         if (path.startsFromKing()) {
-            nextPath.setWeight(getCurrentWeight(path.getNumberOfSkips(), diagonalMove.getFirstTile().containsAKing()));
-            buildPath(board, diagonalMove.getSecondTile(), nextPath);
-//            buildPathStartingFromKing(board, diagonalMove.getSecondTile(), nextPath);
+            newWeight = getCurrentWeight(path.getNumberOfSkips(), diagonalMove.getFirstTile().containsAKing());
         } else {
-            nextPath.setWeight(10 * (path.getNumberOfSkips() + 1));
-            buildPath(board, diagonalMove.getSecondTile(), nextPath);
-//            buildPathStartingFromMan(board, diagonalMove.getSecondTile(), nextPath);
+            newWeight = 10 * (path.getNumberOfSkips() + 1);
         }
+        nextPath.setWeight(newWeight);
+        buildPath(board, diagonalMove.getSecondTile(), nextPath);
         candidatesPaths.add(nextPath);
     }
 

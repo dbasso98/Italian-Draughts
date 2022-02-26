@@ -57,4 +57,8 @@ public class Path {
     public boolean startsFromKing() {
         return getPieceContainedInSource().isKing();
     }
+
+    public Color getSourceColor() {
+        return getPieceContainedInSource().getColor();
+    }
 }
