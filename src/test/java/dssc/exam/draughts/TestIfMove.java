@@ -25,7 +25,6 @@ public class TestIfMove {
         new Move(board, new Point(2, 1), new Point(3, 2)).moveDecider();
         assertTrue(board.getTile(2, 1).isEmpty());
         assertTrue(board.getTile(3, 2).isNotEmpty());
-        assertEquals(17, board.getPieceAtTile(3,2).getId());
     }
 
     @Test
@@ -36,7 +35,6 @@ public class TestIfMove {
         assertTrue(board.getTile(3,2).isEmpty());
         assertTrue(board.getTile(2, 1).isEmpty());
         assertTrue(board.getTile(4, 3).isNotEmpty());
-        assertEquals(17, board.getPieceAtTile(4,3).getId());
     }
 
     @Test

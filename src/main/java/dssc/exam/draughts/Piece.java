@@ -3,13 +3,11 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.IOInterfaces.StringRepresentationOfPiece;
 
 public class Piece {
-    private final int id;
     private final Color pieceColor;
     private boolean isKing;
     private StringRepresentationOfPiece representation;
 
-    public Piece(int id, Color pieceColor) {
-        this.id = id;
+    public Piece(Color pieceColor) {
         this.pieceColor = pieceColor;
         this.isKing = false;
         this.representation = StringRepresentationOfPiece.representation(this);
@@ -32,14 +30,9 @@ public class Piece {
         return this.pieceColor;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
     @Override
     public String toString() {
         return "Piece{" +
-                "id=" + id +
                 ", color=" + pieceColor +
                 ", isKing=" + isKing +
                 '}';

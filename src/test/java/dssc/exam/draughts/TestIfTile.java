@@ -28,7 +28,7 @@ public class TestIfTile {
 
     @BeforeEach
     void setBlackPieceOnTile(){
-        blackTileBlackMan.setPiece(new Piece(1, Color.BLACK));
+        blackTileBlackMan.setPiece(new Piece(Color.BLACK));
     }
 
     @Test

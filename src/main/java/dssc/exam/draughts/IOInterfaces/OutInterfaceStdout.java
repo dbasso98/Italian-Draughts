@@ -38,13 +38,9 @@ public class OutInterfaceStdout implements OutInterface {
 
     private String displayTile(Tile tile) {
         if (tile.isEmpty()) {
-            return displayEmptyTile();
+            return "[ ]";
         }
         return tile.getPiece().display();
-    }
-
-    private String displayEmptyTile() {
-        return "[ ]";
     }
 
 

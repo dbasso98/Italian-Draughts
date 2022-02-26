@@ -27,7 +27,7 @@ public class Board {
 
     private void setNewPieceAtIndex(int tileIndex, Color color) {
         Tile tile = boardArray.get(tileIndex);
-        tile.setPiece(new Piece(tileIndex, color));
+        tile.setPiece(new Piece(color));
     }
 
     public Board() {

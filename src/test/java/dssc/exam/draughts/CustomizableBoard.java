@@ -5,7 +5,7 @@ import java.util.List;
 class CustomizableBoard extends Board {
 
     void setManAtTile(int x, int y, Color color) {
-        getTile(x, y).setPiece(new Piece(0, color));
+        getTile(x, y).setPiece(new Piece(color));
     }
 
     void setKingAtTile(int x, int y, Color color) {
@@ -22,7 +22,7 @@ class CustomizableBoard extends Board {
 
     CustomizableBoard setMultipleManAt(List<Integer> indexesOfPieces, Color color) {
         for (Integer index : indexesOfPieces) {
-            getTile(index).setPiece(new Piece(0, color));
+            getTile(index).setPiece(new Piece(color));
         }
         return this;
     }

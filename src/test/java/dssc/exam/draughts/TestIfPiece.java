@@ -14,25 +14,24 @@ public class TestIfPiece {
     @ParameterizedTest
     @CsvSource({"BLACK, BLACK", "WHITE, WHITE"})
     void isOfColor(Color colorOfPiece, Color expectedColor){
-        Piece piece = new Piece(1, colorOfPiece);
+        Piece piece = new Piece(colorOfPiece);
         assertEquals(expectedColor, piece.getColor());
     }
 
     @Test
     void isNotKing(){
-        Piece piece = new Piece(1, Color.WHITE);
+        Piece piece = new Piece(Color.WHITE);
         assertFalse(piece.isKing());
     }
 
     @Test
     void isKing(){
-        Piece piece = new Piece(1, Color.WHITE);
+        Piece piece = new Piece(Color.WHITE);
         piece.upgradeToKing();
         assertTrue(piece.isKing());
     }
 
     private static final String piece =  "Piece{" +
-            "id=" + 1 +
             ", color=" + "BLACK" +
             ", isKing=" + false +
             "}" + System.lineSeparator();
@@ -41,7 +40,7 @@ public class TestIfPiece {
     void printsToStdOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
-        var fakePiece = new Piece(1, Color.BLACK);
+        var fakePiece = new Piece(Color.BLACK);
         System.out.println(fakePiece);
 
         assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());

@@ -66,13 +66,9 @@ public class Tile {
         return getPiece().isKing();
     }
 
-    private String displayEmptyTile() {
-        return "[ ]";
-    }
-
     public String display() {
         if (isEmpty()) {
-            return displayEmptyTile();
+            return "[ ]";
         }
         return piece.display();
     }
