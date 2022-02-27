@@ -10,6 +10,23 @@ public class Board {
     private final ArrayList<Tile> boardArray = new ArrayList<>(BoardSpecifications.boardSize());
     private final int lastIndexOfBoardArray = BoardSpecifications.boardSize() - 1;
 
+    public Board() {
+        initializeEmptyBoard();
+        for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
+            if (getTile(tileIndex).isBlack()) {
+                setNewPieceAtIndex(tileIndex, Color.WHITE);
+                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
+            }
+        }
+    }
+
+    void initializeEmptyBoard() {
+        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
+            createEvenRow(row);
+            createOddRow(row + 1);
+        }
+    }
+
     private void createOddRow(int row) {
         createRow(row, Color.BLACK, Color.WHITE);
     }
@@ -30,38 +47,16 @@ public class Board {
         tile.setPiece(new Piece(tileIndex, color));
     }
 
-    public Board() {
-        initializeEmptyBoard();
-        for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
-            if (getTile(tileIndex).isBlack()) {
-                setNewPieceAtIndex(tileIndex, Color.WHITE);
-                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
-            }
-        }
-    }
-
-    void initializeEmptyBoard() {
-        for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
-            createEvenRow(row);
-            createOddRow(row + 1);
-        }
-    }
-
     private int convertRowColumnToIndex(int row, int column) {
         return BoardSpecifications.numberOfColumns() * row + column;
-    }
-
-    private boolean isPositionInsideTheBoard(int row, int column) {
-        return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
     boolean isPositionInsideTheBoard(Point position) {
         return isPositionInsideTheBoard(position.x, position.y);
     }
 
-    private int getMiddleIndex(int startIndex, int endIndex) {
-        int distance = Math.abs(startIndex - endIndex);
-        return Math.min(startIndex, endIndex) + distance / 2;
+    private boolean isPositionInsideTheBoard(int row, int column) {
+        return row >= 0 && column >= 0 && row <= 7 && column <= 7;
     }
 
     int getMiddlePosition(Point source, Point destination) throws IndexException {
@@ -70,8 +65,9 @@ public class Board {
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
     }
 
-    int getSize() {
-        return boardArray.size();
+    private int getMiddleIndex(int startIndex, int endIndex) {
+        int distance = Math.abs(startIndex - endIndex);
+        return Math.min(startIndex, endIndex) + distance / 2;
     }
 
     int getNumberOfPiecesOfColor(Color color) {
@@ -81,12 +77,23 @@ public class Board {
     }
 
     ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
-        ArrayList<Tile> listOfTiles = new ArrayList<>(BoardSpecifications.numberOfPiecesPerPlayer());
-        for (Tile tile : boardArray) {
-            if (tile.containsPieceOfColor(color))
-                listOfTiles.add(tile);
-        }
-        return listOfTiles;
+        return new ArrayList<>(boardArray.stream()
+                                        .filter(tile -> tile.containsPieceOfColor(color))
+                                        .collect(Collectors.toList()));
+    }
+
+    public Color getColorOfPieceAtTile(Point position) {
+        return getPieceAtTile(position.x, position.y).getColor();
+    }
+
+    public Tile getTileInDiagonalOffset(Tile tile, Point offset) {
+        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset.x, tile.getColumn() + offset.y))
+            return getTile(tile.getRow() + offset.x, tile.getColumn() + offset.y);
+        return null;
+    }
+
+    int getSize() {
+        return boardArray.size();
     }
 
     public Tile getTile(int index) {
@@ -107,15 +114,5 @@ public class Board {
 
     private int getSymmetricIndexOf(int index) {
         return lastIndexOfBoardArray - index;
-    }
-
-    public Color getColorOfPieceAtTile(Point position) {
-        return getPieceAtTile(position.x, position.y).getColor();
-    }
-
-    public Tile getTileInDiagonalOffset(Tile tile, Point offset) {
-        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset.x, tile.getColumn() + offset.y))
-            return getTile(tile.getRow() + offset.x, tile.getColumn() + offset.y);
-        return null;
     }
 }
