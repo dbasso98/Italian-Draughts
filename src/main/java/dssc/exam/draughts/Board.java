@@ -78,8 +78,8 @@ public class Board {
 
     ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         return new ArrayList<>(boardArray.stream()
-                                        .filter(tile -> tile.containsPieceOfColor(color))
-                                        .collect(Collectors.toList()));
+                .filter(tile -> tile.containsPieceOfColor(color))
+                .collect(Collectors.toList()));
     }
 
     int getSize() {

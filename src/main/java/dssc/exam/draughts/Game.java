@@ -6,7 +6,6 @@ import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Game {
     private final Player whitePlayer;
@@ -19,10 +18,17 @@ public class Game {
     void loadGame(Board board, int round) {
         this.board = board;
         this.round = round;
-        if ((round % 2) == 0)
-            this.currentPlayer = this.whitePlayer;
-        else
-            this.currentPlayer = this.blackPlayer;
+        this.currentPlayer = (round % 2 == 0) ? this.whitePlayer : this.blackPlayer;
+    }
+
+    void startGame() {
+        initPlayers();
+        play();
+    }
+
+    void initPlayers() {
+        whitePlayer.initializePlayerName(1);
+        blackPlayer.initializePlayerName(2);
     }
 
     void play() {
@@ -37,24 +43,6 @@ public class Game {
         changePlayer();
         out.displayWinner(currentPlayer);
     }
-
-    void initPlayers() {
-        whitePlayer.initializePlayerName(1);
-        blackPlayer.initializePlayerName(2);
-    }
-
-    void startGame() {
-        initPlayers();
-        play();
-    }
-
-    private Move getMoveFromPlayer() throws DraughtsException {
-        Point source = currentPlayer.readSource();
-        testSourceValidity(source);
-        Point destination = currentPlayer.readDestination();
-        return new Move(board, source, destination);
-    }
-
 
     void playRound() throws CannotMoveException {
         out.giveInitialRoundInformationToThePlayer(board, currentPlayer);
@@ -79,14 +67,27 @@ public class Game {
             } catch (IncompleteMoveException exception) {
                 continueSkipMove(exception);
                 break;
-
             } catch (CannotMoveException cannotMoveException) {
                 throw cannotMoveException;
-
             } catch (DraughtsException exception) {
                 out.signalInvalidMove(exception);
             }
         }
+    }
+
+    private Move getMoveFromPlayer() throws DraughtsException {
+        Point source = currentPlayer.readSource();
+        testSourceValidity(source);
+        Point destination = currentPlayer.readDestination();
+        return new Move(board, source, destination);
+    }
+
+    private void testSourceValidity(Point source) throws DraughtsException {
+        Tile sourceTile = board.getTile(source);
+        if (sourceTile.isEmpty())
+            throw new TileException("The first Tile you selected is empty");
+        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
+            throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
     private void continueSkipMove(IncompleteMoveException e) {
@@ -112,14 +113,6 @@ public class Game {
             }
         }
         return source;
-    }
-
-    private void testSourceValidity(Point source) throws DraughtsException {
-        Tile sourceTile = board.getTile(source);
-        if (sourceTile.isEmpty())
-            throw new TileException("The first Tile you selected is empty");
-        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
-            throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
     void changePlayer() {
