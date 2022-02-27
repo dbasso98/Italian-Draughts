@@ -82,16 +82,6 @@ public class Board {
                                         .collect(Collectors.toList()));
     }
 
-    public Color getColorOfPieceAtTile(Point position) {
-        return getPieceAtTile(position.x, position.y).getColor();
-    }
-
-    public Tile getTileInDiagonalOffset(Tile tile, Point offset) {
-        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset.x, tile.getColumn() + offset.y))
-            return getTile(tile.getRow() + offset.x, tile.getColumn() + offset.y);
-        return null;
-    }
-
     int getSize() {
         return boardArray.size();
     }
@@ -110,6 +100,16 @@ public class Board {
 
     public Piece getPieceAtTile(int row, int column) {
         return getTile(row, column).getPiece();
+    }
+
+    public Color getColorOfPieceAtTile(Point position) {
+        return getPieceAtTile(position.x, position.y).getColor();
+    }
+
+    public Tile getTileInDiagonalOffset(Tile tile, Point offset) {
+        if (tile != null && isPositionInsideTheBoard(tile.getRow() + offset.x, tile.getColumn() + offset.y))
+            return getTile(tile.getRow() + offset.x, tile.getColumn() + offset.y);
+        return null;
     }
 
     private int getSymmetricIndexOf(int index) {
