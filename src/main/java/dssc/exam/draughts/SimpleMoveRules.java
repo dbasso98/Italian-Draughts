@@ -1,6 +1,8 @@
 package dssc.exam.draughts;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimpleMoveRules extends MoveRules{
 
@@ -16,5 +18,31 @@ public class SimpleMoveRules extends MoveRules{
 
     boolean canSimplyMove() {
         return canSimplyMove;
+    }
+
+    static boolean CanNotMakeASimpleMove(Board board, Color colorOfMovingPiece) {
+        ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(colorOfMovingPiece);
+        var assertCanDoASimpleMove = new ArrayList<Boolean>();
+        for (var tile : tilesContainingPieceOfSameColor) {
+            canDoAtLeastASimpleMove(assertCanDoASimpleMove, tile, colorOfMovingPiece.associatedDirection(), board);
+        }
+        return assertCanDoASimpleMove.stream().allMatch(check -> check.equals(false));
+    }
+
+    private static void canDoAtLeastASimpleMove(ArrayList<Boolean> assertCanDoASimpleMove, Tile tile,
+                                                int movingDirection, Board board) {
+        ArrayList<SimpleMoveRules> candidateSimpleMoves = getListOfSameDirectionMove(tile, movingDirection, board);
+        if (tile.containsAKing())
+            candidateSimpleMoves.addAll(getListOfSameDirectionMove(tile, -movingDirection, board));
+        candidateSimpleMoves.forEach(move -> move.evaluateIfCanSimplyMove());
+        assertCanDoASimpleMove.add(candidateSimpleMoves.stream()
+                .map(simpleMove -> simpleMove.canSimplyMove())
+                .reduce(false, (firstMove, secondMove) -> firstMove || secondMove));
+    }
+
+    private static ArrayList<SimpleMoveRules> getListOfSameDirectionMove(Tile currentTile, int direction, Board board) {
+        var rightMove = new SimpleMoveRules(currentTile, new Point(direction, 1), board);
+        var leftMove = new SimpleMoveRules(currentTile, new Point(direction, -1), board);
+        return new ArrayList<>(Arrays.asList(rightMove, leftMove));
     }
 }
