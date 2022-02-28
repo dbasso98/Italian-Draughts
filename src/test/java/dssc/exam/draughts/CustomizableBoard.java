@@ -33,5 +33,4 @@ class CustomizableBoard extends Board {
         }
         return this;
     }
-
 }
