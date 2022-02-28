@@ -31,16 +31,16 @@ public class SimpleMoveRules extends MoveRules{
 
     private static void canDoAtLeastASimpleMove(ArrayList<Boolean> assertCanDoASimpleMove, Tile tile,
                                                 int movingDirection, Board board) {
-        ArrayList<SimpleMoveRules> candidateSimpleMoves = getListOfSameDirectionMove(tile, movingDirection, board);
+        ArrayList<SimpleMoveRules> candidateSimpleMoves = getListOfSameDirectionSimpleMove(tile, movingDirection, board);
         if (tile.containsAKing())
-            candidateSimpleMoves.addAll(getListOfSameDirectionMove(tile, -movingDirection, board));
+            candidateSimpleMoves.addAll(getListOfSameDirectionSimpleMove(tile, -movingDirection, board));
         candidateSimpleMoves.forEach(move -> move.evaluateIfCanSimplyMove());
         assertCanDoASimpleMove.add(candidateSimpleMoves.stream()
                 .map(simpleMove -> simpleMove.canSimplyMove())
                 .reduce(false, (firstMove, secondMove) -> firstMove || secondMove));
     }
 
-    private static ArrayList<SimpleMoveRules> getListOfSameDirectionMove(Tile currentTile, int direction, Board board) {
+    private static ArrayList<SimpleMoveRules> getListOfSameDirectionSimpleMove(Tile currentTile, int direction, Board board) {
         var rightMove = new SimpleMoveRules(currentTile, new Point(direction, 1), board);
         var leftMove = new SimpleMoveRules(currentTile, new Point(direction, -1), board);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
