@@ -11,26 +11,35 @@ public class CandidateSkipPathBuilder {
     static HashMap<Tile, Path> build(Board board, Color movingPieceColor) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
+        collectCandidateSkipPaths(board, tilesContainingPieceOfSameColor, tilesToStartSkippingFrom);
+        return tilesToStartSkippingFrom;
+    }
+
+    private static void collectCandidateSkipPaths(Board board, ArrayList<Tile> tilesContainingPieceOfSameColor, HashMap<Tile, Path> tilesToStartSkippingFrom) {
         for (Tile tile : tilesContainingPieceOfSameColor) {
             var skipPath = new Path(tile);
             buildPath(board, tile, skipPath);
             if (skipPath.getWeight() > 0)
                 tilesToStartSkippingFrom.put(tile, skipPath);
         }
-        return tilesToStartSkippingFrom;
     }
 
     private static void buildPath(Board board, Tile currentTile, Path path) {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
-            var movingDirection = path.getSourceColor().associatedDirection();
-            ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection, board);
-            if (path.startsFromKing()) {
-                candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection, board));
-            }
+            ArrayList<SkipMoveRules> candidateSkipMoves = getCandidateSkipMoves(board, currentTile, path);
             candidateSkipMoves.forEach(move -> move.evaluateIfCanSkip(path));
             extendPathIfPossible(board, path, candidateSkipMoves);
         }
+    }
+
+    private static ArrayList<SkipMoveRules> getCandidateSkipMoves(Board board, Tile currentTile, Path path) {
+        var movingDirection = path.getSourceColor().associatedDirection();
+        ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection, board);
+        if (path.startsFromKing()) {
+            candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection, board));
+        }
+        return candidateSkipMoves;
     }
 
     private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int direction, Board board) {
@@ -45,7 +54,7 @@ public class CandidateSkipPathBuilder {
         boolean atLeastOneSkipIsPossible = false;
         for (SkipMoveRules move : candidateSkipMoves) {
             if (move.canSkip()) {
-                continueToBuildPath(board, path, move, candidatesPaths);
+                candidatesPaths.add(getNextPath(board, path, move));
                 atLeastOneSkipIsPossible = true;
             }
         }
@@ -54,7 +63,7 @@ public class CandidateSkipPathBuilder {
         }
     }
 
-    private static void continueToBuildPath(Board board, Path path, SkipMoveRules diagonalMove, ArrayList<Path> candidatesPaths) {
+    private static Path getNextPath(Board board, Path path, SkipMoveRules diagonalMove) {
         var nextPath = Path.copy(path);
         int newWeight;
         if (path.startsFromKing()) {
@@ -64,7 +73,7 @@ public class CandidateSkipPathBuilder {
         }
         nextPath.setWeight(newWeight);
         buildPath(board, diagonalMove.getSecondTile(), nextPath);
-        candidatesPaths.add(nextPath);
+        return nextPath;
     }
 
     private static void updateBestPath(Path currentPath, ArrayList<Path> candidatesPaths) {
@@ -80,7 +89,7 @@ public class CandidateSkipPathBuilder {
     private static int getCurrentWeight(int skips, boolean skippedAKing) {
         int currentWeight = 10 * (skips + 1);
         if (skippedAKing)
-            currentWeight += 5 + (3 - skips);
+            return currentWeight + 5 + (3 - skips);
         return currentWeight;
     }
 }
