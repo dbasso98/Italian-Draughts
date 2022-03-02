@@ -1,7 +1,9 @@
 package dssc.exam.draughts.display;
 
 import dssc.exam.draughts.Color;
+import dssc.exam.draughts.Piece;
 import dssc.exam.draughts.Tile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -14,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestIfDisplayTile {
     Tile emptyTile = new Tile(Color.BLACK, new Point(0,0));
     Tile blackTileBlackMan = new Tile(Color.BLACK, new Point(0,0));
-
     ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
 
     @Test
@@ -23,6 +24,11 @@ public class TestIfDisplayTile {
         emptyTile.display();
         assertEquals("[ ]", fakeStandardOutput.toString());
 
+    }
+
+    @BeforeEach
+    void setBlackPiece(){
+        blackTileBlackMan.setPiece(new Piece(Color.BLACK));
     }
 
     @Test

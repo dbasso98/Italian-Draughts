@@ -68,8 +68,9 @@ public class Tile {
 
     public void display() {
         if (isEmpty()) {
-            System.out.println("[ ]");
+            System.out.print("[ ]");
         }
-        piece.display();
+        else
+            piece.display();
     }
 }

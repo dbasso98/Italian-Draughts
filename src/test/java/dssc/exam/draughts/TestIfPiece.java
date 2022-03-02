@@ -31,7 +31,7 @@ public class TestIfPiece {
         assertTrue(piece.isKing());
     }
 
-    private static final String piece =  "[b]" + System.lineSeparator();
+    private static final String piece =  "[b]";
 
     @Test
     void printsToStdOutput() {

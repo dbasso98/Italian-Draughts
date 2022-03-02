@@ -15,15 +15,15 @@ public class DisplayPiece implements Display<Piece> {
 
     private void kingRepresentation(Piece piece) {
         if (piece.getColor() == Color.BLACK)
-            System.out.println("[B]");
+            System.out.print("[B]");
         else
-            System.out.println("[W]");
+            System.out.print("[W]");
     }
 
     private void manRepresentation(Piece piece) {
         if (piece.getColor() == Color.BLACK)
-            System.out.println("[b]");
+            System.out.print("[b]");
         else
-            System.out.println("[w]");
+            System.out.print("[w]");
     }
 }
