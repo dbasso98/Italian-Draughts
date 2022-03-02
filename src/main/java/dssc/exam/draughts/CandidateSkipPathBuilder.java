@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CandidateSkipPathBuilder {
 
-    static HashMap<Tile, Path> candidatePathsForSkipMove(Board board, Color movingPieceColor) {
+    static HashMap<Tile, Path> build(Board board, Color movingPieceColor) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
         for (Tile tile : tilesContainingPieceOfSameColor) {
@@ -24,7 +24,6 @@ public class CandidateSkipPathBuilder {
         path.addTile(currentTile);
         if (path.getNumberOfSkips() < 3) {
             var movingDirection = path.getSourceColor().associatedDirection();
-
             ArrayList<SkipMoveRules> candidateSkipMoves = getListOfSameDirectionSkipMove(currentTile, movingDirection, board);
             if (path.startsFromKing()) {
                 candidateSkipMoves.addAll(getListOfSameDirectionSkipMove(currentTile, -movingDirection, board));
@@ -34,23 +33,23 @@ public class CandidateSkipPathBuilder {
         }
     }
 
-    private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int Direction, Board board) {
-        var rightMove = new SkipMoveRules(currentTile, new Point(Direction, 1), board);
-        var leftMove = new SkipMoveRules(currentTile, new Point(Direction, -1), board);
+    private static ArrayList<SkipMoveRules> getListOfSameDirectionSkipMove(Tile currentTile, int direction, Board board) {
+        var rightMove = new SkipMoveRules(currentTile, new Point(direction, 1), board);
+        var leftMove = new SkipMoveRules(currentTile, new Point(direction, -1), board);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
     }
 
     private static void extendPathIfPossible(Board board, Path path,
                                              List<SkipMoveRules> candidateSkipMoves) {
         var candidatesPaths = new ArrayList<Path>();
-        boolean atLeastOneMoveIsPossible = false;
+        boolean atLeastOneSkipIsPossible = false;
         for (SkipMoveRules move : candidateSkipMoves) {
-            if (move.getSkipCheck()) {
+            if (move.canSkip()) {
                 continueToBuildPath(board, path, move, candidatesPaths);
-                atLeastOneMoveIsPossible = true;
+                atLeastOneSkipIsPossible = true;
             }
         }
-        if (atLeastOneMoveIsPossible) {
+        if (atLeastOneSkipIsPossible) {
             updateBestPath(path, candidatesPaths);
         }
     }

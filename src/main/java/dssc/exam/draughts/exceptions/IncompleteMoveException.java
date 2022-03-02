@@ -17,10 +17,6 @@ public class IncompleteMoveException extends MoveException {
         this.skipPath = skipPath;
     }
 
-    public int getWeight() {
-        return skipPath.getWeight();
-    }
-
     public ArrayList<Tile> getSkipPath() {
         return skipPath.getPath();
     }
