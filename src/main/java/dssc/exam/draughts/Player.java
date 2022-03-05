@@ -54,13 +54,6 @@ public class Player {
         }
     }
 
-//    Point readPoint() throws InputMismatchException {
-//        int column = inputInterface.getInt();
-//        int row = inputInterface.getInt();
-//        return new Point(row - 1, column - 1);
-//    }
-
-
     public Color getColor() {
         return color;
     }

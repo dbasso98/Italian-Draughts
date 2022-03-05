@@ -46,13 +46,6 @@ public class Game {
         play();
     }
 
-//    public Move getMoveFromPlayer2() throws DraughtsException {
-//        Point source = currentPlayer.readSource();
-//        testSourceValidity(source);
-//        Point destination = currentPlayer.readDestination();
-//        return new Move(board, source, destination);
-//    }
-
     private Move getMoveFromPlayer() throws DraughtsException {
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
