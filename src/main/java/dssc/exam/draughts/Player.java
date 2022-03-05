@@ -45,7 +45,7 @@ public class Player {
 
         while (true) {
             try {
-                return readPoint();
+                return inputInterface.readPoint();
 
             } catch (InputMismatchException e) {
                 out.displayMessage("Please enter a valid expression");
@@ -53,13 +53,6 @@ public class Player {
             }
         }
     }
-
-    Point readPoint() throws InputMismatchException {
-        int column = inputInterface.getInt();
-        int row = inputInterface.getInt();
-        return new Point(row - 1, column - 1);
-    }
-
 
     public Color getColor() {
         return color;

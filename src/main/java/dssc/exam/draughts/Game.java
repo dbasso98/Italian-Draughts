@@ -82,14 +82,6 @@ public class Game {
         return new Move(board, source, destination);
     }
 
-    private void testSourceValidity(Point source) throws DraughtsException {
-        Tile sourceTile = board.getTile(source);
-        if (sourceTile.isEmpty())
-            throw new TileException("The first Tile you selected is empty");
-        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
-            throw new MoveException("The piece you intend to move belongs to your opponent");
-    }
-
     private void continueSkipMove(IncompleteMoveException e) {
         int movesToCompleteTurn = e.getNumberOfSkips();
         Point newSource = e.getNewSource();
@@ -113,6 +105,16 @@ public class Game {
             }
         }
         return source;
+    }
+
+    private void testSourceValidity(Point source) throws DraughtsException {
+        if (!board.isPositionInsideTheBoard(source))
+            throw new IndexException("The Tile you selected is not inside the board");
+        Tile sourceTile = board.getTile(source);
+        if (sourceTile.isEmpty())
+            throw new TileException("The first Tile you selected is empty");
+        if (sourceTile.getPiece().getColor() != currentPlayer.getColor())
+            throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
     void changePlayer() {
