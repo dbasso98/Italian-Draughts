@@ -139,6 +139,13 @@ public class TestIfPlayer {
         }
 
         @Override
+        public Point readPoint() throws InputMismatchException {
+            int column = getInt();
+            int row = getInt();
+            return new Point(row - 1, column - 1);
+        }
+
+        @Override
         public void skipToNextInput() {
         }
     }

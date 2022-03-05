@@ -46,6 +46,13 @@ public class Game {
         play();
     }
 
+//    public Move getMoveFromPlayer2() throws DraughtsException {
+//        Point source = currentPlayer.readSource();
+//        testSourceValidity(source);
+//        Point destination = currentPlayer.readDestination();
+//        return new Move(board, source, destination);
+//    }
+
     private Move getMoveFromPlayer() throws DraughtsException {
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
@@ -105,6 +112,8 @@ public class Game {
     }
 
     private void testSourceValidity(Point source) throws DraughtsException {
+        if (!board.isPositionInsideTheBoard(source))
+            throw new IndexException("The Tile you selected is not inside the board");
         Tile sourceTile = board.getTile(source);
         if (sourceTile.isEmpty())
             throw new TileException("The first Tile you selected is empty");
