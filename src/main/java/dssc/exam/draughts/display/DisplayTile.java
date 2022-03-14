@@ -9,11 +9,12 @@ public class DisplayTile implements Display<Tile> {
         if (tile.isEmpty()) {
             displayEmptyTile();
         }
-        tile.getPiece().display();
+        else
+            tile.getPiece().display();
     }
 
     private void displayEmptyTile() {
-        System.out.println("[ ]");
+        System.out.print("[ ]");
     }
 }
 
