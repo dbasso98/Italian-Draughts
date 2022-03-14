@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestIfDisplayPiece {
+
     private ByteArrayOutputStream changeStdOutputToFakeOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
@@ -21,16 +22,16 @@ public class TestIfDisplayPiece {
     @CsvSource({"BLACK, [b]", "WHITE, [w]"})
     void printsManToStdOutput(Color colorOfPiece, String representationOfPiece) {
         var fakeStandardOutput = changeStdOutputToFakeOutput();
-        var fakePiece = new Piece(colorOfPiece);
-        new DisplayPiece().display(fakePiece);
+
+        new DisplayPiece().display(new Piece(colorOfPiece));
         assertEquals(representationOfPiece, fakeStandardOutput.toString());
     }
 
     @ParameterizedTest
     @CsvSource({"BLACK, [B]", "WHITE, [W]"})
     void printsKingToStdOutput(Color colorOfPiece, String representationOfPiece) {
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
+        var fakeStandardOutput = changeStdOutputToFakeOutput();
+
         var fakePiece = new Piece(colorOfPiece);
         fakePiece.upgradeToKing();
 

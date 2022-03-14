@@ -15,7 +15,6 @@ public class DisplayPlayer implements Display<Player> {
         display(player);
     }
 
-
     public void displayWinner(Player player) {
         System.out.println("The winner is " + player.name);
     }

@@ -43,7 +43,7 @@ public class Game {
             }
         }
         changePlayer();
-        System.out.println("The winner is " + currentPlayer.name);
+        displayPlayer.displayWinner(currentPlayer);
     }
 
     void playRound() throws CannotMoveException {
