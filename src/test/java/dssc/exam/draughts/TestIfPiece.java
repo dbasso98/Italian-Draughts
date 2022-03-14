@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfPiece {
@@ -29,17 +26,5 @@ public class TestIfPiece {
         Piece piece = new Piece(Color.WHITE);
         piece.upgradeToKing();
         assertTrue(piece.isKing());
-    }
-
-    private static final String piece =  "[b]";
-
-    @Test
-    void printsToStdOutput() {
-        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(fakeStandardOutput));
-        var fakePiece = new Piece(Color.BLACK);
-        fakePiece.display();
-
-        assertEquals(TestIfPiece.piece, fakeStandardOutput.toString());
     }
 }
