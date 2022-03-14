@@ -58,7 +58,7 @@ public class Game {
         var canNotMakeASkip = CandidateSkipPathBuilder.build(board, currentPlayer.getColor()).isEmpty();
         var canNotMakeASimpleMove = SimpleMoveRules.CanNotMakeASimpleMove(board, currentPlayer.getColor());
         if (canNotMakeASkip && canNotMakeASimpleMove)
-            throw new CannotMoveException("Cannot perform any move!\n*******GAME OVER*******");
+            throw new CannotMoveException("Cannot perform any move!"+ System.lineSeparator() +"*******GAME OVER*******");
     }
 
     private void readAndPerformMove() throws CannotMoveException {
