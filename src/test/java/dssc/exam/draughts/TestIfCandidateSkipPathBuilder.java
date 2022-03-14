@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,7 +84,7 @@ public class TestIfCandidateSkipPathBuilder {
                 .upgradeToKing(Arrays.asList(17, 19, 44))
                 .popPiecesAt(Arrays.asList(46, 49, 51, 40))
                 .setMultipleManAt(Arrays.asList(28, 26, 39, 33), Color.BLACK)
-                .upgradeToKing(Arrays.asList(26));
+                .upgradeToKing(List.of(26));
         var pathValues = CandidateSkipPathBuilder.build(board, Color.WHITE).values();
         assertEquals(38, Collections.max((pathValues.stream()
                                                             .map(Path::getWeight)

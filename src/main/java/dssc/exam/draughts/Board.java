@@ -56,7 +56,15 @@ public class Board {
     }
 
     private boolean isPositionInsideTheBoard(int row, int column) {
-        return row >= 0 && column >= 0 && row <= 7 && column <= 7;
+        return isColumnInsideTheBoard(column) && isRowInsideTheBoard(row);
+    }
+
+    private boolean isColumnInsideTheBoard(int column) {
+        return column >= 0 && column <= BoardSpecifications.numberOfColumns();
+    }
+
+    private boolean isRowInsideTheBoard(int row) {
+        return row >= 0 && row < BoardSpecifications.numberOfRows();
     }
 
     int getMiddlePosition(Point source, Point destination) throws IndexException {

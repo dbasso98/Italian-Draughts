@@ -54,7 +54,7 @@ public class Move {
             return 0;
 
         return Collections.max(candidateTiles.values().stream()
-                .map(path -> path.getWeight())
+                .map(Path::getWeight)
                 .collect(Collectors.toList()));
     }
 

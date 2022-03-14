@@ -1,5 +1,6 @@
 package dssc.exam.draughts.IOInterfaces;
 
+import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,5 +24,13 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     @Override
     public void skipToNextInput() {
         scanner.next();
+    }
+
+    @Override
+    public Point readPoint() throws InputMismatchException {
+        int column = getInt();
+        int row = getInt();
+        scanner.nextLine();
+        return new Point(row - 1, column - 1);
     }
 }
