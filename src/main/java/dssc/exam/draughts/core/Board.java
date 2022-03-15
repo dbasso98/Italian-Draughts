@@ -1,6 +1,8 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.exceptions.*;
+import dssc.exam.draughts.utilities.BoardSpecifications;
+import dssc.exam.draughts.utilities.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,13 +16,13 @@ public class Board {
         initializeEmptyBoard();
         for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
             if (getTile(tileIndex).isBlack()) {
-                setNewPieceAtIndex(tileIndex, Color.WHITE);
-                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
+                setNewPieceAtIndex(tileIndex, dssc.exam.draughts.utilities.Color.WHITE);
+                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), dssc.exam.draughts.utilities.Color.BLACK);
             }
         }
     }
 
-    void initializeEmptyBoard() {
+    public void initializeEmptyBoard() {
         for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
             createEvenRow(row);
             createOddRow(row + 1);
@@ -28,21 +30,21 @@ public class Board {
     }
 
     private void createOddRow(int row) {
-        createRow(row, Color.BLACK, Color.WHITE);
+        createRow(row, dssc.exam.draughts.utilities.Color.BLACK, dssc.exam.draughts.utilities.Color.WHITE);
     }
 
     private void createEvenRow(int row) {
-        createRow(row, Color.WHITE, Color.BLACK);
+        createRow(row, dssc.exam.draughts.utilities.Color.WHITE, dssc.exam.draughts.utilities.Color.BLACK);
     }
 
-    private void createRow(int row, Color firstColor, Color secondColor) {
+    private void createRow(int row, dssc.exam.draughts.utilities.Color firstColor, dssc.exam.draughts.utilities.Color secondColor) {
         for (int column = 0; column < BoardSpecifications.numberOfColumns(); column += 2) {
             boardArray.add(new Tile(firstColor, new Point(row, column)));
             boardArray.add(new Tile(secondColor, new Point(row, column + 1)));
         }
     }
 
-    private void setNewPieceAtIndex(int tileIndex, Color color) {
+    private void setNewPieceAtIndex(int tileIndex, dssc.exam.draughts.utilities.Color color) {
         Tile tile = boardArray.get(tileIndex);
         tile.setPiece(new Piece(color));
     }
@@ -51,7 +53,7 @@ public class Board {
         return BoardSpecifications.numberOfColumns() * row + column;
     }
 
-    boolean isPositionInsideTheBoard(Point position) {
+    public boolean isPositionInsideTheBoard(Point position) {
         return isPositionInsideTheBoard(position.x, position.y);
     }
 
@@ -67,7 +69,7 @@ public class Board {
         return row >= 0 && row < BoardSpecifications.numberOfRows();
     }
 
-    int getMiddlePosition(Point source, Point destination) throws IndexException {
+    public int getMiddlePosition(Point source, Point destination) throws IndexException {
         if (!isPositionInsideTheBoard(source) && !isPositionInsideTheBoard(destination))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         return getMiddleIndex(convertRowColumnToIndex(source.x, source.y), convertRowColumnToIndex(destination.x, destination.y));
@@ -78,19 +80,19 @@ public class Board {
         return Math.min(startIndex, endIndex) + distance / 2;
     }
 
-    int getNumberOfPiecesOfColor(Color color) {
+    public int getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(Tile::getPiece)
                 .collect(Collectors.toList())).size();
     }
 
-    ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
+    public ArrayList<Tile> getTilesContainingPieceOfColor(dssc.exam.draughts.utilities.Color color) {
         return new ArrayList<>(boardArray.stream()
                 .filter(tile -> tile.containsPieceOfColor(color))
                 .collect(Collectors.toList()));
     }
 
-    int getSize() {
+    public int getSize() {
         return boardArray.size();
     }
 

@@ -1,8 +1,11 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.moveLogics.MoveValidator;
 import dssc.exam.draughts.exceptions.IndexException;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
+import dssc.exam.draughts.utilities.Color;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

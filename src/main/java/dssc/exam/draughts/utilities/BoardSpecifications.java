@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.utilities;
 
 public class BoardSpecifications {
     private static final int size = 64;

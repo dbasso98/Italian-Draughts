@@ -1,4 +1,9 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
+
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.utilities.Color;
+import dssc.exam.draughts.core.Path;
+import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,7 +13,7 @@ import java.util.List;
 
 public class CandidateSkipPathBuilder {
 
-    static HashMap<Tile, Path> build(Board board, Color movingPieceColor) {
+    public static HashMap<Tile, Path> build(Board board, Color movingPieceColor) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(movingPieceColor);
         HashMap<Tile, Path> tilesToStartSkippingFrom = new HashMap<>();
         collectCandidateSkipPaths(board, tilesContainingPieceOfSameColor, tilesToStartSkippingFrom);

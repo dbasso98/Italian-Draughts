@@ -1,10 +1,14 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
+
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.utilities.Color;
+import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimpleMoveRules extends MoveRules{
+public class SimpleMoveRules extends MoveRules {
 
     private boolean canSimplyMove;
 
@@ -20,7 +24,7 @@ public class SimpleMoveRules extends MoveRules{
         return canSimplyMove;
     }
 
-    static boolean CanNotMakeASimpleMove(Board board, Color colorOfMovingPiece) {
+    public static boolean CanNotMakeASimpleMove(Board board, Color colorOfMovingPiece) {
         ArrayList<Tile> tilesContainingPieceOfSameColor = board.getTilesContainingPieceOfColor(colorOfMovingPiece);
         var assertCanDoASimpleMove = new ArrayList<Boolean>();
         for (var tile : tilesContainingPieceOfSameColor) {

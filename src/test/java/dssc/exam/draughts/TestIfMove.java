@@ -1,7 +1,10 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.moveLogics.Move;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
+import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -50,7 +53,7 @@ public class TestIfMove {
         var board = new CustomizableBoard()
                 .upgradeToKing(Arrays.asList(17))
                 .popPiecesAt(Arrays.asList(44, 49, 53))
-                .setMultipleManAt(Arrays.asList(26, 44, 30), Color.BLACK);
+                .setMultipleManAt(Arrays.asList(26, 44, 30), dssc.exam.draughts.utilities.Color.BLACK);
         MoveException exception = assertThrows(MoveException.class, () -> new Move(board, new Point(2, 1), new Point(3, 0)).moveDecider());
         assertEquals("There are pieces that must capture, try these positions: (2,3)", exception.getMessage());
     }

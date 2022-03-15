@@ -1,7 +1,7 @@
 package dssc.exam.draughts.display;
 
-import dssc.exam.draughts.Board;
-import dssc.exam.draughts.Player;
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Player;
 
 public class DisplayPlayer implements Display<Player> {
 

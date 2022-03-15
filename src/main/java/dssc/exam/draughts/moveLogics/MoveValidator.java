@@ -1,5 +1,7 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Tile;
 import dssc.exam.draughts.exceptions.DraughtsException;
 import dssc.exam.draughts.exceptions.IndexException;
 import dssc.exam.draughts.exceptions.MoveException;
@@ -7,12 +9,12 @@ import dssc.exam.draughts.exceptions.TileException;
 
 import java.awt.*;
 
-class MoveValidator {
+public class MoveValidator {
     private final Board board;
     private final Point source;
     private final Point destination;
 
-    MoveValidator(Board board, Point source, Point destination) {
+    public MoveValidator(Board board, Point source, Point destination) {
         this.board = board;
         this.source = source;
         this.destination = destination;

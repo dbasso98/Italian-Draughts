@@ -1,6 +1,7 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.display.DisplayPiece;
+import dssc.exam.draughts.utilities.Color;
 
 public class Piece {
     private final Color pieceColor;

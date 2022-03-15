@@ -1,7 +1,7 @@
 package dssc.exam.draughts.display;
 
-import dssc.exam.draughts.Color;
-import dssc.exam.draughts.Piece;
+import dssc.exam.draughts.utilities.Color;
+import dssc.exam.draughts.core.Piece;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

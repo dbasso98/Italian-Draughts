@@ -1,5 +1,9 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Piece;
+import dssc.exam.draughts.utilities.Color;
+
 import java.util.List;
 
 class CustomizableBoard extends Board {

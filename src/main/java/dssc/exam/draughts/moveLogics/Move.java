@@ -1,5 +1,9 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Path;
+import dssc.exam.draughts.core.Piece;
+import dssc.exam.draughts.core.Tile;
 import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
@@ -70,7 +74,7 @@ public class Move {
         doASimpleMove();
     }
 
-    void doASimpleMove() {
+    public void doASimpleMove() {
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile.getPiece(), destinationTile.getRow());
     }

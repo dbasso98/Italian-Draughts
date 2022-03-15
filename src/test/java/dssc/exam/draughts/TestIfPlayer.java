@@ -1,6 +1,8 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
+import dssc.exam.draughts.core.Player;
+import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -21,7 +23,7 @@ public class TestIfPlayer {
     private Player getPlayerWithDoubledInput(List<Integer> inputList) {
         PlayerInterfaceDouble inputDouble = new PlayerInterfaceDouble();
         inputDouble.setIntegers(inputList);
-        return new Player(Color.BLACK, inputDouble);
+        return new Player(dssc.exam.draughts.utilities.Color.BLACK, inputDouble);
     }
 
     static Stream<Arguments> generateDataReadPosition() {
@@ -76,7 +78,7 @@ public class TestIfPlayer {
         PlayerInterfaceExceptionRaiserDouble input = new
                 PlayerInterfaceExceptionRaiserDouble(new InputMismatchException());
         input.setIntegers(inputList);
-        Player player = new Player(Color.WHITE, input);
+        Player player = new Player(dssc.exam.draughts.utilities.Color.WHITE, input);
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         player.readSource();

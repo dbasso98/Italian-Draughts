@@ -1,13 +1,15 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
+
+import dssc.exam.draughts.utilities.Color;
 
 import java.awt.*;
 
 public class Tile {
     private Piece piece = null;
-    private final Color tileColor;
+    private final dssc.exam.draughts.utilities.Color tileColor;
     private final Point position;
 
-    public Tile(Color color, Point position) {
+    public Tile(dssc.exam.draughts.utilities.Color color, Point position) {
         this.tileColor = color;
         this.position = position;
     }
@@ -26,7 +28,7 @@ public class Tile {
         return piece;
     }
 
-    public Color getColor() {
+    public dssc.exam.draughts.utilities.Color getColor() {
         return tileColor;
     }
 
@@ -51,11 +53,11 @@ public class Tile {
     }
 
     public boolean isBlack() {
-        return tileColor == Color.BLACK;
+        return tileColor == dssc.exam.draughts.utilities.Color.BLACK;
     }
 
     public boolean isWhite() {
-        return tileColor == Color.WHITE;
+        return tileColor == dssc.exam.draughts.utilities.Color.WHITE;
     }
 
     public boolean containsPieceOfColor(Color color) {

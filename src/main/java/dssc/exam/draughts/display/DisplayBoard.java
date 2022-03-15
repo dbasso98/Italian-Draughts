@@ -1,8 +1,8 @@
 package dssc.exam.draughts.display;
 
-import dssc.exam.draughts.Board;
-import dssc.exam.draughts.BoardSpecifications;
-import dssc.exam.draughts.Tile;
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.utilities.BoardSpecifications;
+import dssc.exam.draughts.core.Tile;
 import dssc.exam.draughts.exceptions.IndexException;
 
 public class DisplayBoard implements Display<Board> {

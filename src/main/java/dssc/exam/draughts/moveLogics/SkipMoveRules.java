@@ -1,12 +1,17 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
+
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.utilities.Color;
+import dssc.exam.draughts.core.Path;
+import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 
-public class SkipMoveRules extends MoveRules{
+public class SkipMoveRules extends MoveRules {
     private Tile secondDiagonalTile;
     private boolean canSkip;
 
-    SkipMoveRules(Tile source, Point offset, Board board){
+    public SkipMoveRules(Tile source, Point offset, Board board){
         super(source, offset, board);
         getSecondDiagonalTile(board);
     }
@@ -15,7 +20,7 @@ public class SkipMoveRules extends MoveRules{
         secondDiagonalTile = board.getTileInDiagonalOffset(this.firstDiagonalTile, offset);
     }
 
-    void evaluateIfCanSkip(Path path) {
+    public void evaluateIfCanSkip(Path path) {
         if (path.startsFromKing()) {
             evaluateIfKingCanSkip(path);
             return;
@@ -52,11 +57,11 @@ public class SkipMoveRules extends MoveRules{
         return !(path.containsTile(secondDiagonalTile));
     }
 
-    Tile getSecondTile() {
+    public Tile getSecondTile() {
         return secondDiagonalTile;
     }
 
-    boolean canSkip() {
+    public boolean canSkip() {
         return canSkip;
     }
 }

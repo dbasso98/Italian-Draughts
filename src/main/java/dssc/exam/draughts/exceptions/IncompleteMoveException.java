@@ -1,7 +1,7 @@
 package dssc.exam.draughts.exceptions;
 
-import dssc.exam.draughts.Path;
-import dssc.exam.draughts.Tile;
+import dssc.exam.draughts.core.Path;
+import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;

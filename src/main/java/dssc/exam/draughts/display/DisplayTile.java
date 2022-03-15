@@ -1,6 +1,6 @@
 package dssc.exam.draughts.display;
 
-import dssc.exam.draughts.Tile;
+import dssc.exam.draughts.core.Tile;
 
 public class DisplayTile implements Display<Tile> {
 

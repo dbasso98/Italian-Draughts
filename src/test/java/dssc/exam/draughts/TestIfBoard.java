@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.utilities.Color;
 import net.jqwik.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,14 +22,14 @@ public class TestIfBoard {
 
     @Test
     void has24Pieces() {
-        var numberOfBlackPieces = board.getNumberOfPiecesOfColor(Color.BLACK);
-        var numberOfWhitePieces = board.getNumberOfPiecesOfColor(Color.WHITE);
+        var numberOfBlackPieces = board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.BLACK);
+        var numberOfWhitePieces = board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.WHITE);
         assertEquals(24, numberOfBlackPieces + numberOfWhitePieces);
     }
 
     @ParameterizedTest
     @CsvSource({"BLACK, 12", "WHITE, 12"})
-    void has12PiecesOfColor(Color color, int number) {
+    void has12PiecesOfColor(dssc.exam.draughts.utilities.Color color, int number) {
         assertEquals(number, board.getNumberOfPiecesOfColor(color));
     }
 
@@ -35,7 +37,7 @@ public class TestIfBoard {
     @CsvSource({"WHITE, 17", "WHITE, 19", "WHITE, 21", "WHITE, 23",
             "WHITE, 8", "WHITE, 10", "WHITE, 12", "WHITE, 14",
             "WHITE, 1", "WHITE, 3", "WHITE, 5", "WHITE, 7"})
-    void has12WhitePiecesInFirstThreeRows(Color color, int position) {
+    void has12WhitePiecesInFirstThreeRows(dssc.exam.draughts.utilities.Color color, int position) {
         assertEquals(board.getTile(position).getPiece().getColor(), color);
         assertEquals(board.getTile(position).getPiece().getColor(), color);
     }

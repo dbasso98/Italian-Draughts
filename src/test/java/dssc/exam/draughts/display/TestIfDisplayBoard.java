@@ -1,6 +1,6 @@
 package dssc.exam.draughts.display;
 
-import dssc.exam.draughts.Board;
+import dssc.exam.draughts.core.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

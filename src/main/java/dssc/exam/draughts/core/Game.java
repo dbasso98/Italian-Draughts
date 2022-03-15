@@ -1,8 +1,12 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
+import dssc.exam.draughts.moveLogics.CandidateSkipPathBuilder;
+import dssc.exam.draughts.moveLogics.Move;
+import dssc.exam.draughts.moveLogics.SimpleMoveRules;
 import dssc.exam.draughts.display.DisplayBoard;
 import dssc.exam.draughts.display.DisplayPlayer;
 import dssc.exam.draughts.exceptions.*;
+import dssc.exam.draughts.utilities.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,23 +21,23 @@ public class Game {
     private DisplayBoard displayBoard;
 
 
-    void loadGame(Board board, int round) {
+    public void loadGame(Board board, int round) {
         this.board = board;
         this.round = round;
         this.currentPlayer = (round % 2 == 0) ? this.whitePlayer : this.blackPlayer;
     }
 
-    void startGame() {
+    public void startGame() {
         initPlayers();
         play();
     }
 
-    void initPlayers() {
+    public void initPlayers() {
         whitePlayer.initializePlayerName(1);
         blackPlayer.initializePlayerName(2);
     }
 
-    void play() {
+    public void play() {
         while (whitePlayerHasPieces() & blackPlayerHasPieces()) {
             try {
                 playRound();
@@ -46,7 +50,7 @@ public class Game {
         displayPlayer.displayWinner(currentPlayer);
     }
 
-    void playRound() throws CannotMoveException {
+    public void playRound() throws CannotMoveException {
         displayPlayer.initialInformation(board, currentPlayer);
         throwExceptionIfCannotMakeAtLeastOneMove();
         readAndPerformMove();
@@ -121,7 +125,7 @@ public class Game {
             throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
-    void changePlayer() {
+    public void changePlayer() {
         if (currentPlayer == blackPlayer) {
             currentPlayer = whitePlayer;
             return;
@@ -130,22 +134,22 @@ public class Game {
     }
 
     boolean blackPlayerHasPieces() {
-        return board.getNumberOfPiecesOfColor(Color.BLACK) != 0;
+        return board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.BLACK) != 0;
     }
 
     boolean whitePlayerHasPieces() {
-        return board.getNumberOfPiecesOfColor(Color.WHITE) != 0;
+        return board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.WHITE) != 0;
     }
 
-    int getRound() {
+    public int getRound() {
         return round;
     }
 
-    Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
+    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
         this.displayPlayer = displayPlayer;
         this.displayBoard = displayBoard;
         this.whitePlayer = whitePlayer;
@@ -153,15 +157,15 @@ public class Game {
         this.currentPlayer = whitePlayer;
     }
 
-    Game(Player whitePlayer, Player blackPlayer) { // solo nei test viene usato.
+    public Game(Player whitePlayer, Player blackPlayer) { // solo nei test viene usato.
         this(new DisplayPlayer(), new DisplayBoard(), whitePlayer, blackPlayer);
     }
 
-    Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
-        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
+    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
+        this(displayPlayer, displayBoard, new Player(dssc.exam.draughts.utilities.Color.WHITE), new Player(Color.BLACK));
     }
 
-    Game() {
+    public Game() {
         this(new DisplayPlayer(), new DisplayBoard());
     }
 }

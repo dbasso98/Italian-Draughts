@@ -1,4 +1,7 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
+
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 
@@ -17,7 +20,7 @@ public class MoveRules {
         firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, offset);
     }
 
-    Tile getFirstTile() {
+    public Tile getFirstTile() {
         return firstDiagonalTile;
     }
 }

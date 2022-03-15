@@ -1,5 +1,7 @@
 package dssc.exam.draughts;
 
+import dssc.exam.draughts.core.Piece;
+import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

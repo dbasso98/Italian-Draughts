@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.utilities;
 
 public enum Color {
     BLACK(-1, 0),

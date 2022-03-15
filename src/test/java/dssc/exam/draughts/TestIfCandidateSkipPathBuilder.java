@@ -1,10 +1,13 @@
 package dssc.exam.draughts;
 
-import dssc.exam.draughts.display.DisplayBoard;
+import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.core.Path;
+import dssc.exam.draughts.moveLogics.CandidateSkipPathBuilder;
+import dssc.exam.draughts.moveLogics.Move;
+import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,23 +21,23 @@ public class TestIfCandidateSkipPathBuilder {
     void findsCandidateTilesForSkipMove() {
         var board = new Board();
         new Move(board, new Point(5, 4), new Point(3, 2)).movePiece();
-        assertEquals(2, CandidateSkipPathBuilder.build(board, Color.WHITE).size());
-        assertEquals(0, CandidateSkipPathBuilder.build(board, Color.BLACK).size());
+        assertEquals(2, CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.BLACK).size());
     }
 
     @Test
     void doesntFindAnyCandidateTileForSkipMoveAtBeginning() {
         var board = new Board();
-        assertEquals(0, CandidateSkipPathBuilder.build(board, Color.WHITE).size());
-        assertEquals(0, CandidateSkipPathBuilder.build(board, Color.BLACK).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE).size());
+        assertEquals(0, CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.BLACK).size());
     }
 
     @Test
     void findsAPathWithMoreThanOneSkip() {
         var board = new CustomizableBoard()
                 .popPiecesAt(Arrays.asList(44, 49, 53))
-                .setMultipleManAt(Arrays.asList(26, 44, 30), Color.BLACK);
-        assertEquals(2, Collections.max((CandidateSkipPathBuilder.build(board, Color.WHITE).values().stream()
+                .setMultipleManAt(Arrays.asList(26, 44, 30), dssc.exam.draughts.utilities.Color.BLACK);
+        assertEquals(2, Collections.max((CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE).values().stream()
                                                                                         .map(Path::getNumberOfSkips)
                                                                                         .collect(Collectors.toList()))));
     }
@@ -44,8 +47,8 @@ public class TestIfCandidateSkipPathBuilder {
         var board = new CustomizableBoard()
                 .upgradeToKing(Arrays.asList(17))
                 .popPiecesAt(Arrays.asList(44, 49, 53, 21))
-                .setMultipleManAt(Arrays.asList(26, 44, 30, 28), Color.BLACK);
-        assertEquals(3, Collections.max(CandidateSkipPathBuilder.build(board, Color.WHITE).values().stream()
+                .setMultipleManAt(Arrays.asList(26, 44, 30, 28), dssc.exam.draughts.utilities.Color.BLACK);
+        assertEquals(3, Collections.max(CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE).values().stream()
                                                                                         .map(Path::getNumberOfSkips)
                                                                                         .collect(Collectors.toList())));
     }
@@ -55,7 +58,7 @@ public class TestIfCandidateSkipPathBuilder {
         var board = new Board();
         new Move(board, new Point(6, 5), new Point(3, 2)).movePiece();
         board.getPieceAtTile(5, 4).upgradeToKing();
-        var candidateTilesToStartASkip = CandidateSkipPathBuilder.build(board, Color.WHITE);
+        var candidateTilesToStartASkip = CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE);
         var pathOfTileThatCannotSkipAKing = candidateTilesToStartASkip.get(board.getTile(2, 1));
         assertEquals(1, pathOfTileThatCannotSkipAKing.getNumberOfSkips());
         assertEquals(10, pathOfTileThatCannotSkipAKing.getWeight());
@@ -65,9 +68,9 @@ public class TestIfCandidateSkipPathBuilder {
     void givesHigherScoreToPathWithMostKingsToEat() {
         var board = new CustomizableBoard()
                 .popPiecesAt(Arrays.asList(46, 49, 53))
-                .setMultipleManAt(Arrays.asList(26, 28, 32, 40), Color.BLACK)
+                .setMultipleManAt(Arrays.asList(26, 28, 32, 40), dssc.exam.draughts.utilities.Color.BLACK)
                 .upgradeToKing(Arrays.asList(17, 21, 26, 44));
-        var pathValues = CandidateSkipPathBuilder.build(board, Color.WHITE).values();
+        var pathValues = CandidateSkipPathBuilder.build(board, dssc.exam.draughts.utilities.Color.WHITE).values();
         assertEquals(45, Collections.max((pathValues.stream()
                                                             .map(Path::getWeight)
                                                             .collect(Collectors.toList()))));
@@ -83,7 +86,7 @@ public class TestIfCandidateSkipPathBuilder {
         var board = new CustomizableBoard()
                 .upgradeToKing(Arrays.asList(17, 19, 44))
                 .popPiecesAt(Arrays.asList(46, 49, 51, 40))
-                .setMultipleManAt(Arrays.asList(28, 26, 39, 33), Color.BLACK)
+                .setMultipleManAt(Arrays.asList(28, 26, 39, 33), dssc.exam.draughts.utilities.Color.BLACK)
                 .upgradeToKing(List.of(26));
         var pathValues = CandidateSkipPathBuilder.build(board, Color.WHITE).values();
         assertEquals(38, Collections.max((pathValues.stream()
