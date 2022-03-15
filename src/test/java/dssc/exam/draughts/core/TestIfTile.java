@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIfTile {
 
-    Tile emptyTile = new Tile(dssc.exam.draughts.utilities.Color.BLACK, new Point(0,0));
-    Tile blackTileBlackMan = new Tile(dssc.exam.draughts.utilities.Color.BLACK, new Point(0,0));
+    Tile emptyTile = new Tile(Color.BLACK, new Point(0,0));
+    Tile blackTileBlackMan = new Tile(Color.BLACK, new Point(0,0));
 
     @Test
     void isEmpty() {
@@ -22,7 +22,7 @@ public class TestIfTile {
 
     @ParameterizedTest
     @CsvSource({"BLACK, BLACK", "WHITE, WHITE"})
-    void isOfColor(dssc.exam.draughts.utilities.Color colorOfTile, dssc.exam.draughts.utilities.Color expectedColor){
+    void isOfColor(Color colorOfTile, Color expectedColor){
         Tile coloredTile = new Tile(colorOfTile, new Point(0,0));
         assertEquals(expectedColor, coloredTile.getColor());
     }

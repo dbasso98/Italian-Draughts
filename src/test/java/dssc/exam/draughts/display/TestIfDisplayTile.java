@@ -45,5 +45,4 @@ public class TestIfDisplayTile {
         blackTileBlackMan.display();
         assertEquals("[B]", fakeStandardOutput.toString());
     }
-
 }

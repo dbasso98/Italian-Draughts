@@ -38,5 +38,4 @@ public class TestIfDisplayPiece {
         new DisplayPiece().display(fakePiece);
         assertEquals(representationOfPiece, fakeStandardOutput.toString());
     }
-
 }

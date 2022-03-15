@@ -1,6 +1,5 @@
 package dssc.exam.draughts.core;
 
-import dssc.exam.draughts.core.Piece;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

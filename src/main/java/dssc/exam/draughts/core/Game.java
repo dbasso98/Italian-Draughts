@@ -5,8 +5,8 @@ import dssc.exam.draughts.moveLogics.Move;
 import dssc.exam.draughts.moveLogics.SimpleMoveRules;
 import dssc.exam.draughts.display.DisplayBoard;
 import dssc.exam.draughts.display.DisplayPlayer;
-import dssc.exam.draughts.exceptions.*;
 import dssc.exam.draughts.utilities.Color;
+import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -134,11 +134,11 @@ public class Game {
     }
 
     boolean blackPlayerHasPieces() {
-        return board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.BLACK) != 0;
+        return board.getNumberOfPiecesOfColor(Color.BLACK) != 0;
     }
 
     boolean whitePlayerHasPieces() {
-        return board.getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color.WHITE) != 0;
+        return board.getNumberOfPiecesOfColor(Color.WHITE) != 0;
     }
 
     public int getRound() {
@@ -162,7 +162,7 @@ public class Game {
     }
 
     public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
-        this(displayPlayer, displayBoard, new Player(dssc.exam.draughts.utilities.Color.WHITE), new Player(Color.BLACK));
+        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     public Game() {

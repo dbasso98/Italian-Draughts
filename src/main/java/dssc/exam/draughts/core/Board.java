@@ -16,8 +16,8 @@ public class Board {
         initializeEmptyBoard();
         for (int tileIndex = 0; tileIndex < BoardSpecifications.initialAreaOccupiedByOnePlayer(); ++tileIndex) {
             if (getTile(tileIndex).isBlack()) {
-                setNewPieceAtIndex(tileIndex, dssc.exam.draughts.utilities.Color.WHITE);
-                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), dssc.exam.draughts.utilities.Color.BLACK);
+                setNewPieceAtIndex(tileIndex, Color.WHITE);
+                setNewPieceAtIndex(getSymmetricIndexOf(tileIndex), Color.BLACK);
             }
         }
     }
@@ -30,21 +30,21 @@ public class Board {
     }
 
     private void createOddRow(int row) {
-        createRow(row, dssc.exam.draughts.utilities.Color.BLACK, dssc.exam.draughts.utilities.Color.WHITE);
+        createRow(row, Color.BLACK, Color.WHITE);
     }
 
     private void createEvenRow(int row) {
-        createRow(row, dssc.exam.draughts.utilities.Color.WHITE, dssc.exam.draughts.utilities.Color.BLACK);
+        createRow(row, Color.WHITE, Color.BLACK);
     }
 
-    private void createRow(int row, dssc.exam.draughts.utilities.Color firstColor, dssc.exam.draughts.utilities.Color secondColor) {
+    private void createRow(int row, Color firstColor, Color secondColor) {
         for (int column = 0; column < BoardSpecifications.numberOfColumns(); column += 2) {
             boardArray.add(new Tile(firstColor, new Point(row, column)));
             boardArray.add(new Tile(secondColor, new Point(row, column + 1)));
         }
     }
 
-    private void setNewPieceAtIndex(int tileIndex, dssc.exam.draughts.utilities.Color color) {
+    private void setNewPieceAtIndex(int tileIndex, Color color) {
         Tile tile = boardArray.get(tileIndex);
         tile.setPiece(new Piece(color));
     }
@@ -80,13 +80,13 @@ public class Board {
         return Math.min(startIndex, endIndex) + distance / 2;
     }
 
-    public int getNumberOfPiecesOfColor(dssc.exam.draughts.utilities.Color color) {
+    public int getNumberOfPiecesOfColor(Color color) {
         return new ArrayList<>(getTilesContainingPieceOfColor(color).stream()
                 .map(Tile::getPiece)
                 .collect(Collectors.toList())).size();
     }
 
-    public ArrayList<Tile> getTilesContainingPieceOfColor(dssc.exam.draughts.utilities.Color color) {
+    public ArrayList<Tile> getTilesContainingPieceOfColor(Color color) {
         return new ArrayList<>(boardArray.stream()
                 .filter(tile -> tile.containsPieceOfColor(color))
                 .collect(Collectors.toList()));

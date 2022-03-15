@@ -19,8 +19,8 @@ public class TestIfGame {
 
     @Test
     void changesPlayer() {
-        Player whitePlayer = new Player(dssc.exam.draughts.utilities.Color.WHITE);
-        Player blackPlayer = new Player(dssc.exam.draughts.utilities.Color.BLACK);
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
         Game game = new Game(whitePlayer, blackPlayer);
         assertEquals(whitePlayer, game.getCurrentPlayer());
         game.changePlayer();
@@ -36,22 +36,22 @@ public class TestIfGame {
                 new Point(3, 4));
 
         Game game = new Game(
-                new PlayerStub(dssc.exam.draughts.utilities.Color.WHITE, fakeInputList),
-                new PlayerStub(dssc.exam.draughts.utilities.Color.BLACK, fakeInputList));
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
 
         Board board = new Board();
         game.loadGame(board, 0);
 
         assertTrue(board.getTile(2, 3).isNotEmpty());
         assertTrue(board.getTile(3, 4).isEmpty());
-        assertEquals(dssc.exam.draughts.utilities.Color.WHITE, game.getCurrentPlayer().getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         assertEquals(0, game.getRound());
 
         game.playRound();
 
         assertTrue(board.getTile(2, 3).isEmpty());
         assertTrue(board.getTile(3, 4).isNotEmpty());
-        assertEquals(dssc.exam.draughts.utilities.Color.BLACK, game.getCurrentPlayer().getColor());
+        assertEquals(Color.BLACK, game.getCurrentPlayer().getColor());
         assertEquals(1, game.getRound());
     }
 
@@ -65,11 +65,11 @@ public class TestIfGame {
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
         Board board = new Board();
         Game game = new Game(
-                new PlayerStub(dssc.exam.draughts.utilities.Color.WHITE, fakeInputList),
-                new PlayerStub(dssc.exam.draughts.utilities.Color.BLACK, fakeInputList));
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
 
         game.loadGame(board, 0);
-        assertEquals(dssc.exam.draughts.utilities.Color.WHITE, game.getCurrentPlayer().getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
         game.playRound();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
 
@@ -87,11 +87,11 @@ public class TestIfGame {
 
         Board board = new Board();
         Game game = new Game(
-                new PlayerStub(dssc.exam.draughts.utilities.Color.WHITE, fakeInputList),
-                new PlayerStub(dssc.exam.draughts.utilities.Color.BLACK, fakeInputList));
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
 
         game.loadGame(board, 0);
-        assertEquals(dssc.exam.draughts.utilities.Color.WHITE, game.getCurrentPlayer().getColor());
+        assertEquals(Color.WHITE, game.getCurrentPlayer().getColor());
 
         game.playRound();
 
@@ -113,8 +113,8 @@ public class TestIfGame {
 
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
-        Player whitePlayer = new Player(dssc.exam.draughts.utilities.Color.WHITE);
-        Player blackPlayer = new Player(dssc.exam.draughts.utilities.Color.BLACK);
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
 
         whitePlayer.setName("Player 1");
         blackPlayer.setName("Player 2");
@@ -136,12 +136,12 @@ public class TestIfGame {
 
         CustomizableBoard board = new CustomizableBoard()
                 .popPiecesAt(Arrays.asList(12, 17, 33, 42, 44))
-                .setMultipleManAt(Arrays.asList(28, 33), dssc.exam.draughts.utilities.Color.WHITE)
-                .setMultipleManAt(Arrays.asList(24, 37), dssc.exam.draughts.utilities.Color.BLACK);
+                .setMultipleManAt(Arrays.asList(28, 33), Color.WHITE)
+                .setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
 
         Game game = new Game(
-                new PlayerStub(dssc.exam.draughts.utilities.Color.WHITE, fakeInputList),
-                new PlayerStub(dssc.exam.draughts.utilities.Color.BLACK, fakeInputList));
+                new PlayerStub(Color.WHITE, fakeInputList),
+                new PlayerStub(Color.BLACK, fakeInputList));
 
         game.loadGame(board, 1);
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
@@ -161,14 +161,14 @@ public class TestIfGame {
         board.popPiecesAt(Stream.iterate(1, n -> n + 1)
                 .limit(board.getSize() - 1)
                 .collect(Collectors.toList()));
-        board.setManAtTile(0,1, dssc.exam.draughts.utilities.Color.WHITE);
-        board.setManAtTile(1,0, dssc.exam.draughts.utilities.Color.BLACK);
-        board.setKingAtTile(1,2, dssc.exam.draughts.utilities.Color.BLACK);
+        board.setManAtTile(0,1, Color.WHITE);
+        board.setManAtTile(1,0, Color.BLACK);
+        board.setKingAtTile(1,2, Color.BLACK);
 
         ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
 
-        Player whitePlayer = new Player(dssc.exam.draughts.utilities.Color.WHITE);
-        Player blackPlayer = new Player(dssc.exam.draughts.utilities.Color.BLACK);
+        Player whitePlayer = new Player(Color.WHITE);
+        Player blackPlayer = new Player(Color.BLACK);
 
         whitePlayer.setName("Player 1");
         blackPlayer.setName("Player 2");

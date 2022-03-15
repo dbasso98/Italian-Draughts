@@ -44,5 +44,4 @@ public class TestIfScannerPlayerInput {
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertThrows(InputMismatchException.class, inputInterface::getInt);
     }
-
 }
