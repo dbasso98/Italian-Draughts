@@ -8,12 +8,16 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SimpleMoveRules extends MoveRules {
-
+public class SimpleMoveRules {
+    final Tile sourceTile;
+    final Point offset;
+    Tile firstDiagonalTile;
     private boolean canSimplyMove;
 
     SimpleMoveRules(Tile source, Point offset, Board board) {
-        super(source, offset, board);
+        this.sourceTile = source;
+        this.offset = offset;
+        getFirstDiagonalTile(board);
     }
 
     void evaluateIfCanSimplyMove() {
@@ -49,4 +53,9 @@ public class SimpleMoveRules extends MoveRules {
         var leftMove = new SimpleMoveRules(currentTile, new Point(direction, -1), board);
         return new ArrayList<>(Arrays.asList(rightMove, leftMove));
     }
+
+    private void getFirstDiagonalTile(Board board) {
+        firstDiagonalTile = board.getTileInDiagonalOffset(sourceTile, offset);
+    }
+
 }
