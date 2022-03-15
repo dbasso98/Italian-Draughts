@@ -1,7 +1,5 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
-import dssc.exam.draughts.core.Piece;
-import dssc.exam.draughts.core.Tile;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

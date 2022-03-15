@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
 import dssc.exam.draughts.core.Player;

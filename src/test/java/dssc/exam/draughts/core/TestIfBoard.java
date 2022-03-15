@@ -1,4 +1,4 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.core.Board;
 import dssc.exam.draughts.utilities.Color;

@@ -1,5 +1,6 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.core;
 
+import dssc.exam.draughts.CustomizableBoard;
 import dssc.exam.draughts.core.Board;
 import dssc.exam.draughts.core.Game;
 import dssc.exam.draughts.core.Player;
