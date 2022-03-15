@@ -1,9 +1,5 @@
 package dssc.exam.draughts.core;
 
-import dssc.exam.draughts.CustomizableBoard;
-import dssc.exam.draughts.core.Board;
-import dssc.exam.draughts.core.Game;
-import dssc.exam.draughts.core.Player;
 import dssc.exam.draughts.exceptions.CannotMoveException;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;

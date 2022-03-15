@@ -1,7 +1,6 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
 
 import dssc.exam.draughts.core.Board;
-import dssc.exam.draughts.moveLogics.MoveValidator;
 import dssc.exam.draughts.exceptions.IndexException;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;

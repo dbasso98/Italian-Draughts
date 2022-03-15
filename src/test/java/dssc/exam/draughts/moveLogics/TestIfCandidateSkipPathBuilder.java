@@ -1,9 +1,8 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
 
+import dssc.exam.draughts.core.CustomizableBoard;
 import dssc.exam.draughts.core.Board;
 import dssc.exam.draughts.core.Path;
-import dssc.exam.draughts.moveLogics.CandidateSkipPathBuilder;
-import dssc.exam.draughts.moveLogics.Move;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 

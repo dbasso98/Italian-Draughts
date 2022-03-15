@@ -1,7 +1,7 @@
-package dssc.exam.draughts;
+package dssc.exam.draughts.moveLogics;
 
+import dssc.exam.draughts.core.CustomizableBoard;
 import dssc.exam.draughts.core.Board;
-import dssc.exam.draughts.moveLogics.Move;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
 import dssc.exam.draughts.utilities.Color;
