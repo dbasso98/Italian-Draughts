@@ -32,53 +32,6 @@
 This repository consists of a Test Driven Development implementation of Italian Draughts using Java 17.
 Furthermore, continuous integration was used by means of Travis CI.
 
-### Game Setup 
-Italian Draughts is a 2 player game on a board of 64 squares, half are white and half are black.
-Each player controls 12 pieces of a specific color (black or white) and the board is placed in 
-such a way so that the rightmost square on both sides is black. Furthermore, all the pieces are
-placed in black tiles only.
-
-Shown below, is a typical setup:
-
-
-
-![](Damiera.jpg)
-
-### Game Play
-White always moves first, alternating turns. Each piece (man) can only move diagonally forward of one square.
-This implies, that at all times, all the pieces MUST be in a black square. 
-
-If a man reaches the opposite side of the board, it is upgraded to a king. 
-Kings can move forward or backward (always diagonally of one square).
-
-Furthermore, capturing is mandatory. In other words, if a man finds a piece of opposing color in his diagonal
-(forward of one square) with a free space in the subsequent diagonal, it must occupy the free position and capture
-the opposing piece.
-Men can only capture diagonally forward for a maximum of three pieces while kings can capture backwards as well (same
-rules apply). Furthermore, kings can only be captured by other kings.
-
-The following criteria apply when capturing:
-
-- A player must always capture the greatest amount of pieces (to a maximum of three). - If a player may capture the same amount of pieces with either a man or a king, they 
-  must do so with the king.
-- If the player may capture the same amount of pieces with a king, they must choose 
-  the capture with most kings.
-- If a player may capture the same amount of kings, they must perform the capture with
-  a king closest to its proximity.
-- If none of these rules apply, the player may choose the best capture according to their
-  strategic needs.
-
-### Game Ending
-The game ends when one of the following conditions is verified:
-
-- one player has captured all the opposing pieces
-- one player resigns
-- one player cannot perform any more moves. 
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 ### Built With
 ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
@@ -91,8 +44,7 @@ The game ends when one of the following conditions is verified:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Clone the repository. 
 
 ### Prerequisites
 
@@ -191,6 +143,53 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 * []()
 * []()
 * []()
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+### Game Setup 
+Italian Draughts is a 2 player game on a board of 64 squares, half are white and half are black.
+Each player controls 12 pieces of a specific color (black or white) and the board is placed in 
+such a way so that the rightmost square on both sides is black. Furthermore, all the pieces are
+placed in black tiles only.
+
+Shown below, is a typical setup:
+
+
+
+![](Damiera.jpg)
+
+### Game Play
+White always moves first, alternating turns. Each piece (man) can only move diagonally forward of one square.
+This implies, that at all times, all the pieces MUST be in a black square. 
+
+If a man reaches the opposite side of the board, it is upgraded to a king. 
+Kings can move forward or backward (always diagonally of one square).
+
+Furthermore, capturing is mandatory. In other words, if a man finds a piece of opposing color in his diagonal
+(forward of one square) with a free space in the subsequent diagonal, it must occupy the free position and capture
+the opposing piece.
+Men can only capture diagonally forward for a maximum of three pieces while kings can capture backwards as well (same
+rules apply). Furthermore, kings can only be captured by other kings.
+
+The following criteria apply when capturing:
+
+- A player must always capture the greatest amount of pieces (to a maximum of three). - If a player may capture the same amount of pieces with either a man or a king, they 
+  must do so with the king.
+- If the player may capture the same amount of pieces with a king, they must choose 
+  the capture with most kings.
+- If a player may capture the same amount of kings, they must perform the capture with
+  a king closest to its proximity.
+- If none of these rules apply, the player may choose the best capture according to their
+  strategic needs.
+
+### Game Ending
+The game ends when one of the following conditions is verified:
+
+- one player has captured all the opposing pieces
+- one player resigns
+- one player cannot perform any more moves. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
