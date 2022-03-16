@@ -95,6 +95,8 @@ Clone the repository to a directory. Once in the directory, run:
 
 Java 17
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -126,12 +128,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 <!-- CONTACT -->
 ## Contact
 
 Michele Berti
+
 Davide Basso
+
 Andres Bermeo Marinelli
 
 <p align="right">(<a href="#top">back to top</a>)</p>
