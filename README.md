@@ -47,7 +47,7 @@ placed in black tiles only.
 
 Shown below, is a typical setup:
 
-<img src="Damiera.jpg" alt="Damiera" width="200"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Damiera.JPG/1920px-Damiera.JPG" width="300">
 
 ### Game Play
 White always moves first, alternating turns. Each piece (man) can only move diagonally forward of one square.
