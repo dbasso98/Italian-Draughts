@@ -93,7 +93,7 @@ Clone the repository to a directory. Once in the directory, run:
 
 ### Prerequisites
 
-Java 17
+* Java 17
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -124,18 +124,6 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-<!-- CONTACT -->
-## Contact
-
-Michele Berti
-
-Davide Basso
-
-Andres Bermeo Marinelli
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
