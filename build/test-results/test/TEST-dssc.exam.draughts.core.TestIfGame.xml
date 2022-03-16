@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dssc.exam.draughts.core.TestIfGame" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-16T18:42:54" hostname="ZORO" time="0.071">
+  <properties/>
+  <testcase name="informsThePlayerThatCanContinueToSkip()" classname="dssc.exam.draughts.core.TestIfGame" time="0.045"/>
+  <testcase name="performAMoveAndUpdatesRoundNumber()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
+  <testcase name="changesPlayer()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
+  <testcase name="doesntAllowToMoveAnOpponentPiece()" classname="dssc.exam.draughts.core.TestIfGame" time="0.004"/>
+  <testcase name="EndGameWhenAPlayerCannotMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.01"/>
+  <testcase name="endsWhenOnePlayerHasNoPiecesLeft()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
+  <testcase name="doesntAllowToStartMovingFromAnEmptyTile()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

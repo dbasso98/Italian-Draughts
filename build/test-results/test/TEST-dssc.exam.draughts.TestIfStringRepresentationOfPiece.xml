@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dssc.exam.draughts.TestIfStringRepresentationOfPiece" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-16T18:42:54" hostname="ZORO" time="0.009">
+  <properties/>
+  <testcase name="displayBlackKing()" classname="dssc.exam.draughts.TestIfStringRepresentationOfPiece" time="0.004"/>
+  <testcase name="displayWhiteKing()" classname="dssc.exam.draughts.TestIfStringRepresentationOfPiece" time="0.001"/>
+  <testcase name="displayWhiteMan()" classname="dssc.exam.draughts.TestIfStringRepresentationOfPiece" time="0.001"/>
+  <testcase name="displayBlackMan()" classname="dssc.exam.draughts.TestIfStringRepresentationOfPiece" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

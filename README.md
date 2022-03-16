@@ -47,7 +47,7 @@ placed in black tiles only.
 
 Shown below, is a typical setup:
 
-![](Damiera.jpg)
+<img src="Damiera.jpg" alt="Damiera" width="200"/>
 
 ### Game Play
 White always moves first, alternating turns. Each piece (man) can only move diagonally forward of one square.
@@ -87,63 +87,22 @@ The game ends when one of the following conditions is verified:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Clone the repository. Install IntelliJ and Fogeddaabouiittt. 
+Clone the repository to a directory. Once in the directory, run:
+
+```java -jar ./build/libs/Italian-Draughts-1.0-SNAPSHOT.jar```
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+Java 17
 
 <!-- CONTRIBUTING -->
 ## Contributing
+
+This repository was created with the intention of following Agile Software Development Practices. In particular,
+continuous integration was a main factor for this project.
+We followed a Test Driven Development approach by continuously refactoring and integrating new features in small steps.
+
+Furthermore, we set up two/three weekly meetings to align and decide future steps. 
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -159,7 +118,6 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
 <!-- LICENSE -->
 ## License
 
@@ -172,23 +130,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Michele Berti
+Davide Basso
+Andres Bermeo Marinelli
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

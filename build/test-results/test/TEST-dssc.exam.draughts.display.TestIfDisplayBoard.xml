@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dssc.exam.draughts.display.TestIfDisplayBoard" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-16T18:42:54" hostname="ZORO" time="0.023">
+  <properties/>
+  <testcase name="printsBoardCorrectly()" classname="dssc.exam.draughts.display.TestIfDisplayBoard" time="0.023"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
