@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.moveLogics.TestIfMoveValidator" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-03-17T21:06:45" hostname="ZORO" time="0.719">
+<testsuite name="dssc.exam.draughts.moveLogics.TestIfMoveValidator" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-03-17T21:09:52" hostname="ZORO" time="0.702">
   <properties/>
-  <testcase name="checksForCorrectDirectionOfAPiece()" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.002"/>
-  <testcase name="allowsToMoveOnlyByOneOrTwoTiles()" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.002"/>
-  <testcase name="[1] sourceRow=0, sourceCol=0, destinationRow=1, destinationCol=1" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.002"/>
+  <testcase name="checksForCorrectDirectionOfAPiece()" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
+  <testcase name="allowsToMoveOnlyByOneOrTwoTiles()" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
+  <testcase name="[1] sourceRow=0, sourceCol=0, destinationRow=1, destinationCol=1" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
   <testcase name="[2] sourceRow=3, sourceCol=3, destinationRow=4, destinationCol=4" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
   <testcase name="[3] sourceRow=5, sourceCol=5, destinationRow=6, destinationCol=6" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
   <testcase name="[4] sourceRow=0, sourceCol=2, destinationRow=1, destinationCol=3" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.001"/>
-  <testcase name="throwsErrorIfSamePosition" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.025"/>
-  <testcase name="throwsInvalidPositionException" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.217"/>
-  <testcase name="checksDiagonalPosition" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.027"/>
+  <testcase name="throwsErrorIfSamePosition" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.019"/>
+  <testcase name="throwsInvalidPositionException" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.221"/>
+  <testcase name="checksDiagonalPosition" classname="dssc.exam.draughts.moveLogics.TestIfMoveValidator" time="0.029"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

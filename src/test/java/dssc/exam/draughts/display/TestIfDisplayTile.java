@@ -21,7 +21,7 @@ public class TestIfDisplayTile {
     @Test
     void correctlyDisplaysEmptyTile(){
         System.setOut(new PrintStream(fakeStandardOutput));
-        emptyTile.display();
+        new DisplayTile().display(emptyTile);
         assertEquals("[ ]", fakeStandardOutput.toString());
 
     }
@@ -34,7 +34,7 @@ public class TestIfDisplayTile {
     @Test
     void correctlyDisplaysTileOnceBlackPieceIsSetOnIt(){
         System.setOut(new PrintStream(fakeStandardOutput));
-        blackTileBlackMan.display();
+        new DisplayTile().display(blackTileBlackMan);
         assertEquals("[b]", fakeStandardOutput.toString());
     }
 
@@ -42,7 +42,7 @@ public class TestIfDisplayTile {
     void correctlyDisplaysTileOnceBlackKingIsPlacedOnIt(){
         System.setOut(new PrintStream(fakeStandardOutput));
         blackTileBlackMan.getPiece().upgradeToKing();
-        blackTileBlackMan.display();
+        new DisplayTile().display(blackTileBlackMan);
         assertEquals("[B]", fakeStandardOutput.toString());
     }
 }
