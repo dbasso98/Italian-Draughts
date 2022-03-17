@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfTile" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-16T18:42:54" hostname="ZORO" time="0.013">
+<testsuite name="dssc.exam.draughts.core.TestIfTile" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-17T19:12:29" hostname="ZORO" time="0.015">
   <properties/>
   <testcase name="isNotEmptyIfPieceIsSetOnIt()" classname="dssc.exam.draughts.core.TestIfTile" time="0.004"/>
   <testcase name="isEmpty()" classname="dssc.exam.draughts.core.TestIfTile" time="0.001"/>
-  <testcase name="[1] colorOfTile=BLACK, expectedColor=BLACK" classname="dssc.exam.draughts.core.TestIfTile" time="0.001"/>
+  <testcase name="[1] colorOfTile=BLACK, expectedColor=BLACK" classname="dssc.exam.draughts.core.TestIfTile" time="0.002"/>
   <testcase name="[2] colorOfTile=WHITE, expectedColor=WHITE" classname="dssc.exam.draughts.core.TestIfTile" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

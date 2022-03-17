@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfPlayer" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-16T18:42:54" hostname="ZORO" time="0.026">
+<testsuite name="dssc.exam.draughts.core.TestIfPlayer" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-17T19:12:29" hostname="ZORO" time="0.028">
   <properties/>
   <testcase name="[1] inputList=[3, 4, 5, 6]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
   <testcase name="[2] inputList=[12, 15, 14, 36]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
-  <testcase name="[1] name=Michele" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.006"/>
+  <testcase name="[1] name=Michele" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.007"/>
   <testcase name="[1] inputList=[3, 4, 5, 6], rowExpected=2, columnExpected=3" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
   <testcase name="[2] inputList=[12, 15, 14, 36], rowExpected=11, columnExpected=14" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
   <testcase name="[1] inputList=[3, 4, 5, 6], sourceColumn=2, sourceRow=3, destinationColumn=4, destinationRow=5" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
