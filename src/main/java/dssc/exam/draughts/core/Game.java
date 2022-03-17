@@ -20,13 +20,6 @@ public class Game {
     private DisplayPlayer displayPlayer;
     private DisplayBoard displayBoard;
 
-
-    public void loadGame(Board board, int round) {
-        this.board = board;
-        this.round = round;
-        this.currentPlayer = (round % 2 == 0) ? this.whitePlayer : this.blackPlayer;
-    }
-
     public void startGame() {
         initPlayers();
         play();
@@ -35,6 +28,12 @@ public class Game {
     public void initPlayers() {
         whitePlayer.initializePlayerName(1);
         blackPlayer.initializePlayerName(2);
+    }
+
+    public void loadGame(Board board, int round) {
+        this.board = board;
+        this.round = round;
+        this.currentPlayer = (round % 2 == 0) ? this.whitePlayer : this.blackPlayer;
     }
 
     public void play() {
@@ -87,6 +86,9 @@ public class Game {
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
         Point destination = currentPlayer.readDestination();
+        // non sarebbe utile anche a sto punto controllare la destination?
+        // piu che altro per coerenza... che uno che legge la prima cosa che pensa
+        // è perche non si fa anche il check della dest e che quindi ci sta un errore.
         return new Move(board, source, destination);
     }
 
@@ -143,11 +145,11 @@ public class Game {
 
     public int getRound() {
         return round;
-    }
+    } // solo usato nei test. A cosa serve sapere il round se non lo usiamo mai?
 
     public Player getCurrentPlayer() {
         return currentPlayer;
-    }
+    } // uguale a sopra
 
     public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
         this.displayPlayer = displayPlayer;
@@ -168,4 +170,7 @@ public class Game {
     public Game() {
         this(new DisplayPlayer(), new DisplayBoard());
     }
+
+    // tutte questi ctor di game mi sembrano un po inutili. Se la classe display board è un membro e lo usiamo di default,
+    // non ha senso passarlo come variabile penso. Alla fine quello che usiamo davvero è un mix delle ultime due ctor.
 }
