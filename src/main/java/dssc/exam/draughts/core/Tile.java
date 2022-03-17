@@ -67,12 +67,4 @@ public class Tile {
     public boolean containsAKing() {
         return getPiece().isKing();
     }
-
-    public void display() { // sarebbe da eliminare anche e usare solo display tile
-        if (isEmpty()) {
-            System.out.print("[ ]");
-        }
-        else
-            piece.display();
-    }
 }

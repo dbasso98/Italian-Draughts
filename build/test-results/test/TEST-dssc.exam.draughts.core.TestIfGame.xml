@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfGame" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-17T21:09:52" hostname="ZORO" time="0.062">
+<testsuite name="dssc.exam.draughts.core.TestIfGame" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-17T21:12:55" hostname="ZORO" time="0.056">
   <properties/>
-  <testcase name="informsThePlayerThatCanContinueToSkip()" classname="dssc.exam.draughts.core.TestIfGame" time="0.038"/>
-  <testcase name="performAMoveAndUpdatesRoundNumber()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
-  <testcase name="changesPlayer()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
-  <testcase name="doesntAllowToMoveAnOpponentPiece()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
-  <testcase name="EndGameWhenAPlayerCannotMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.011"/>
+  <testcase name="informsThePlayerThatCanContinueToSkip()" classname="dssc.exam.draughts.core.TestIfGame" time="0.036"/>
+  <testcase name="performAMoveAndUpdatesRoundNumber()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
+  <testcase name="changesPlayer()" classname="dssc.exam.draughts.core.TestIfGame" time="0.001"/>
+  <testcase name="doesntAllowToMoveAnOpponentPiece()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
+  <testcase name="EndGameWhenAPlayerCannotMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.009"/>
   <testcase name="endsWhenOnePlayerHasNoPiecesLeft()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
   <testcase name="doesntAllowToStartMovingFromAnEmptyTile()" classname="dssc.exam.draughts.core.TestIfGame" time="0.001"/>
   <system-out><![CDATA[]]></system-out>

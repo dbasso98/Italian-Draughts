@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.core.Piece;
+import dssc.exam.draughts.display.DisplayPiece;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class TestIfStringRepresentationOfPiece {
     void displayBlackMan(){
         System.setOut(new PrintStream(fakeStandardOutput));
         Piece blackMan = new Piece(Color.BLACK);
-        blackMan.display();
+        new DisplayPiece().display(blackMan);
         assertEquals("[b]", fakeStandardOutput.toString());
     }
 
@@ -25,7 +26,7 @@ public class TestIfStringRepresentationOfPiece {
     void displayWhiteMan(){
         System.setOut(new PrintStream(fakeStandardOutput));
         Piece whiteMan = new Piece(Color.WHITE);
-        whiteMan.display();
+        new DisplayPiece().display(whiteMan);
         assertEquals("[w]", fakeStandardOutput.toString());
     }
 
@@ -34,7 +35,7 @@ public class TestIfStringRepresentationOfPiece {
         System.setOut(new PrintStream(fakeStandardOutput));
         Piece blackKing = new Piece(Color.BLACK);
         blackKing.upgradeToKing();
-        blackKing.display();
+        new DisplayPiece().display(blackKing);
         assertEquals("[B]", fakeStandardOutput.toString() );
     }
 
@@ -43,7 +44,7 @@ public class TestIfStringRepresentationOfPiece {
         System.setOut(new PrintStream(fakeStandardOutput));
         Piece whiteKing = new Piece(Color.WHITE);
         whiteKing.upgradeToKing();
-        whiteKing.display();
+        new DisplayPiece().display(whiteKing);
         assertEquals("[W]", fakeStandardOutput.toString());
     }
 }
