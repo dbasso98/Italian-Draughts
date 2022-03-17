@@ -1,6 +1,5 @@
 package dssc.exam.draughts.core;
 
-import dssc.exam.draughts.display.DisplayPiece;
 import dssc.exam.draughts.utilities.Color;
 
 public class Piece {
@@ -23,10 +22,4 @@ public class Piece {
     public Color getColor() {
         return this.pieceColor;
     }
-
-
-    public void display() {
-        new DisplayPiece().display(this);
-    } // secondo me andrebbe rimosso
-    // e usato solo displayPiece
 }
