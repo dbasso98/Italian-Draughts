@@ -10,7 +10,7 @@ public class DisplayTile implements Display<Tile> {
             displayEmptyTile();
         }
         else
-            tile.getPiece().display();
+            new DisplayPiece().display(tile.getPiece());
     }
 
     private void displayEmptyTile() {

@@ -30,7 +30,7 @@ public class Tile {
 
     public Color getColor() {
         return tileColor;
-    }
+    } // solo nei test
 
     public Point getPosition() {
         return position;
@@ -68,7 +68,7 @@ public class Tile {
         return getPiece().isKing();
     }
 
-    public void display() {
+    public void display() { // sarebbe da eliminare anche e usare solo display tile
         if (isEmpty()) {
             System.out.print("[ ]");
         }

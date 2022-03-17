@@ -27,5 +27,6 @@ public class Piece {
 
     public void display() {
         new DisplayPiece().display(this);
-    }
+    } // secondo me andrebbe rimosso
+    // e usato solo displayPiece
 }

@@ -24,7 +24,7 @@ public class Path {
         return source;
     }
 
-    public Piece getPieceContainedInSource() {
+    private Piece getPieceContainedInSource() {
         return getSource().getPiece();
     }
 
