@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-17T21:12:55" hostname="ZORO" time="0.015">
+<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T18:49:17" hostname="ZORO" time="0.015">
   <properties/>
   <testcase name="doesASimpleMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <testcase name="suggestsOptimalMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.003"/>
-  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
+  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <testcase name="doesASkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.0"/>
   <testcase name="skipsWithAKingInsteadOfAMan()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <testcase name="doesntMoveDiagonallyIfTileIsOccupied()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.004"/>
-  <testcase name="updatesManToKingWhenLastRowIsReached()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.0"/>
+  <testcase name="updatesManToKingWhenLastRowIsReached()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
