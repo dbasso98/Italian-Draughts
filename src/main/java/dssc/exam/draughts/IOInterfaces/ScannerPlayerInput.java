@@ -1,5 +1,7 @@
 package dssc.exam.draughts.IOInterfaces;
 
+import dssc.exam.draughts.core.Player;
+
 import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -32,5 +34,10 @@ public class ScannerPlayerInput implements PlayerInputInterface {
         int row = getInt();
         scanner.nextLine();
         return new Point(row - 1, column - 1);
+    }
+
+    @Override
+    public void askName(Player player, int playerNum){
+        System.out.println("Player" + playerNum + "[" + player.getColor() + "]: Please, insert your name:");
     }
 }

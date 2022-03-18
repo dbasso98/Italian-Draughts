@@ -149,5 +149,8 @@ public class TestIfPlayer {
         @Override
         public void skipToNextInput() {
         }
+
+        @Override
+        public void askName(Player player, int playerNum){}
     }
 }

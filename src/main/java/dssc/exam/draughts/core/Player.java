@@ -38,7 +38,7 @@ public class Player {
     }
 
     private String getName(int playerNum) {
-        out.askName(this, playerNum);
+        inputInterface.askName(this, playerNum);
         return inputInterface.getString();
     }
 

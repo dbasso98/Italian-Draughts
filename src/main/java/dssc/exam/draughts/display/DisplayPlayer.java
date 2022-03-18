@@ -16,12 +16,5 @@ public class DisplayPlayer implements Display<Player> {
         display(player);
     }
 
-    public void displayWinner(Player player) {
-        System.out.println("The winner is " + player.name);
-    }
-
-    public void askName(Player player, int playerNum) {
-        System.out.println("Player" + playerNum + "[" + player.getColor() + "]: Please, insert your name:");
-    }
 
 }

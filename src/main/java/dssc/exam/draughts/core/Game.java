@@ -1,12 +1,12 @@
 package dssc.exam.draughts.core;
 
+import dssc.exam.draughts.display.DisplayBoard;
+import dssc.exam.draughts.display.DisplayGame;
+import dssc.exam.draughts.exceptions.*;
 import dssc.exam.draughts.moveLogics.CandidateSkipPathBuilder;
 import dssc.exam.draughts.moveLogics.Move;
 import dssc.exam.draughts.moveLogics.SimpleMoveRules;
-import dssc.exam.draughts.display.DisplayBoard;
-import dssc.exam.draughts.display.DisplayPlayer;
 import dssc.exam.draughts.utilities.Color;
-import dssc.exam.draughts.exceptions.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,27 +17,27 @@ public class Game {
     private Player currentPlayer;
     private Board board = new Board();
     private int round = 0;
-    private final DisplayPlayer displayPlayer;
     private final DisplayBoard displayBoard;
+    private final DisplayGame displayGame;
 
-    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
-        this.displayPlayer = displayPlayer;
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, Player whitePlayer, Player blackPlayer) {
         this.displayBoard = displayBoard;
+        this.displayGame = displayGame;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentPlayer = whitePlayer;
     }
 
     public Game(Player whitePlayer, Player blackPlayer) {
-        this(new DisplayPlayer(), new DisplayBoard(), whitePlayer, blackPlayer);
+        this(new DisplayBoard(), new DisplayGame(),whitePlayer, blackPlayer);
     }
 
-    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
-        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame) {
+        this(displayBoard, displayGame, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     public Game() {
-        this(new DisplayPlayer(), new DisplayBoard());
+        this(new DisplayBoard(), new DisplayGame());
     }
 
     public void startGame() {
@@ -66,11 +66,11 @@ public class Game {
             }
         }
         changePlayer();
-        displayPlayer.displayWinner(currentPlayer);
+        displayGame.winner(currentPlayer);
     }
 
     public void playRound() throws CannotMoveException {
-        displayPlayer.initialInformation(board, currentPlayer);
+        displayGame.initialInformation(board, currentPlayer);
         throwExceptionIfCannotMakeAtLeastOneMove();
         readAndPerformMove();
         changePlayer();

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T18:49:17" hostname="ZORO" time="0.013">
+<testsuite name="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T21:12:32" hostname="ZORO" time="0.011">
   <properties/>
   <testcase name="doesNotAllowAManToSkipAKing()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.001"/>
-  <testcase name="findsCandidateTilesForSkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.001"/>
-  <testcase name="findsAPathWithMoreThanOneSkip()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.002"/>
+  <testcase name="findsCandidateTilesForSkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.0"/>
+  <testcase name="findsAPathWithMoreThanOneSkip()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.001"/>
   <testcase name="stopsMoveAfterThreeCompletedSkips()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.001"/>
   <testcase name="givesHigherScoreToPathWithFirstOccurrenceOfAKing()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.002"/>
   <testcase name="doesntFindAnyCandidateTileForSkipMoveAtBeginning()" classname="dssc.exam.draughts.moveLogics.TestIfCandidateSkipPathBuilder" time="0.001"/>
