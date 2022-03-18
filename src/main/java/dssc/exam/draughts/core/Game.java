@@ -17,8 +17,28 @@ public class Game {
     private Player currentPlayer;
     private Board board = new Board();
     private int round = 0;
-    private DisplayPlayer displayPlayer;
-    private DisplayBoard displayBoard;
+    private final DisplayPlayer displayPlayer;
+    private final DisplayBoard displayBoard;
+
+    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
+        this.displayPlayer = displayPlayer;
+        this.displayBoard = displayBoard;
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+        this.currentPlayer = whitePlayer;
+    }
+
+    public Game(Player whitePlayer, Player blackPlayer) {
+        this(new DisplayPlayer(), new DisplayBoard(), whitePlayer, blackPlayer);
+    }
+
+    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
+        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
+    }
+
+    public Game() {
+        this(new DisplayPlayer(), new DisplayBoard());
+    }
 
     public void startGame() {
         initPlayers();
@@ -41,7 +61,7 @@ public class Game {
             try {
                 playRound();
             } catch (CannotMoveException exception) {
-                System.out.println(exception.getMessage());
+                exception.printMessage();
                 break;
             }
         }
@@ -77,7 +97,7 @@ public class Game {
                 throw cannotMoveException;
 
             } catch (DraughtsException exception) {
-                System.out.println("Invalid move: " + exception.getMessage());
+                exception.printInformativeMessage("Invalid move: ");
             }
         }
     }
@@ -86,9 +106,7 @@ public class Game {
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
         Point destination = currentPlayer.readDestination();
-        // non sarebbe utile anche a sto punto controllare la destination?
-        // piu che altro per coerenza... che uno che legge la prima cosa che pensa
-        // è perche non si fa anche il check della dest e che quindi ci sta un errore.
+
         return new Move(board, source, destination);
     }
 
@@ -97,7 +115,7 @@ public class Game {
         Point newSource = e.getNewSource();
         while (movesToCompleteTurn > 1) {
             displayBoard.display(board);
-            System.out.println(e.getMessage());
+            e.printMessage();
             newSource = makeAStepInMultipleSkip(e.getSkipPath(), newSource);
             --movesToCompleteTurn;
         }
@@ -111,7 +129,7 @@ public class Game {
                 source = destination;
                 break;
             } catch (DraughtsException e) {
-                System.out.println("Invalid move: " + e.getMessage());
+                e.printInformativeMessage("Invalid move: ");
             }
         }
         return source;
@@ -145,32 +163,9 @@ public class Game {
 
     public int getRound() {
         return round;
-    } // solo usato nei test. A cosa serve sapere il round se non lo usiamo mai?
+    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
-    } // uguale a sopra
-
-    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard, Player whitePlayer, Player blackPlayer) {
-        this.displayPlayer = displayPlayer;
-        this.displayBoard = displayBoard;
-        this.whitePlayer = whitePlayer;
-        this.blackPlayer = blackPlayer;
-        this.currentPlayer = whitePlayer;
     }
-
-    public Game(Player whitePlayer, Player blackPlayer) { // solo nei test viene usato.
-        this(new DisplayPlayer(), new DisplayBoard(), whitePlayer, blackPlayer);
-    }
-
-    public Game(DisplayPlayer displayPlayer, DisplayBoard displayBoard) {
-        this(displayPlayer, displayBoard, new Player(Color.WHITE), new Player(Color.BLACK));
-    }
-
-    public Game() {
-        this(new DisplayPlayer(), new DisplayBoard());
-    }
-
-    // tutte questi ctor di game mi sembrano un po inutili. Se la classe display board è un membro e lo usiamo di default,
-    // non ha senso passarlo come variabile penso. Alla fine quello che usiamo davvero è un mix delle ultime due ctor.
 }

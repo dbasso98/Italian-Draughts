@@ -28,7 +28,7 @@ public class MoveValidator {
         throwExceptionIfIsNotADiagonalMove();
         throwExceptionIfIsNotMovingByOneOrTwoTiles();
         throwExceptionIfSourceTileIsEmpty();
-        throwExceptionIfTileIsNonEmpty();
+        throwExceptionIfDestinationTileIsNonEmpty();
         throwExceptionIfWrongDirection();
     }
 
@@ -58,7 +58,7 @@ public class MoveValidator {
             throw new MoveException(("Checker can move only by one or two tiles!"));
     }
 
-    private void throwExceptionIfTileIsNonEmpty() throws TileException {
+    private void throwExceptionIfDestinationTileIsNonEmpty() throws TileException {
         Tile destinationTile = board.getTile(destination);
         if (destinationTile.isNotEmpty())
             throw new TileException("Cannot move since tile at (" + (destinationTile.getColumn() + 1)
