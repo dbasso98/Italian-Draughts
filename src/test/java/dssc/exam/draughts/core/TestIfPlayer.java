@@ -152,5 +152,13 @@ public class TestIfPlayer {
 
         @Override
         public void askName(Player player, int playerNum){}
+
+        @Override
+        public Point readSource(){ return null;};
+        @Override
+        public Point readDestination(){return null;};
+        @Override
+        public Point readPosition(String message){return null;};
+
     }
 }

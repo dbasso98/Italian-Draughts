@@ -2,6 +2,7 @@ package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
+import dssc.exam.draughts.display.DisplayGame;
 import dssc.exam.draughts.display.DisplayPlayer;
 import dssc.exam.draughts.utilities.Color;
 
@@ -12,17 +13,12 @@ public class Player {
     public String name = "";
     private final Color color;
     private final PlayerInputInterface inputInterface;
-    private final DisplayPlayer out;
-
-    // queste variabili non dovrebbero essere parte della input interface? che senso ha che stanno qui?
-    // -----------------------------------------------------------------------------------------------------
-    private static final String readSourceMessage = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)";
-    private static final String readDestinationMessage = "What are the coordinates (x, y) of the Tile you intend to move the piece to? (e.g. 3 4)";
+    private final DisplayPlayer displayPlayer;
 
     public Player(Color color, PlayerInputInterface inputInterface, DisplayPlayer displayPlayer) {
         this.color = color;
         this.inputInterface = inputInterface;
-        this.out = displayPlayer;
+        this.displayPlayer = displayPlayer;
     }
 
     public Player(Color color, PlayerInputInterface inputInterface) {
@@ -48,15 +44,15 @@ public class Player {
 
 
     public Point readSource() {
-        return readPosition(readSourceMessage);
+        return readPosition(new DisplayGame().getSourceMessage());
     }
 
     public Point readDestination() {
-        return readPosition(readDestinationMessage);
+        return readPosition(new DisplayGame().getDestinationMessage());
     }
 
     public Point readPosition(String message) {
-        System.out.println(message);
+        new DisplayGame().message(message);
 
         while (true) {
             try {

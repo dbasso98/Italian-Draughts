@@ -1,6 +1,7 @@
 package dssc.exam.draughts.IOInterfaces;
 
 import dssc.exam.draughts.core.Player;
+import dssc.exam.draughts.display.DisplayGame;
 
 import java.awt.*;
 import java.util.InputMismatchException;
@@ -40,4 +41,32 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     public void askName(Player player, int playerNum){
         System.out.println("Player" + playerNum + "[" + player.getColor() + "]: Please, insert your name:");
     }
+
+    @Override
+    public Point readSource() {
+        return readPosition(new DisplayGame().getSourceMessage());
+    }
+
+    @Override
+    public Point readDestination() {
+        return readPosition(new DisplayGame().getDestinationMessage());
+    }
+
+    @Override
+    public Point readPosition(String message) {
+        new DisplayGame().message(message);
+
+        while (true) {
+            try {
+                return readPoint();
+
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid expression");
+                skipToNextInput();
+            }
+        }
+    }
+
+
+
 }

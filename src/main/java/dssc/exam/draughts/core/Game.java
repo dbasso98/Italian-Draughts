@@ -1,5 +1,7 @@
 package dssc.exam.draughts.core;
 
+import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
+import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.display.DisplayBoard;
 import dssc.exam.draughts.display.DisplayGame;
 import dssc.exam.draughts.exceptions.*;
@@ -12,32 +14,35 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Game {
+    private final DisplayBoard displayBoard;
+    private final DisplayGame displayGame;
+    private final PlayerInputInterface in;
+
     private final Player whitePlayer;
     private final Player blackPlayer;
     private Player currentPlayer;
     private Board board = new Board();
     private int round = 0;
-    private final DisplayBoard displayBoard;
-    private final DisplayGame displayGame;
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame, Player whitePlayer, Player blackPlayer) {
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in, Player whitePlayer, Player blackPlayer) {
         this.displayBoard = displayBoard;
         this.displayGame = displayGame;
+        this.in = in;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentPlayer = whitePlayer;
     }
 
     public Game(Player whitePlayer, Player blackPlayer) {
-        this(new DisplayBoard(), new DisplayGame(),whitePlayer, blackPlayer);
+        this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput(), whitePlayer, blackPlayer);
     }
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame) {
-        this(displayBoard, displayGame, new Player(Color.WHITE), new Player(Color.BLACK));
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in) {
+        this(displayBoard, displayGame, in, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     public Game() {
-        this(new DisplayBoard(), new DisplayGame());
+        this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput());
     }
 
     public void startGame() {

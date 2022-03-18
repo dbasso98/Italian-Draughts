@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T21:12:32" hostname="ZORO" time="0.015">
+<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T22:27:30" hostname="ZORO" time="0.014">
   <properties/>
   <testcase name="doesASimpleMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
-  <testcase name="suggestsOptimalMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.003"/>
-  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
+  <testcase name="suggestsOptimalMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
+  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <testcase name="doesASkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.0"/>
   <testcase name="skipsWithAKingInsteadOfAMan()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
   <testcase name="doesntMoveDiagonallyIfTileIsOccupied()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.004"/>

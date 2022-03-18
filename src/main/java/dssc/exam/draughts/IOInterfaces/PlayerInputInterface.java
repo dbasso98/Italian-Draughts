@@ -15,4 +15,10 @@ public interface PlayerInputInterface {
     void skipToNextInput();
 
     void askName(Player player, int playerNum);
+
+    Point readSource();
+
+    Point readDestination();
+
+    Point readPosition(String message);
 }
