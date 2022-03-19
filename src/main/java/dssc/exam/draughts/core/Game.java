@@ -101,10 +101,8 @@ public class Game {
             } catch (IncompleteMoveException exception) {
                 continueSkipMove(exception);
                 break;
-
             } catch (CannotMoveException cannotMoveException) {
                 throw cannotMoveException;
-
             } catch (DraughtsException exception) {
                 exception.printInformativeMessage("Invalid move: ");
             }
@@ -115,7 +113,6 @@ public class Game {
         Point source = in.readSource();
         testSourceValidity(source);
         Point destination = in.readDestination();
-
         return new Move(board, source, destination);
     }
 
