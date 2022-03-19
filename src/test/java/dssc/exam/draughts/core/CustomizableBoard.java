@@ -3,6 +3,8 @@ package dssc.exam.draughts.core;
 import dssc.exam.draughts.utilities.Color;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CustomizableBoard extends Board {
 
@@ -33,6 +35,13 @@ public class CustomizableBoard extends Board {
         for (Integer index : indexesOfPieces) {
             getTile(index).getPiece().upgradeToKing();
         }
+        return this;
+    }
+
+    public CustomizableBoard removeAllPieces() {
+        this.popPiecesAt(Stream.iterate(1, n -> n + 1)
+                               .limit(this.getSize() - 1)
+                               .collect(Collectors.toList()));
         return this;
     }
 }

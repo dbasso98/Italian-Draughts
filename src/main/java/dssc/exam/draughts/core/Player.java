@@ -42,7 +42,6 @@ public class Player {
         this.name = name;
     }
 
-
     public Point readSource() {
         return readPosition(new DisplayGame().getSourceMessage());
     }
