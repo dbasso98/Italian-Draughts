@@ -25,10 +25,10 @@ public class TestIfPlayer {
         return new Player(Color.BLACK, inputDouble);
     }
 
-    static Stream<Arguments> generateDataReadPosition() {
+    static Stream<Arguments> generateDataGetMove() {
         return Stream.of(
-                Arguments.of(Arrays.asList(3, 4), 2, 3),
-                Arguments.of(Arrays.asList(12, 15), 11, 14)
+                Arguments.of(Arrays.asList(3, 4, 5, 6), 2, 3, 4, 5),
+                Arguments.of(Arrays.asList(12, 15, 14, 36), 11, 14, 13, 35)
         );
     }
 
@@ -36,18 +36,9 @@ public class TestIfPlayer {
     @MethodSource("generateDataGetMove")
     void readsPosition(List<Integer> inputList,
                           int rowExpected, int columnExpected) {
-
         Point point = getPlayerWithDoubledInput(inputList).readSource();
-
         assertEquals(point.x, columnExpected);
         assertEquals(point.y, rowExpected);
-    }
-
-    static Stream<Arguments> generateDataGetMove() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(3, 4, 5, 6), 2, 3, 4, 5),
-                Arguments.of(Arrays.asList(12, 15, 14, 36), 11, 14, 13, 35)
-        );
     }
 
     @ParameterizedTest
@@ -58,17 +49,8 @@ public class TestIfPlayer {
         Player player = getPlayerWithDoubledInput(inputList);
         Point actualSource = player.readSource();
         Point actualDestination = player.readDestination();
-        Point expectedSource = new Point(sourceRow, sourceColumn);
-        Point expectedDestination = new Point(destinationRow, destinationColumn);
-        assertEquals(expectedSource, actualSource);
-        assertEquals(expectedDestination, actualDestination);
-    }
-
-    static Stream<Arguments> generateDataNonNumericInputException() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(1, 2)),
-                Arguments.of(Arrays.asList(3, 4))
-        );
+        assertEquals(new Point(sourceRow, sourceColumn), actualSource);
+        assertEquals(new Point(destinationRow, destinationColumn), actualDestination);
     }
 
     @ParameterizedTest
@@ -82,9 +64,19 @@ public class TestIfPlayer {
         System.setOut(new PrintStream(fakeStandardOutput));
         player.readSource();
         String expected = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)" +
-                System.lineSeparator() +
-                "Please enter a valid expression" + System.lineSeparator();
+                           System.lineSeparator() +
+                          "Please enter a valid expression" + System.lineSeparator();
         assertEquals(expected, fakeStandardOutput.toString());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"Michele, Andres, Davide"})
+    void testNameGetter(String name) {
+        PlayerInterfaceDouble input = new PlayerInterfaceDouble();
+        input.setStrings(List.of(name));
+        Player player = new Player(Color.BLACK, input);
+        player.initializePlayerName(0);
+        assertEquals(name, player.name);
     }
 
     private class PlayerInterfaceExceptionRaiserDouble extends PlayerInterfaceDouble {
@@ -103,16 +95,6 @@ public class TestIfPlayer {
             }
             return super.getInt();
         }
-    }
-
-    @ParameterizedTest
-    @CsvSource({"Michele, Andres, Davide"})
-    void testNameGetter(String name) {
-        PlayerInterfaceDouble input = new PlayerInterfaceDouble();
-        input.setStrings(List.of(name));
-        Player player = new Player(Color.BLACK, input);
-        player.initializePlayerName(0);
-        assertEquals(name, player.name);
     }
 
     private class PlayerInterfaceDouble implements PlayerInputInterface {
@@ -155,10 +137,11 @@ public class TestIfPlayer {
 
         @Override
         public Point readSource(){ return null;};
+
         @Override
         public Point readDestination(){return null;};
+
         @Override
         public Point readPosition(String message){return null;};
-
     }
 }
