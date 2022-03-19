@@ -57,7 +57,7 @@ public class TestIfGame {
                                                                new Point(2, 1),
                                                                new Point(3, 2)));
         game.loadGame(new Board(), 0);
-        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
         String expectedOut = "Invalid move: The first Tile you selected is empty";
@@ -70,7 +70,7 @@ public class TestIfGame {
                                                                new Point(2, 1),
                                                                new Point(3, 2)));
         game.loadGame(new Board(), 0);
-        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
         String expectedOut = "Invalid move: The piece you intend to move belongs to your opponent";
@@ -81,7 +81,7 @@ public class TestIfGame {
     void endsWhenOnePlayerHasNoPiecesLeft() {
         CustomizableBoard board = new CustomizableBoard();
         removeAllWhitePiecesFromBoard(board);
-        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         Player whitePlayer = new Player(Color.WHITE);
         whitePlayer.setName("Player 1");
         Player blackPlayer = new Player(Color.BLACK);
@@ -109,7 +109,7 @@ public class TestIfGame {
                                                                new Point(3, 2),
                                                                new Point(1, 4)));
         game.loadGame(board, 1);
-        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
         assertEquals("Player [BLACK]:", actualLines[10]);
@@ -123,7 +123,7 @@ public class TestIfGame {
         whitePlayer.setName("Player 1");
         Player blackPlayer = new Player(Color.BLACK);
         blackPlayer.setName("Player 2");
-        ByteArrayOutputStream fakeStandardOutput = getFakeStandardOutput();
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         Game game = new Game(whitePlayer, blackPlayer);
         game.loadGame(board,0);
         game.play();
@@ -142,7 +142,7 @@ public class TestIfGame {
         return board;
     }
 
-    private ByteArrayOutputStream getFakeStandardOutput() {
+    private ByteArrayOutputStream changeStdOutputToFakeOutput() {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         return fakeStandardOutput;
@@ -171,7 +171,7 @@ public class TestIfGame {
         }
     }
 
-    static class FakeScannerPlayerInput extends ScannerPlayerInput {
+    private class FakeScannerPlayerInput extends ScannerPlayerInput {
         private static int nextPointToReadIndex = 0;
         private final List<Point> fakeReadPoints;
 

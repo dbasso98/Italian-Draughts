@@ -22,7 +22,6 @@ public class TestIfDisplayPiece {
     @CsvSource({"BLACK, [b]", "WHITE, [w]"})
     void printsManToStdOutput(Color colorOfPiece, String representationOfPiece) {
         var fakeStandardOutput = changeStdOutputToFakeOutput();
-
         new DisplayPiece().display(new Piece(colorOfPiece));
         assertEquals(representationOfPiece, fakeStandardOutput.toString());
     }
@@ -31,10 +30,8 @@ public class TestIfDisplayPiece {
     @CsvSource({"BLACK, [B]", "WHITE, [W]"})
     void printsKingToStdOutput(Color colorOfPiece, String representationOfPiece) {
         var fakeStandardOutput = changeStdOutputToFakeOutput();
-
         var fakePiece = new Piece(colorOfPiece);
         fakePiece.upgradeToKing();
-
         new DisplayPiece().display(fakePiece);
         assertEquals(representationOfPiece, fakeStandardOutput.toString());
     }

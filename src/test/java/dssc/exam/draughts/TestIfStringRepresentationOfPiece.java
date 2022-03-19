@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestIfStringRepresentationOfPiece {
     ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
 
-
     @Test
     void displayBlackMan(){
         System.setOut(new PrintStream(fakeStandardOutput));

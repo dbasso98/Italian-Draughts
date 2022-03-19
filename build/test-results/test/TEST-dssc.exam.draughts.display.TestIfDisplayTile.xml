@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.display.TestIfDisplayTile" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-03-19T17:55:18" hostname="Macbook-Air-Bax.local" time="0.004">
+<testsuite name="dssc.exam.draughts.display.TestIfDisplayTile" tests="3" skipped="0" failures="0" errors="0" timestamp="2022-03-19T18:13:29" hostname="Macbook-Air-Bax.local" time="0.013">
   <properties/>
-  <testcase name="correctlyDisplaysTileOnceBlackPieceIsSetOnIt()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.001"/>
-  <testcase name="correctlyDisplaysEmptyTile()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.001"/>
-  <testcase name="correctlyDisplaysTileOnceBlackKingIsPlacedOnIt()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.0"/>
+  <testcase name="correctlyDisplaysTileOnceBlackPieceIsSetOnIt()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.002"/>
+  <testcase name="correctlyDisplaysEmptyTile()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.003"/>
+  <testcase name="correctlyDisplaysTileOnceBlackKingIsPlacedOnIt()" classname="dssc.exam.draughts.display.TestIfDisplayTile" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestIfDisplayBoard {
     Board board = new Board();
 
-
     @BeforeEach
     private void makeBoardWithWhiteKingAndBlackKing() {
         board.getPieceAtTile(1, 0).upgradeToKing();

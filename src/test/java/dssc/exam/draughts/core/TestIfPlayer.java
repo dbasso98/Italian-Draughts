@@ -34,8 +34,7 @@ public class TestIfPlayer {
 
     @ParameterizedTest
     @MethodSource("generateDataGetMove")
-    void readsPosition(List<Integer> inputList,
-                          int rowExpected, int columnExpected) {
+    void readsPosition(List<Integer> inputList, int rowExpected, int columnExpected) {
         Point point = getPlayerWithDoubledInput(inputList).readSource();
         assertEquals(point.x, columnExpected);
         assertEquals(point.y, rowExpected);
@@ -129,8 +128,7 @@ public class TestIfPlayer {
         }
 
         @Override
-        public void skipToNextInput() {
-        }
+        public void skipToNextInput() {}
 
         @Override
         public void askName(Player player, int playerNum){}
