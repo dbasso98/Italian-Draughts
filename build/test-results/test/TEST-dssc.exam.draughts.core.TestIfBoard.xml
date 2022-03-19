@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dssc.exam.draughts.core.TestIfBoard" tests="50" skipped="0" failures="0" errors="0" timestamp="2022-03-19T11:25:50" hostname="Macbook-Air-Bax.local" time="1.923">
+  <properties/>
+  <testcase name="[1] color=BLACK, position=56" classname="dssc.exam.draughts.core.TestIfBoard" time="0.006"/>
+  <testcase name="[2] color=BLACK, position=58" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[3] color=BLACK, position=60" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[4] color=BLACK, position=62" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[5] color=BLACK, position=49" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[6] color=BLACK, position=51" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[7] color=BLACK, position=53" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[8] color=BLACK, position=55" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[9] color=BLACK, position=40" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[10] color=BLACK, position=42" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[11] color=BLACK, position=44" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[12] color=BLACK, position=46" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="has64Tiles()" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[1] color=WHITE, position=17" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[2] color=WHITE, position=19" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[3] color=WHITE, position=21" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[4] color=WHITE, position=23" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[5] color=WHITE, position=8" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[6] color=WHITE, position=10" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[7] color=WHITE, position=12" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[8] color=WHITE, position=14" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[9] color=WHITE, position=1" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[10] color=WHITE, position=3" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[11] color=WHITE, position=5" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[12] color=WHITE, position=7" classname="dssc.exam.draughts.core.TestIfBoard" time="0.001"/>
+  <testcase name="[1] position=24" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[2] position=25" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[3] position=26" classname="dssc.exam.draughts.core.TestIfBoard" time="0.006"/>
+  <testcase name="[4] position=27" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[5] position=28" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[6] position=29" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[7] position=30" classname="dssc.exam.draughts.core.TestIfBoard" time="0.001"/>
+  <testcase name="[8] position=31" classname="dssc.exam.draughts.core.TestIfBoard" time="0.005"/>
+  <testcase name="[9] position=32" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[10] position=33" classname="dssc.exam.draughts.core.TestIfBoard" time="0.003"/>
+  <testcase name="[11] position=34" classname="dssc.exam.draughts.core.TestIfBoard" time="0.001"/>
+  <testcase name="[12] position=35" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[13] position=36" classname="dssc.exam.draughts.core.TestIfBoard" time="0.005"/>
+  <testcase name="[14] position=37" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[15] position=38" classname="dssc.exam.draughts.core.TestIfBoard" time="0.001"/>
+  <testcase name="[16] position=39" classname="dssc.exam.draughts.core.TestIfBoard" time="0.013"/>
+  <testcase name="[1] color=BLACK, number=12" classname="dssc.exam.draughts.core.TestIfBoard" time="0.005"/>
+  <testcase name="[2] color=WHITE, number=12" classname="dssc.exam.draughts.core.TestIfBoard" time="0.001"/>
+  <testcase name="has24Pieces()" classname="dssc.exam.draughts.core.TestIfBoard" time="0.004"/>
+  <testcase name="[1] sourceRow=0, sourceColumn=0, destinationRow=2, destinationColumn=2, middlePosition=9" classname="dssc.exam.draughts.core.TestIfBoard" time="0.005"/>
+  <testcase name="[2] sourceRow=0, sourceColumn=6, destinationRow=2, destinationColumn=4, middlePosition=13" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[3] sourceRow=7, sourceColumn=1, destinationRow=5, destinationColumn=3, middlePosition=50" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="[4] sourceRow=7, sourceColumn=7, destinationRow=5, destinationColumn=5, middlePosition=54" classname="dssc.exam.draughts.core.TestIfBoard" time="0.002"/>
+  <testcase name="associatesCorrectPositionToTiles" classname="dssc.exam.draughts.core.TestIfBoard" time="0.076"/>
+  <testcase name="isColorSymmetric" classname="dssc.exam.draughts.core.TestIfBoard" time="0.054"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
