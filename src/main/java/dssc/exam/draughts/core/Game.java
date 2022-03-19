@@ -37,6 +37,10 @@ public class Game {
         this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput(), whitePlayer, blackPlayer);
     }
 
+    public Game(PlayerInputInterface in, Player whitePlayer, Player blackPlayer) {
+        this(new DisplayBoard(), new DisplayGame(), in, whitePlayer, blackPlayer);
+    }
+
     public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in) {
         this(displayBoard, displayGame, in, new Player(Color.WHITE), new Player(Color.BLACK));
     }
@@ -108,9 +112,9 @@ public class Game {
     }
 
     private Move getMoveFromPlayer() throws DraughtsException {
-        Point source = currentPlayer.readSource();
+        Point source = in.readSource();
         testSourceValidity(source);
-        Point destination = currentPlayer.readDestination();
+        Point destination = in.readDestination();
 
         return new Move(board, source, destination);
     }

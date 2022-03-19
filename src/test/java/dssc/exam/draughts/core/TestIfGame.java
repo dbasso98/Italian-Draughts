@@ -1,5 +1,6 @@
 package dssc.exam.draughts.core;
 
+import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.exceptions.CannotMoveException;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
@@ -148,7 +149,8 @@ public class TestIfGame {
     }
 
     private Game instantiateGameWithFakeInput(List<Point> fakeInputList) {
-        Game game = new Game(new PlayerStub(Color.WHITE, fakeInputList),
+        Game game = new Game(new FakeScannerPlayerInput(fakeInputList),
+                             new PlayerStub(Color.WHITE, fakeInputList),
                              new PlayerStub(Color.BLACK, fakeInputList));
         return game;
     }
@@ -159,6 +161,21 @@ public class TestIfGame {
 
         PlayerStub(Color color, List<Point> points) {
             super(color);
+            fakeReadPoints = points;
+            nextPointToReadIndex = 0;
+        }
+
+        @Override
+        public Point readPosition(String message) {
+            return fakeReadPoints.get(nextPointToReadIndex++);
+        }
+    }
+
+    static class FakeScannerPlayerInput extends ScannerPlayerInput {
+        private static int nextPointToReadIndex = 0;
+        private final List<Point> fakeReadPoints;
+
+        FakeScannerPlayerInput(List<Point> points) {
             fakeReadPoints = points;
             nextPointToReadIndex = 0;
         }

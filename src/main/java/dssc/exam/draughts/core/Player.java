@@ -67,6 +67,4 @@ public class Player {
     public Color getColor() {
         return color;
     }
-
-
 }

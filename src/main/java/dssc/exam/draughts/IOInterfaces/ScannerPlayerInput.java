@@ -55,18 +55,13 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     @Override
     public Point readPosition(String message) {
         new DisplayGame().message(message);
-
         while (true) {
             try {
                 return readPoint();
-
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid expression");
                 skipToNextInput();
             }
         }
     }
-
-
-
 }
