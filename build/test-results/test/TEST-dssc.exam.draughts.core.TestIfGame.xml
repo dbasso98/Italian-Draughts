@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfGame" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-18T22:27:30" hostname="ZORO" time="0.09">
+<testsuite name="dssc.exam.draughts.core.TestIfGame" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-03-19T10:28:51" hostname="Macbook-Air-Bax.local" time="0.127">
   <properties/>
-  <testcase name="informsThePlayerThatCanContinueToSkip()" classname="dssc.exam.draughts.core.TestIfGame" time="0.067"/>
-  <testcase name="performAMoveAndUpdatesRoundNumber()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
-  <testcase name="changesPlayer()" classname="dssc.exam.draughts.core.TestIfGame" time="0.001"/>
-  <testcase name="doesntAllowToMoveAnOpponentPiece()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
-  <testcase name="EndGameWhenAPlayerCannotMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.007"/>
-  <testcase name="endsWhenOnePlayerHasNoPiecesLeft()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
-  <testcase name="doesntAllowToStartMovingFromAnEmptyTile()" classname="dssc.exam.draughts.core.TestIfGame" time="0.002"/>
+  <testcase name="informsThePlayerThatCanContinueToSkip()" classname="dssc.exam.draughts.core.TestIfGame" time="0.074"/>
+  <testcase name="changesPlayer()" classname="dssc.exam.draughts.core.TestIfGame" time="0.003"/>
+  <testcase name="doesntAllowToMoveAnOpponentPiece()" classname="dssc.exam.draughts.core.TestIfGame" time="0.006"/>
+  <testcase name="EndGameWhenAPlayerCannotMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.014"/>
+  <testcase name="performsAMove()" classname="dssc.exam.draughts.core.TestIfGame" time="0.005"/>
+  <testcase name="endsWhenOnePlayerHasNoPiecesLeft()" classname="dssc.exam.draughts.core.TestIfGame" time="0.005"/>
+  <testcase name="doesntAllowToStartMovingFromAnEmptyTile()" classname="dssc.exam.draughts.core.TestIfGame" time="0.006"/>
+  <testcase name="updatesRoundNumber()" classname="dssc.exam.draughts.core.TestIfGame" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

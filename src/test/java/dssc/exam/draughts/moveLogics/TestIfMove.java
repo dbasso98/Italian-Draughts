@@ -2,6 +2,7 @@ package dssc.exam.draughts.moveLogics;
 
 import dssc.exam.draughts.core.CustomizableBoard;
 import dssc.exam.draughts.core.Board;
+import dssc.exam.draughts.exceptions.DraughtsException;
 import dssc.exam.draughts.exceptions.MoveException;
 import dssc.exam.draughts.exceptions.TileException;
 import dssc.exam.draughts.utilities.Color;
@@ -24,7 +25,7 @@ public class TestIfMove {
     }
 
     @Test
-    void doesASimpleMove() throws Exception {
+    void doesASimpleMove() throws DraughtsException {
         var board = new Board();
         new Move(board, new Point(2, 1), new Point(3, 2)).moveDecider();
         assertTrue(board.getTile(2, 1).isEmpty());
@@ -32,7 +33,7 @@ public class TestIfMove {
     }
 
     @Test
-    void doesASkipMove() throws Exception {
+    void doesASkipMove() throws DraughtsException {
         var board = new Board();
         new Move(board, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(board, new Point(2, 1), new Point(4, 3)).moveDecider();
@@ -42,7 +43,7 @@ public class TestIfMove {
     }
 
     @Test
-    void updatesManToKingWhenLastRowIsReached() throws Exception {
+    void updatesManToKingWhenLastRowIsReached() {
         var board = new Board();
         new Move(board, new Point(2, 1), new Point(7, 7)).doASimpleMove();
         assertTrue(board.getPieceAtTile(7, 7).isKing());
