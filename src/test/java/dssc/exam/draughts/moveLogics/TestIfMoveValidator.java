@@ -90,11 +90,9 @@ public class TestIfMoveValidator {
         return Arbitraries.integers().between(1, 6);
     }
 
-
     @Provide
     Arbitrary<Integer[]> offset() {
         Arbitrary<Integer> integerArbitrary = Arbitraries.integers().between(-1, 1);
         return integerArbitrary.array(Integer[].class).ofSize(2).filter(x -> !x[0].equals(x[1]) && (x[0] == 0 || x[1] == 0));
     }
-
 }
