@@ -9,7 +9,7 @@ public class Path {
     private final Tile source;
     private int weight;
 
-    public Path (Tile source) {
+    public Path(Tile source) {
         this.source = source;
     }
 
@@ -32,7 +32,7 @@ public class Path {
         return path;
     }
 
-    public void setPath(ArrayList<Tile> newPath){
+    public void setPath(ArrayList<Tile> newPath) {
         this.path = newPath;
     }
 
