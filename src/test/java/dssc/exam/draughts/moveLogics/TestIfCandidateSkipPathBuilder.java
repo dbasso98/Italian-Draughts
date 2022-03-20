@@ -97,5 +97,4 @@ public class TestIfCandidateSkipPathBuilder {
                                                             .collect(Collectors.toList())
                                                             .get(0));
     }
-
 }

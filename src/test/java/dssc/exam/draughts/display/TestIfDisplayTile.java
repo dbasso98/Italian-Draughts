@@ -23,7 +23,6 @@ public class TestIfDisplayTile {
         System.setOut(new PrintStream(fakeStandardOutput));
         new DisplayTile().display(emptyTile);
         assertEquals("[ ]", fakeStandardOutput.toString());
-
     }
 
     @BeforeEach
