@@ -130,7 +130,7 @@ public class Game {
     private Point makeAStepInMultipleSkip(ArrayList<Tile> skipPath, Point source) {
         while (true) {
             try {
-                Point destination = currentPlayer.readDestination();
+                Point destination = in.readDestination();
                 new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;
