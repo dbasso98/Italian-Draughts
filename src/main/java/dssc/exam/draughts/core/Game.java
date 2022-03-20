@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Game {
     private final DisplayBoard displayBoard;
     private final DisplayGame displayGame;
-    private final PlayerInputInterface in;
+    private final PlayerInputInterface playerInputInterface;
 
     private final Player whitePlayer;
     private final Player blackPlayer;
@@ -24,10 +24,10 @@ public class Game {
     private Board board = new Board();
     private int round = 0;
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in, Player whitePlayer, Player blackPlayer) {
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface, Player whitePlayer, Player blackPlayer) {
         this.displayBoard = displayBoard;
         this.displayGame = displayGame;
-        this.in = in;
+        this.playerInputInterface = playerInputInterface;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentPlayer = whitePlayer;
@@ -37,12 +37,12 @@ public class Game {
         this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput(), whitePlayer, blackPlayer);
     }
 
-    public Game(PlayerInputInterface in, Player whitePlayer, Player blackPlayer) {
-        this(new DisplayBoard(), new DisplayGame(), in, whitePlayer, blackPlayer);
+    public Game(PlayerInputInterface playerInputInterface, Player whitePlayer, Player blackPlayer) {
+        this(new DisplayBoard(), new DisplayGame(), playerInputInterface, whitePlayer, blackPlayer);
     }
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in) {
-        this(displayBoard, displayGame, in, new Player(Color.WHITE), new Player(Color.BLACK));
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface) {
+        this(displayBoard, displayGame, playerInputInterface, new Player(Color.WHITE), new Player(Color.BLACK));
     }
 
     public Game() {
@@ -55,8 +55,8 @@ public class Game {
     }
 
     public void initPlayers() {
-        whitePlayer.initializePlayerName(1);
-        blackPlayer.initializePlayerName(2);
+        playerInputInterface.initializePlayerName(whitePlayer,1);
+        playerInputInterface.initializePlayerName(blackPlayer,2);
     }
 
     public void loadGame(Board board, int round) {
@@ -110,9 +110,9 @@ public class Game {
     }
 
     private Move getMoveFromPlayer() throws DraughtsException {
-        Point source = in.readSource();
+        Point source = playerInputInterface.readSource();
         testSourceValidity(source);
-        Point destination = in.readDestination();
+        Point destination = playerInputInterface.readDestination();
         return new Move(board, source, destination);
     }
 
@@ -130,7 +130,7 @@ public class Game {
     private Point makeAStepInMultipleSkip(ArrayList<Tile> skipPath, Point source) {
         while (true) {
             try {
-                Point destination = in.readDestination();
+                Point destination = playerInputInterface.readDestination();
                 new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;

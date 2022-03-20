@@ -64,4 +64,16 @@ public class ScannerPlayerInput implements PlayerInputInterface {
             }
         }
     }
+
+    @Override
+    public void initializePlayerName(Player player, int playerNum) {
+        player.setName(getName(player, playerNum));
+    }
+
+    @Override
+    public String getName(Player player, int playerNum) {
+        askName(player, playerNum);
+        return getString();
+    }
+
 }

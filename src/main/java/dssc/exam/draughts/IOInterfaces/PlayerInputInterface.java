@@ -21,4 +21,8 @@ public interface PlayerInputInterface {
     Point readDestination();
 
     Point readPosition(String message);
+
+    void initializePlayerName(Player player, int playerNum);
+
+    String getName(Player player, int playerNum);
 }
