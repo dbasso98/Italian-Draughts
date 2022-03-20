@@ -82,10 +82,8 @@ public class TestIfGame {
         CustomizableBoard board = new CustomizableBoard();
         removeAllWhitePiecesFromBoard(board);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
-        Player whitePlayer = new Player(Color.WHITE);
-        whitePlayer.setName("Player 1");
-        Player blackPlayer = new Player(Color.BLACK);
-        blackPlayer.setName("Player 2");
+        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
+        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
         Game game = new Game(whitePlayer, blackPlayer);
         game.loadGame(board, 0);
         game.play();
@@ -119,10 +117,8 @@ public class TestIfGame {
     @Test
     void EndGameWhenAPlayerCannotMove() {
         CustomizableBoard board = setBoardSoThatPlayerCannotMove();
-        Player whitePlayer = new Player(Color.WHITE);
-        whitePlayer.setName("Player 1");
-        Player blackPlayer = new Player(Color.BLACK);
-        blackPlayer.setName("Player 2");
+        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
+        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         Game game = new Game(whitePlayer, blackPlayer);
         game.loadGame(board,0);
@@ -131,6 +127,12 @@ public class TestIfGame {
         assertEquals("Cannot perform any move!", actualLines[11]);
         assertEquals("*******GAME OVER*******", actualLines[12]);
         assertEquals("The winner is Player 2", actualLines[13]);
+    }
+
+    private Player createPlayerWithName(String name, Color color) {
+        Player newPlayer = new Player(color);
+        newPlayer.setName(name);
+        return newPlayer;
     }
 
     private CustomizableBoard setBoardSoThatPlayerCannotMove() {
@@ -149,21 +151,9 @@ public class TestIfGame {
     }
 
     private Game instantiateGameWithFakeInput(List<Point> fakeInputList) {
-        Game game = new Game(new ScannerPlayerInputStub(fakeInputList),
-                             new PlayerStub(Color.WHITE, fakeInputList),
-                             new PlayerStub(Color.BLACK, fakeInputList));
-        return game;
-    }
-
-    static class PlayerStub extends Player {
-        private static int nextPointToReadIndex = 0;
-        private final List<Point> fakeReadPoints;
-
-        PlayerStub(Color color, List<Point> points) {
-            super(color);
-            fakeReadPoints = points;
-            nextPointToReadIndex = 0;
-        }
+        return new Game(new ScannerPlayerInputStub(fakeInputList),
+                             new Player(Color.WHITE),
+                             new Player(Color.BLACK));
     }
 
     private class ScannerPlayerInputStub extends ScannerPlayerInput {

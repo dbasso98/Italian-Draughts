@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfPlayer" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:27:29" hostname="ZORO" time="0.025">
+<testsuite name="dssc.exam.draughts.core.TestIfPlayer" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:42:31" hostname="Macbook-Air-Bax.local" time="0.081">
   <properties/>
-  <testcase name="[1] inputList=[3, 4, 5, 6]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
-  <testcase name="[2] inputList=[12, 15, 14, 36]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
-  <testcase name="[1] name=Michele" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.006"/>
-  <testcase name="[1] inputList=[3, 4, 5, 6], rowExpected=2, columnExpected=3" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
-  <testcase name="[2] inputList=[12, 15, 14, 36], rowExpected=11, columnExpected=14" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
-  <testcase name="[1] inputList=[3, 4, 5, 6], sourceColumn=2, sourceRow=3, destinationColumn=4, destinationRow=5" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
-  <testcase name="[2] inputList=[12, 15, 14, 36], sourceColumn=11, sourceRow=14, destinationColumn=13, destinationRow=35" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.001"/>
+  <testcase name="[1] inputList=[3, 4, 5, 6]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.005"/>
+  <testcase name="[2] inputList=[12, 15, 14, 36]" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
+  <testcase name="[1] name=Michele" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.019"/>
+  <testcase name="[1] inputList=[3, 4, 5, 6], rowExpected=2, columnExpected=3" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
+  <testcase name="[2] inputList=[12, 15, 14, 36], rowExpected=11, columnExpected=14" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.002"/>
+  <testcase name="[1] inputList=[3, 4, 5, 6], sourceColumn=2, sourceRow=3, destinationColumn=4, destinationRow=5" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.004"/>
+  <testcase name="[2] inputList=[12, 15, 14, 36], sourceColumn=11, sourceRow=14, destinationColumn=13, destinationRow=35" classname="dssc.exam.draughts.core.TestIfPlayer" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

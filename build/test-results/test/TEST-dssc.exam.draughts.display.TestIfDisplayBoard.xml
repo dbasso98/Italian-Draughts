@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.display.TestIfDisplayBoard" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:27:29" hostname="ZORO" time="0.024">
+<testsuite name="dssc.exam.draughts.display.TestIfDisplayBoard" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:42:31" hostname="Macbook-Air-Bax.local" time="0.059">
   <properties/>
-  <testcase name="printsBoardCorrectly()" classname="dssc.exam.draughts.display.TestIfDisplayBoard" time="0.024"/>
+  <testcase name="printsBoardCorrectly()" classname="dssc.exam.draughts.display.TestIfDisplayBoard" time="0.059"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

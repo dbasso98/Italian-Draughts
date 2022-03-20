@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:27:29" hostname="ZORO" time="0.017">
+<testsuite name="dssc.exam.draughts.moveLogics.TestIfMove" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:42:32" hostname="Macbook-Air-Bax.local" time="0.062">
   <properties/>
-  <testcase name="doesASimpleMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
-  <testcase name="suggestsOptimalMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.003"/>
-  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
-  <testcase name="doesASkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
-  <testcase name="skipsWithAKingInsteadOfAMan()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
-  <testcase name="doesntMoveDiagonallyIfTileIsOccupied()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.006"/>
+  <testcase name="doesASimpleMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.002"/>
+  <testcase name="suggestsOptimalMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.011"/>
+  <testcase name="suggestsOptimalMoveEvenIfOriginalIsASkip()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.007"/>
+  <testcase name="doesASkipMove()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.017"/>
+  <testcase name="skipsWithAKingInsteadOfAMan()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.004"/>
+  <testcase name="doesntMoveDiagonallyIfTileIsOccupied()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.011"/>
   <testcase name="updatesManToKingWhenLastRowIsReached()" classname="dssc.exam.draughts.moveLogics.TestIfMove" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
