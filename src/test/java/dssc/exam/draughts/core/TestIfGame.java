@@ -164,11 +164,6 @@ public class TestIfGame {
             fakeReadPoints = points;
             nextPointToReadIndex = 0;
         }
-
-        @Override
-        public Point readPosition(String message) {
-            return fakeReadPoints.get(nextPointToReadIndex++);
-        }
     }
 
     private class ScannerPlayerInputStub extends ScannerPlayerInput {

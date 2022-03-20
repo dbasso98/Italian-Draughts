@@ -1,6 +1,6 @@
 package dssc.exam.draughts.core;
 
-import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
+import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,14 +15,14 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestIfPlayer {
 
-    private Player getPlayerWithDoubledInput(List<Integer> inputList) {
+    private PlayerInterfaceDouble getDoubledInputInterface(List<Integer> inputList) {
         PlayerInterfaceDouble inputDouble = new PlayerInterfaceDouble();
         inputDouble.setIntegers(inputList);
-        return new Player(Color.BLACK, inputDouble);
+        return inputDouble;
     }
 
     static Stream<Arguments> generateDataGetMove() {
@@ -35,7 +35,8 @@ public class TestIfPlayer {
     @ParameterizedTest
     @MethodSource("generateDataGetMove")
     void readsPosition(List<Integer> inputList, int rowExpected, int columnExpected) {
-        Point point = getPlayerWithDoubledInput(inputList).readSource();
+        var in = getDoubledInputInterface(inputList);
+        Point point = in.readSource();
         assertEquals(point.x, columnExpected);
         assertEquals(point.y, rowExpected);
     }
@@ -45,9 +46,9 @@ public class TestIfPlayer {
     void readsPositionsToMakeAMove(List<Integer> inputList,
                                    int sourceColumn, int sourceRow,
                                    int destinationColumn, int destinationRow) {
-        Player player = getPlayerWithDoubledInput(inputList);
-        Point actualSource = player.readSource();
-        Point actualDestination = player.readDestination();
+        var in = getDoubledInputInterface(inputList);
+        Point actualSource = in.readSource();
+        Point actualDestination = in.readDestination();
         assertEquals(new Point(sourceRow, sourceColumn), actualSource);
         assertEquals(new Point(destinationRow, destinationColumn), actualDestination);
     }
@@ -58,10 +59,9 @@ public class TestIfPlayer {
         PlayerInterfaceExceptionRaiserDouble input = new
                 PlayerInterfaceExceptionRaiserDouble(new InputMismatchException());
         input.setIntegers(inputList);
-        Player player = new Player(Color.WHITE, input);
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
-        player.readSource();
+        input.readSource();
         String expected = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)" +
                            System.lineSeparator() +
                           "Please enter a valid expression" + System.lineSeparator();
@@ -74,7 +74,7 @@ public class TestIfPlayer {
         PlayerInterfaceDouble input = new PlayerInterfaceDouble();
         input.setStrings(List.of(name));
         Player player = new Player(Color.BLACK, input);
-        player.initializePlayerName(0);
+        input.initializePlayerName(player, 0);
         assertEquals(name, player.name);
     }
 
@@ -96,7 +96,7 @@ public class TestIfPlayer {
         }
     }
 
-    private class PlayerInterfaceDouble implements PlayerInputInterface {
+    private class PlayerInterfaceDouble extends ScannerPlayerInput {
         private int stringIndex = 0;
         private int intIndex = 0;
         private List<String> strings;
@@ -129,17 +129,5 @@ public class TestIfPlayer {
 
         @Override
         public void skipToNextInput() {}
-
-        @Override
-        public void askName(Player player, int playerNum){}
-
-        @Override
-        public Point readSource(){ return null;};
-
-        @Override
-        public Point readDestination(){return null;};
-
-        @Override
-        public Point readPosition(String message){return null;};
     }
 }

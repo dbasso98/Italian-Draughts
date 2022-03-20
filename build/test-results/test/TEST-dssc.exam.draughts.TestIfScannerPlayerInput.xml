@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.TestIfScannerPlayerInput" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-03-20T10:34:49" hostname="Macbook-Air-Bax.local" time="0.921">
+<testsuite name="dssc.exam.draughts.TestIfScannerPlayerInput" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:27:29" hostname="ZORO" time="0.895">
   <properties/>
-  <testcase name="[1] string=Michele" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.049"/>
-  <testcase name="[2] string=a" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="[3] string=b" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.003"/>
+  <testcase name="[1] string=Michele" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.063"/>
+  <testcase name="[2] string=a" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.003"/>
+  <testcase name="[3] string=b" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
   <testcase name="[4] string=@" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
   <testcase name="[5] string=some" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.003"/>
   <testcase name="[1] string=Michele" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.003"/>
-  <testcase name="[2] string=Andres" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="[3] string=Davide" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="[4] string=Alberto" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="[5] string=1" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="[6] string=some" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.002"/>
-  <testcase name="testGetInt" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.35"/>
+  <testcase name="[2] string=Andres" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.001"/>
+  <testcase name="[3] string=Davide" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.001"/>
+  <testcase name="[4] string=Alberto" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.001"/>
+  <testcase name="[5] string=1" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.001"/>
+  <testcase name="[6] string=some" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.001"/>
+  <testcase name="testGetInt" classname="dssc.exam.draughts.TestIfScannerPlayerInput" time="0.327"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dssc.exam.draughts.core.TestIfPiece" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-20T10:34:50" hostname="Macbook-Air-Bax.local" time="0.011">
+<testsuite name="dssc.exam.draughts.core.TestIfPiece" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-03-20T14:27:29" hostname="ZORO" time="0.01">
   <properties/>
   <testcase name="isKing()" classname="dssc.exam.draughts.core.TestIfPiece" time="0.0"/>
-  <testcase name="isNotKing()" classname="dssc.exam.draughts.core.TestIfPiece" time="0.001"/>
-  <testcase name="[1] colorOfPiece=BLACK, expectedColor=BLACK" classname="dssc.exam.draughts.core.TestIfPiece" time="0.002"/>
+  <testcase name="isNotKing()" classname="dssc.exam.draughts.core.TestIfPiece" time="0.002"/>
+  <testcase name="[1] colorOfPiece=BLACK, expectedColor=BLACK" classname="dssc.exam.draughts.core.TestIfPiece" time="0.0"/>
   <testcase name="[2] colorOfPiece=WHITE, expectedColor=WHITE" classname="dssc.exam.draughts.core.TestIfPiece" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
