@@ -149,7 +149,7 @@ public class TestIfGame {
     }
 
     private Game instantiateGameWithFakeInput(List<Point> fakeInputList) {
-        Game game = new Game(new FakeScannerPlayerInput(fakeInputList),
+        Game game = new Game(new ScannerPlayerInputStub(fakeInputList),
                              new PlayerStub(Color.WHITE, fakeInputList),
                              new PlayerStub(Color.BLACK, fakeInputList));
         return game;
@@ -171,11 +171,11 @@ public class TestIfGame {
         }
     }
 
-    private class FakeScannerPlayerInput extends ScannerPlayerInput {
+    private class ScannerPlayerInputStub extends ScannerPlayerInput {
         private static int nextPointToReadIndex = 0;
         private final List<Point> fakeReadPoints;
 
-        FakeScannerPlayerInput(List<Point> points) {
+        ScannerPlayerInputStub(List<Point> points) {
             fakeReadPoints = points;
             nextPointToReadIndex = 0;
         }

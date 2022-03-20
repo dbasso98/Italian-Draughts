@@ -42,7 +42,7 @@ public class Game {
     }
 
     public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface in) {
-        this(displayBoard, displayGame, in, new Player(Color.WHITE), new Player(Color.BLACK));
+        this(displayBoard, displayGame, in, new Player(Color.WHITE, in), new Player(Color.BLACK, in));
     }
 
     public Game() {
@@ -130,7 +130,7 @@ public class Game {
     private Point makeAStepInMultipleSkip(ArrayList<Tile> skipPath, Point source) {
         while (true) {
             try {
-                Point destination = currentPlayer.readDestination();
+                Point destination = in.readDestination();
                 new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;

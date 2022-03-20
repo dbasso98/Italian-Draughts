@@ -52,11 +52,9 @@ public class Player {
 
     public Point readPosition(String message) {
         new DisplayGame().message(message);
-
         while (true) {
             try {
                 return inputInterface.readPoint();
-
             } catch (InputMismatchException e) {
                 System.out.println("Please enter a valid expression");
                 inputInterface.skipToNextInput();
