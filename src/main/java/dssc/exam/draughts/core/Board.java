@@ -22,7 +22,7 @@ public class Board {
         }
     }
 
-    public void initializeEmptyBoard() {
+    private void initializeEmptyBoard() {
         for (int row = 0; row < BoardSpecifications.numberOfRows(); row += 2) {
             createEvenRow(row);
             createOddRow(row + 1);
