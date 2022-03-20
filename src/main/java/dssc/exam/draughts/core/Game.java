@@ -55,8 +55,8 @@ public class Game {
     }
 
     public void initPlayers() {
-        playerInputInterface.initializePlayerName(whitePlayer,1);
-        playerInputInterface.initializePlayerName(blackPlayer,2);
+        playerInputInterface.initializePlayerName(whitePlayer, 1);
+        playerInputInterface.initializePlayerName(blackPlayer, 2);
     }
 
     public void loadGame(Board board, int round) {
@@ -90,7 +90,7 @@ public class Game {
         var canNotMakeASkip = CandidateSkipPathBuilder.build(board, currentPlayer.getColor()).isEmpty();
         var canNotMakeASimpleMove = SimpleMoveRules.CanNotMakeASimpleMove(board, currentPlayer.getColor());
         if (canNotMakeASkip && canNotMakeASimpleMove)
-            throw new CannotMoveException("Cannot perform any move!"+ System.lineSeparator() +"*******GAME OVER*******");
+            throw new CannotMoveException("Cannot perform any move!" + System.lineSeparator() + "*******GAME OVER*******");
     }
 
     private void readAndPerformMove() throws CannotMoveException {
@@ -151,7 +151,7 @@ public class Game {
             throw new MoveException("The piece you intend to move belongs to your opponent");
     }
 
-    public void changePlayer() {
+    void changePlayer() {
         if (currentPlayer == blackPlayer) {
             currentPlayer = whitePlayer;
             return;
@@ -159,15 +159,15 @@ public class Game {
         currentPlayer = blackPlayer;
     }
 
-    boolean blackPlayerHasPieces() {
+    private boolean blackPlayerHasPieces() {
         return board.getNumberOfPiecesOfColor(Color.BLACK) != 0;
     }
 
-    boolean whitePlayerHasPieces() {
+    private boolean whitePlayerHasPieces() {
         return board.getNumberOfPiecesOfColor(Color.WHITE) != 0;
     }
 
-    public int getRound() {
+    int getRound() {
         return round;
     }
 
