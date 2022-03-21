@@ -28,3 +28,10 @@ hs_err_pid*
 .jqwik-database
 /src/main/java/dssc/exam/draughts/exceptions/Tester.java
 /src/main/java/dssc/exam/draughts/Tester.java
+
+# Build
+/build/reports/
+/build/test-results/
+/build/tmp/
+/build/generated/
+/build/classes/
