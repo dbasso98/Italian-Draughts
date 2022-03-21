@@ -110,7 +110,8 @@ public class Game {
     }
 
     private Move getMoveFromPlayer() throws DraughtsException {
-        Point source = playerInputInterface.readSource();
+//        Point source = playerInputInterface.readSource();
+        Point source = currentPlayer.readSource();
         testSourceValidity(source);
         Point destination = playerInputInterface.readDestination();
         return new Move(board, source, destination);

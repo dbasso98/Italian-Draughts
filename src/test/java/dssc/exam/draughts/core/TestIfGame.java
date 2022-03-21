@@ -30,8 +30,8 @@ public class TestIfGame {
 
     @Test
     void performsAMove() throws CannotMoveException {
-        Game game = instantiateGameWithFakeInput(Arrays.asList(new Point(2, 3),
-                                                               new Point(3, 4)));
+        Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(2, 3),
+                new Point(3, 4)));
         Board board = new Board();
         game.loadGame(board, 0);
         assertTrue(board.getTile(2, 3).isNotEmpty());
@@ -43,8 +43,8 @@ public class TestIfGame {
 
     @Test
     void updatesRoundNumber() throws CannotMoveException {
-        Game game = instantiateGameWithFakeInput(Arrays.asList(new Point(2, 3),
-                                                               new Point(3, 4)));
+        Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(2, 3),
+                new Point(3, 4)));
         game.loadGame(new Board(), 0);
         assertEquals(0, game.getRound());
         game.playRound();
@@ -53,9 +53,9 @@ public class TestIfGame {
 
     @Test
     void doesntAllowToStartMovingFromAnEmptyTile() throws CannotMoveException {
-        Game game = instantiateGameWithFakeInput(Arrays.asList(new Point(0, 2),
-                                                               new Point(2, 1),
-                                                               new Point(3, 2)));
+        Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(0, 2),
+                new Point(2, 1),
+                new Point(3, 2)));
         game.loadGame(new Board(), 0);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
@@ -66,9 +66,9 @@ public class TestIfGame {
 
     @Test
     void doesntAllowToMoveAnOpponentPiece() throws CannotMoveException {
-        Game game = instantiateGameWithFakeInput(Arrays.asList(new Point(5, 0),
-                                                               new Point(2, 1),
-                                                               new Point(3, 2)));
+        Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(5, 0),
+                new Point(2, 1),
+                new Point(3, 2)));
         game.loadGame(new Board(), 0);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
@@ -93,8 +93,8 @@ public class TestIfGame {
 
     private void removeAllWhitePiecesFromBoard(CustomizableBoard board) {
         board.popPiecesAt(Stream.iterate(1, n -> n + 1)
-                                .limit(board.getSize() / 2)
-                                .collect(Collectors.toList()));
+                .limit(board.getSize() / 2)
+                .collect(Collectors.toList()));
     }
 
     @Test
@@ -103,9 +103,9 @@ public class TestIfGame {
                 .popPiecesAt(Arrays.asList(12, 17, 33, 42, 44))
                 .setMultipleManAt(Arrays.asList(28, 33), Color.WHITE)
                 .setMultipleManAt(Arrays.asList(24, 37), Color.BLACK);
-        Game game = instantiateGameWithFakeInput(Arrays.asList(new Point(5, 0),
-                                                               new Point(3, 2),
-                                                               new Point(1, 4)));
+        Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(5, 0),
+                new Point(3, 2),
+                new Point(1, 4)));
         game.loadGame(board, 1);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         game.playRound();
@@ -121,7 +121,7 @@ public class TestIfGame {
         Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         Game game = new Game(whitePlayer, blackPlayer);
-        game.loadGame(board,0);
+        game.loadGame(board, 0);
         game.play();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
         assertEquals("Cannot perform any move!", actualLines[11]);
@@ -138,9 +138,9 @@ public class TestIfGame {
     private CustomizableBoard setBoardSoThatPlayerCannotMove() {
         CustomizableBoard board = new CustomizableBoard();
         board.removeAllPieces();
-        board.setManAtTile(0,1, Color.WHITE);
-        board.setManAtTile(1,0, Color.BLACK);
-        board.setKingAtTile(1,2, Color.BLACK);
+        board.setManAtTile(0, 1, Color.WHITE);
+        board.setManAtTile(1, 0, Color.BLACK);
+        board.setKingAtTile(1, 2, Color.BLACK);
         return board;
     }
 
@@ -152,8 +152,15 @@ public class TestIfGame {
 
     private Game instantiateGameWithFakeInput(List<Point> fakeInputList) {
         return new Game(new ScannerPlayerInputStub(fakeInputList),
-                             new Player(Color.WHITE),
-                             new Player(Color.BLACK));
+                new Player(Color.WHITE),
+                new Player(Color.BLACK));
+    }
+
+    private Game instantiateGameWithFakeInputPlayer(List<Point> fakeInputList) {
+        ScannerPlayerInputStub scannerPlayerInputStub = new ScannerPlayerInputStub(fakeInputList);
+        return new Game(scannerPlayerInputStub,
+                new Player(Color.WHITE, scannerPlayerInputStub),
+                new Player(Color.BLACK, scannerPlayerInputStub));
     }
 
     private class ScannerPlayerInputStub extends ScannerPlayerInput {

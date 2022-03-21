@@ -5,6 +5,8 @@ import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.display.DisplayPlayer;
 import dssc.exam.draughts.utilities.Color;
 
+import java.awt.*;
+
 public class Player {
     public String name = "";
     private final Color color;
@@ -31,5 +33,9 @@ public class Player {
 
     public Color getColor() {
         return color;
+    }
+
+    public Point readSource() {
+        return inputInterface.readSource();
     }
 }
