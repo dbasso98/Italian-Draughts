@@ -30,7 +30,7 @@ public class Tile {
 
     public Color getColor() {
         return tileColor;
-    } // solo nei test
+    }
 
     public Point getPosition() {
         return position;
