@@ -54,7 +54,7 @@ public class Game {
 
     public void initPlayers() {
         whitePlayer.initializeName(1);
-        blackPlayer.initializeName(1);
+        blackPlayer.initializeName(2);
     }
 
     public void loadGame(Board board, int round) {
