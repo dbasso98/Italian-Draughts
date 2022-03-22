@@ -20,7 +20,7 @@ public class DisplayGame {
 
     public void initialInformation(Board board, Player player) {
         new DisplayBoard().display(board);
-        new DisplayPlayer().display(player);
+        player.displayIndicator();
     }
 
     public void winner(Player player) {

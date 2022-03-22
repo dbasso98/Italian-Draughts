@@ -44,7 +44,11 @@ public class Player {
     }
 
     void initializeName(int playerNum) {
-        inputInterface.initializePlayerName(this, playerNum);
+        setName(inputInterface.getName(this, playerNum));
+    }
+
+    public void displayIndicator() {
+        displayPlayer.display(this);
     }
 
 
