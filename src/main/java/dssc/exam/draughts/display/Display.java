@@ -1,6 +1,6 @@
 package dssc.exam.draughts.display;
 
-public interface Display<T> {
+ interface Display<T> {
 
-    void display(T object);
-}
+     void display(T object);
+ }
