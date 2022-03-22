@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class Game {
     private final DisplayBoard displayBoard;
     private final DisplayGame displayGame;
-    private final PlayerInputInterface playerInputInterface;
 
     private final Player whitePlayer;
     private final Player blackPlayer;
@@ -27,7 +26,6 @@ public class Game {
     public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface, Player whitePlayer, Player blackPlayer) {
         this.displayBoard = displayBoard;
         this.displayGame = displayGame;
-        this.playerInputInterface = playerInputInterface;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.currentPlayer = whitePlayer;
@@ -55,8 +53,8 @@ public class Game {
     }
 
     public void initPlayers() {
-        playerInputInterface.initializePlayerName(whitePlayer, 1);
-        playerInputInterface.initializePlayerName(blackPlayer, 2);
+        whitePlayer.initializeName(1);
+        blackPlayer.initializeName(1);
     }
 
     public void loadGame(Board board, int round) {
@@ -110,10 +108,9 @@ public class Game {
     }
 
     private Move getMoveFromPlayer() throws DraughtsException {
-//        Point source = playerInputInterface.readSource();
         Point source = currentPlayer.readSource();
         testSourceValidity(source);
-        Point destination = playerInputInterface.readDestination();
+        Point destination = currentPlayer.readDestination();
         return new Move(board, source, destination);
     }
 
@@ -131,7 +128,7 @@ public class Game {
     private Point makeAStepInMultipleSkip(ArrayList<Tile> skipPath, Point source) {
         while (true) {
             try {
-                Point destination = playerInputInterface.readDestination();
+                Point destination = currentPlayer.readDestination();
                 new Move(board, source, destination).continueToSkip(skipPath);
                 source = destination;
                 break;

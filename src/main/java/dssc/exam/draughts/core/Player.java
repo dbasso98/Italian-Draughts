@@ -35,7 +35,17 @@ public class Player {
         return color;
     }
 
-    public Point readSource() {
+    Point readSource() {
         return inputInterface.readSource();
     }
+
+    Point readDestination() {
+        return inputInterface.readDestination();
+    }
+
+    void initializeName(int playerNum) {
+        inputInterface.initializePlayerName(this, playerNum);
+    }
+
+
 }
