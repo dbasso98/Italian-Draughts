@@ -7,14 +7,14 @@ import dssc.exam.draughts.core.Tile;
 
 import java.awt.*;
 
-public class SkipMoveRules {
+class SkipMoveRules {
     final Tile sourceTile;
     final Point offset;
     Tile firstDiagonalTile;
     private Tile secondDiagonalTile;
     private boolean canSkip;
 
-    public SkipMoveRules(Tile source, Point offset, Board board){
+    SkipMoveRules(Tile source, Point offset, Board board) {
         this.sourceTile = source;
         this.offset = offset;
         getFirstDiagonalTile(board);
@@ -25,7 +25,7 @@ public class SkipMoveRules {
         secondDiagonalTile = board.getTileInDiagonalOffset(this.firstDiagonalTile, offset);
     }
 
-    public void evaluateIfCanSkip(Path path) {
+    void evaluateIfCanSkip(Path path) {
         if (path.startsFromKing()) {
             evaluateIfKingCanSkip(path);
             return;
@@ -70,11 +70,11 @@ public class SkipMoveRules {
         return firstDiagonalTile;
     }
 
-    public Tile getSecondTile() {
+    Tile getSecondTile() {
         return secondDiagonalTile;
     }
 
-    public boolean canSkip() {
+    boolean canSkip() {
         return canSkip;
     }
 }

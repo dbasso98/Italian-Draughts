@@ -9,18 +9,18 @@ import dssc.exam.draughts.exceptions.TileException;
 
 import java.awt.*;
 
-public class MoveValidator {
+class MoveValidator {
     private final Board board;
     private final Point source;
     private final Point destination;
 
-    public MoveValidator(Board board, Point source, Point destination) {
+    MoveValidator(Board board, Point source, Point destination) {
         this.board = board;
         this.source = source;
         this.destination = destination;
     }
 
-    public void throwExceptionIfPositionsAreInvalid() throws DraughtsException {
+    void throwExceptionIfPositionsAreInvalid() throws DraughtsException {
         if (!(board.isPositionInsideTheBoard(source) || board.isPositionInsideTheBoard(destination)))
             throw new IndexException("Position is not valid! Index must be between 1 and 8 for each axis!");
         throwExceptionIfIsWhiteTile(source);
