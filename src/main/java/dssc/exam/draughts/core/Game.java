@@ -67,7 +67,7 @@ public class Game {
         while (whitePlayerHasPieces() & blackPlayerHasPieces()) {
             try {
                 playRound();
-            } catch (CannotMoveException exception) {
+            } catch (CannotMoveException | SurrendException exception) {
                 exception.printMessage();
                 break;
             }
@@ -76,7 +76,7 @@ public class Game {
         displayGame.winner(currentPlayer);
     }
 
-    public void playRound() throws CannotMoveException {
+    public void playRound() throws CannotMoveException, SurrendException {
         displayGame.initialInformation(board, currentPlayer);
         throwExceptionIfCannotMakeAtLeastOneMove();
         readAndPerformMove();
@@ -91,7 +91,7 @@ public class Game {
             throw new CannotMoveException("Cannot perform any move!" + System.lineSeparator() + "*******GAME OVER*******");
     }
 
-    private void readAndPerformMove() throws CannotMoveException {
+    private void readAndPerformMove() throws SurrendException {
         while (true) {
             try {
                 getMoveFromPlayer().moveDecider();
@@ -99,8 +99,8 @@ public class Game {
             } catch (IncompleteMoveException exception) {
                 continueSkipMove(exception);
                 break;
-            } catch (CannotMoveException cannotMoveException) {
-                throw cannotMoveException;
+            } catch (SurrendException surrendException) {
+                throw surrendException;
             } catch (DraughtsException exception) {
                 exception.printInformativeMessage("Invalid move: ");
             }

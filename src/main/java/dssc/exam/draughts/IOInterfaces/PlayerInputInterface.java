@@ -1,6 +1,7 @@
 package dssc.exam.draughts.IOInterfaces;
 
 import dssc.exam.draughts.core.Player;
+import dssc.exam.draughts.exceptions.SurrendException;
 
 import java.awt.*;
 import java.util.InputMismatchException;
@@ -8,19 +9,19 @@ import java.util.InputMismatchException;
 public interface PlayerInputInterface {
     String getString();
 
-    int getInt() throws InputMismatchException;
+    int getInt() throws InputMismatchException, SurrendException;
 
-    Point readPoint() throws InputMismatchException;
+    Point readPoint() throws InputMismatchException, SurrendException;
 
     void skipToNextInput();
 
     void askName(Player player, int playerNum);
 
-    Point readSource();
+    Point readSource() throws SurrendException;
 
-    Point readDestination();
+    Point readDestination() throws SurrendException;
 
-    Point readPosition(String message);
+    Point readPosition(String message) throws SurrendException;
 
     void initializePlayerName(Player player, int playerNum);
 

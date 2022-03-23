@@ -3,6 +3,7 @@ package dssc.exam.draughts.core;
 import dssc.exam.draughts.IOInterfaces.PlayerInputInterface;
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.display.DisplayPlayer;
+import dssc.exam.draughts.exceptions.SurrendException;
 import dssc.exam.draughts.utilities.Color;
 
 import java.awt.*;
@@ -35,11 +36,11 @@ public class Player {
         return color;
     }
 
-    Point readSource() {
+    Point readSource() throws SurrendException {
         return inputInterface.readSource();
     }
 
-    Point readDestination() {
+    Point readDestination() throws SurrendException {
         return inputInterface.readDestination();
     }
 

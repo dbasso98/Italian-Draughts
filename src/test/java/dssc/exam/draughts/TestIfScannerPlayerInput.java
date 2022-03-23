@@ -1,6 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
+import dssc.exam.draughts.exceptions.SurrendException;
 import net.jqwik.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,7 +24,7 @@ public class TestIfScannerPlayerInput {
     }
 
     @Property
-    void testGetInt(@ForAll("integerGenerator") Integer input) {
+    void testGetInt(@ForAll("integerGenerator") Integer input) throws SurrendException {
         setFakeStdInput(input.toString());
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertSame(input, inputInterface.getInt());
@@ -32,7 +33,7 @@ public class TestIfScannerPlayerInput {
     @ParameterizedTest
     @CsvSource({"Michele", "Andres", "Davide", "Alberto", "1", "some"})
     void testGetString(String string) {
-        setFakeStdInput(string);
+        setFakeStdInput(string + System.lineSeparator());
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertEquals(string, inputInterface.getString());
     }
@@ -40,7 +41,7 @@ public class TestIfScannerPlayerInput {
     @ParameterizedTest
     @CsvSource({"Michele", "a", "b", "@", "some"})
     void testInputMismatchException(String string){
-        setFakeStdInput(string);
+        setFakeStdInput(string + System.lineSeparator());
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertThrows(InputMismatchException.class, inputInterface::getInt);
     }

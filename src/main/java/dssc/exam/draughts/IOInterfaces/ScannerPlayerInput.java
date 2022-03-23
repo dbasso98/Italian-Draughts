@@ -2,9 +2,11 @@ package dssc.exam.draughts.IOInterfaces;
 
 import dssc.exam.draughts.core.Player;
 import dssc.exam.draughts.display.DisplayGame;
+import dssc.exam.draughts.exceptions.SurrendException;
 
 import java.awt.*;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ScannerPlayerInput implements PlayerInputInterface {
@@ -16,13 +18,24 @@ public class ScannerPlayerInput implements PlayerInputInterface {
 
     @Override
     public String getString() {
-        return scanner.next();
+        var string = scanner.next();
+        scanner.nextLine();
+        return string;
     }
 
     @Override
-    public int getInt() throws InputMismatchException {
-        return scanner.nextInt();
+    public int getInt() throws InputMismatchException, SurrendException {
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException exception) {
+            var in = getString();
+            if (in.equals("s")) {
+                throw new SurrendException("You decided to surrender");
+            }
+            throw exception;
+        }
     }
+
 
     @Override
     public void skipToNextInput() {
@@ -30,7 +43,7 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     }
 
     @Override
-    public Point readPoint() throws InputMismatchException {
+    public Point readPoint() throws InputMismatchException, SurrendException {
         int column = getInt();
         int row = getInt();
         scanner.nextLine();
@@ -38,22 +51,22 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     }
 
     @Override
-    public void askName(Player player, int playerNum){
+    public void askName(Player player, int playerNum) {
         System.out.println("Player" + playerNum + "[" + player.getColor() + "]: Please, insert your name:");
     }
 
     @Override
-    public Point readSource() {
+    public Point readSource() throws SurrendException {
         return readPosition(new DisplayGame().getSourceMessage());
     }
 
     @Override
-    public Point readDestination() {
+    public Point readDestination() throws SurrendException {
         return readPosition(new DisplayGame().getDestinationMessage());
     }
 
     @Override
-    public Point readPosition(String message) {
+    public Point readPosition(String message) throws SurrendException {
         new DisplayGame().message(message);
         while (true) {
             try {
