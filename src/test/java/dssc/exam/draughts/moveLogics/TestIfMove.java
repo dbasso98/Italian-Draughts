@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +38,7 @@ public class TestIfMove {
         var board = new Board();
         new Move(board, new Point(5, 4), new Point(3, 2)).movePiece();
         new Move(board, new Point(2, 1), new Point(4, 3)).moveDecider();
-        assertTrue(board.getTile(3,2).isEmpty());
+        assertTrue(board.getTile(3, 2).isEmpty());
         assertTrue(board.getTile(2, 1).isEmpty());
         assertTrue(board.getTile(4, 3).isNotEmpty());
     }
@@ -52,7 +53,7 @@ public class TestIfMove {
     @Test
     void suggestsOptimalMove() {
         var board = new CustomizableBoard()
-                .upgradeToKing(Arrays.asList(17))
+                .upgradeToKing(List.of(17))
                 .popPiecesAt(Arrays.asList(44, 49, 53))
                 .setMultipleManAt(Arrays.asList(26, 44, 30), Color.BLACK);
         MoveException exception = assertThrows(MoveException.class, () -> new Move(board, new Point(2, 1), new Point(3, 0)).moveDecider());
@@ -62,7 +63,7 @@ public class TestIfMove {
     @Test
     void suggestsOptimalMoveEvenIfOriginalIsASkip() {
         var board = new CustomizableBoard()
-                .upgradeToKing(Arrays.asList(17))
+                .upgradeToKing(List.of(17))
                 .popPiecesAt(Arrays.asList(44, 49, 53))
                 .setMultipleManAt(Arrays.asList(26, 44, 30), Color.BLACK);
         MoveException exception = assertThrows(MoveException.class, () -> new Move(board, new Point(2, 3), new Point(4, 1)).moveDecider());
@@ -76,5 +77,16 @@ public class TestIfMove {
         new Move(board, new Point(5, 4), new Point(3, 2)).movePiece();
         MoveException exception = assertThrows(MoveException.class, () -> new Move(board, new Point(2, 3), new Point(4, 1)).moveDecider());
         assertEquals("You should skip with a King instead of a Man! Choose one of these positions: (2,3)", exception.getMessage());
+    }
+
+    @Test
+    void isDoneIfNoneOfPreviousRulesApplies() throws Exception {
+        var board = new CustomizableBoard()
+                .removeAllPieces()
+                .setMultipleManAt(Arrays.asList(1, 3), Color.WHITE);
+        board.upgradeToKing(Arrays.asList(1, 3)).setKingAtTile(1, 2, Color.BLACK);
+        new Move(board, new Point(0, 1), new Point(2, 3)).moveDecider();
+        assertTrue(board.getTile(0, 1).isEmpty());
+        assertTrue(board.getTile(2, 3).isNotEmpty());
     }
 }
