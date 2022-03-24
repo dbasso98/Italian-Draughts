@@ -42,9 +42,9 @@ public class SimpleMoveRules {
         ArrayList<SimpleMoveRules> candidateSimpleMoves = getListOfSameDirectionSimpleMove(tile, movingDirection, board);
         if (tile.containsAKing())
             candidateSimpleMoves.addAll(getListOfSameDirectionSimpleMove(tile, -movingDirection, board));
-        candidateSimpleMoves.forEach(move -> move.evaluateIfCanSimplyMove());
+        candidateSimpleMoves.forEach(SimpleMoveRules::evaluateIfCanSimplyMove);
         assertCanDoASimpleMove.add(candidateSimpleMoves.stream()
-                .map(simpleMove -> simpleMove.canSimplyMove())
+                .map(SimpleMoveRules::canSimplyMove)
                 .reduce(false, (firstMove, secondMove) -> firstMove || secondMove));
     }
 
