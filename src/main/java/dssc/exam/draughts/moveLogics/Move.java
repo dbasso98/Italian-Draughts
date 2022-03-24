@@ -37,7 +37,7 @@ public class Move {
         if (isASimpleMove())
             doASimpleMoveIfPossible(candidatePaths, maxWeightTiles);
         else
-            doASkipMove(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
+            doASkipMoveIfPossible(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
     }
 
     private ArrayList<Tile> getMaxWeightTilesWithKing(ArrayList<Tile> tilesWithMaxWeight) {
@@ -95,8 +95,8 @@ public class Move {
         }
     }
 
-    private void doASkipMove(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
-                             ArrayList<Tile> MaxWeightTilesWithKing) throws DraughtsException {
+    private void doASkipMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
+                                       ArrayList<Tile> MaxWeightTilesWithKing) throws DraughtsException {
         if (!bestSourceTiles.contains(sourceTile)) {
             throw new MoveException("You can select a better skip! Choose one of the tiles at these positions:"
                     + printPositionsOfTiles(bestSourceTiles));
