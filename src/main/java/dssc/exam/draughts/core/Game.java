@@ -23,7 +23,7 @@ public class Game {
     private Board board = new Board();
     private int round = 0;
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface, Player whitePlayer, Player blackPlayer) {
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, Player whitePlayer, Player blackPlayer) {
         this.displayBoard = displayBoard;
         this.displayGame = displayGame;
         this.whitePlayer = whitePlayer;
@@ -32,11 +32,11 @@ public class Game {
     }
 
     public Game(Player whitePlayer, Player blackPlayer) {
-        this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput(), whitePlayer, blackPlayer);
+        this(new DisplayBoard(), new DisplayGame(), whitePlayer, blackPlayer);
     }
 
-    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface) {
-        this(displayBoard, displayGame, playerInputInterface, new Player(Color.WHITE, playerInputInterface), new Player(Color.BLACK, playerInputInterface));
+    public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface bothPlayerInputInterface) {
+        this(displayBoard, displayGame, new Player(Color.WHITE, bothPlayerInputInterface), new Player(Color.BLACK, bothPlayerInputInterface));
     }
 
     public Game() {
