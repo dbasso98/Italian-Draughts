@@ -3,6 +3,7 @@ package dssc.exam.draughts;
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.exceptions.SurrenderException;
 import net.jqwik.api.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -40,9 +41,16 @@ public class TestIfScannerPlayerInput {
 
     @ParameterizedTest
     @CsvSource({"Michele", "a", "b", "@", "some"})
-    void testInputMismatchException(String string){
+    void testInputMismatchException(String string) {
         setFakeStdInput(string + System.lineSeparator());
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertThrows(InputMismatchException.class, inputInterface::getInt);
+    }
+
+    @Test
+    void testIfThrowSurrenderException() {
+        setFakeStdInput("s" + System.lineSeparator());
+        ScannerPlayerInput inputInterface = new ScannerPlayerInput();
+        assertThrows(SurrenderException.class, inputInterface::getInt);
     }
 }
