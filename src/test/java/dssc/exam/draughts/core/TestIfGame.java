@@ -134,10 +134,11 @@ public class TestIfGame {
     void endGameWhenAPlayerSurrender() {
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
         Player whitePlayer = new Player(Color.WHITE,
-                new SurrenderExceptionRaiserPlayerInputStub(new SurrenderException("")));
+                new SurrenderExceptionRaiserPlayerInputStub(new SurrenderException("You decided to surrender")));
         Game game = new Game(whitePlayer, createPlayerWithName("Player 2", Color.BLACK));
         game.play();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
+        assertEquals("You decided to surrender", actualLines[12]);
         assertEquals("The winner is Player 2", actualLines[13]);
 
     }
