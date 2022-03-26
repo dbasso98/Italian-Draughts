@@ -2,7 +2,7 @@ package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
 import dssc.exam.draughts.exceptions.CannotMoveException;
-import dssc.exam.draughts.exceptions.SurrendException;
+import dssc.exam.draughts.exceptions.SurrenderException;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ public class TestIfGame {
     }
 
     @Test
-    void performsAMove() throws CannotMoveException, SurrendException {
+    void performsAMove() throws CannotMoveException, SurrenderException {
         Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(2, 3),
                 new Point(3, 4)));
         Board board = new Board();
@@ -43,7 +43,7 @@ public class TestIfGame {
     }
 
     @Test
-    void updatesRoundNumber() throws CannotMoveException, SurrendException {
+    void updatesRoundNumber() throws CannotMoveException, SurrenderException {
         Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(2, 3),
                 new Point(3, 4)));
         game.loadGame(new Board(), 0);
@@ -53,7 +53,7 @@ public class TestIfGame {
     }
 
     @Test
-    void doesntAllowToStartMovingFromAnEmptyTile() throws CannotMoveException, SurrendException {
+    void doesntAllowToStartMovingFromAnEmptyTile() throws CannotMoveException, SurrenderException {
         Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(0, 2),
                 new Point(2, 1),
                 new Point(3, 2)));
@@ -66,7 +66,7 @@ public class TestIfGame {
     }
 
     @Test
-    void doesntAllowToMoveAnOpponentPiece() throws CannotMoveException, SurrendException {
+    void doesntAllowToMoveAnOpponentPiece() throws CannotMoveException, SurrenderException {
         Game game = instantiateGameWithFakeInputPlayer(Arrays.asList(new Point(5, 0),
                 new Point(2, 1),
                 new Point(3, 2)));
@@ -178,4 +178,19 @@ public class TestIfGame {
             return fakeReadPoints.get(nextPointToReadIndex++);
         }
     }
+
+    private class SurrenderExceptionRaiserPlayerInputStub extends ScannerPlayerInput {
+
+        private final SurrenderException surrenderException;
+
+        SurrenderExceptionRaiserPlayerInputStub(SurrenderException surrenderException) {
+            this.surrenderException = surrenderException;
+        }
+
+        @Override
+        public int getInt() throws SurrenderException {
+            throw this.surrenderException;
+        }
+    }
+
 }

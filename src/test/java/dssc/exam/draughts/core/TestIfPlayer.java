@@ -1,7 +1,7 @@
 package dssc.exam.draughts.core;
 
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
-import dssc.exam.draughts.exceptions.SurrendException;
+import dssc.exam.draughts.exceptions.SurrenderException;
 import dssc.exam.draughts.utilities.Color;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -36,7 +36,7 @@ public class TestIfPlayer {
     @ParameterizedTest
     @MethodSource("generateDataGetMove")
     void readsPosition(List<Integer> inputList, int rowExpected, int columnExpected)
-            throws SurrendException {
+            throws SurrenderException {
         var in = getDoubledInputInterface(inputList);
         Point point = in.readSource();
         assertEquals(point.x, columnExpected);
@@ -48,7 +48,7 @@ public class TestIfPlayer {
     void readsPositionsToMakeAMove(List<Integer> inputList,
                                    int sourceColumn, int sourceRow,
                                    int destinationColumn, int destinationRow)
-            throws SurrendException {
+            throws SurrenderException {
         var in = getDoubledInputInterface(inputList);
         Point actualSource = in.readSource();
         Point actualDestination = in.readDestination();
@@ -58,7 +58,7 @@ public class TestIfPlayer {
 
     @ParameterizedTest
     @MethodSource("generateDataGetMove")
-    void alertsForInvalidExpression(List<Integer> inputList) throws SurrendException {
+    void alertsForInvalidExpression(List<Integer> inputList) throws SurrenderException {
         PlayerInterfaceInputMismatchExceptionRaiserDouble input = new
                 PlayerInterfaceInputMismatchExceptionRaiserDouble(new InputMismatchException());
         input.setIntegers(inputList);
@@ -90,26 +90,7 @@ public class TestIfPlayer {
         }
 
         @Override
-        public int getInt() throws InputMismatchException, SurrendException {
-            if (isFirstCall) {
-                isFirstCall = false;
-                throw exceptionToThrow;
-            }
-            return super.getInt();
-        }
-
-    }
-
-    private class PlayerInterfaceSurrendExceptionRaiserDouble extends PlayerInterfaceDouble {
-        private final SurrendException exceptionToThrow;
-        private boolean isFirstCall = true;
-
-        PlayerInterfaceSurrendExceptionRaiserDouble(SurrendException surrendException) {
-            this.exceptionToThrow = surrendException;
-        }
-
-        @Override
-        public int getInt() throws SurrendException, InputMismatchException {
+        public int getInt() throws InputMismatchException, SurrenderException {
             if (isFirstCall) {
                 isFirstCall = false;
                 throw exceptionToThrow;
@@ -139,12 +120,12 @@ public class TestIfPlayer {
         }
 
         @Override
-        public int getInt() throws SurrendException, InputMismatchException {
+        public int getInt() throws SurrenderException, InputMismatchException {
             return integers.get(intIndex++);
         }
 
         @Override
-        public Point readPoint() throws InputMismatchException, SurrendException {
+        public Point readPoint() throws InputMismatchException, SurrenderException {
             int column = getInt();
             int row = getInt();
             return new Point(row - 1, column - 1);

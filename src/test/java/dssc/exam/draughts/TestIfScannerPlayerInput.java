@@ -1,7 +1,7 @@
 package dssc.exam.draughts;
 
 import dssc.exam.draughts.IOInterfaces.ScannerPlayerInput;
-import dssc.exam.draughts.exceptions.SurrendException;
+import dssc.exam.draughts.exceptions.SurrenderException;
 import net.jqwik.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,7 +24,7 @@ public class TestIfScannerPlayerInput {
     }
 
     @Property
-    void testGetInt(@ForAll("integerGenerator") Integer input) throws SurrendException {
+    void testGetInt(@ForAll("integerGenerator") Integer input) throws SurrenderException {
         setFakeStdInput(input.toString());
         ScannerPlayerInput inputInterface = new ScannerPlayerInput();
         assertSame(input, inputInterface.getInt());

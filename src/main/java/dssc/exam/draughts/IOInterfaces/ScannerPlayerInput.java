@@ -2,11 +2,10 @@ package dssc.exam.draughts.IOInterfaces;
 
 import dssc.exam.draughts.core.Player;
 import dssc.exam.draughts.display.DisplayGame;
-import dssc.exam.draughts.exceptions.SurrendException;
+import dssc.exam.draughts.exceptions.SurrenderException;
 
 import java.awt.*;
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class ScannerPlayerInput implements PlayerInputInterface {
@@ -24,13 +23,13 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     }
 
     @Override
-    public int getInt() throws InputMismatchException, SurrendException {
+    public int getInt() throws InputMismatchException, SurrenderException {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException exception) {
             var in = getString();
             if (in.equals("s")) {
-                throw new SurrendException("You decided to surrender");
+                throw new SurrenderException("You decided to surrender");
             }
             throw exception;
         }
@@ -43,7 +42,7 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     }
 
     @Override
-    public Point readPoint() throws InputMismatchException, SurrendException {
+    public Point readPoint() throws InputMismatchException, SurrenderException {
         int column = getInt();
         int row = getInt();
         scanner.nextLine();
@@ -56,17 +55,17 @@ public class ScannerPlayerInput implements PlayerInputInterface {
     }
 
     @Override
-    public Point readSource() throws SurrendException {
+    public Point readSource() throws SurrenderException {
         return readPosition(new DisplayGame().getSourceMessage());
     }
 
     @Override
-    public Point readDestination() throws SurrendException {
+    public Point readDestination() throws SurrenderException {
         return readPosition(new DisplayGame().getDestinationMessage());
     }
 
     @Override
-    public Point readPosition(String message) throws SurrendException {
+    public Point readPosition(String message) throws SurrenderException {
         new DisplayGame().message(message);
         while (true) {
             try {
