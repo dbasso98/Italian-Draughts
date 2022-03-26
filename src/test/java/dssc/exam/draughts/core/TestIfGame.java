@@ -138,8 +138,8 @@ public class TestIfGame {
         Game game = new Game(whitePlayer, createPlayerWithName("Player 2", Color.BLACK));
         game.play();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
-        assertEquals("You decided to surrender", actualLines[12]);
-        assertEquals("The winner is Player 2", actualLines[13]);
+        assertEquals("You decided to surrender", actualLines[13]);
+        assertEquals("The winner is Player 2", actualLines[14]);
 
     }
 

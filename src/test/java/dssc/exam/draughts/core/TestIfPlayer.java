@@ -66,7 +66,7 @@ public class TestIfPlayer {
         System.setOut(new PrintStream(fakeStandardOutput));
         input.readSource();
         String expected = "What are the coordinates (x, y) of the piece you intend to move? (e.g. 3 4)" +
-                System.lineSeparator() +
+                System.lineSeparator() + "or press s to surrender" + System.lineSeparator() +
                 "Please enter a valid expression" + System.lineSeparator();
         assertEquals(expected, fakeStandardOutput.toString());
     }
