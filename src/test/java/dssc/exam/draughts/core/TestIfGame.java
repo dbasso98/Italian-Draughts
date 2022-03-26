@@ -116,7 +116,7 @@ public class TestIfGame {
     }
 
     @Test
-    void EndGameWhenAPlayerCannotMove() {
+    void endGameWhenAPlayerCannotMove() {
         CustomizableBoard board = setBoardSoThatPlayerCannotMove();
         Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
         Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
@@ -128,6 +128,18 @@ public class TestIfGame {
         assertEquals("Cannot perform any move!", actualLines[11]);
         assertEquals("*******GAME OVER*******", actualLines[12]);
         assertEquals("The winner is Player 2", actualLines[13]);
+    }
+
+    @Test
+    void endGameWhenAPlayerSurrender() {
+        ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
+        Player whitePlayer = new Player(Color.WHITE,
+                new SurrenderExceptionRaiserPlayerInputStub(new SurrenderException("")));
+        Game game = new Game(whitePlayer, createPlayerWithName("Player 2", Color.BLACK));
+        game.play();
+        String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
+        assertEquals("The winner is Player 2", actualLines[13]);
+
     }
 
     private Player createPlayerWithName(String name, Color color) {
@@ -174,7 +186,6 @@ public class TestIfGame {
     }
 
     private class SurrenderExceptionRaiserPlayerInputStub extends ScannerPlayerInput {
-
         private final SurrenderException surrenderException;
 
         SurrenderExceptionRaiserPlayerInputStub(SurrenderException surrenderException) {
