@@ -151,15 +151,9 @@ public class TestIfGame {
         return fakeStandardOutput;
     }
 
-    private Game instantiateGameWithFakeInput(List<Point> fakeInputList) {
-        return new Game(new ScannerPlayerInputStub(fakeInputList),
-                new Player(Color.WHITE),
-                new Player(Color.BLACK));
-    }
-
     private Game instantiateGameWithFakeInputPlayer(List<Point> fakeInputList) {
         ScannerPlayerInputStub scannerPlayerInputStub = new ScannerPlayerInputStub(fakeInputList);
-        return new Game(scannerPlayerInputStub,
+        return new Game(
                 new Player(Color.WHITE, scannerPlayerInputStub),
                 new Player(Color.BLACK, scannerPlayerInputStub));
     }

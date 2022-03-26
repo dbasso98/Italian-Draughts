@@ -35,10 +35,6 @@ public class Game {
         this(new DisplayBoard(), new DisplayGame(), new ScannerPlayerInput(), whitePlayer, blackPlayer);
     }
 
-    public Game(PlayerInputInterface playerInputInterface, Player whitePlayer, Player blackPlayer) {
-        this(new DisplayBoard(), new DisplayGame(), playerInputInterface, whitePlayer, blackPlayer);
-    }
-
     public Game(DisplayBoard displayBoard, DisplayGame displayGame, PlayerInputInterface playerInputInterface) {
         this(displayBoard, displayGame, playerInputInterface, new Player(Color.WHITE, playerInputInterface), new Player(Color.BLACK, playerInputInterface));
     }
