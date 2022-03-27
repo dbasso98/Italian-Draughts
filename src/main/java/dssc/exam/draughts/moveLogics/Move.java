@@ -36,8 +36,10 @@ public class Move {
     private void doTheMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> maxWeightTiles) throws DraughtsException {
         if (isASimpleMove())
             doASimpleMoveIfPossible(candidatePaths, maxWeightTiles);
-        else
+        else if (!candidatePaths.isEmpty())
             doASkipMoveIfPossible(candidatePaths, maxWeightTiles, getMaxWeightTilesWithKing(maxWeightTiles));
+        else
+            new MoveValidator(board, source, destination).signalIncorrectMove();
     }
 
     private ArrayList<Tile> getMaxWeightTilesWithKing(ArrayList<Tile> tilesWithMaxWeight) {
@@ -97,7 +99,7 @@ public class Move {
 
     private void doASkipMoveIfPossible(HashMap<Tile, Path> candidatePaths, ArrayList<Tile> bestSourceTiles,
                                        ArrayList<Tile> MaxWeightTilesWithKing) throws DraughtsException {
-        if (!bestSourceTiles.contains(sourceTile)) {
+        if (!bestSourceTiles.contains(sourceTile) && !bestSourceTiles.isEmpty()) {
             throw new MoveException("You can select a better skip! Choose one of the tiles at these positions:"
                     + printPositionsOfTiles(bestSourceTiles));
         }
@@ -110,7 +112,6 @@ public class Move {
             throw new MoveException("You should skip with a King instead of a Man! Choose one of these positions:"
                     + printPositionsOfTiles(MaxWeightTilesWithKing));
         skipMove();
-
     }
 
     private void throwIncompleteMoveIfContinueToSkip(HashMap<Tile, Path> candidatePaths) throws IncompleteMoveException {
@@ -128,10 +129,10 @@ public class Move {
 
     private void skipMove() throws DraughtsException {
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
-        if (middleTile.isEmpty())
-            throw new TileException("Skip move over an empty tile is not accepted");
-        if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
-            throw new MoveException("Color of piece to skip cannot be the same as source piece");
+//        if (middleTile.isEmpty())
+//            throw new TileException("Skip move over an empty tile is not accepted");
+//        if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
+//            throw new MoveException("Color of piece to skip cannot be the same as source piece");
         doASimpleMove();
         middleTile.popPiece();
     }

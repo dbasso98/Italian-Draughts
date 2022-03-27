@@ -32,6 +32,17 @@ class MoveValidator {
         throwExceptionIfWrongDirection();
     }
 
+     void signalIncorrectMove() throws DraughtsException {
+        var middleTile = board.getTile(board.getMiddlePosition(source, destination));
+        var sourceTile = board.getTile(source);
+        if (middleTile.isEmpty())
+            throw new MoveException("Skip move over an empty tile is not accepted!");
+        if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
+            throw new MoveException("Color of piece to skip cannot be the same as source piece!");
+        if(middleTile.containsAKing() && !sourceTile.containsAKing())
+            throw new MoveException("A Man cannot skip a King!");
+    }
+
     private void throwExceptionIfIsWhiteTile(Point position) throws TileException {
         if (board.getTile(position).isWhite())
             throw new TileException("Cannot play on white tiles, only black ones, please change position!");
