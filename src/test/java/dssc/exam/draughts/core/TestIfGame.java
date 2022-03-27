@@ -21,9 +21,9 @@ public class TestIfGame {
 
     @Test
     void changesPlayer() {
-        Player whitePlayer = new Player(Color.WHITE);
-        Player blackPlayer = new Player(Color.BLACK);
-        Game game = new Game(whitePlayer, blackPlayer);
+        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
+        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
+        var game =  new Game(whitePlayer, blackPlayer);
         assertEquals(whitePlayer, game.getCurrentPlayer());
         game.changePlayer();
         assertEquals(blackPlayer, game.getCurrentPlayer());
@@ -83,9 +83,7 @@ public class TestIfGame {
         CustomizableBoard board = new CustomizableBoard();
         removeAllWhitePiecesFromBoard(board);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
-        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
-        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
-        Game game = new Game(whitePlayer, blackPlayer);
+        Game game = instantiateGameWithPlayers();
         game.loadGame(board, 0);
         game.play();
         String expected = "The winner is Player 2" + System.lineSeparator();
@@ -118,10 +116,8 @@ public class TestIfGame {
     @Test
     void endGameWhenAPlayerCannotMove() {
         CustomizableBoard board = setBoardSoThatPlayerCannotMove();
-        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
-        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
         ByteArrayOutputStream fakeStandardOutput = changeStdOutputToFakeOutput();
-        Game game = new Game(whitePlayer, blackPlayer);
+        Game game = instantiateGameWithPlayers();
         game.loadGame(board, 0);
         game.play();
         String[] actualLines = fakeStandardOutput.toString().split(System.lineSeparator());
@@ -147,6 +143,12 @@ public class TestIfGame {
         Player newPlayer = new Player(color);
         newPlayer.setName(name);
         return newPlayer;
+    }
+
+    private Game instantiateGameWithPlayers() {
+        Player whitePlayer = createPlayerWithName("Player 1", Color.WHITE);
+        Player blackPlayer = createPlayerWithName("Player 2", Color.BLACK);
+        return new Game(whitePlayer, blackPlayer);
     }
 
     private CustomizableBoard setBoardSoThatPlayerCannotMove() {
