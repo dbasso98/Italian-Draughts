@@ -26,8 +26,6 @@ hs_err_pid*
 *.gradle
 .DS_Store
 .jqwik-database
-/src/main/java/dssc/exam/draughts/exceptions/Tester.java
-/src/main/java/dssc/exam/draughts/Tester.java
 
 # Build
 /build/reports/
