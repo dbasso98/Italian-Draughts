@@ -62,7 +62,7 @@ public class Board {
     }
 
     private boolean isColumnInsideTheBoard(int column) {
-        return column >= 0 && column <= BoardSpecifications.numberOfColumns();
+        return column >= 0 && column < BoardSpecifications.numberOfColumns();
     }
 
     private boolean isRowInsideTheBoard(int row) {
