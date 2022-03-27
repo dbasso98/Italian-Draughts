@@ -46,7 +46,7 @@ public class TestIfMove {
     @Test
     void updatesManToKingWhenLastRowIsReached() {
         var board = new Board();
-        new Move(board, new Point(2, 1), new Point(7, 7)).doASimpleMove();
+        new Move(board, new Point(2, 1), new Point(7, 7)).performTheMove();
         assertTrue(board.getPieceAtTile(7, 7).isKing());
     }
 

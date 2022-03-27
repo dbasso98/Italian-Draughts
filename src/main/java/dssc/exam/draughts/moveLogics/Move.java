@@ -73,10 +73,10 @@ public class Move {
             throw new MoveException("There are pieces that must capture, try these positions:"
                     + printPositionsOfTiles(tilesWithMaxWeight));
         }
-        doASimpleMove();
+        performTheMove();
     }
 
-    public void doASimpleMove() {
+    public void performTheMove() {
         movePiece(sourceTile, destinationTile);
         updateToKingWhenLastRowIsReached(destinationTile.getPiece(), destinationTile.getRow());
     }
@@ -129,11 +129,7 @@ public class Move {
 
     private void skipMove() throws DraughtsException {
         var middleTile = board.getTile(board.getMiddlePosition(source, destination));
-//        if (middleTile.isEmpty())
-//            throw new TileException("Skip move over an empty tile is not accepted");
-//        if (middleTile.getPiece().getColor() == sourceTile.getPiece().getColor())
-//            throw new MoveException("Color of piece to skip cannot be the same as source piece");
-        doASimpleMove();
+        performTheMove();
         middleTile.popPiece();
     }
 
